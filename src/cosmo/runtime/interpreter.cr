@@ -1,9 +1,9 @@
 class Cosmo::Interpreter
-  getter source : String
+  getter output_ast : Bool = false
 
-  def initialize(@source)
+  def initialize(@output_ast)
   end
 
-  def interpret
+  def interpret(source : String) : LiteralType
   end
 end
