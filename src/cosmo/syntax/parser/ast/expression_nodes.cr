@@ -1,6 +1,31 @@
 module Cosmo::AST::Expression
   include Cosmo::AST
 
+  class VarDeclaration < Node
+    getter typedef : Token
+    getter var : Var
+    getter value : Node
+
+    def initialize(@typedef, @var, @value)
+    end
+
+    def to_s
+      "VarDeclaration<typedef: #{@typedef.value}, var: #{@var.token.value.to_s}, value: #{@value.to_s}>"
+    end
+  end
+
+  class VarAssignment < Node
+    getter var : Var
+    getter value : Node
+
+    def initialize(@var, @value)
+    end
+
+    def to_s
+      "VarAssignment<var: #{@var.token.value.to_s}, value: #{@value.to_s}>"
+    end
+  end
+
   class Var < Node
     getter token : Token
 
@@ -22,18 +47,6 @@ module Cosmo::AST::Expression
 
     def to_s
       "Binary<left: #{@left.to_s}, operator: #{@operator}, right: #{@right.to_s}>"
-    end
-  end
-
-  class Assignment < Node
-    getter var : Var
-    getter value : Node
-
-    def initialize(@var, @value)
-    end
-
-    def to_s
-      "Assignment<var: #{@var.token.value.to_s}, value: #{@value.to_s}>"
     end
   end
 

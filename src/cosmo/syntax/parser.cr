@@ -13,7 +13,7 @@ class Cosmo::Parser
 
   # Entry point
   def parse
-    parse_expression
+    parse_block
   end
 
   # Parse an expression and return a node
@@ -21,19 +21,58 @@ class Cosmo::Parser
     parse_assignment
   end
 
+  # Parse a statement and return a node
+  private def parse_statement : Node
+    parse_var_declaration
+  end
+
+  # Parse a block of statements and return a node
+  private def parse_block : Node
+    statements = [] of Node
+
+    until finished?
+      statements << parse_statement
+    end
+
+    Statement::Block.new(statements)
+  end
+
   # Parse a variable assignment expression and return a node
   private def parse_assignment : Node
     left = parse_logical_or
 
     while match?(Syntax::Equal)
-      unless left.is_a?(Expression::Var)
+      if left.is_a?(Expression::Var)
+        value = parse_expression
+        left = Expression::VarAssignment.new(left, value)
+      else
         Logger.report_error("Expected identifier, got", peek(-2).type.to_s, peek(-2).location.line, peek(-2).location.position)
       end
-      value = parse_expression
-      left = Expression::Assignment.new(left, value)
     end
 
     left
+  end
+
+  # Parse a variable declaration and return a node
+  private def parse_var_declaration : Node
+    if match?(Syntax::TypeDef)
+      variable_type = last_token
+
+      if match?(Syntax::Identifier)
+        variable_name = last_token
+        identifier = Expression::Var.new(variable_name)
+        if match?(Syntax::Equal)
+          value = parse_expression
+          Expression::VarDeclaration.new(variable_type, identifier, value)
+        else
+          Expression::VarDeclaration.new(variable_type, identifier, Expression::NoneLiteral.new)
+        end
+      else
+        Logger.report_error("Expected identifier, got", last_token.type.to_s, last_token.location.line, last_token.location.position)
+      end
+    else
+      parse_assignment
+    end
   end
 
   # Parse a logical OR expression and return a node

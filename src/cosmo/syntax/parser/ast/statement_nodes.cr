@@ -1,34 +1,38 @@
 module Cosmo::AST::Statement
-  class ExpressionList
-    getter expressions : Array(Node)
+  class Block < Node
+    getter nodes : Array(Node)
 
-    def initialize(@expressions = [] of Node)
+    def initialize(@nodes = [] of Node)
     end
 
     def empty?
-      @expressions.empty?
+      @nodes.empty?
     end
 
     def [](i : UInt) : Node
-      @expressions[i]
+      @nodes[i]
     end
 
     def last : Node
-      @expressions.last
+      @nodes.last
     end
 
     def location : Location
-      @location || @expressions.first?.try &.location
+      @location || @nodes.first?.try &.location
     end
 
     def end_location : Location
-      @end_location || @expressions.last?.try &.end_location
+      @end_location || @nodes.last?.try &.end_location
     end
 
     # It yields first node if this holds only one node, or yields `nil`.
     def single_expression? : Node?
-      return @expressions.first.single_expression if @expressions.size == 1
+      return @nodes.first.single_expression if @nodes.size == 1
       nil
+    end
+
+    def to_s
+      "Block<nodes: [#{@nodes.map(&.to_s).join(", ")}]>"
     end
   end
 end

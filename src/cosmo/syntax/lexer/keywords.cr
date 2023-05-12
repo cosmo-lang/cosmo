@@ -19,22 +19,10 @@ module Cosmo::Keywords
     "return" => Syntax::Return
   }
 
-  TYPE_KEYWORDS = {
-    "bool" => Syntax::BooleanType,
-    "string" => Syntax::StringType,
-    "char" => Syntax::CharType,
-    "int" => Syntax::IntegerType,
-    "float" => Syntax::FloatType,
-    "void" => Syntax::VoidType,
-    "none" => Syntax::NoneType,
-  }
+  TYPE_KEYWORDS = ["bool", "string", "char", "int", "float", "void", "none"]
 
   def self.type?(s)
-    TYPE_KEYWORDS.has_key?(s)
-  end
-
-  def self.get_type_syntax(s)
-    TYPE_KEYWORDS.fetch(s) { raise "Invalid type keyword #{s}" }
+    TYPE_KEYWORDS.includes?(s)
   end
 
   def self.keyword?(s)

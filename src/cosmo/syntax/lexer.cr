@@ -307,8 +307,7 @@ class Cosmo::Lexer
       value = nil if ident_str == "none"
       add_token(syntax_type, value)
     elsif Keywords.type?(ident_str)
-      syntax_type = Keywords.get_type_syntax(ident_str)
-      add_token(syntax_type, ident_str)
+      add_token(Syntax::TypeDef, ident_str)
     else
       add_token(Syntax::Identifier, ident_str)
     end
