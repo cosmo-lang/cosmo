@@ -1,6 +1,6 @@
 # Cosmo
 
-Cosmo is a statically-typed programming language.
+Cosmo is a statically-typed programming language written in pure Crystal.
 
 ## Installation
 
