@@ -31,7 +31,7 @@ class Cosmo::Lexer
     char = current_char
     case char
     when "."
-      if peek.match(/\d/)
+      if char_exists?(1) && peek.match(/[0-9]/)
         read_number
       else
         add_token(Syntax::Dot, nil)

@@ -86,6 +86,8 @@ describe Lexer do
 
   end
   it "lexes other characters" do
-
+    tokens = Lexer.new("$ -> >= & :: ..", "test").tokenize
+    tokens.first.type.should eq Syntax::This
+    tokens.first.value.should eq nil
   end
 end
