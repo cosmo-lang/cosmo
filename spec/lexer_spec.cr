@@ -16,10 +16,26 @@ describe Lexer do
     tokens.first.value.should eq 1234
   end
   it "lexes hex literals" do
+    tokens = Lexer.new("0xabc123", "test").tokenize
+    tokens.first.type.should eq Syntax::Integer
+    tokens.first.value.should eq 11256099
 
+    tokens = Lexer.new("0xdE43FA", "test").tokenize
+    tokens.first.type.should eq Syntax::Integer
+    tokens.first.value.should eq 14566394
+
+    tokens = Lexer.new("0x123ABC", "test").tokenize
+    tokens.first.type.should eq Syntax::Integer
+    tokens.first.value.should eq 1194684
   end
   it "lexes binary literals" do
+    tokens = Lexer.new("0b11111", "test").tokenize
+    tokens.first.type.should eq Syntax::Integer
+    tokens.first.value.should eq 31
 
+    tokens = Lexer.new("0b1011011", "test").tokenize
+    tokens.first.type.should eq Syntax::Integer
+    tokens.first.value.should eq 91
   end
   it "lexes booleans" do
     tokens = Lexer.new("true", "test").tokenize
