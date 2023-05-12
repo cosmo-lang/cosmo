@@ -55,7 +55,9 @@ describe Lexer do
     tokens.first.value.should eq false
   end
   it "lexes none value" do
-
+    tokens = Lexer.new("none", "test").tokenize
+    tokens.first.type.should eq Syntax::None
+    tokens.first.value.should eq nil
   end
   it "lexes strings" do
 
