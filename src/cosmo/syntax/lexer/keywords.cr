@@ -1,4 +1,4 @@
-require "./syntax_type"
+require "../syntax_type"
 
 module Cosmo::Keywords
   KEYWORDS = {
@@ -29,7 +29,7 @@ module Cosmo::Keywords
   }
 
   def self.type?(s)
-    TYPE_KEYWORDS.key?(s)
+    TYPE_KEYWORDS.has_key?(s)
   end
 
   def self.get_type_syntax(s)
@@ -37,7 +37,7 @@ module Cosmo::Keywords
   end
 
   def self.keyword?(s)
-    KEYWORDS.key?(s)
+    KEYWORDS.has_key?(s)
   end
 
   def self.get_syntax(s)

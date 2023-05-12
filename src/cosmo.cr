@@ -21,16 +21,15 @@ module Cosmo
 
   @@interpreter = Interpreter.new(output_ast: @@options.has_key?(:ast))
 
-  def self.read_source(source : String, repl : Bool = false)
-    result = @@interpreter.interpret(source)
-    puts result if repl
+  def self.read_source(source : String, file_path : String) : LiteralType
+    @@interpreter.interpret(source, file_path)
   end
 
   # Reads a file at `path` and returns it's contents
   def self.read_file(path : String)
     begin
       contents = File.read(path)
-      read_source(contents)
+      read_source(contents, file_path: path)
     rescue e : Exception
       raise "Failed to read file \"#{path}\": #{e}"
       exit 1
@@ -47,7 +46,7 @@ module Cosmo
     loop do
       line = read_line
       break if line.nil?
-      read_source(line, repl: true)
+      puts read_source(line, file_path: "repl")
     end
   end
 end

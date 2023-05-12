@@ -1,4 +1,5 @@
 require "./lexer/token"
+require "./lexer/keywords"
 
 alias LiteralType =
   Int64 | Int32 | Int16 | Int8 |
@@ -12,19 +13,22 @@ class Cosmo::Lexer
   getter position : UInt32 = 0
   getter char_pos : UInt32 = 0
   getter tokens = [] of Token
+  getter file_path : String
 
-  def initialize(@source)
+  def initialize(@source, @file_path)
   end
 
-  def peek(offset)
-    @source[@position + offset]
+  # Peek `offset` characters ahead of our current position
+  # Returns a string because it's easier
+  private def peek(offset) : String
+    @source[@position + offset].to_s
   end
 
-  def current_char
+  private def current_char : String
     peek 0
   end
 
-  def match_char(expected)
+  private def match_char?(expected)
     return false if finished?
     return false unless char_exists?(1)
     return false unless peek(1) == expected
@@ -32,26 +36,27 @@ class Cosmo::Lexer
     true
   end
 
-  def finished?
+  private def finished?
     @position >= @source.size
   end
 
-  def char_exists?(offset)
-    @source[@position + offset]
+  private def char_exists?(offset)
+    !@source[@position + offset].nil?
   end
 
-  def advance
-    char = @source[@position]
+  private def advance : String
+    char = @source[@position].to_s
     @position += 1
     @char_pos += 1
     char
   end
 
-  def add_token(syntax, value)
-    @tokens << Token.new(syntax, value, @char_pos + 1, @line)
+  private def add_token(syntax : Syntax, value : LiteralType)
+    location = Location.new(@file_path, @line, @char_pos + 1)
+    @tokens << Token.new(syntax, value, location)
   end
 
-  def is_hex?
+  private def is_hex?
     current_char == "0" &&
       char_exists?(1) &&
       peek(1) == "x" &&
@@ -59,7 +64,7 @@ class Cosmo::Lexer
       peek(2).to_i(16)
   end
 
-  def is_binary?
+  private def is_binary?
     current_char == "0" &&
       char_exists?(1) &&
       peek(1) == "b" &&
@@ -67,30 +72,30 @@ class Cosmo::Lexer
       peek(2).to_i(2)
   end
 
-  def skip_comments(multiline)
+  private def skip_comments(multiline)
     advance
     while !end_of_comment(multiline, @line)
       advance
     end
   end
 
-  def end_of_comment(multiline, current_line)
+  private def end_of_comment(multiline, current_line)
     if multiline
-      match_char(":") &&
-        match_char("#") &&
-        match_char("#")
+      match_char?(":") &&
+        match_char?("#") &&
+        match_char?("#")
     else
       @line != current_line || finished?
     end
   end
 
-  def skip_whitespace
+  private def skip_whitespace
     while !finished? && current_char =~ /\s/
       advance
     end
   end
 
-  def read_number
+  private def read_number
     num_str = ""
     radix = if is_hex?
       advance
@@ -109,59 +114,65 @@ class Cosmo::Lexer
       if current_char == "."
         decimal_used = true
       end
-      num_str << advance.to_s
+      num_str += advance.to_s
     end
 
-    value = float_from_string(num_str, radix)
-    add_token(Syntax::Float, PossibleTokenValue.new(Syntax::Float, value))
+    if decimal_used
+      value =
+      add_token(Syntax::Float, num_str.to_f64)
+    else
+
+    end
     @position -= 1
   end
 
-  def read_string(delim)
+  private def read_string(delim)
     advance
     res_str = ""
     while !finished? && current_char != delim
-      res_str << advance.to_s
+      res_str += advance.to_s
     end
-    add_token(Syntax::String, PossibleTokenValue.new(Syntax::String, res_str))
+    add_token(Syntax::String, res_str)
   end
 
-  def read_char(delim)
+  private def read_char(delim)
     advance
     res_str = ""
-    while !finished? && current_char != delim
-      res_str << advance.to_s
-      if res_str.length > 1
+    until finished? || current_char == delim
+      res_str += advance.to_s
+      if res_str.size > 1
         Logger.report_error("Character overflow", "Character literal has more than one character", @position, @line)
         break
       end
     end
-    add_token(Syntax::Char, PossibleTokenValue.new(Syntax::Char, res_str[0]))
+    add_token(Syntax::Char, res_str.chars.first)
   end
 
-  def read_identifier
+  private def read_identifier
     ident_str = ""
     until finished?
-      if char_exists?(1) && !peek(1).alphanumeric? && peek(1) != "_" && peek(1) != "$"
+      if char_exists?(1) && !peek(1).match(/[A-Za-z0-9]+/) && peek(1) != "_" && peek(1) != "$"
         ident_str += current_char.to_s
         skip_whitespace
         break
       end
       ident_str += advance.to_s
     end
-    if Keywords.is?(ident_str)
+    if Keywords.keyword?(ident_str)
       syntax_type = Keywords.get_syntax(ident_str)
-      value = Keywords.get_value(ident_str)
+      value = true if ident_str == "true"
+      value = false if ident_str == "false"
+      value = nil if ident_str == "none"
       add_token(syntax_type, value)
-    elsif Keywords.is_type?(ident_str)
+    elsif Keywords.type?(ident_str)
       syntax_type = Keywords.get_type_syntax(ident_str)
-      add_token(syntax_type, PossibleTokenValue.new(syntax_type, ident_str))
+      add_token(syntax_type, ident_str)
     else
-      add_token(Syntax::Identifier, PossibleTokenValue.new(Syntax::String, ident_str))
+      add_token(Syntax::Identifier, ident_str)
     end
   end
 
-  def lex
+  private def lex
     char = current_char
     case char
     when "."
@@ -194,52 +205,52 @@ class Cosmo::Lexer
     when "'"
       read_char(char)
     when "#"
-      if match_char("#")
-        is_multiline = match_char(":")
+      if match_char?("#")
+        is_multiline = match_char?(":")
         skip_comments(is_multiline)
       else
         add_token(Syntax::Hashtag, nil)
       end
     when ":"
-      if match_char(":")
+      if match_char?(":")
         add_token(Syntax::ColonColon, nil)
       else
         add_token(Syntax::Colon, nil)
       end
     when "+"
-      if match_char("=")
+      if match_char?("=")
         add_token(Syntax::PlusEqual, nil)
       else
         add_token(Syntax::Plus, nil)
       end
     when "-"
-      if match_char("=")
+      if match_char?("=")
         add_token(Syntax::MinusEqual, nil)
-      elsif match_char(">")
+      elsif match_char?(">")
         add_token(Syntax::HyphenArrow, nil)
       else
         add_token(Syntax::Minus, nil)
       end
     when "*"
-      if match_char("=")
+      if match_char?("=")
         add_token(Syntax::StarEqual, nil)
       else
         add_token(Syntax::Star, nil)
       end
     when "/"
-      if match_char("=")
+      if match_char?("=")
         add_token(Syntax::SlashEqual, nil)
       else
         add_token(Syntax::Slash, nil)
       end
     when "^"
-      if match_char("=")
+      if match_char?("=")
         add_token(Syntax::CaratEqual, nil)
       else
         add_token(Syntax::Carat, nil)
       end
     when "%"
-      if match_char("=")
+      if match_char?("=")
         add_token(Syntax::PercentEqual, nil)
       else
         add_token(Syntax::Percent, nil)
@@ -251,31 +262,31 @@ class Cosmo::Lexer
     when "?"
       add_token(Syntax::Question, nil)
     when "!"
-      if match_char("=")
+      if match_char?("=")
         add_token(Syntax::BangEqual, nil)
       else
         add_token(Syntax::Bang, nil)
       end
     when "="
-      if match_char("=")
+      if match_char?("=")
         add_token(Syntax::EqualEqual, nil)
       else
         add_token(Syntax::Equal, nil)
       end
     when "<"
-      if match_char("=")
+      if match_char?("=")
         add_token(Syntax::LessEqual, nil)
       else
         add_token(Syntax::Less, nil)
       end
     when ">"
-      if match_char("=")
+      if match_char?("=")
         add_token(Syntax::GreaterEqual, nil)
       else
         add_token(Syntax::Greater, nil)
       end
     else
-      default_char = @source[@position]
+      default_char = @source[@position].to_s
       return skip_whitespace if default_char.match(/\s/)
 
       is_ident = default_char.match(/[a-zA-Z_$]/)

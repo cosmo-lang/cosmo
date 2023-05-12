@@ -4,13 +4,12 @@ require "./location"
 struct Cosmo::Token
   getter type : Syntax
   getter value : LiteralType
-  getter start_location : Location
-  getter end_location : Location
+  getter location : Location
 
-  def initialize(@type, @value, @start_location, @end_location)
+  def initialize(@type, @value, @location)
   end
 
-  def to_s
+  private def value_str
     case @type
     when Syntax::Integer, Syntax::Float, Syntax::Boolean
       @value.to_s
@@ -23,7 +22,11 @@ struct Cosmo::Token
     when Syntax::Identifier
       "Ident<#{@value.to_s}>"
     else
-      @value.to_s
+      @value.to_s == "" ? "none" : @value.to_s
     end
+  end
+
+  def to_s
+    "Token<type: #{@type}, value: #{value_str}, location: [#{@location.to_s}]"
   end
 end
