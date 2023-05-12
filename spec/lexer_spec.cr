@@ -87,7 +87,18 @@ describe Lexer do
   end
   it "lexes other characters" do
     tokens = Lexer.new("$ -> >= & :: ..", "test").tokenize
-    tokens.first.type.should eq Syntax::This
-    tokens.first.value.should eq nil
+    this, hyph_arrow, gr_eq, amper, double_colon, dotdot = tokens
+    this.type.should eq Syntax::This
+    this.value.should eq nil
+    hyph_arrow.type.should eq Syntax::HyphenArrow
+    hyph_arrow.value.should eq nil
+    gr_eq.type.should eq Syntax::GreaterEqual
+    gr_eq.value.should eq nil
+    amper.type.should eq Syntax::Ampersand
+    amper.value.should eq nil
+    double_colon.type.should eq Syntax::ColonColon
+    double_colon.value.should eq nil
+    dotdot.type.should eq Syntax::DotDot
+    dotdot.value.should eq nil
   end
 end
