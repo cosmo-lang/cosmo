@@ -144,7 +144,25 @@ describe Parser do
     var.token.value.should eq "_this_isValid$"
   end
   it "parses variable assignments" do
+    block = Parser.new("abc = 1.234", "test").parse
+    block.nodes.empty?.should eq false
+    assignment = block.nodes.first.as AST::Expression::VarAssignment
+    assignment.var.class.should eq AST::Expression::Var
+    assignment.var.token.type.should eq Syntax::Identifier
+    assignment.var.token.value.should eq "abc"
+    literal = assignment.value.as AST::Expression::FloatLiteral
+    literal.class.should eq AST::Expression::FloatLiteral
+    literal.value.should eq 1.234
 
+    block = Parser.new("_this_isValid$ = false", "test").parse
+    block.nodes.empty?.should eq false
+    assignment = block.nodes.first.as AST::Expression::VarAssignment
+    assignment.var.class.should eq AST::Expression::Var
+    assignment.var.token.type.should eq Syntax::Identifier
+    assignment.var.token.value.should eq "_this_isValid$"
+    literal = assignment.value.as AST::Expression::BooleanLiteral
+    literal.class.should eq AST::Expression::BooleanLiteral
+    literal.value.should eq false
   end
   it "parses variable declarations" do
 
