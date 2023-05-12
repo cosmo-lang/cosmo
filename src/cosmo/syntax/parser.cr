@@ -34,7 +34,7 @@ class Cosmo::Parser
       node = parse_expression
       consume(Syntax::RParen)
       node
-    when Syntax::Minus, Syntax::Bang
+    when Syntax::Plus, Syntax::Minus, Syntax::Star, Syntax::Hashtag, Syntax::Bang
       op = current
       consume(current.type)
       operand = parse_factor
@@ -52,6 +52,14 @@ class Cosmo::Parser
       Expression::IntLiteral.new(value.as(Int))
     when Syntax::Float
       Expression::FloatLiteral.new(value.as(Float))
+    when Syntax::Boolean
+      Expression::BooleanLiteral.new(value.as(Bool))
+    when Syntax::String
+      Expression::StringLiteral.new(value.to_s)
+    when Syntax::Char
+      Expression::CharLiteral.new(value.as(Char))
+    when Syntax::None
+      Expression::NoneLiteral.new
     else
       raise "Unhandled syntax type: #{current.type}"
     end
@@ -74,7 +82,7 @@ class Cosmo::Parser
 
   # Consume the current token if it matches the expected syntax
   private def consume(syntax : Syntax)
-    Logger.report_error("Expected #{syntax.to_s}, got", current.type.to_s, current.location.line, current.location.position) unless current.type == syntax
+    Logger.report_error("Expected #{syntax}, got", current.type.to_s, current.location.line, current.location.position) unless current.type == syntax
     @position += 1
   end
 

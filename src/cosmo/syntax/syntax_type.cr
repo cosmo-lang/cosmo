@@ -8,7 +8,7 @@ enum Cosmo::Syntax
   Less; LessEqual; Greater; GreaterEqual
   Equal; EqualEqual; Bang; BangEqual
   Ampersand; Pipe; Question
-  ColonColon; Colon; Dot; HyphenArrow
+  ColonColon; Colon; Dot; HyphenArrow; Dollar
   LBrace; RBrace; LBracket; RBracket; LParen; RParen
   Comma
   Hashtag

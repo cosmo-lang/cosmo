@@ -34,8 +34,16 @@ module Cosmo::AST::Expression
     end
   end
 
+  class BooleanLiteral < Literal
+    def initialize(@value : Bool); end
+    def to_s
+      "Literal<#{value}>"
+    end
+  end
+
   class NoneLiteral < Literal
     getter value = nil
+    def initialize; end
     def to_s
       "Literal<none>"
     end
