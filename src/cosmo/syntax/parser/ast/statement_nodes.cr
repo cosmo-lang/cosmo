@@ -13,6 +13,10 @@ module Cosmo::AST::Statement
       @nodes[i]
     end
 
+    def first : Node
+      @nodes.first
+    end
+
     def last : Node
       @nodes.last
     end
