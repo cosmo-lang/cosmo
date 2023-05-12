@@ -1,6 +1,7 @@
 require "./spec_helper"
 
 describe Lexer do
+  unexpected_float = "Unexpected float: Hex/binary numbers must be integers"
   it "throws for unexpected characters" do
     lexer = Lexer.new("@/\\", "test")
     expect_raises(Exception, "[1:1] Unexpected character: @") { lexer.tokenize }
@@ -29,8 +30,7 @@ describe Lexer do
     tokens.first.value.should eq 1194684
 
     lexer = Lexer.new("0xAE.0", "test")
-    err_msg = "Unexpected float: Hex/binary numbers must be integers"
-    expect_raises(Exception, "[6:2] #{err_msg}") { lexer.tokenize }
+    expect_raises(Exception, "[6:2] #{unexpected_float}") { lexer.tokenize }
   end
   it "lexes binary literals" do
     tokens = Lexer.new("0b11111", "test").tokenize
@@ -42,8 +42,7 @@ describe Lexer do
     tokens.first.value.should eq 91
 
     lexer = Lexer.new("0b11.2", "test")
-    err_msg = "Unexpected float: Hex/binary numbers must be integers"
-    expect_raises(Exception, "[5:2] #{err_msg}") { lexer.tokenize }
+    expect_raises(Exception, "[5:2] #{unexpected_float}") { lexer.tokenize }
   end
   it "lexes booleans" do
     tokens = Lexer.new("true", "test").tokenize
@@ -60,10 +59,22 @@ describe Lexer do
     tokens.first.value.should eq nil
   end
   it "lexes strings" do
-
+    tokens = Lexer.new("\"hello world\"", "test").tokenize
+    tokens.first.type.should eq Syntax::String
+    tokens.first.value.should eq "hello world"
   end
   it "lexes chars" do
+    tokens = Lexer.new("'h'", "test").tokenize
+    tokens.first.type.should eq Syntax::Char
+    tokens.first.value.should eq 'h'
 
+    tokens = Lexer.new("'i'", "test").tokenize
+    tokens.first.type.should eq Syntax::Char
+    tokens.first.value.should eq 'i'
+
+    tokens = Lexer.new("'$'", "test").tokenize
+    tokens.first.type.should eq Syntax::Char
+    tokens.first.value.should eq '$'
   end
   it "lexes identifiers" do
 
