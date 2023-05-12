@@ -1,4 +1,4 @@
-module Cosmo::Syntax
+enum Cosmo::Syntax
   Identifier
   Integer
   Float

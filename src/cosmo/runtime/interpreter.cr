@@ -1,3 +1,5 @@
+require "../syntax/parser"
+
 class Cosmo::Interpreter
   getter output_ast : Bool = false
 

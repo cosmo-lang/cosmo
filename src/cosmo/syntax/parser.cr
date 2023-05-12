@@ -1,5 +1,4 @@
-require "./syntax_type"
-require "./syntax_type"
+require "./lexer"
 require "./parser/ast"
 
 class Cosmo::Parser

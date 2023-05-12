@@ -1,10 +1,13 @@
+require "../syntax_type"
+require "./location"
+
 struct Cosmo::Token
   getter type : Syntax
   getter value : LiteralType
-  getter line : UInt
-  getter position : UInt
+  getter start_location : Location
+  getter end_location : Location
 
-  def initialize(@type, @value, @line, @position)
+  def initialize(@type, @value, @start_location, @end_location)
   end
 
   def to_s
