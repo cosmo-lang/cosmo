@@ -1,6 +1,42 @@
 module Cosmo::AST::Expression
   include Cosmo::AST
 
+  class Var < Node
+    getter token : Token
+
+    def initialize(@token)
+    end
+
+    def to_s
+      "Var<token: #{@token.to_s}>"
+    end
+  end
+
+  class BinaryOp < Node
+    getter left : Node
+    getter operator : Syntax
+    getter right : Node
+
+    def initialize(@left, @operator, @right)
+    end
+
+    def to_s
+      "Binary<left: #{@left.to_s}, operator: #{@operator}, right: #{@right.to_s}>"
+    end
+  end
+
+  class UnaryOp < Node
+    getter operator : Syntax
+    getter operand : Node
+
+    def initialize(@operator, @operand)
+    end
+
+    def to_s
+      "Unary<operator: #{@operator}, operand: #{@operand.to_s}>"
+    end
+  end
+
   abstract class Literal < Node
     getter value : LiteralType
     def initialize(@value); end
@@ -46,31 +82,6 @@ module Cosmo::AST::Expression
     def initialize; end
     def to_s
       "Literal<none>"
-    end
-  end
-
-  class BinaryOp < Node
-    getter left : Node
-    getter operator : Syntax
-    getter right : Node
-
-    def initialize(@left, @operator, @right)
-    end
-
-    def to_s
-      "Binary<left: #{@left.to_s}, operator: #{@operator}, right: #{@right.to_s}>"
-    end
-  end
-
-  class UnaryOp < Node
-    getter operator : Syntax
-    getter operand : Node
-
-    def initialize(@operator, @operand)
-    end
-
-    def to_s
-      "Unary<operator: #{@operator}, operand: #{@operand.to_s}>"
     end
   end
 end

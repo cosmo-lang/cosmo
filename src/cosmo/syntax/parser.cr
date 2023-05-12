@@ -169,6 +169,8 @@ class Cosmo::Parser
       node = parse_expression
       consume(Syntax::RParen)
       node
+    elsif match?(Syntax::Identifier)
+      Expression::Var.new(last_token)
     else
       parse_literal
     end
