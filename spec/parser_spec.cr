@@ -129,7 +129,19 @@ describe Parser do
     right.value.should eq 46
   end
   it "parses variable references" do
+    block = Parser.new("abc", "test").parse
+    block.nodes.empty?.should eq false
+    var = block.nodes.first.as AST::Expression::Var
+    var.class.should eq AST::Expression::Var
+    var.token.type.should eq Syntax::Identifier
+    var.token.value.should eq "abc"
 
+    block = Parser.new("_this_isValid$", "test").parse
+    block.nodes.empty?.should eq false
+    var = block.nodes.first.as AST::Expression::Var
+    var.class.should eq AST::Expression::Var
+    var.token.type.should eq Syntax::Identifier
+    var.token.value.should eq "_this_isValid$"
   end
   it "parses variable assignments" do
 
