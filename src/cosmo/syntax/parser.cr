@@ -18,7 +18,22 @@ class Cosmo::Parser
 
   # Parse an expression and return a node
   private def parse_expression : Node
-    parse_logical_or
+    parse_assignment
+  end
+
+  # Parse a variable assignment expression and return a node
+  private def parse_assignment : Node
+    left = parse_logical_or
+
+    while match?(Syntax::Equal)
+      unless left.is_a?(Expression::Var)
+        Logger.report_error("Expected identifier, got", peek(-2).type.to_s, peek(-2).location.line, peek(-2).location.position)
+      end
+      value = parse_expression
+      left = Expression::Assignment.new(left, value)
+    end
+
+    left
   end
 
   # Parse a logical OR expression and return a node
@@ -178,12 +193,17 @@ class Cosmo::Parser
 
   # Return the current token at the current position
   private def current : Token
-    @tokens[@position]
+    peek 0
+  end
+
+  # Consume the current token and advance the position
+  def peek(offset : Int32 = 1) : Token
+    @tokens[@position + offset]
   end
 
   # Return the token at the current position minus one
   private def last_token : Token
-    @tokens[@position - 1]
+    peek -1
   end
 
   private def finished?

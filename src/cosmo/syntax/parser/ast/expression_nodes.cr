@@ -25,6 +25,18 @@ module Cosmo::AST::Expression
     end
   end
 
+  class Assignment < Node
+    getter var : Var
+    getter value : Node
+
+    def initialize(@var, @value)
+    end
+
+    def to_s
+      "Assignment<var: #{@var.token.value.to_s}, value: #{@value.to_s}>"
+    end
+  end
+
   class UnaryOp < Node
     getter operator : Syntax
     getter operand : Node
