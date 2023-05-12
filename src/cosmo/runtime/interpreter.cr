@@ -7,8 +7,6 @@ class Cosmo::Interpreter
   end
 
   def interpret(source : String, file_path : String) : LiteralType
-    Lexer.new(source, file_path).tokenize.each do |token|
-      puts token.to_s
-    end
+    puts Parser.new(source, file_path).parse.to_s
   end
 end

@@ -1,47 +1,49 @@
 module Cosmo::AST::Expression
-  abstract class Literal::Base < Node
+  include Cosmo::AST
+
+  abstract class Literal < Node
     getter value : LiteralType
     def initialize(@value); end
   end
 
-  class Literal::String < Literal::Base
+  class StringLiteral < Literal
     def initialize(@value : String); end
     def to_s
-      "\"#{value}\""
+      "Literal<\"#{value}\">"
     end
   end
 
-  class Literal::Char < Literal::Base
+  class CharLiteral < Literal
     def initialize(@value : Char); end
     def to_s
-      "'#{value}'"
+      "Literal<'#{value}'>"
     end
   end
 
-  class Literal::Int < Literal::Base
-    def initialize(@value : Int); end
+  class IntLiteral < Literal
+    def initialize(@value : Int64 | Int32 | Int16 | Int8); end
     def to_s
-      "#{value}"
+      "Literal<#{value}>"
     end
   end
 
-  class Literal::Float < Literal::Base
-    def initialize(@value : Float); end
+  class FloatLiteral < Literal
+    def initialize(@value : Float64 | Float32 | Float16 | Float8); end
     def to_s
-      "#{value}"
+      "Literal<#{value}>"
     end
   end
 
-  class Literal::None < Literal::Base
+  class NoneLiteral < Literal
     getter value = nil
     def to_s
-      "none"
+      "Literal<none>"
     end
   end
 
   class BinaryOp < Node
     getter left : Node
-    getter operator : Syntax
+    getter operator : Token
     getter right : Node
 
     def initialize(@left, @operator, @right)
@@ -53,7 +55,7 @@ module Cosmo::AST::Expression
   end
 
   class UnaryOp < Node
-    getter operator : Syntax
+    getter operator : Token
     getter operand : Node
 
     def initialize(@operator, @operand)

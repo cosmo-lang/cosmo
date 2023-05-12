@@ -24,3 +24,6 @@ module Cosmo::AST
     end
   end
 end
+
+require "./ast/expression_nodes"
+require "./ast/statement_nodes"

@@ -18,6 +18,148 @@ class Cosmo::Lexer
   def initialize(@source, @file_path)
   end
 
+  def tokenize : Array(Token)
+    until finished?
+      lex
+    end
+
+    add_token(Syntax::EOF, nil)
+    @tokens
+  end
+
+  private def lex
+    char = current_char
+    case char
+    when "."
+      if peek.match(/\d/)
+        read_number
+      else
+        add_token(Syntax::Dot, nil)
+      end
+    when "{"
+      add_token(Syntax::LBrace, nil)
+    when "}"
+      add_token(Syntax::RBrace, nil)
+    when "["
+      add_token(Syntax::LBracket, nil)
+    when "]"
+      add_token(Syntax::RBracket, nil)
+    when "("
+      add_token(Syntax::LParen, nil)
+    when ")"
+      add_token(Syntax::RParen, nil)
+    when ","
+      add_token(Syntax::Comma, nil)
+    when ";"
+      advance
+    when "\n"
+      @line += 1
+      @char_pos = 0
+    when "\""
+      read_string(char)
+    when "'"
+      read_char(char)
+    when "#"
+      if match_char?("#")
+        is_multiline = match_char?(":")
+        skip_comments(is_multiline)
+      else
+        add_token(Syntax::Hashtag, nil)
+      end
+    when ":"
+      if match_char?(":")
+        add_token(Syntax::ColonColon, nil)
+      else
+        add_token(Syntax::Colon, nil)
+      end
+    when "+"
+      if match_char?("=")
+        add_token(Syntax::PlusEqual, nil)
+      else
+        add_token(Syntax::Plus, nil)
+      end
+    when "-"
+      if match_char?("=")
+        add_token(Syntax::MinusEqual, nil)
+      elsif match_char?(">")
+        add_token(Syntax::HyphenArrow, nil)
+      else
+        add_token(Syntax::Minus, nil)
+      end
+    when "*"
+      if match_char?("=")
+        add_token(Syntax::StarEqual, nil)
+      else
+        add_token(Syntax::Star, nil)
+      end
+    when "/"
+      if match_char?("=")
+        add_token(Syntax::SlashEqual, nil)
+      else
+        add_token(Syntax::Slash, nil)
+      end
+    when "^"
+      if match_char?("=")
+        add_token(Syntax::CaratEqual, nil)
+      else
+        add_token(Syntax::Carat, nil)
+      end
+    when "%"
+      if match_char?("=")
+        add_token(Syntax::PercentEqual, nil)
+      else
+        add_token(Syntax::Percent, nil)
+      end
+    when "&"
+      add_token(Syntax::Ampersand, nil)
+    when "|"
+      add_token(Syntax::Pipe, nil)
+    when "?"
+      add_token(Syntax::Question, nil)
+    when "!"
+      if match_char?("=")
+        add_token(Syntax::BangEqual, nil)
+      else
+        add_token(Syntax::Bang, nil)
+      end
+    when "="
+      if match_char?("=")
+        add_token(Syntax::EqualEqual, nil)
+      else
+        add_token(Syntax::Equal, nil)
+      end
+    when "<"
+      if match_char?("=")
+        add_token(Syntax::LessEqual, nil)
+      else
+        add_token(Syntax::Less, nil)
+      end
+    when ">"
+      if match_char?("=")
+        add_token(Syntax::GreaterEqual, nil)
+      else
+        add_token(Syntax::Greater, nil)
+      end
+    else
+      default_char = @source[@position].to_s
+      return skip_whitespace if default_char.match(/\s/)
+
+      is_ident = default_char.match(/[a-zA-Z_$]/)
+      is_number = default_char.match(/\d/) ||
+        (default_char == "0" && peek == "x" && peek(2).match(/[0-9a-fA-F]/)) ||
+        (default_char == "0" && peek == "b" && peek(2).match(/[01]/))
+
+      if is_number
+        read_number
+      elsif is_ident
+        read_identifier
+      else
+        Logger.report_error("Unexpected character", default_char.to_s, @position, @line)
+      end
+    end
+    @position += 1
+  end
+
   # Peek `offset` characters ahead of our current position
   # Returns a string because it's easier
   private def peek(offset : UInt32 = 1) : String
@@ -168,147 +310,5 @@ class Cosmo::Lexer
     else
       add_token(Syntax::Identifier, ident_str)
     end
-  end
-
-  private def lex
-    char = current_char
-    case char
-    when "."
-      if peek.match(/\d/)
-        read_number
-      else
-        add_token(Syntax::Dot, nil)
-      end
-    when "{"
-      add_token(Syntax::LeftBrace, nil)
-    when "}"
-      add_token(Syntax::RightBrace, nil)
-    when "["
-      add_token(Syntax::LeftBracket, nil)
-    when "]"
-      add_token(Syntax::RightBracket, nil)
-    when "("
-      add_token(Syntax::LeftParen, nil)
-    when ")"
-      add_token(Syntax::RightParen, nil)
-    when ","
-      add_token(Syntax::Comma, nil)
-    when ";"
-      advance
-    when "\n"
-      @line += 1
-      @char_pos = 0
-    when "\""
-      read_string(char)
-    when "'"
-      read_char(char)
-    when "#"
-      if match_char?("#")
-        is_multiline = match_char?(":")
-        skip_comments(is_multiline)
-      else
-        add_token(Syntax::Hashtag, nil)
-      end
-    when ":"
-      if match_char?(":")
-        add_token(Syntax::ColonColon, nil)
-      else
-        add_token(Syntax::Colon, nil)
-      end
-    when "+"
-      if match_char?("=")
-        add_token(Syntax::PlusEqual, nil)
-      else
-        add_token(Syntax::Plus, nil)
-      end
-    when "-"
-      if match_char?("=")
-        add_token(Syntax::MinusEqual, nil)
-      elsif match_char?(">")
-        add_token(Syntax::HyphenArrow, nil)
-      else
-        add_token(Syntax::Minus, nil)
-      end
-    when "*"
-      if match_char?("=")
-        add_token(Syntax::StarEqual, nil)
-      else
-        add_token(Syntax::Star, nil)
-      end
-    when "/"
-      if match_char?("=")
-        add_token(Syntax::SlashEqual, nil)
-      else
-        add_token(Syntax::Slash, nil)
-      end
-    when "^"
-      if match_char?("=")
-        add_token(Syntax::CaratEqual, nil)
-      else
-        add_token(Syntax::Carat, nil)
-      end
-    when "%"
-      if match_char?("=")
-        add_token(Syntax::PercentEqual, nil)
-      else
-        add_token(Syntax::Percent, nil)
-      end
-    when "&"
-      add_token(Syntax::Ampersand, nil)
-    when "|"
-      add_token(Syntax::Pipe, nil)
-    when "?"
-      add_token(Syntax::Question, nil)
-    when "!"
-      if match_char?("=")
-        add_token(Syntax::BangEqual, nil)
-      else
-        add_token(Syntax::Bang, nil)
-      end
-    when "="
-      if match_char?("=")
-        add_token(Syntax::EqualEqual, nil)
-      else
-        add_token(Syntax::Equal, nil)
-      end
-    when "<"
-      if match_char?("=")
-        add_token(Syntax::LessEqual, nil)
-      else
-        add_token(Syntax::Less, nil)
-      end
-    when ">"
-      if match_char?("=")
-        add_token(Syntax::GreaterEqual, nil)
-      else
-        add_token(Syntax::Greater, nil)
-      end
-    else
-      default_char = @source[@position].to_s
-      return skip_whitespace if default_char.match(/\s/)
-
-      is_ident = default_char.match(/[a-zA-Z_$]/)
-      is_number = default_char.match(/\d/) ||
-        (default_char == "0" && peek == "x" && peek(2).match(/[0-9a-fA-F]/)) ||
-        (default_char == "0" && peek == "b" && peek(2).match(/[01]/))
-
-      if is_number
-        read_number
-      elsif is_ident
-        read_identifier
-      else
-        Logger.report_error("Unexpected character", default_char.to_s, @position, @line)
-      end
-    end
-    @position += 1
-  end
-
-  def tokenize : Array(Token)
-    until finished?
-      lex
-    end
-
-    add_token(Syntax::EOF, nil)
-    @tokens
   end
 end
