@@ -103,8 +103,9 @@ module Cosmo::AST::Expression
   end
 
   class NoneLiteral < Literal
-    getter value = nil
-    def initialize; end
+    def initialize
+      super nil
+    end
     def to_s
       "Literal<none>"
     end
