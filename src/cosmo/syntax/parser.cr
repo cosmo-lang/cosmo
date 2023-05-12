@@ -4,6 +4,6 @@ class Parser
   def initialize(@source)
   end
 
-  def parser
+  def parse
   end
 end
