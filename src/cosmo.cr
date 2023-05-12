@@ -1,5 +1,6 @@
 require "./cosmo/runtime/interpreter"
 require "option_parser"
+require "readline"
 
 module Cosmo
   # Parse options
