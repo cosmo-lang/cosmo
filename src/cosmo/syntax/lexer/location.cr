@@ -8,7 +8,7 @@ class Location
   def initialize(@file_name, @line, @column)
   end
 
-  def between?(min, max)
+  def between?(min : UInt, max : UInt)
     return false unless min && max
     min <= self && self <= max
   end
@@ -17,8 +17,8 @@ class Location
     original_file_name.try { |file_name| File.dirname(file_name) }
   end
 
-  # Returns the Location as a string
-  def expanded_location
+  # Returns a Location with a String as a file name instead of a VirtualFile
+  def expanded_location : Location
     case @file_name
     when String
       self
