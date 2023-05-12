@@ -253,12 +253,16 @@ class Cosmo::Lexer
     end
 
     decimal_used = false
-    while !finished? && ((current_char.to_i64?(radix).nil? ? false : current_char.to_i64(radix).to_s(radix) == current_char) || (!decimal_used && radix == 10 && current_char == "."))
-      decimal_used = true if current_char == "."
+    until finished?
+      char = current_char.downcase
+      is_valid = char.to_i64?(radix).nil? ? false : char.to_i64(radix).to_s(radix) == char
+      break unless is_valid || char == "."
+      decimal_used = true if char == "."
       num_str += advance.to_s
     end
 
     if decimal_used
+      Logger.report_error("Unexpected float", "Hex/binary numbers must be integers", @line, @position) unless radix == 10
       add_token(Syntax::Float, num_str.to_f64)
     else
       add_token(Syntax::Integer, num_str.to_i64(radix))
@@ -270,7 +274,7 @@ class Cosmo::Lexer
   private def read_string(delim)
     advance
     res_str = ""
-    while !finished? && current_char != delim
+    until finished? || current_char == delim
       res_str += advance.to_s
     end
     add_token(Syntax::String, res_str)

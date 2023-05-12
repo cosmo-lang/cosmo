@@ -27,6 +27,10 @@ describe Lexer do
     tokens = Lexer.new("0x123ABC", "test").tokenize
     tokens.first.type.should eq Syntax::Integer
     tokens.first.value.should eq 1194684
+
+    lexer = Lexer.new("0xAE.0", "test")
+    err_msg = "Unexpected float: Hex/binary numbers must be integers"
+    expect_raises(Exception, "[6:2] #{err_msg}") { lexer.tokenize }
   end
   it "lexes binary literals" do
     tokens = Lexer.new("0b11111", "test").tokenize
@@ -36,6 +40,10 @@ describe Lexer do
     tokens = Lexer.new("0b1011011", "test").tokenize
     tokens.first.type.should eq Syntax::Integer
     tokens.first.value.should eq 91
+
+    lexer = Lexer.new("0b11.2", "test")
+    err_msg = "Unexpected float: Hex/binary numbers must be integers"
+    expect_raises(Exception, "[5:2] #{err_msg}") { lexer.tokenize }
   end
   it "lexes booleans" do
     tokens = Lexer.new("true", "test").tokenize
