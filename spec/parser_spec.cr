@@ -63,6 +63,27 @@ describe Parser do
     literal = negate.operand.as AST::Expression::IntLiteral
     literal.class.should eq AST::Expression::IntLiteral
     literal.value.should eq 12
+
+    block = Parser.new("!true", "test").parse
+    block.nodes.empty?.should eq false
+    unary = block.nodes.first.as AST::Expression::UnaryOp
+    unary.class.should eq AST::Expression::UnaryOp
+    unary.operator.should eq Syntax::Bang
+
+    literal = unary.operand.as AST::Expression::BooleanLiteral
+    literal.class.should eq AST::Expression::BooleanLiteral
+    literal.value.should eq true
+
+    block = Parser.new("*something", "test").parse
+    block.nodes.empty?.should eq false
+    unary = block.nodes.first.as AST::Expression::UnaryOp
+    unary.class.should eq AST::Expression::UnaryOp
+    unary.operator.should eq Syntax::Star
+
+    literal = unary.operand.as AST::Expression::Var
+    literal.class.should eq AST::Expression::Var
+    literal.token.type.should eq Syntax::Identifier
+    literal.token.value.should eq "something"
   end
   it "parses binary operators" do
 
