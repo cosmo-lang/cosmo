@@ -1,6 +1,6 @@
 require "./syntax_type"
 
-module Keywords
+module Cosmo::Keywords
   KEYWORDS = {
     "true" => Syntax::Boolean,
     "false" => Syntax::Boolean,

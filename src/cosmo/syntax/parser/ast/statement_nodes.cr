@@ -1,4 +1,4 @@
-module AST::Statement
+module Cosmo::AST::Statement
   class ExpressionList
     getter expressions : Array(Node)
 

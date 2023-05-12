@@ -1,4 +1,4 @@
-struct Token
+struct Cosmo::Token
   getter type : Syntax
   getter value : LiteralType?
   getter line : UInt

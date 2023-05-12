@@ -1,4 +1,4 @@
-module AST::Expression
+module Cosmo::AST::Expression
   abstract class Literal::Base < Node
     getter value : LiteralType
     def initialize(@value); end

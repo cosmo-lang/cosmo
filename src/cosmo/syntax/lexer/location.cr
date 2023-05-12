@@ -1,4 +1,4 @@
-class Location
+class Cosmo::Location
   include Comparable(self)
 
   getter line : UInt

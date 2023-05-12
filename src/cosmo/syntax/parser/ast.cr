@@ -1,4 +1,4 @@
-module AST
+module Cosmo::AST
   enum Visibility
     Public
     Protected

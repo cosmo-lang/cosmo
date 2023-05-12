@@ -2,7 +2,7 @@ require "./syntax_type"
 require "./syntax_type"
 require "./parser/ast"
 
-class Parser
+class Cosmo::Parser
   getter source : String
 
   def initialize(@source)

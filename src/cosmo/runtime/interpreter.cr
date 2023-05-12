@@ -1,4 +1,4 @@
-class Interpreter
+class Cosmo::Interpreter
   getter source : String
 
   def initialize(@source)
