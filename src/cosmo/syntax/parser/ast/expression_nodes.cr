@@ -39,7 +39,7 @@ module Cosmo::AST::Expression
 
   class BinaryOp < Node
     getter left : Node
-    getter operator : Syntax
+    getter operator : Token
     getter right : Node
 
     def initialize(@left, @operator, @right)
@@ -51,7 +51,7 @@ module Cosmo::AST::Expression
   end
 
   class UnaryOp < Node
-    getter operator : Syntax
+    getter operator : Token
     getter operand : Node
 
     def initialize(@operator, @operand)

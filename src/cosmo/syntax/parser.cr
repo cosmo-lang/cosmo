@@ -80,7 +80,7 @@ class Cosmo::Parser
     left = parse_logical_and
 
     while match?(Syntax::Pipe)
-      op = last_token.type
+      op = last_token
       right = parse_logical_and
       left = Expression::BinaryOp.new(left, op, right)
     end
@@ -93,7 +93,7 @@ class Cosmo::Parser
     left = parse_equality
 
     while match?(Syntax::Ampersand)
-      op = last_token.type
+      op = last_token
       right = parse_equality
       left = Expression::BinaryOp.new(left, op, right)
     end
@@ -106,7 +106,7 @@ class Cosmo::Parser
     left = parse_comparison
 
     while match?(Syntax::EqualEqual) || match?(Syntax::BangEqual)
-      op = last_token.type
+      op = last_token
       right = parse_comparison
       left = Expression::BinaryOp.new(left, op, right)
     end
@@ -119,7 +119,7 @@ class Cosmo::Parser
     left = parse_addition
 
     while match?(Syntax::Less) || match?(Syntax::LessEqual) || match?(Syntax::Greater) || match?(Syntax::GreaterEqual)
-      op = last_token.type
+      op = last_token
       right = parse_addition
       left = Expression::BinaryOp.new(left, op, right)
     end
@@ -132,7 +132,7 @@ class Cosmo::Parser
     left = parse_multiplication
 
     while match?(Syntax::Plus) || match?(Syntax::Minus)
-      op = last_token.type
+      op = last_token
       right = parse_multiplication
       left = Expression::BinaryOp.new(left, op, right)
     end
@@ -145,7 +145,7 @@ class Cosmo::Parser
     left = parse_exponentiation
 
     while match?(Syntax::Star) || match?(Syntax::Slash) || match?(Syntax::Percent)
-      op = last_token.type
+      op = last_token
       right = parse_exponentiation
       left = Expression::BinaryOp.new(left, op, right)
     end
@@ -158,7 +158,7 @@ class Cosmo::Parser
     left = parse_unary
 
     while match?(Syntax::Carat)
-      op = last_token.type
+      op = last_token
       right = parse_unary
       left = Expression::BinaryOp.new(left, op, right)
     end
@@ -169,7 +169,7 @@ class Cosmo::Parser
   # Parse a unary expression and return a node
   private def parse_unary : Node
     if match?(Syntax::Plus) || match?(Syntax::Minus) || match?(Syntax::Bang) || match?(Syntax::Star)
-      op = last_token.type
+      op = last_token
       operand = parse_unary
       Expression::UnaryOp.new(op, operand)
     else
