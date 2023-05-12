@@ -34,7 +34,11 @@ class Cosmo::Lexer
       if char_exists?(1) && peek.match(/[0-9]/)
         read_number
       else
-        add_token(Syntax::Dot, nil)
+        if match_char?(".")
+          add_token(Syntax::DotDot, nil)
+        else
+          add_token(Syntax::Dot, nil)
+        end
       end
     when "{"
       add_token(Syntax::LBrace, nil)
