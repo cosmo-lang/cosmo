@@ -86,7 +86,47 @@ describe Parser do
     literal.token.value.should eq "something"
   end
   it "parses binary operators" do
+    block = Parser.new("false & true", "test").parse
+    block.nodes.empty?.should eq false
+    binary = block.nodes.first.as AST::Expression::BinaryOp
+    binary.class.should eq AST::Expression::BinaryOp
+    binary.operator.should eq Syntax::Ampersand
 
+    left = binary.left.as(AST::Expression::BooleanLiteral)
+    left.class.should eq AST::Expression::BooleanLiteral
+    left.value.should eq false
+
+    right = binary.right.as(AST::Expression::BooleanLiteral)
+    right.class.should eq AST::Expression::BooleanLiteral
+    right.value.should eq true
+
+    block = Parser.new("10 % 2", "test").parse
+    block.nodes.empty?.should eq false
+    binary = block.nodes.first.as AST::Expression::BinaryOp
+    binary.class.should eq AST::Expression::BinaryOp
+    binary.operator.should eq Syntax::Percent
+
+    left = binary.left.as(AST::Expression::IntLiteral)
+    left.class.should eq AST::Expression::IntLiteral
+    left.value.should eq 10
+
+    right = binary.right.as(AST::Expression::IntLiteral)
+    right.class.should eq AST::Expression::IntLiteral
+    right.value.should eq 2
+
+    block = Parser.new("16.23 <= 46", "test").parse
+    block.nodes.empty?.should eq false
+    binary = block.nodes.first.as AST::Expression::BinaryOp
+    binary.class.should eq AST::Expression::BinaryOp
+    binary.operator.should eq Syntax::LessEqual
+
+    left = binary.left.as(AST::Expression::FloatLiteral)
+    left.class.should eq AST::Expression::FloatLiteral
+    left.value.should eq 16.23
+
+    right = binary.right.as(AST::Expression::IntLiteral)
+    right.class.should eq AST::Expression::IntLiteral
+    right.value.should eq 46
   end
   it "parses variable references" do
 
