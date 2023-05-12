@@ -5,7 +5,7 @@ Cosmo is a statically-typed programming language.
 ## Installation
 
 1. Install [Crystal](https://crystal-lang.org/install/).
-2. Run `make install`.
+2. Run `sudo make install`.
 3. Assert everything is working by running `cosmo -h`
 
 ## Contributing
