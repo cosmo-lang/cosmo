@@ -165,6 +165,28 @@ describe Parser do
     literal.value.should eq false
   end
   it "parses variable declarations" do
+    block = Parser.new("float abc = 1.234", "test").parse
+    block.nodes.empty?.should eq false
+    declaration = block.nodes.first.as AST::Expression::VarDeclaration
+    declaration.typedef.type.should eq Syntax::TypeDef
+    declaration.typedef.value.should eq "float"
+    declaration.var.class.should eq AST::Expression::Var
+    declaration.var.token.type.should eq Syntax::Identifier
+    declaration.var.token.value.should eq "abc"
+    literal = declaration.value.as AST::Expression::FloatLiteral
+    literal.class.should eq AST::Expression::FloatLiteral
+    literal.value.should eq 1.234
 
+    block = Parser.new("bool _this_isValid$ = false", "test").parse
+    block.nodes.empty?.should eq false
+    declaration = block.nodes.first.as AST::Expression::VarDeclaration
+    declaration.typedef.type.should eq Syntax::TypeDef
+    declaration.typedef.value.should eq "bool"
+    declaration.var.class.should eq AST::Expression::Var
+    declaration.var.token.type.should eq Syntax::Identifier
+    declaration.var.token.value.should eq "_this_isValid$"
+    literal = declaration.value.as AST::Expression::BooleanLiteral
+    literal.class.should eq AST::Expression::BooleanLiteral
+    literal.value.should eq false
   end
 end
