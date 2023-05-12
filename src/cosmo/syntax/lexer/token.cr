@@ -1,5 +1,3 @@
-alias LiteralType = Int | Float | Bool | String | Char
-
 struct Token
   getter type : Syntax
   getter value : LiteralType?
