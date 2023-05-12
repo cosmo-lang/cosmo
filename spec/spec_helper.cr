@@ -1,2 +1,2 @@
+require "../src/cosmo/syntax/parser"
 require "spec"
-require "../src/cosmo"
