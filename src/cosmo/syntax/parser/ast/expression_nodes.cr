@@ -43,26 +43,26 @@ module Cosmo::AST::Expression
 
   class BinaryOp < Node
     getter left : Node
-    getter operator : Token
+    getter operator : Syntax
     getter right : Node
 
     def initialize(@left, @operator, @right)
     end
 
     def to_s
-      "Binary<left: #{@left}, operator: #{@operator.type}, right: #{@right}>"
+      "Binary<left: #{@left.to_s}, operator: #{@operator}, right: #{@right.to_s}>"
     end
   end
 
   class UnaryOp < Node
-    getter operator : Token
+    getter operator : Syntax
     getter operand : Node
 
     def initialize(@operator, @operand)
     end
 
     def to_s
-      "Unary<operator: #{@operator.type}, operand: #{@operand}>"
+      "Unary<operator: #{@operator}, operand: #{@operand.to_s}>"
     end
   end
 end

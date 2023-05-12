@@ -28,11 +28,17 @@ class Cosmo::Parser
 
   # Parse a factor (e.g. number or parentheses) and return a node
   private def parse_factor : Node
-    if current == "("
-      consume Syntax::LParen
+    case current.type
+    when Syntax::LParen
+      consume(Syntax::LParen)
       node = parse_expression
-      consume Syntax::RParen
-      return node
+      consume(Syntax::RParen)
+      node
+    when Syntax::Minus, Syntax::Bang
+      op = current
+      consume(current.type)
+      operand = parse_factor
+      Expression::UnaryOp.new(op.type, operand)
     else
       parse_literal
     end
@@ -54,6 +60,16 @@ class Cosmo::Parser
   # Return the current token at the current position
   private def current : Token
     @tokens[@position]
+  end
+
+  # Consumes the character if it exists, returns whether or not it was consumed
+  private def match?(syntax : Syntax)
+    if current.type == syntax
+      consume(syntax)
+      true
+    else
+      false
+    end
   end
 
   # Consume the current token if it matches the expected syntax
