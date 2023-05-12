@@ -48,6 +48,8 @@ class Cosmo::Lexer
       add_token(Syntax::LParen, nil)
     when ")"
       add_token(Syntax::RParen, nil)
+    when "$"
+      add_token(Syntax::This, nil)
     when ","
       add_token(Syntax::Comma, nil)
     when ";"
