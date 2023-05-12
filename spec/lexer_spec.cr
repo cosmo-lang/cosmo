@@ -1,8 +1,9 @@
 require "./spec_helper"
 
-describe Lexer do
+describe Cosmo::Lexer do
   it "throws for unexpected characters" do
-
+    lexer = Cosmo::Lexer.new("@/\\", "test")
+    expect_raises(Exception, "[1:1] Unexpected character: @") { lexer.tokenize }
   end
   it "lexes floats" do
 
@@ -35,6 +36,9 @@ describe Lexer do
 
   end
   it "lexes type keywords" do
+
+  end
+  it "lexes other characters" do
 
   end
 end

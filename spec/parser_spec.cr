@@ -1,6 +1,6 @@
 require "./spec_helper"
 
-describe Parser do
+describe Cosmo::Parser do
   describe "parses literals" do
     it "floats" do
 
