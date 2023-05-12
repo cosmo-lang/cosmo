@@ -77,7 +77,13 @@ describe Lexer do
     tokens.first.value.should eq '$'
   end
   it "lexes identifiers" do
+    tokens = Lexer.new("abcdef", "test").tokenize
+    tokens.first.type.should eq Syntax::Identifier
+    tokens.first.value.should eq "abcdef"
 
+    tokens = Lexer.new("_this_isValid$", "test").tokenize
+    tokens.first.type.should eq Syntax::Identifier
+    tokens.first.value.should eq "_this_isValid$"
   end
   it "lexes keywords" do
 
