@@ -23,7 +23,35 @@ class Cosmo::Parser
 
   # Parse a term (e.g., multiplication or division) and return a node
   private def parse_term : Node
-    parse_factor
+    left = parse_factor
+
+    case current.type
+    when
+    Syntax::Plus,
+    Syntax::Minus,
+    Syntax::Star,
+    Syntax::Slash,
+    Syntax::Carat,
+    Syntax::Percent,
+    Syntax::Ampersand,
+    Syntax::Pipe,
+    Syntax::Less,
+    Syntax::LessEqual,
+    Syntax::Greater,
+    Syntax::GreaterEqual,
+    Syntax::BangEqual
+      left = parse_binary_op(left)
+    end
+
+    left
+  end
+
+  private def parse_binary_op(left : Node)
+    op = current.type
+    consume(op)
+
+    right = parse_term
+    Expression::BinaryOp.new(left, op, right)
   end
 
   # Parse a factor (e.g. number or parentheses) and return a node
@@ -35,10 +63,10 @@ class Cosmo::Parser
       consume(Syntax::RParen)
       node
     when Syntax::Plus, Syntax::Minus, Syntax::Star, Syntax::Hashtag, Syntax::Bang
-      op = current
-      consume(current.type)
+      op = current.type
+      consume(op)
       operand = parse_factor
-      Expression::UnaryOp.new(op.type, operand)
+      Expression::UnaryOp.new(op, operand)
     else
       parse_literal
     end
@@ -49,16 +77,22 @@ class Cosmo::Parser
     value = current.value
     case current.type
     when Syntax::Integer
+      consume(current.type)
       Expression::IntLiteral.new(value.as(Int))
     when Syntax::Float
+      consume(current.type)
       Expression::FloatLiteral.new(value.as(Float))
     when Syntax::Boolean
+      consume(current.type)
       Expression::BooleanLiteral.new(value.as(Bool))
     when Syntax::String
+      consume(current.type)
       Expression::StringLiteral.new(value.to_s)
     when Syntax::Char
+      consume(current.type)
       Expression::CharLiteral.new(value.as(Char))
     when Syntax::None
+      consume(current.type)
       Expression::NoneLiteral.new
     else
       raise "Unhandled syntax type: #{current.type}"
