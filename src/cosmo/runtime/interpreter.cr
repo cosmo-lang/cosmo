@@ -21,6 +21,26 @@ class Cosmo::Interpreter
     when Statement::Block
       return walk(node.single_expression?.not_nil!) unless node.single_expression?.nil?
       node.nodes.each { |expr| walk(expr) }
+    when Expression::UnaryOp
+      operand = walk(node.operand)
+      case node.operator.type
+      when Syntax::Plus
+        if operand.is_a?(Float) || operand.is_a?(Int)
+          operand.abs
+        else
+          report_error("Invalid '+' operand type", operand.class.to_s, node.operator)
+        end
+      when Syntax::Minus
+        if operand.is_a?(Float) || operand.is_a?(Int)
+          -operand
+        else
+          report_error("Invalid '-' operand type", operand.class.to_s, node.operator)
+        end
+      when Syntax::Star
+        raise "'*' unary operator has not yet implemented."
+      when Syntax::Hashtag
+        raise "'#' unary operator has not yet implemented."
+      end
     when Expression::BinaryOp # TODO: better typechecks
       left = walk(node.left)
       right = walk(node.right)
