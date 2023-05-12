@@ -14,7 +14,7 @@ enum Cosmo::Syntax
   Hashtag
   Function
   If
-  In
+  In; Of
   Else
   For
   While

@@ -8,6 +8,7 @@ module Cosmo::Keywords
     "fn" => Syntax::Function,
     "if" => Syntax::If,
     "in" => Syntax::In,
+    "of" => Syntax::Of,
     "else" => Syntax::Else,
     "for" => Syntax::For,
     "while" => Syntax::While,
