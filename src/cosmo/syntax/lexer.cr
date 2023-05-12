@@ -20,7 +20,7 @@ class Cosmo::Lexer
 
   # Peek `offset` characters ahead of our current position
   # Returns a string because it's easier
-  private def peek(offset) : String
+  private def peek(offset : UInt32 = 1) : String
     @source[@position + offset].to_s
   end
 
@@ -31,7 +31,7 @@ class Cosmo::Lexer
   private def match_char?(expected)
     return false if finished?
     return false unless char_exists?(1)
-    return false unless peek(1) == expected
+    return false unless peek == expected
     advance
     true
   end
@@ -41,7 +41,7 @@ class Cosmo::Lexer
   end
 
   private def char_exists?(offset)
-    !@source[@position + offset].nil?
+    (@position + offset) < @source.size
   end
 
   private def advance : String
@@ -59,7 +59,7 @@ class Cosmo::Lexer
   private def is_hex?
     current_char == "0" &&
       char_exists?(1) &&
-      peek(1) == "x" &&
+      peek == "x" &&
       char_exists?(2) &&
       peek(2).to_i(16)
   end
@@ -67,7 +67,7 @@ class Cosmo::Lexer
   private def is_binary?
     current_char == "0" &&
       char_exists?(1) &&
-      peek(1) == "b" &&
+      peek == "b" &&
       char_exists?(2) &&
       peek(2).to_i(2)
   end
@@ -97,32 +97,29 @@ class Cosmo::Lexer
 
   private def read_number
     num_str = ""
-    radix = if is_hex?
+    radix = 10
+    if is_hex?
       advance
       advance
-      16
+      radix =16
     elsif is_binary?
       advance
       advance
-      2
-    else
-      10
+      radix = 2
     end
 
     decimal_used = false
-    while !finished? && (current_char.to_i(radix).to_s(radix) == current_char || (!decimal_used && radix == 10 && current_char === "."))
-      if current_char == "."
-        decimal_used = true
-      end
+    while !finished? && ((current_char.to_i64?(radix).nil? ? false : current_char.to_i64(radix).to_s(radix) == current_char) || (!decimal_used && radix == 10 && current_char == "."))
+      decimal_used = true if current_char == "."
       num_str += advance.to_s
     end
 
     if decimal_used
-      value =
       add_token(Syntax::Float, num_str.to_f64)
     else
-
+      add_token(Syntax::Integer, num_str.to_i64(radix))
     end
+
     @position -= 1
   end
 
@@ -151,13 +148,14 @@ class Cosmo::Lexer
   private def read_identifier
     ident_str = ""
     until finished?
-      if char_exists?(1) && !peek(1).match(/[A-Za-z0-9]+/) && peek(1) != "_" && peek(1) != "$"
+      if char_exists?(1) && !peek.match(/[a-zA-Z0-9_$]/)
         ident_str += current_char.to_s
         skip_whitespace
         break
       end
-      ident_str += advance.to_s
+      ident_str += advance
     end
+
     if Keywords.keyword?(ident_str)
       syntax_type = Keywords.get_syntax(ident_str)
       value = true if ident_str == "true"
@@ -176,7 +174,7 @@ class Cosmo::Lexer
     char = current_char
     case char
     when "."
-      if peek(1).match(/\d/)
+      if peek.match(/\d/)
         read_number
       else
         add_token(Syntax::Dot, nil)
@@ -291,8 +289,8 @@ class Cosmo::Lexer
 
       is_ident = default_char.match(/[a-zA-Z_$]/)
       is_number = default_char.match(/\d/) ||
-        (default_char == "0" && peek(1) == "x" && peek(2).match(/[0-9a-fA-F]/)) ||
-        (default_char == "0" && peek(1) == "b" && peek(2).match(/[01]/))
+        (default_char == "0" && peek == "x" && peek(2).match(/[0-9a-fA-F]/)) ||
+        (default_char == "0" && peek == "b" && peek(2).match(/[01]/))
 
       if is_number
         read_number

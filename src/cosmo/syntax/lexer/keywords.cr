@@ -7,6 +7,7 @@ module Cosmo::Keywords
     "none" => Syntax::None,
     "fn" => Syntax::Function,
     "if" => Syntax::If,
+    "in" => Syntax::In,
     "else" => Syntax::Else,
     "for" => Syntax::For,
     "while" => Syntax::While,
