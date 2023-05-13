@@ -39,6 +39,8 @@ describe Interpreter do
     result.should eq 0
     result = interpreter.interpret("9 ^ 2 / 14 + 6 * 2", "test")
     result.should eq 17.785714285714285
+    result = interpreter.interpret("(14 - 3.253 / 14.5) * 27 ^ 4", "test")
+    result.should eq 7320947.960482759
   end
   it "interprets variable declarations" do
     result = interpreter.interpret("int x = 0b11", "test")
@@ -49,10 +51,8 @@ describe Interpreter do
     result.should eq "hello world"
   end
   it "interprets variable assignments" do
-    result = interpreter.interpret("
-    int x = 0b11
-    x = 5
-    ", "test")
+    interpreter.interpret("int x = 0b11", "test")
+    result = interpreter.interpret("x = 5", "test")
     result.should eq 5
   end
 end

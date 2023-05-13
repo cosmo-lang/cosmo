@@ -307,6 +307,7 @@ class Cosmo::Lexer
       end
       ident_str += advance
     end
+    ident_str = ident_str.strip
 
     if Keywords.keyword?(ident_str)
       syntax_type = Keywords.get_syntax(ident_str)
