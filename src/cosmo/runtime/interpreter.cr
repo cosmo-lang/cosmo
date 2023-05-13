@@ -8,6 +8,16 @@ class Cosmo::Interpreter
   getter file_path : String = ""
 
   def initialize(@output_ast)
+    globals = {
+      "puts" => {"fn", PutsIntrinsic.new(@scope, [
+        AST::Expression::Parameter.new(
+          typedef: Token.new(Syntax::TypeDef, "string", Location.new("intrinsic", 0, 0)),
+          identifier: Token.new(Syntax::Identifier, "msg", Location.new("intrinsic", 0, 0))
+        )
+      ])}
+    } of String => Tuple(String, ValueType)
+
+    @scope.set_global(globals)
   end
 
   def interpret(source : String, @file_path : String) : ValueType
@@ -45,19 +55,25 @@ class Cosmo::Interpreter
       fn
     when Expression::FunctionCall
       fn = @scope.lookup(node.var.token)
-      if fn.is_a?(Function)
+      if fn.is_a?(Function) || fn.is_a?(IntrinsicFunction)
         report_error("Expected #{fn.arity} arguments, got", node.arguments.size.to_s, node.var.token) unless fn.arity.includes?(node.arguments.size)
         @scope = fn.scope
         params = fn.param_nodes
+
+        arg_values = [] of ValueType
         non_nullable_params = params.select { |param| !param.default_value.nil? }
         params.each_with_index do |param, i|
           value = walk(node.arguments[i])
           unless value.nil? && non_nullable_params.includes?(param)
             fn.scope.declare(param.typedef, param.identifier, value)
           end
+          arg_values << value
         end
 
-        result = walk(fn.body)
+        result = fn.intrinsic? ?
+          fn.as(IntrinsicFunction).call(*Tuple(ValueType).from(arg_values))
+          : walk(fn.as(Function).body)
+
         @scope = @scope.unwrap
         result
       else

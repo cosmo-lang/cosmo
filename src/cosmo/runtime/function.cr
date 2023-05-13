@@ -6,4 +6,8 @@ class Cosmo::Function
 
   def initialize(@scope, @param_nodes, @arity, @body)
   end
+
+  def intrinsic?
+    false
+  end
 end

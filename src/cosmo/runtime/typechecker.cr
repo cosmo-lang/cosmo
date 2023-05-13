@@ -1,6 +1,7 @@
 require "../logger"
+require "./intrinsics"
 
-alias ValueType = LiteralType | Cosmo::Function
+alias ValueType = LiteralType | Cosmo::Function | Cosmo::IntrinsicFunction
 
 module Cosmo::TypeChecker
   extend self
@@ -16,7 +17,8 @@ module Cosmo::TypeChecker
     Char => "char",
     Bool => "bool",
     Nil => "none",
-    Function => "fn"
+    Function => "fn",
+    PutsIntrinsic => "fn"
   }
 
   private def report_mismatch(typedef : String, value : ValueType, token : Token)

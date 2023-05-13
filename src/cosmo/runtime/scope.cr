@@ -8,6 +8,10 @@ class Cosmo::Scope
   def initialize(@parent = nil)
   end
 
+  def set_global(variables : Hash(String, Tuple(String, ValueType)))
+    @local_variables = variables
+  end
+
   def declare(typedef : Token, identifier : Token, value : ValueType)
     TypeChecker.assert(typedef.value.to_s, value, typedef) unless value == nil
     @local_variables[identifier.value.to_s] = {typedef.value.to_s, value}
@@ -30,8 +34,8 @@ class Cosmo::Scope
     value
   end
 
-  def unwrap
-    @parent.not_nil!
+  def unwrap : Scope
+    @parent || self
   end
 
   def to_s
