@@ -13,6 +13,7 @@ class Cosmo::Interpreter
   def interpret(source : String, @file_path : String) : ValueType
     parser = Parser.new(source, @file_path)
     ast = parser.parse
+    puts @ast if @output_ast
     walk(ast)
   end
 

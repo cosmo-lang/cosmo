@@ -4,6 +4,8 @@ require "option_parser"
 require "readline"
 
 module Cosmo
+  extend self
+
   # Parse options
   @@options = {} of Symbol => Bool
   OptionParser.new do |opts|
@@ -18,30 +20,28 @@ module Cosmo
   end.parse(ARGV)
 
 
-
   @@interpreter = Interpreter.new(output_ast: @@options.has_key?(:ast))
 
-  def self.read_source(source : String, file_path : String) : ValueType
+  def read_source(source : String, file_path : String) : ValueType
     @@interpreter.interpret(source, file_path)
   end
 
   # Reads a file at `path` and returns it's contents
-  def self.read_file(path : String)
+  def read_file(path : String)
     begin
       contents = File.read(path)
       read_source(contents, file_path: path)
     rescue e : Exception
-      raise "Failed to read file \"#{path}\": #{e}"
-      exit 1
+      abort "Failed to read file \"#{path}\": #{e}", 1
     end
   end
 
-  def self.read_line : String?
+  def read_line : String?
     Readline.readline "➤ ", add_history: true
   end
 
   # Starts the REPL
-  def self.run_repl
+  def run_repl
     puts "Welcome to the Cosmo REPL"
     loop do
       line = read_line
