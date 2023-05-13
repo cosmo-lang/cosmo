@@ -183,18 +183,18 @@ describe Parser do
     declaration = block.nodes.first.as AST::Expression::VarDeclaration
     declaration.typedef.type.should eq Syntax::TypeDef
     declaration.typedef.value.should eq "bool"
-    declaration.var.should be_a AST::Expression::Var
     declaration.var.token.type.should eq Syntax::Identifier
     declaration.var.token.value.should eq "_this_isValid$"
     literal = declaration.value.as AST::Expression::BooleanLiteral
     literal.should be_a AST::Expression::BooleanLiteral
     literal.value.should be_false
   end
-  it "parses function definitions * calls" do
+  it "parses function definitions & calls" do
     lines = [
       "bool fn is_eq(int a, int b) {",
       " a == b",
-      "}"
+      "}",
+      "is_eq(1, 1)"
     ]
     block = Parser.new(lines.join('\n'), "test").parse
     block.nodes.empty?.should be_false
@@ -209,5 +209,15 @@ describe Parser do
     function_def.body.nodes.first.should be_a AST::Expression::BinaryOp
     function_def.return_typedef.type.should eq Syntax::TypeDef
     function_def.return_typedef.value.should eq "bool"
+
+    function_call = block.nodes.last.as AST::Expression::FunctionCall
+    function_call.var.token.type.should eq Syntax::Identifier
+    function_call.var.token.value.should eq "is_eq"
+    arg1, arg2 = function_call.arguments
+
+    arg1.should be_a AST::Expression::IntLiteral
+    arg1.as(AST::Expression::IntLiteral).value.should eq 1
+    arg2.should be_a AST::Expression::IntLiteral
+    arg2.as(AST::Expression::IntLiteral).value.should eq 1
   end
 end
