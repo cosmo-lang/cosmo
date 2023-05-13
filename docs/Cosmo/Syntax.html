@@ -1,0 +1,1908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 1.7.3">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="Cosmo">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="Cosmo">
+  <title>Cosmo::Syntax - Cosmo master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          Cosmo
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="Cosmo/Cosmo" data-name="cosmo">
+      <a href="../Cosmo.html">Cosmo</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/AST" data-name="cosmo::ast">
+      <a href="../Cosmo/AST.html">AST</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/AST/Expression" data-name="cosmo::ast::expression">
+      <a href="../Cosmo/AST/Expression.html">Expression</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/BinaryOp" data-name="cosmo::ast::expression::binaryop">
+      <a href="../Cosmo/AST/Expression/BinaryOp.html">BinaryOp</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/BooleanLiteral" data-name="cosmo::ast::expression::booleanliteral">
+      <a href="../Cosmo/AST/Expression/BooleanLiteral.html">BooleanLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/CharLiteral" data-name="cosmo::ast::expression::charliteral">
+      <a href="../Cosmo/AST/Expression/CharLiteral.html">CharLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/FloatLiteral" data-name="cosmo::ast::expression::floatliteral">
+      <a href="../Cosmo/AST/Expression/FloatLiteral.html">FloatLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/IntLiteral" data-name="cosmo::ast::expression::intliteral">
+      <a href="../Cosmo/AST/Expression/IntLiteral.html">IntLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Literal" data-name="cosmo::ast::expression::literal">
+      <a href="../Cosmo/AST/Expression/Literal.html">Literal</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/NoneLiteral" data-name="cosmo::ast::expression::noneliteral">
+      <a href="../Cosmo/AST/Expression/NoneLiteral.html">NoneLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/StringLiteral" data-name="cosmo::ast::expression::stringliteral">
+      <a href="../Cosmo/AST/Expression/StringLiteral.html">StringLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/UnaryOp" data-name="cosmo::ast::expression::unaryop">
+      <a href="../Cosmo/AST/Expression/UnaryOp.html">UnaryOp</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Var" data-name="cosmo::ast::expression::var">
+      <a href="../Cosmo/AST/Expression/Var.html">Var</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/VarAssignment" data-name="cosmo::ast::expression::varassignment">
+      <a href="../Cosmo/AST/Expression/VarAssignment.html">VarAssignment</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/VarDeclaration" data-name="cosmo::ast::expression::vardeclaration">
+      <a href="../Cosmo/AST/Expression/VarDeclaration.html">VarDeclaration</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Node" data-name="cosmo::ast::node">
+      <a href="../Cosmo/AST/Node.html">Node</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/AST/Statement" data-name="cosmo::ast::statement">
+      <a href="../Cosmo/AST/Statement.html">Statement</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Block" data-name="cosmo::ast::statement::block">
+      <a href="../Cosmo/AST/Statement/Block.html">Block</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Visibility" data-name="cosmo::ast::visibility">
+      <a href="../Cosmo/AST/Visibility.html">Visibility</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Interpreter" data-name="cosmo::interpreter">
+      <a href="../Cosmo/Interpreter.html">Interpreter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Keywords" data-name="cosmo::keywords">
+      <a href="../Cosmo/Keywords.html">Keywords</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Lexer" data-name="cosmo::lexer">
+      <a href="../Cosmo/Lexer.html">Lexer</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Location" data-name="cosmo::location">
+      <a href="../Cosmo/Location.html">Location</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Logger" data-name="cosmo::logger">
+      <a href="../Cosmo/Logger.html">Logger</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Parser" data-name="cosmo::parser">
+      <a href="../Cosmo/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Scope" data-name="cosmo::scope">
+      <a href="../Cosmo/Scope.html">Scope</a>
+      
+    </li>
+  
+  <li class=" current" data-id="Cosmo/Cosmo/Syntax" data-name="cosmo::syntax">
+      <a href="../Cosmo/Syntax.html">Syntax</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Token" data-name="cosmo::token">
+      <a href="../Cosmo/Token.html">Token</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/TypeChecker" data-name="cosmo::typechecker">
+      <a href="../Cosmo/TypeChecker.html">TypeChecker</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/LiteralType" data-name="literaltype">
+      <a href="../LiteralType.html">LiteralType</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">enum</span> Cosmo::Syntax
+
+</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L1" target="_blank">
+        cosmo/syntax/syntax_type.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="enum-members" class="anchor" href="#enum-members">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Enum Members
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="Identifier">
+        <strong>Identifier</strong> = <code><span class="n">0</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Integer">
+        <strong>Integer</strong> = <code><span class="n">1</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Float">
+        <strong>Float</strong> = <code><span class="n">2</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="String">
+        <strong>String</strong> = <code><span class="n">3</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Char">
+        <strong>Char</strong> = <code><span class="n">4</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Boolean">
+        <strong>Boolean</strong> = <code><span class="n">5</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="None">
+        <strong>None</strong> = <code><span class="n">6</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="TypeDef">
+        <strong>TypeDef</strong> = <code><span class="n">7</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Plus">
+        <strong>Plus</strong> = <code><span class="n">8</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="PlusEqual">
+        <strong>PlusEqual</strong> = <code><span class="n">9</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Minus">
+        <strong>Minus</strong> = <code><span class="n">10</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="MinusEqual">
+        <strong>MinusEqual</strong> = <code><span class="n">11</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Star">
+        <strong>Star</strong> = <code><span class="n">12</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="StarEqual">
+        <strong>StarEqual</strong> = <code><span class="n">13</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Slash">
+        <strong>Slash</strong> = <code><span class="n">14</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="SlashEqual">
+        <strong>SlashEqual</strong> = <code><span class="n">15</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Carat">
+        <strong>Carat</strong> = <code><span class="n">16</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="CaratEqual">
+        <strong>CaratEqual</strong> = <code><span class="n">17</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Percent">
+        <strong>Percent</strong> = <code><span class="n">18</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="PercentEqual">
+        <strong>PercentEqual</strong> = <code><span class="n">19</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Less">
+        <strong>Less</strong> = <code><span class="n">20</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="LessEqual">
+        <strong>LessEqual</strong> = <code><span class="n">21</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Greater">
+        <strong>Greater</strong> = <code><span class="n">22</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="GreaterEqual">
+        <strong>GreaterEqual</strong> = <code><span class="n">23</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Equal">
+        <strong>Equal</strong> = <code><span class="n">24</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="EqualEqual">
+        <strong>EqualEqual</strong> = <code><span class="n">25</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Bang">
+        <strong>Bang</strong> = <code><span class="n">26</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="BangEqual">
+        <strong>BangEqual</strong> = <code><span class="n">27</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ampersand">
+        <strong>Ampersand</strong> = <code><span class="n">28</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Pipe">
+        <strong>Pipe</strong> = <code><span class="n">29</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Question">
+        <strong>Question</strong> = <code><span class="n">30</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="ColonColon">
+        <strong>ColonColon</strong> = <code><span class="n">31</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Colon">
+        <strong>Colon</strong> = <code><span class="n">32</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Dot">
+        <strong>Dot</strong> = <code><span class="n">33</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="DotDot">
+        <strong>DotDot</strong> = <code><span class="n">34</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="HyphenArrow">
+        <strong>HyphenArrow</strong> = <code><span class="n">35</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="This">
+        <strong>This</strong> = <code><span class="n">36</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="LBrace">
+        <strong>LBrace</strong> = <code><span class="n">37</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="RBrace">
+        <strong>RBrace</strong> = <code><span class="n">38</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="LBracket">
+        <strong>LBracket</strong> = <code><span class="n">39</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="RBracket">
+        <strong>RBracket</strong> = <code><span class="n">40</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="LParen">
+        <strong>LParen</strong> = <code><span class="n">41</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="RParen">
+        <strong>RParen</strong> = <code><span class="n">42</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Comma">
+        <strong>Comma</strong> = <code><span class="n">43</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Hashtag">
+        <strong>Hashtag</strong> = <code><span class="n">44</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Function">
+        <strong>Function</strong> = <code><span class="n">45</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="If">
+        <strong>If</strong> = <code><span class="n">46</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="In">
+        <strong>In</strong> = <code><span class="n">47</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Of">
+        <strong>Of</strong> = <code><span class="n">48</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Else">
+        <strong>Else</strong> = <code><span class="n">49</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="For">
+        <strong>For</strong> = <code><span class="n">50</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="While">
+        <strong>While</strong> = <code><span class="n">51</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Global">
+        <strong>Global</strong> = <code><span class="n">52</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Constant">
+        <strong>Constant</strong> = <code><span class="n">53</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Break">
+        <strong>Break</strong> = <code><span class="n">54</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Next">
+        <strong>Next</strong> = <code><span class="n">55</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Match">
+        <strong>Match</strong> = <code><span class="n">56</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Return">
+        <strong>Return</strong> = <code><span class="n">57</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="EOF">
+        <strong>EOF</strong> = <code><span class="n">58</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#ampersand%3F-instance-method" class="signature"><strong>#ampersand?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bang%3F-instance-method" class="signature"><strong>#bang?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bang_equal%3F-instance-method" class="signature"><strong>#bang_equal?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#boolean%3F-instance-method" class="signature"><strong>#boolean?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#break%3F-instance-method" class="signature"><strong>#break?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#carat%3F-instance-method" class="signature"><strong>#carat?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#carat_equal%3F-instance-method" class="signature"><strong>#carat_equal?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#char%3F-instance-method" class="signature"><strong>#char?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#colon%3F-instance-method" class="signature"><strong>#colon?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#colon_colon%3F-instance-method" class="signature"><strong>#colon_colon?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#comma%3F-instance-method" class="signature"><strong>#comma?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#constant%3F-instance-method" class="signature"><strong>#constant?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dot%3F-instance-method" class="signature"><strong>#dot?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dot_dot%3F-instance-method" class="signature"><strong>#dot_dot?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#else%3F-instance-method" class="signature"><strong>#else?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#eof%3F-instance-method" class="signature"><strong>#eof?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#equal%3F-instance-method" class="signature"><strong>#equal?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#equal_equal%3F-instance-method" class="signature"><strong>#equal_equal?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#float%3F-instance-method" class="signature"><strong>#float?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#for%3F-instance-method" class="signature"><strong>#for?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#function%3F-instance-method" class="signature"><strong>#function?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#global%3F-instance-method" class="signature"><strong>#global?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#greater%3F-instance-method" class="signature"><strong>#greater?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#greater_equal%3F-instance-method" class="signature"><strong>#greater_equal?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hashtag%3F-instance-method" class="signature"><strong>#hashtag?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hyphen_arrow%3F-instance-method" class="signature"><strong>#hyphen_arrow?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#identifier%3F-instance-method" class="signature"><strong>#identifier?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#if%3F-instance-method" class="signature"><strong>#if?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#in%3F-instance-method" class="signature"><strong>#in?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#integer%3F-instance-method" class="signature"><strong>#integer?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#l_brace%3F-instance-method" class="signature"><strong>#l_brace?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#l_bracket%3F-instance-method" class="signature"><strong>#l_bracket?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#l_paren%3F-instance-method" class="signature"><strong>#l_paren?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#less%3F-instance-method" class="signature"><strong>#less?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#less_equal%3F-instance-method" class="signature"><strong>#less_equal?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#match%3F-instance-method" class="signature"><strong>#match?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#minus%3F-instance-method" class="signature"><strong>#minus?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#minus_equal%3F-instance-method" class="signature"><strong>#minus_equal?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next%3F-instance-method" class="signature"><strong>#next?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#none%3F-instance-method" class="signature"><strong>#none?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#of%3F-instance-method" class="signature"><strong>#of?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#percent%3F-instance-method" class="signature"><strong>#percent?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#percent_equal%3F-instance-method" class="signature"><strong>#percent_equal?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pipe%3F-instance-method" class="signature"><strong>#pipe?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#plus%3F-instance-method" class="signature"><strong>#plus?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#plus_equal%3F-instance-method" class="signature"><strong>#plus_equal?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#question%3F-instance-method" class="signature"><strong>#question?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#r_brace%3F-instance-method" class="signature"><strong>#r_brace?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#r_bracket%3F-instance-method" class="signature"><strong>#r_bracket?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#r_paren%3F-instance-method" class="signature"><strong>#r_paren?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#return%3F-instance-method" class="signature"><strong>#return?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#slash%3F-instance-method" class="signature"><strong>#slash?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#slash_equal%3F-instance-method" class="signature"><strong>#slash_equal?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#star%3F-instance-method" class="signature"><strong>#star?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#star_equal%3F-instance-method" class="signature"><strong>#star_equal?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#string%3F-instance-method" class="signature"><strong>#string?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#this%3F-instance-method" class="signature"><strong>#this?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#type_def%3F-instance-method" class="signature"><strong>#type_def?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#while%3F-instance-method" class="signature"><strong>#while?</strong></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="ampersand?-instance-method">
+      <div class="signature">
+        
+        def <strong>ampersand?</strong>
+
+        <a class="method-permalink" href="#ampersand%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bang?-instance-method">
+      <div class="signature">
+        
+        def <strong>bang?</strong>
+
+        <a class="method-permalink" href="#bang%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bang_equal?-instance-method">
+      <div class="signature">
+        
+        def <strong>bang_equal?</strong>
+
+        <a class="method-permalink" href="#bang_equal%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="boolean?-instance-method">
+      <div class="signature">
+        
+        def <strong>boolean?</strong>
+
+        <a class="method-permalink" href="#boolean%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="break?-instance-method">
+      <div class="signature">
+        
+        def <strong>break?</strong>
+
+        <a class="method-permalink" href="#break%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L23" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="carat?-instance-method">
+      <div class="signature">
+        
+        def <strong>carat?</strong>
+
+        <a class="method-permalink" href="#carat%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="carat_equal?-instance-method">
+      <div class="signature">
+        
+        def <strong>carat_equal?</strong>
+
+        <a class="method-permalink" href="#carat_equal%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="char?-instance-method">
+      <div class="signature">
+        
+        def <strong>char?</strong>
+
+        <a class="method-permalink" href="#char%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="colon?-instance-method">
+      <div class="signature">
+        
+        def <strong>colon?</strong>
+
+        <a class="method-permalink" href="#colon%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="colon_colon?-instance-method">
+      <div class="signature">
+        
+        def <strong>colon_colon?</strong>
+
+        <a class="method-permalink" href="#colon_colon%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="comma?-instance-method">
+      <div class="signature">
+        
+        def <strong>comma?</strong>
+
+        <a class="method-permalink" href="#comma%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="constant?-instance-method">
+      <div class="signature">
+        
+        def <strong>constant?</strong>
+
+        <a class="method-permalink" href="#constant%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L22" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dot?-instance-method">
+      <div class="signature">
+        
+        def <strong>dot?</strong>
+
+        <a class="method-permalink" href="#dot%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dot_dot?-instance-method">
+      <div class="signature">
+        
+        def <strong>dot_dot?</strong>
+
+        <a class="method-permalink" href="#dot_dot%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="else?-instance-method">
+      <div class="signature">
+        
+        def <strong>else?</strong>
+
+        <a class="method-permalink" href="#else%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="eof?-instance-method">
+      <div class="signature">
+        
+        def <strong>eof?</strong>
+
+        <a class="method-permalink" href="#eof%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L27" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="equal?-instance-method">
+      <div class="signature">
+        
+        def <strong>equal?</strong>
+
+        <a class="method-permalink" href="#equal%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="equal_equal?-instance-method">
+      <div class="signature">
+        
+        def <strong>equal_equal?</strong>
+
+        <a class="method-permalink" href="#equal_equal%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="float?-instance-method">
+      <div class="signature">
+        
+        def <strong>float?</strong>
+
+        <a class="method-permalink" href="#float%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="for?-instance-method">
+      <div class="signature">
+        
+        def <strong>for?</strong>
+
+        <a class="method-permalink" href="#for%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L19" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="function?-instance-method">
+      <div class="signature">
+        
+        def <strong>function?</strong>
+
+        <a class="method-permalink" href="#function%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="global?-instance-method">
+      <div class="signature">
+        
+        def <strong>global?</strong>
+
+        <a class="method-permalink" href="#global%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L21" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="greater?-instance-method">
+      <div class="signature">
+        
+        def <strong>greater?</strong>
+
+        <a class="method-permalink" href="#greater%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="greater_equal?-instance-method">
+      <div class="signature">
+        
+        def <strong>greater_equal?</strong>
+
+        <a class="method-permalink" href="#greater_equal%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hashtag?-instance-method">
+      <div class="signature">
+        
+        def <strong>hashtag?</strong>
+
+        <a class="method-permalink" href="#hashtag%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L14" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hyphen_arrow?-instance-method">
+      <div class="signature">
+        
+        def <strong>hyphen_arrow?</strong>
+
+        <a class="method-permalink" href="#hyphen_arrow%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="identifier?-instance-method">
+      <div class="signature">
+        
+        def <strong>identifier?</strong>
+
+        <a class="method-permalink" href="#identifier%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L2" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="if?-instance-method">
+      <div class="signature">
+        
+        def <strong>if?</strong>
+
+        <a class="method-permalink" href="#if%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L16" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="in?-instance-method">
+      <div class="signature">
+        
+        def <strong>in?</strong>
+
+        <a class="method-permalink" href="#in%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L17" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="integer?-instance-method">
+      <div class="signature">
+        
+        def <strong>integer?</strong>
+
+        <a class="method-permalink" href="#integer%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="l_brace?-instance-method">
+      <div class="signature">
+        
+        def <strong>l_brace?</strong>
+
+        <a class="method-permalink" href="#l_brace%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="l_bracket?-instance-method">
+      <div class="signature">
+        
+        def <strong>l_bracket?</strong>
+
+        <a class="method-permalink" href="#l_bracket%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="l_paren?-instance-method">
+      <div class="signature">
+        
+        def <strong>l_paren?</strong>
+
+        <a class="method-permalink" href="#l_paren%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="less?-instance-method">
+      <div class="signature">
+        
+        def <strong>less?</strong>
+
+        <a class="method-permalink" href="#less%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="less_equal?-instance-method">
+      <div class="signature">
+        
+        def <strong>less_equal?</strong>
+
+        <a class="method-permalink" href="#less_equal%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="match?-instance-method">
+      <div class="signature">
+        
+        def <strong>match?</strong>
+
+        <a class="method-permalink" href="#match%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L25" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="minus?-instance-method">
+      <div class="signature">
+        
+        def <strong>minus?</strong>
+
+        <a class="method-permalink" href="#minus%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="minus_equal?-instance-method">
+      <div class="signature">
+        
+        def <strong>minus_equal?</strong>
+
+        <a class="method-permalink" href="#minus_equal%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next?-instance-method">
+      <div class="signature">
+        
+        def <strong>next?</strong>
+
+        <a class="method-permalink" href="#next%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="none?-instance-method">
+      <div class="signature">
+        
+        def <strong>none?</strong>
+
+        <a class="method-permalink" href="#none%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="of?-instance-method">
+      <div class="signature">
+        
+        def <strong>of?</strong>
+
+        <a class="method-permalink" href="#of%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L17" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="percent?-instance-method">
+      <div class="signature">
+        
+        def <strong>percent?</strong>
+
+        <a class="method-permalink" href="#percent%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="percent_equal?-instance-method">
+      <div class="signature">
+        
+        def <strong>percent_equal?</strong>
+
+        <a class="method-permalink" href="#percent_equal%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pipe?-instance-method">
+      <div class="signature">
+        
+        def <strong>pipe?</strong>
+
+        <a class="method-permalink" href="#pipe%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="plus?-instance-method">
+      <div class="signature">
+        
+        def <strong>plus?</strong>
+
+        <a class="method-permalink" href="#plus%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="plus_equal?-instance-method">
+      <div class="signature">
+        
+        def <strong>plus_equal?</strong>
+
+        <a class="method-permalink" href="#plus_equal%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="question?-instance-method">
+      <div class="signature">
+        
+        def <strong>question?</strong>
+
+        <a class="method-permalink" href="#question%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="r_brace?-instance-method">
+      <div class="signature">
+        
+        def <strong>r_brace?</strong>
+
+        <a class="method-permalink" href="#r_brace%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="r_bracket?-instance-method">
+      <div class="signature">
+        
+        def <strong>r_bracket?</strong>
+
+        <a class="method-permalink" href="#r_bracket%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="r_paren?-instance-method">
+      <div class="signature">
+        
+        def <strong>r_paren?</strong>
+
+        <a class="method-permalink" href="#r_paren%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="return?-instance-method">
+      <div class="signature">
+        
+        def <strong>return?</strong>
+
+        <a class="method-permalink" href="#return%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="slash?-instance-method">
+      <div class="signature">
+        
+        def <strong>slash?</strong>
+
+        <a class="method-permalink" href="#slash%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="slash_equal?-instance-method">
+      <div class="signature">
+        
+        def <strong>slash_equal?</strong>
+
+        <a class="method-permalink" href="#slash_equal%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="star?-instance-method">
+      <div class="signature">
+        
+        def <strong>star?</strong>
+
+        <a class="method-permalink" href="#star%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="star_equal?-instance-method">
+      <div class="signature">
+        
+        def <strong>star_equal?</strong>
+
+        <a class="method-permalink" href="#star_equal%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="string?-instance-method">
+      <div class="signature">
+        
+        def <strong>string?</strong>
+
+        <a class="method-permalink" href="#string%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="this?-instance-method">
+      <div class="signature">
+        
+        def <strong>this?</strong>
+
+        <a class="method-permalink" href="#this%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type_def?-instance-method">
+      <div class="signature">
+        
+        def <strong>type_def?</strong>
+
+        <a class="method-permalink" href="#type_def%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L4" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="while?-instance-method">
+      <div class="signature">
+        
+        def <strong>while?</strong>
+
+        <a class="method-permalink" href="#while%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/syntax_type.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
