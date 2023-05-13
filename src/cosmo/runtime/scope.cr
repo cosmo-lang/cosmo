@@ -9,8 +9,8 @@ class Cosmo::Scope
   end
 
   def declare(typedef : Token, identifier : Token, value : ValueType)
+    TypeChecker.assert(typedef.value.to_s, value, typedef) unless value == nil
     @local_variables[identifier.value.to_s] = {typedef.value.to_s, value}
-    TypeChecker.assert(typedef.value.to_s, value, typedef)
     value
   end
 
