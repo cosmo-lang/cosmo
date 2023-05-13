@@ -54,11 +54,11 @@ describe Parser do
     block.nodes.empty?.should eq false
     unary = block.nodes.first.as AST::Expression::UnaryOp
     unary.class.should eq AST::Expression::UnaryOp
-    unary.operator.should eq Syntax::Plus
+    unary.operator.type.should eq Syntax::Plus
 
     negate = unary.operand.as AST::Expression::UnaryOp
     negate.class.should eq AST::Expression::UnaryOp
-    negate.operator.should eq Syntax::Minus
+    negate.operator.type.should eq Syntax::Minus
 
     literal = negate.operand.as AST::Expression::IntLiteral
     literal.class.should eq AST::Expression::IntLiteral
@@ -68,7 +68,7 @@ describe Parser do
     block.nodes.empty?.should eq false
     unary = block.nodes.first.as AST::Expression::UnaryOp
     unary.class.should eq AST::Expression::UnaryOp
-    unary.operator.should eq Syntax::Bang
+    unary.operator.type.should eq Syntax::Bang
 
     literal = unary.operand.as AST::Expression::BooleanLiteral
     literal.class.should eq AST::Expression::BooleanLiteral
@@ -78,7 +78,7 @@ describe Parser do
     block.nodes.empty?.should eq false
     unary = block.nodes.first.as AST::Expression::UnaryOp
     unary.class.should eq AST::Expression::UnaryOp
-    unary.operator.should eq Syntax::Star
+    unary.operator.type.should eq Syntax::Star
 
     literal = unary.operand.as AST::Expression::Var
     literal.class.should eq AST::Expression::Var
@@ -90,7 +90,7 @@ describe Parser do
     block.nodes.empty?.should eq false
     binary = block.nodes.first.as AST::Expression::BinaryOp
     binary.class.should eq AST::Expression::BinaryOp
-    binary.operator.should eq Syntax::Ampersand
+    binary.operator.type.should eq Syntax::Ampersand
 
     left = binary.left.as(AST::Expression::BooleanLiteral)
     left.class.should eq AST::Expression::BooleanLiteral
@@ -104,7 +104,7 @@ describe Parser do
     block.nodes.empty?.should eq false
     binary = block.nodes.first.as AST::Expression::BinaryOp
     binary.class.should eq AST::Expression::BinaryOp
-    binary.operator.should eq Syntax::Percent
+    binary.operator.type.should eq Syntax::Percent
 
     left = binary.left.as(AST::Expression::IntLiteral)
     left.class.should eq AST::Expression::IntLiteral
@@ -118,7 +118,7 @@ describe Parser do
     block.nodes.empty?.should eq false
     binary = block.nodes.first.as AST::Expression::BinaryOp
     binary.class.should eq AST::Expression::BinaryOp
-    binary.operator.should eq Syntax::LessEqual
+    binary.operator.type.should eq Syntax::LessEqual
 
     left = binary.left.as(AST::Expression::FloatLiteral)
     left.class.should eq AST::Expression::FloatLiteral
