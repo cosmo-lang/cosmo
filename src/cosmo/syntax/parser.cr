@@ -34,6 +34,7 @@ class Cosmo::Parser
 
   # Parse a block of statements and return a node
   private def parse_block : Statement::Block
+    match?(Syntax::LBrace)
     statements = [] of Node
 
     until finished? || match?(Syntax::RBrace)
@@ -54,7 +55,6 @@ class Cosmo::Parser
       consume(Syntax::LParen)
       params = parse_function_params
       consume(Syntax::RParen)
-      consume(Syntax::LBrace)
       body = parse_block
       Statement::FunctionDef.new(function_ident, params, body, return_typedef)
     else
