@@ -200,9 +200,9 @@ describe Parser do
     block.nodes.empty?.should be_false
     function_def = block.nodes.first.as AST::Statement::FunctionDef
     function_def.parameters.empty?.should be_false
-    function_def.parameters.first.typedef.should eq "int"
+    function_def.parameters.first.typedef.value.should eq "int"
     function_def.parameters.first.identifier.value.should eq "a"
-    function_def.parameters.last.typedef.should eq "int"
+    function_def.parameters.last.typedef.value.should eq "int"
     function_def.parameters.last.identifier.value.should eq "b"
     function_def.identifier.value.should eq "is_eq"
     function_def.body.nodes.empty?.should be_false
