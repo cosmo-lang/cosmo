@@ -46,7 +46,7 @@ class Cosmo::Parser
         value = parse_expression
         left = Expression::VarAssignment.new(left, value)
       else
-        Logger.report_error("Expected identifier, got", peek(-2).type.to_s, peek(-2).location.line, peek(-2).location.position)
+        Logger.report_error("Expected identifier, got", peek(-2).type.to_s, peek(-2))
       end
     end
 
@@ -68,7 +68,7 @@ class Cosmo::Parser
           Expression::VarDeclaration.new(variable_type, identifier, Expression::NoneLiteral.new)
         end
       else
-        Logger.report_error("Expected identifier, got", last_token.type.to_s, last_token.location.line, last_token.location.position)
+        Logger.report_error("Expected identifier, got", last_token.type.to_s, last_token)
       end
     else
       parse_assignment
@@ -264,7 +264,7 @@ class Cosmo::Parser
   # Consume the current token and advance position if token syntax
   # matches the expected syntax, else log an error
   private def consume(syntax : Syntax)
-    Logger.report_error("Expected #{syntax}, got", current.type.to_s, current.location.line, current.location.position) unless current.type == syntax
+    Logger.report_error("Expected #{syntax}, got", current.type.to_s, current) unless current.type == syntax
     @position += 1
   end
 

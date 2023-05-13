@@ -4,7 +4,7 @@ describe Lexer do
   unexpected_float = "Unexpected float: Hex/binary numbers must be integers"
   it "throws for unexpected characters" do
     lexer = Lexer.new("@/\\", "test")
-    expect_raises(Exception, "[1:1] Unexpected character: @") { lexer.tokenize }
+    expect_raises(Exception, "[0:2] Unexpected character: @") { lexer.tokenize }
   end
   it "lexes floats" do
     tokens = Lexer.new("1234.4321", "test").tokenize
@@ -30,7 +30,7 @@ describe Lexer do
     tokens.first.value.should eq 1194684
 
     lexer = Lexer.new("0xAE.0", "test")
-    expect_raises(Exception, "[6:2] #{unexpected_float}") { lexer.tokenize }
+    expect_raises(Exception, "[1:7] #{unexpected_float}") { lexer.tokenize }
   end
   it "lexes binary literals" do
     tokens = Lexer.new("0b11111", "test").tokenize
@@ -42,7 +42,7 @@ describe Lexer do
     tokens.first.value.should eq 91
 
     lexer = Lexer.new("0b11.2", "test")
-    expect_raises(Exception, "[5:2] #{unexpected_float}") { lexer.tokenize }
+    expect_raises(Exception, "[1:6] #{unexpected_float}") { lexer.tokenize }
   end
   it "lexes booleans" do
     tokens = Lexer.new("true", "test").tokenize
