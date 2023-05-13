@@ -18,7 +18,7 @@ class Cosmo::Interpreter
     Logger.report_error(error_type, message, token.location.line, token.location.position)
   end
 
-  private def walk(node : Node) : LiteralType
+  private def walk(node : Node) : LiteralType?
     case node
     when Statement::Block
       return walk(node.single_expression?.not_nil!) unless node.single_expression?.nil?

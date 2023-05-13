@@ -7,18 +7,20 @@ class Cosmo::Scope
 
   def declare(typedef : Token, identifier : Token, value : LiteralType)
     @local_variables[identifier.value.to_s] = {typedef.value.to_s, value}
+    value
   end
 
   def assign(identifier : Token, value : LiteralType)
     typedef, old_value = @local_variables[identifier.value.to_s]
-    @local_variables[identifier.value.to_s] = {typedef.value.to_s, value}
+    @local_variables[identifier.value.to_s] = {typedef, value}
+    value
   end
 
   def lookup(token : Token) : LiteralType
     identifier = token.value
-    _, value = @local_variables.has_key?(identifier) ? @local_variables[identifier] : nil
+    _, value = @local_variables.has_key?(identifier) ? @local_variables[identifier] : {nil, nil}
     Logger.report_error("Undefined variable", token.value.to_s, token.location.position, token.location.line) if value.nil? && @parent.nil?
-    return unwrap.lookup_variable(token) if value.nil? && !@parent.nil?
+    return unwrap.lookup(token) if value.nil? && !@parent.nil?
     value
   end
 
