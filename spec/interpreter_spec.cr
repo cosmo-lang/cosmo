@@ -20,4 +20,18 @@ describe Interpreter do
     result = interpreter.interpret("'e'", "test")
     result.should eq 'e'
   end
+  it "interprets unary operators" do
+    result = interpreter.interpret("!false", "test")
+    result.should eq true
+    result = interpreter.interpret("!true", "test")
+    result.should eq false
+    result = interpreter.interpret("!!123", "test")
+    result.should eq true
+    result = interpreter.interpret("0b111", "test")
+    result.should eq 7
+    result = interpreter.interpret("-0xabc", "test")
+    result.should eq -2748
+    result = interpreter.interpret("+-10.24335", "test")
+    result.should eq 10.24335
+  end
 end
