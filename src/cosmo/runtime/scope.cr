@@ -28,8 +28,8 @@ class Cosmo::Scope
 
   def lookup(token : Token) : ValueType
     identifier = token.value
-    _, value = @local_variables.has_key?(identifier) ? @local_variables[identifier] : {nil, nil}
-    Logger.report_error("Undefined variable", token.value.to_s, token) if value.nil? && @parent.nil?
+    typedef, value = @local_variables.has_key?(identifier) ? @local_variables[identifier] : {nil, nil}
+    Logger.report_error("Undefined variable", token.value.to_s, token) if typedef.nil? && @parent.nil?
     return unwrap.lookup(token) if value.nil? && !@parent.nil?
     value
   end
