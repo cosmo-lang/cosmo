@@ -3,6 +3,18 @@
 
 Cosmo is a statically-typed programming language written in pure Crystal.
 
+## Things I Gotta Do
+
+- Arrays
+- Some sorta hashmap
+- Interfaces
+- Classes
+  * single inheritance
+  * mixins
+  * visibilities
+  * methods
+  * $ (this)
+
 ## Installation
 
 1. Install [Crystal](https://crystal-lang.org/install/).
