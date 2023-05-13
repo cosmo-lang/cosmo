@@ -18,12 +18,18 @@ class Cosmo::Parser
 
   # Parse an expression and return a node
   private def parse_expression : Node
-    parse_assignment
+    callee = parse_assignment
+
+    if match?(Syntax::LParen)
+      callee = parse_function_call(callee)
+    end
+
+    callee
   end
 
   # Parse a statement and return a node
   private def parse_statement : Node
-    parse_var_declaration
+    parse_function_definition
   end
 
   # Parse a block of statements and return a node
@@ -35,6 +41,58 @@ class Cosmo::Parser
     end
 
     Statement::Block.new(statements)
+  end
+
+  # Parse a function definition and return a node
+  private def parse_function_definition : Node
+    if match?(Syntax::TypeDef) && match?(Syntax::Function)
+      return_typedef = peek(-2)
+      function_ident = consume(Syntax::Identifier)
+      consume(Syntax::LParen)
+      parameters = parse_function_parameters
+      consume(Syntax::RParen)
+      body = parse_block
+      Statement::FunctionDef.new(function_ident, parameters, body, return_typedef)
+    else
+      parse_assignment
+    end
+  end
+
+  # Parse function parameters and return an array of nodes
+  private def parse_function_params : Array(Expression::Parameter)
+    params = [] of Expression::Parameter
+
+    if match?(Syntax::TypeDef)
+      param_type = last_token
+      param_ident = consume(Syntax::Identifier)
+      params << Expression::Parameter.new(param_type, param_ident)
+
+      while match?(Syntax::Comma)
+        param_type = consume(Syntax::TypeDef)
+        param_ident = consume(Syntax::Identifier)
+        params << Expression::Parameter.new(param_type, param_ident)
+      end
+    end
+
+    params
+  end
+
+  # Parse a function call and return a node
+  private def parse_function_call(callee : Node) : Node
+    arguments = [] of Node
+
+    if match?(Syntax::LParen)
+      unless match?(Syntax::RParen)
+        arguments << parse_expression
+        while match?(Syntax::Comma)
+          arguments << parse_expression
+        end
+
+        consume(Syntax::RParen)
+      end
+    end
+
+    Expression::FunctionCall.new(callee, arguments)
   end
 
   # Parse a variable assignment expression and return a node

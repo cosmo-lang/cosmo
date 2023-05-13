@@ -1,6 +1,19 @@
 module Cosmo::AST::Expression
   include Cosmo::AST
 
+  class Parameter < Node
+    getter typedef : Token
+    getter identifier : Token
+    getter value : Node = NoneLiteral.new
+
+    def initialize(@typedef, @identifier, @value)
+    end
+
+    def to_s
+      "Parameter<typedef: #{@typedef.value}, identifier: #{@var.identifier.value.to_s}, value: #{@value.to_s}>"
+    end
+  end
+
   class VarDeclaration < Node
     getter typedef : Token
     getter var : Var
