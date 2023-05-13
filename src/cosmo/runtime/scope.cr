@@ -12,9 +12,9 @@ class Cosmo::Scope
   end
 
   def assign(identifier : Token, value : LiteralType)
+    Logger.report_error("Undefined variable", identifier.value.to_s, identifier) unless @local_variables.has_key?(identifier.value.to_s)
     typedef, old_value = @local_variables[identifier.value.to_s]
     TypeChecker.assert(typedef, value, identifier)
-    Logger.report_error("Undefined variable", identifier.value.to_s, identifier) unless @local_variables.has_key?(identifier.value)
     @local_variables[identifier.value.to_s] = {typedef, value}
     value
   end

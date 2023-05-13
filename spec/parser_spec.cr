@@ -167,6 +167,7 @@ describe Parser do
   it "parses variable declarations" do
     block = Parser.new("float abc = 1.234", "test").parse
     block.nodes.empty?.should be_false
+    block.nodes.first.should be_a AST::Expression::VarDeclaration
     declaration = block.nodes.first.as AST::Expression::VarDeclaration
     declaration.typedef.type.should eq Syntax::TypeDef
     declaration.typedef.value.should eq "float"

@@ -45,8 +45,10 @@ class Cosmo::Parser
 
   # Parse a function definition and return a node
   private def parse_function_definition : Node
-    if match?(Syntax::TypeDef) && match?(Syntax::Function)
-      return_typedef = peek(-2)
+    if current.type == Syntax::TypeDef && peek.type == Syntax::Function
+      consume(Syntax::TypeDef)
+      return_typedef = last_token
+      consume(Syntax::Function)
       consume(Syntax::Identifier)
       function_ident = last_token
       consume(Syntax::LParen)
@@ -57,7 +59,7 @@ class Cosmo::Parser
       consume(Syntax::RBrace)
       Statement::FunctionDef.new(function_ident, params, body, return_typedef)
     else
-      parse_assignment
+      parse_var_declaration
     end
   end
 
