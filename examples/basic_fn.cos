@@ -1,0 +1,5 @@
+bool fn is_eq(int a, int b) {
+  a == b
+}
+
+is_eq(1,1)

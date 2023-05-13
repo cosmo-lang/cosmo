@@ -18,7 +18,13 @@ class Cosmo::Parser
 
   # Parse an expression and return a node
   private def parse_expression : Node
-    parse_function_call
+    callee = parse_var_declaration
+
+    if match?(Syntax::LParen)
+      callee = parse_function_call(callee.as Expression::Var)
+    end
+
+    callee
   end
 
   # Parse a statement and return a node
@@ -90,24 +96,18 @@ class Cosmo::Parser
   end
 
   # Parse a function call and return a node
-  private def parse_function_call : Node
-    callee = parse_var_declaration
+  private def parse_function_call(callee : Expression::Var) : Node
+    arguments = [] of Node
 
-    if match?(Syntax::LParen)
-      arguments = [] of Node
-
-      unless match?(Syntax::RParen)
+    unless match?(Syntax::RParen)
+      arguments << parse_expression
+      while match?(Syntax::Comma)
         arguments << parse_expression
-        while match?(Syntax::Comma)
-          arguments << parse_expression
-        end
       end
-
-      consume(Syntax::RParen)
-      Expression::FunctionCall.new(callee.as Expression::Var, arguments)
-    else
-      callee
     end
+
+    consume(Syntax::RParen)
+    Expression::FunctionCall.new(callee, arguments)
   end
 
   # Parse a variable assignment expression and return a node
