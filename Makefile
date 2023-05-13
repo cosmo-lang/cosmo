@@ -10,7 +10,6 @@ test:
 	crystal spec -v
 
 publish:
-	shards build --release
-	make test
+	crystal spec
 	crystal docs --project-name=Cosmo -o docs
 	git push -u
