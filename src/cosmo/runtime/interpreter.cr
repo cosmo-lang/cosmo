@@ -70,7 +70,7 @@ class Cosmo::Interpreter
           if right.is_a?(Int)
             left + right
           elsif right.is_a?(Float)
-            left + right.to_i
+            left.to_f + right
           else
             report_error("Invalid '+' operand type", right.class.to_s, node.operator)
           end
@@ -90,7 +90,7 @@ class Cosmo::Interpreter
           if right.is_a?(Int)
             left - right
           elsif right.is_a?(Float)
-            left - right.to_i
+            left.to_f - right
           else
             report_error("Invalid '-' operand type", right.class.to_s, node.operator)
           end
@@ -110,7 +110,7 @@ class Cosmo::Interpreter
           if right.is_a?(Int)
             left * right
           elsif right.is_a?(Float)
-            left * right.to_i
+            left.to_f * right
           else
             report_error("Invalid '*' operand type", right.class.to_s, node.operator)
           end
@@ -130,7 +130,7 @@ class Cosmo::Interpreter
           if right.is_a?(Int)
             left / right
           elsif right.is_a?(Float)
-            left / right.to_i
+            left.to_f / right
           else
             report_error("Invalid '/' operand type", right.class.to_s, node.operator)
           end
@@ -150,7 +150,7 @@ class Cosmo::Interpreter
           if right.is_a?(Int)
             left ** right
           elsif right.is_a?(Float)
-            left ** right.to_i
+            left.to_f ** right
           else
             report_error("Invalid '^' operand type", right.class.to_s, node.operator)
           end
@@ -170,7 +170,7 @@ class Cosmo::Interpreter
           if right.is_a?(Int)
             left % right
           elsif right.is_a?(Float)
-            left % right.to_i
+            left.to_f % right
           else
             report_error("Invalid '%' operand type", right.class.to_s, node.operator)
           end
@@ -198,7 +198,7 @@ class Cosmo::Interpreter
           if right.is_a?(Int)
             left < right
           elsif right.is_a?(Float)
-            left < right.to_i
+            left.to_f < right
           else
             report_error("Invalid '<' operand type", right.class.to_s, node.operator)
           end
@@ -218,7 +218,7 @@ class Cosmo::Interpreter
           if right.is_a?(Int)
             left <= right
           elsif right.is_a?(Float)
-            left <= right.to_i
+            left.to_f <= right
           else
             report_error("Invalid '<=' operand type", right.class.to_s, node.operator)
           end
@@ -238,7 +238,7 @@ class Cosmo::Interpreter
           if right.is_a?(Int)
             left > right
           elsif right.is_a?(Float)
-            left > right.to_i
+            left.to_f > right
           else
             report_error("Invalid '>' operand type", right.class.to_s, node.operator)
           end
@@ -258,7 +258,7 @@ class Cosmo::Interpreter
           if right.is_a?(Int)
             left >= right
           elsif right.is_a?(Float)
-            left >= right.to_i
+            left.to_f >= right
           else
             report_error("Invalid '>=' operand type", right.class.to_s, node.operator)
           end
