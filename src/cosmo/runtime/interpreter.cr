@@ -1,6 +1,8 @@
 require "../syntax/parser"; include Cosmo::AST
+require "./scope"
 
 class Cosmo::Interpreter
+  getter scope = Scope.new
   getter output_ast : Bool = false
 
   def initialize(@output_ast)
@@ -21,6 +23,11 @@ class Cosmo::Interpreter
     when Statement::Block
       return walk(node.single_expression?.not_nil!) unless node.single_expression?.nil?
       node.nodes.each { |expr| walk(expr) }
+    when Expression::Var
+      @scope.lookup_variable(node.token)
+    when Expression::VarDeclaration, Expression::VarAssignment
+      value = walk(node.value)
+      @scope.set_variable(node.var.token, value)
     when Expression::UnaryOp
       operand = walk(node.operand)
       case node.operator.type

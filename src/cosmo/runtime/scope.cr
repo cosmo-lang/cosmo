@@ -1,22 +1,24 @@
-require_relative "../code_analysis/syntax/syntax"
-require_relative "../logger"
+require "../syntax/lexer/token"
+require "../logger"
 
-class Scope
-  property parent : Scope?
+class Cosmo::Scope
+  property parent : Cosmo::Scope?
   getter local_variables = {} of String => LiteralType
 
-  def add_variable(identifier : String, value : LiteralType)
-    @local_variables[identifier] = value
+  def set_variable(token : Token, value : LiteralType)
+    @local_variables[token.value.to_s] = value
   end
 
-  def lookup_variable(identifier : String, token : Token) : LiteralType
+  def lookup_variable(token : Token) : LiteralType
+    identifier = token.value
     value = @local_variables.has_key?(identifier) ? @local_variables[identifier] : nil
-    Logger.report_error("Undefined variable", token.value, token.position, token.line) if value.nil? && @parent.nil?
-    @parent.lookup_variable(identifier, token) if value.nil? && !@parent.nil?
+    Logger.report_error("Undefined variable", token.value.to_s, token.location.position, token.location.line) if value.nil? && @parent.nil?
+    return unwrap.lookup_variable(token) if value.nil? && !@parent.nil?
+    value
   end
 
   def unwrap
-    @parent
+    @parent.not_nil!
   end
 
   def to_s
