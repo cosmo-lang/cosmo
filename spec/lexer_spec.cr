@@ -47,11 +47,11 @@ describe Lexer do
   it "lexes booleans" do
     tokens = Lexer.new("true", "test").tokenize
     tokens.first.type.should eq Syntax::Boolean
-    tokens.first.value.should eq true
+    tokens.first.value.should be_true
 
     tokens = Lexer.new("false", "test").tokenize
     tokens.first.type.should eq Syntax::Boolean
-    tokens.first.value.should eq false
+    tokens.first.value.should be_false
   end
   it "lexes none value" do
     tokens = Lexer.new("none", "test").tokenize
