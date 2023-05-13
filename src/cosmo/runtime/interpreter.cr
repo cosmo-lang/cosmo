@@ -1,15 +1,17 @@
 require "../syntax/parser"; include Cosmo::AST
+require "./function"
 require "./scope"
 
 class Cosmo::Interpreter
   getter scope = Scope.new
   getter output_ast : Bool = false
+  getter file_path : String = ""
 
   def initialize(@output_ast)
   end
 
-  def interpret(source : String, file_path : String) : LiteralType
-    parser = Parser.new(source, file_path)
+  def interpret(source : String, @file_path : String) : ValueType
+    parser = Parser.new(source, @file_path)
     ast = parser.parse
     walk(ast)
   end
@@ -18,11 +20,40 @@ class Cosmo::Interpreter
     Logger.report_error(error_type, message, token.location.line, token.location.position)
   end
 
-  private def walk(node : Node) : LiteralType?
+  private def walk(node : Node) : ValueType?
     case node
     when Statement::Block
       return walk(node.single_expression?.not_nil!) unless node.single_expression?.nil?
       node.nodes.each { |expr| walk(expr) }
+    when Statement::FunctionDef
+      @scope = Scope.new(@scope)
+      non_nullable_params = node.parameters.map { |param| !param.value.is_a?(AST::Expression::NoneLiteral) }
+      node.parameters.each do |param|
+        value = walk(param.value)
+        @scope.declare(param.typedef, param.identifier, value)
+      end
+
+      arity = non_nullable_params.size.to_u..node.parameters.size.to_u
+      fn = Function.new(@scope, node.parameters, arity, node.body)
+
+      @scope = @scope.unwrap
+      typedef = Token.new(Syntax::Identifier, "fn", Location.new(file_path, 0, 0))
+      @scope.declare(typedef, node.identifier, fn)
+      fn
+    when Expression::FunctionCall
+      fn = @scope.lookup(node.var.token)
+      if fn.is_a?(Function)
+        non_nullable_params = fn.param_nodes.map { |param| !param.value.is_a?(AST::Expression::NoneLiteral) }
+        fn.param_nodes.each_with_index do |param, i|
+          report_error("Expected #{fn.arity} arguments, got", i.to_s, node.var.token) unless fn.arity.includes?(i)
+          value = walk(node.arguments[i])
+          @scope.assign(param.identifier, value) unless value.nil? && non_nullable_params.includes?(param)
+        end
+
+        walk(fn.body)
+      else
+        report_error("Attempt to call", TypeChecker.get_mapped(fn.class), node.var.token)
+      end
     when Expression::Var
       @scope.lookup(node.token)
     when Expression::VarDeclaration

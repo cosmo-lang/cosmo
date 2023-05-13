@@ -1,5 +1,7 @@
 require "../logger"
 
+alias ValueType = LiteralType | Cosmo::Function
+
 module Cosmo::TypeChecker
   extend self
 
@@ -12,16 +14,24 @@ module Cosmo::TypeChecker
     Float32 => "float",
     String => "string",
     Char => "char",
-    Bool => "bool"
+    Bool => "bool",
+    Nil => "none",
+    Function => "fn"
   }
 
-  private def report_mismatch(typedef : String, value : LiteralType, token : Token)
+  private def report_mismatch(typedef : String, value : ValueType, token : Token)
     got_type = TYPE_MAP[value.class]
     Logger.report_error("Type mismatch", "Expected '#{typedef}', got '#{got_type}'", token)
   end
 
-  def assert(typedef : String, value : LiteralType, token : Token)
+  def get_mapped(t : Class) : String
+    TYPE_MAP[t]
+  end
+
+  def assert(typedef : String, value : ValueType, token : Token)
     case typedef
+    when "fn"
+      report_mismatch(typedef, value, token) unless value.is_a?(Function)
     when "int"
       report_mismatch(typedef, value, token) unless value.is_a?(Int)
     when "float"

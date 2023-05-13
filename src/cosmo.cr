@@ -21,7 +21,7 @@ module Cosmo
 
   @@interpreter = Interpreter.new(output_ast: @@options.has_key?(:ast))
 
-  def self.read_source(source : String, file_path : String) : LiteralType
+  def self.read_source(source : String, file_path : String) : ValueType
     @@interpreter.interpret(source, file_path)
   end
 

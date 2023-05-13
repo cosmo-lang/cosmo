@@ -71,14 +71,24 @@ class Cosmo::Parser
       consume(Syntax::Identifier)
       param_ident = last_token
 
-      params << Expression::Parameter.new(param_type, param_ident)
+      if match?(Syntax::Equal)
+        value = parse_expression
+        params << Expression::Parameter.new(param_type, param_ident, value)
+      else
+        params << Expression::Parameter.new(param_type, param_ident, Expression::NoneLiteral.new)
+      end
 
       while match?(Syntax::Comma)
         consume(Syntax::TypeDef)
         param_type = last_token
         consume(Syntax::Identifier)
         param_ident = last_token
-        params << Expression::Parameter.new(param_type, param_ident)
+        if match?(Syntax::Equal)
+          value = parse_expression
+          params << Expression::Parameter.new(param_type, param_ident, value)
+        else
+          params << Expression::Parameter.new(param_type, param_ident, Expression::NoneLiteral.new)
+        end
       end
     end
 
