@@ -36,6 +36,8 @@ class Cosmo::Interpreter
         else
           report_error("Invalid '-' operand type", operand.class.to_s, node.operator)
         end
+      when Syntax::Bang
+        !operand
       when Syntax::Star
         raise "'*' unary operator has not yet implemented."
       when Syntax::Hashtag
