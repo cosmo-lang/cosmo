@@ -40,4 +40,19 @@ describe Interpreter do
     result = interpreter.interpret("9 ^ 2 / 14 + 6 * 2", "test")
     result.should eq 17.785714285714285
   end
+  it "interprets variable declarations" do
+    result = interpreter.interpret("int x = 0b11", "test")
+    result.should eq 3
+    result = interpreter.interpret("char y = 'h'", "test")
+    result.should eq 'h'
+    result = interpreter.interpret("string z = \"hello world\"", "test")
+    result.should eq "hello world"
+  end
+  it "interprets variable assignments" do
+    result = interpreter.interpret("
+    int x = 0b11
+    x = 5
+    ", "test")
+    result.should eq 5
+  end
 end
