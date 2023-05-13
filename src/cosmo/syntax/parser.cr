@@ -44,6 +44,21 @@ class Cosmo::Parser
     Statement::Block.new(statements)
   end
 
+  # Parse a function call and return a node
+  private def parse_function_call(callee : Expression::Var) : Node
+    arguments = [] of Node
+
+    unless match?(Syntax::RParen)
+      arguments << parse_expression
+      while match?(Syntax::Comma)
+        arguments << parse_expression
+      end
+    end
+
+    consume(Syntax::RParen)
+    Expression::FunctionCall.new(callee, arguments)
+  end
+
   # Parse a function definition and return a node
   private def parse_function_definition : Node
     if current.type == Syntax::TypeDef && peek.type == Syntax::Function
@@ -75,7 +90,7 @@ class Cosmo::Parser
         value = parse_expression
         params << Expression::Parameter.new(param_type, param_ident, value)
       else
-        params << Expression::Parameter.new(param_type, param_ident, Expression::NoneLiteral.new)
+        params << Expression::Parameter.new(param_type, param_ident)
       end
 
       while match?(Syntax::Comma)
@@ -87,43 +102,12 @@ class Cosmo::Parser
           value = parse_expression
           params << Expression::Parameter.new(param_type, param_ident, value)
         else
-          params << Expression::Parameter.new(param_type, param_ident, Expression::NoneLiteral.new)
+          params << Expression::Parameter.new(param_type, param_ident)
         end
       end
     end
 
     params
-  end
-
-  # Parse a function call and return a node
-  private def parse_function_call(callee : Expression::Var) : Node
-    arguments = [] of Node
-
-    unless match?(Syntax::RParen)
-      arguments << parse_expression
-      while match?(Syntax::Comma)
-        arguments << parse_expression
-      end
-    end
-
-    consume(Syntax::RParen)
-    Expression::FunctionCall.new(callee, arguments)
-  end
-
-  # Parse a variable assignment expression and return a node
-  private def parse_assignment : Node
-    left = parse_logical_or
-
-    while match?(Syntax::Equal)
-      if left.is_a?(Expression::Var)
-        value = parse_expression
-        left = Expression::VarAssignment.new(left, value)
-      else
-        Logger.report_error("Expected identifier, got", peek(-2).type.to_s, peek(-2))
-      end
-    end
-
-    left
   end
 
   # Parse a variable declaration and return a node
@@ -146,6 +130,22 @@ class Cosmo::Parser
     else
       parse_assignment
     end
+  end
+
+  # Parse a variable assignment expression and return a node
+  private def parse_assignment : Node
+    left = parse_logical_or
+
+    while match?(Syntax::Equal)
+      if left.is_a?(Expression::Var)
+        value = parse_expression
+        left = Expression::VarAssignment.new(left, value)
+      else
+        Logger.report_error("Expected identifier, got", peek(-2).type.to_s, peek(-2))
+      end
+    end
+
+    left
   end
 
   # Parse a logical OR expression and return a node
@@ -297,7 +297,13 @@ class Cosmo::Parser
       consume(Syntax::RParen)
       node
     elsif match?(Syntax::Identifier)
-      Expression::Var.new(last_token)
+      ident = last_token
+      if match?(Syntax::LParen) # it's a function call
+        callee = Expression::Var.new(ident)
+        parse_function_call(callee)
+      else # it's a regular var ref
+        Expression::Var.new(ident)
+      end
     else
       parse_literal
     end

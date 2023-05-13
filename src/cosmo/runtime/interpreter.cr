@@ -13,7 +13,7 @@ class Cosmo::Interpreter
   def interpret(source : String, @file_path : String) : ValueType
     parser = Parser.new(source, @file_path)
     ast = parser.parse
-    puts @ast if @output_ast
+    puts ast if @output_ast
     walk(ast)
   end
 
@@ -28,10 +28,13 @@ class Cosmo::Interpreter
       node.nodes.each { |expr| walk(expr) }
     when Statement::FunctionDef
       scope = Scope.new(@scope)
-      non_nullable_params = node.parameters.select { |param| !param.value.is_a?(AST::Expression::NoneLiteral) }
-      node.parameters.each do |param|
-        value = walk(param.value)
-        scope.declare(param.typedef, param.identifier, value)
+      params = node.parameters
+      non_nullable_params = params.select { |param| !param.default_value.nil? }
+      params.each do |param| # define default values
+        unless param.default_value.nil?
+          value = walk(param.default_value.not_nil!)
+          scope.declare(param.typedef, param.identifier, value)
+        end
       end
 
       arity = non_nullable_params.size.to_u..node.parameters.size.to_u
@@ -44,15 +47,16 @@ class Cosmo::Interpreter
       fn = @scope.lookup(node.var.token)
       if fn.is_a?(Function)
         report_error("Expected #{fn.arity} arguments, got", node.arguments.size.to_s, node.var.token) unless fn.arity.includes?(node.arguments.size)
-        non_nullable_params = fn.param_nodes.select { |param| !param.value.is_a?(AST::Expression::NoneLiteral) }
-        fn.param_nodes.each_with_index do |param, i|
+        @scope = fn.scope
+        params = fn.param_nodes
+        non_nullable_params = params.select { |param| !param.default_value.nil? }
+        params.each_with_index do |param, i|
           value = walk(node.arguments[i])
           unless value.nil? && non_nullable_params.includes?(param)
             fn.scope.declare(param.typedef, param.identifier, value)
           end
         end
 
-        @scope = fn.scope
         result = walk(fn.body)
         @scope = @scope.unwrap
         result

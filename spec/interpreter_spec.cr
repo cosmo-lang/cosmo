@@ -63,5 +63,9 @@ describe Interpreter do
     result.should be_true
     result = interpreter.interpret("is_eq(1, 2)", "test")
     result.should be_false
+
+    interpreter.interpret("bool fn half_sum(int a, int b) { (a + b) / 2 }", "test")
+    result = interpreter.interpret("half_sum(9, 7) + 2", "test")
+    result.should eq 10
   end
 end

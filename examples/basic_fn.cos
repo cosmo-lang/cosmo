@@ -1,5 +1,6 @@
-bool fn is_eq(int a, int b) {
+bool fn is_eq(int a = 1, int b) {
   a == b
 }
 
-is_eq(1, 1)
+bool a = is_eq(none, 1)
+a

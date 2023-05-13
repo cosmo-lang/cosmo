@@ -16,13 +16,13 @@ module Cosmo::AST::Expression
   class Parameter < Node
     getter typedef : Token
     getter identifier : Token
-    getter value : Node
+    getter default_value : Node?
 
-    def initialize(@typedef, @identifier, @value = NoneLiteral.new)
+    def initialize(@typedef, @identifier, @default_value = NoneLiteral.new)
     end
 
     def to_s
-      "Parameter<typedef: #{@typedef.value}, identifier: #{@identifier.value.to_s}, value: #{@value.to_s}>"
+      "Parameter<typedef: #{@typedef.value}, identifier: #{@identifier.value.to_s}, value: #{@default_value.nil? ? "none" : @default_value.to_s}>"
     end
   end
 
