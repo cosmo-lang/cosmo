@@ -5,6 +5,7 @@ Cosmo is a statically-typed programming language written in pure Crystal.
 
 ## Things I Gotta Do
 
+- Probably assign types to literals
 - Arrays
 - Some sorta hashmap
 - Interfaces
@@ -26,8 +27,9 @@ Cosmo is a statically-typed programming language written in pure Crystal.
 1. Fork it (<https://github.com/R-unic/cosmo/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+4. Test your code (`make test`)
+5. Push to the branch (`make publish`)
+6. Create a new Pull Request
 
 ## Contributors
 
