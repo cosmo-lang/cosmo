@@ -219,5 +219,15 @@ describe Parser do
     arg1.as(AST::Expression::IntLiteral).value.should eq 1
     arg2.should be_a AST::Expression::IntLiteral
     arg2.as(AST::Expression::IntLiteral).value.should eq 1
+
+    block = Parser.new(lines.last + " == none", "test").parse
+    block.nodes.empty?.should be_false
+    binary = block.nodes.first.as AST::Expression::BinaryOp
+    function_call = binary.left.as AST::Expression::FunctionCall
+    function_call.var.token.type.should eq Syntax::Identifier
+    function_call.var.token.value.should eq "is_eq"
+
+    binary.operator.type.should eq Syntax::EqualEqual
+    binary.right.should be_a AST::Expression::NoneLiteral
   end
 end
