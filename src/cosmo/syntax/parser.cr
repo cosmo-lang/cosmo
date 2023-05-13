@@ -18,10 +18,10 @@ class Cosmo::Parser
 
   # Parse an expression and return a node
   private def parse_expression : Node
-    callee = parse_assignment
+    callee = parse_var_declaration
 
     if match?(Syntax::LParen)
-      callee = parse_function_call(callee.as(Expression::Var))
+      callee = parse_function_call(callee.as Expression::Var)
     end
 
     callee
@@ -58,7 +58,7 @@ class Cosmo::Parser
       body = parse_block
       Statement::FunctionDef.new(function_ident, params, body, return_typedef)
     else
-      parse_var_declaration
+      parse_expression
     end
   end
 
@@ -89,17 +89,14 @@ class Cosmo::Parser
   private def parse_function_call(callee : Expression::Var) : Node
     arguments = [] of Node
 
-    if match?(Syntax::LParen)
-      unless match?(Syntax::RParen)
+    unless match?(Syntax::RParen)
+      arguments << parse_expression
+      while match?(Syntax::Comma)
         arguments << parse_expression
-        while match?(Syntax::Comma)
-          arguments << parse_expression
-        end
-
-        consume(Syntax::RParen)
       end
     end
 
+    consume(Syntax::RParen)
     Expression::FunctionCall.new(callee, arguments)
   end
 
@@ -330,7 +327,7 @@ class Cosmo::Parser
   # Consume the current token and advance position if token syntax
   # matches the expected syntax, else log an error
   private def consume(syntax : Syntax)
-    Logger.report_error("Expected #{syntax}, got", current.type.to_s, current) unless current.type == syntax
+    Logger.report_error("Expected #{syntax}, got", current.type.to_s, current.location.line, current.location.position + 1) unless current.type == syntax
     @position += 1
   end
 

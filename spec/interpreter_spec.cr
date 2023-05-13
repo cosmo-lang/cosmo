@@ -34,7 +34,7 @@ describe Interpreter do
     result = interpreter.interpret("+-10.24335", "test")
     result.should eq 10.24335
   end
-  it "interprets biary operators" do
+  it "interprets binary operators" do
     result = interpreter.interpret("3 * 6 / 2 - 9", "test")
     result.should eq 0
     result = interpreter.interpret("9 ^ 2 / 14 + 6 * 2", "test")
