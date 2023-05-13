@@ -56,12 +56,7 @@ describe Interpreter do
     result.should eq 5
   end
   it "interprets function definitions & calls" do
-    lines = [
-      "bool fn is_eq(int a, int b) {",
-      " a == b",
-      "}"
-    ]
-    interpreter.interpret(lines.join('\n'), "test")
+    interpreter.interpret("bool fn is_eq(int a, int b) { a == b }", "test")
     result = interpreter.interpret("is_eq == none", "test")
     result.should be_false
     result = interpreter.interpret("is_eq(1, 1)", "test")
