@@ -21,7 +21,7 @@ class Cosmo::Parser
     callee = parse_assignment
 
     if match?(Syntax::LParen)
-      callee = parse_function_call(callee)
+      callee = parse_function_call(callee.as(Expression::Var))
     end
 
     callee
@@ -33,7 +33,7 @@ class Cosmo::Parser
   end
 
   # Parse a block of statements and return a node
-  private def parse_block : Node
+  private def parse_block : Statement::Block
     statements = [] of Node
 
     until finished?
@@ -47,12 +47,15 @@ class Cosmo::Parser
   private def parse_function_definition : Node
     if match?(Syntax::TypeDef) && match?(Syntax::Function)
       return_typedef = peek(-2)
-      function_ident = consume(Syntax::Identifier)
+      consume(Syntax::Identifier)
+      function_ident = last_token
       consume(Syntax::LParen)
-      parameters = parse_function_parameters
+      params = parse_function_params
       consume(Syntax::RParen)
+      consume(Syntax::LBrace)
       body = parse_block
-      Statement::FunctionDef.new(function_ident, parameters, body, return_typedef)
+      consume(Syntax::RBrace)
+      Statement::FunctionDef.new(function_ident, params, body, return_typedef)
     else
       parse_assignment
     end
@@ -64,12 +67,16 @@ class Cosmo::Parser
 
     if match?(Syntax::TypeDef)
       param_type = last_token
-      param_ident = consume(Syntax::Identifier)
+      consume(Syntax::Identifier)
+      param_ident = last_token
+
       params << Expression::Parameter.new(param_type, param_ident)
 
       while match?(Syntax::Comma)
-        param_type = consume(Syntax::TypeDef)
-        param_ident = consume(Syntax::Identifier)
+        consume(Syntax::TypeDef)
+        param_type = last_token
+        consume(Syntax::Identifier)
+        param_ident = last_token
         params << Expression::Parameter.new(param_type, param_ident)
       end
     end
@@ -78,7 +85,7 @@ class Cosmo::Parser
   end
 
   # Parse a function call and return a node
-  private def parse_function_call(callee : Node) : Node
+  private def parse_function_call(callee : Expression::Var) : Node
     arguments = [] of Node
 
     if match?(Syntax::LParen)

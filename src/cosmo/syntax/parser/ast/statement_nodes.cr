@@ -9,7 +9,7 @@ module Cosmo::AST::Statement
     end
 
     def to_s
-      "FunctionDef<identifier: #{@var.identifier.value.to_s}, parameters: [#{@parameters.map(&.to_s).join(", ")}], return_typedef: #{@return_typedef.value}, body: #{@body.to_s}>"
+      "FunctionDef<identifier: #{@identifier.value.to_s}, parameters: [#{@parameters.map(&.to_s).join(", ")}], return_typedef: #{@return_typedef.value}, body: #{@body.to_s}>"
     end
   end
 

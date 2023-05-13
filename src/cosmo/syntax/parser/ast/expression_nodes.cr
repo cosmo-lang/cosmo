@@ -1,16 +1,28 @@
 module Cosmo::AST::Expression
   include Cosmo::AST
 
-  class Parameter < Node
-    getter typedef : Token
-    getter identifier : Token
-    getter value : Node = NoneLiteral.new
+  class FunctionCall < Node
+    getter var : Var
+    getter arguments : Array(Node)
 
-    def initialize(@typedef, @identifier, @value)
+    def initialize(@var, @arguments)
     end
 
     def to_s
-      "Parameter<typedef: #{@typedef.value}, identifier: #{@var.identifier.value.to_s}, value: #{@value.to_s}>"
+      "FunctionCall<var: #{@var.to_s}, argu: [#{@arguments.map(&.to_s).join(", ")}]>"
+    end
+  end
+
+  class Parameter < Node
+    getter typedef : Token
+    getter identifier : Token
+    getter value : Node
+
+    def initialize(@typedef, @identifier, @value = NoneLiteral.new)
+    end
+
+    def to_s
+      "Parameter<typedef: #{@typedef.value}, identifier: #{@identifier.value.to_s}, value: #{@value.to_s}>"
     end
   end
 

@@ -189,4 +189,24 @@ describe Parser do
     literal.should be_a AST::Expression::BooleanLiteral
     literal.value.should be_false
   end
+  it "parses function definitions * calls" do
+    lines = [
+      "bool fn is_eq(int a, int b) {",
+      " a == b",
+      "}"
+    ]
+    block = Parser.new(lines.join('\n'), "test").parse
+    block.nodes.empty?.should be_false
+    function_def = block.nodes.first.as AST::Statement::FunctionDef
+    function_def.parameters.empty?.should be_false
+    function_def.parameters.first.typedef.should eq "int"
+    function_def.parameters.first.identifier.value.should eq "a"
+    function_def.parameters.last.typedef.should eq "int"
+    function_def.parameters.last.identifier.value.should eq "b"
+    function_def.identifier.value.should eq "is_eq"
+    function_def.body.nodes.empty?.should be_false
+    function_def.body.nodes.first.should be_a AST::Expression::BinaryOp
+    function_def.return_typedef.type.should eq Syntax::TypeDef
+    function_def.return_typedef.value.should eq "bool"
+  end
 end
