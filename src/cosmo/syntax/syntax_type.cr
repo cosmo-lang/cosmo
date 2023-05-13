@@ -1,6 +1,6 @@
 enum Cosmo::Syntax
   Identifier
-  Integer; Float; String; Char; Boolean; None
+  Any; Integer; Float; String; Char; Boolean; None
   TypeDef
   Plus; PlusEqual; Minus; MinusEqual
   Star; StarEqual; Slash; SlashEqual

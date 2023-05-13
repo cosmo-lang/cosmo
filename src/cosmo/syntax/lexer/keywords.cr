@@ -20,7 +20,7 @@ module Cosmo::Keywords
     "return" => Syntax::Return
   }
 
-  TYPE_KEYWORDS = ["bool", "string", "char", "int", "float", "void", "none"]
+  TYPE_KEYWORDS = ["any", "bool", "string", "char", "int", "float", "void", "none"]
 
   def self.type?(s)
     TYPE_KEYWORDS.includes?(s)

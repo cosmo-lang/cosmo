@@ -46,6 +46,7 @@ module Cosmo::TypeChecker
       report_mismatch(typedef, value, token) unless value.is_a?(Char)
     when "none"
       report_mismatch(typedef, value, token) unless value == nil
+    when "any"
     else
       raise "Unhandled type '#{typedef}' in TypeChecker"
     end

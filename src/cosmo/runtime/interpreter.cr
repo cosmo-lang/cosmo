@@ -11,7 +11,7 @@ class Cosmo::Interpreter
     globals = {
       "puts" => {"fn", PutsIntrinsic.new(@scope, [
         AST::Expression::Parameter.new(
-          typedef: Token.new(Syntax::TypeDef, "string", Location.new("intrinsic", 0, 0)),
+          typedef: Token.new(Syntax::TypeDef, "any", Location.new("intrinsic", 0, 0)),
           identifier: Token.new(Syntax::Identifier, "msg", Location.new("intrinsic", 0, 0))
         )
       ])}
