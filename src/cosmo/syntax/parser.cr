@@ -235,8 +235,8 @@ class Cosmo::Parser
     peek 0
   end
 
-  # Consume the current token and advance the position
-  def peek(offset : Int32 = 1) : Token
+  # Peeks ahead in the token stream by `offset`
+  private def peek(offset : Int32 = 1) : Token
     @tokens[@position + offset]
   end
 
@@ -269,7 +269,7 @@ class Cosmo::Parser
   end
 
   # Consume the current token and advance the position
-  def consume_current : Token
+  private def consume_current : Token
     token = current
     @position += 1
     token
