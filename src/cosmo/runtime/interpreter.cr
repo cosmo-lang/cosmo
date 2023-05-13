@@ -24,10 +24,13 @@ class Cosmo::Interpreter
       return walk(node.single_expression?.not_nil!) unless node.single_expression?.nil?
       node.nodes.each { |expr| walk(expr) }
     when Expression::Var
-      @scope.lookup_variable(node.token)
-    when Expression::VarDeclaration, Expression::VarAssignment
+      @scope.lookup(node.token)
+    when Expression::VarDeclaration
       value = walk(node.value)
-      @scope.set_variable(node.var.token, value)
+      @scope.declare(node.typedef, node.var.token, value)
+    when Expression::VarAssignment
+      value = walk(node.value)
+      @scope.assign(node.var.token, value)
     when Expression::UnaryOp
       operand = walk(node.operand)
       case node.operator.type

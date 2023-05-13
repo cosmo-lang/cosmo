@@ -3,15 +3,20 @@ require "../logger"
 
 class Cosmo::Scope
   property parent : Cosmo::Scope?
-  getter local_variables = {} of String => LiteralType
+  getter local_variables = {} of String => Tuple(String, LiteralType)
 
-  def set_variable(token : Token, value : LiteralType)
-    @local_variables[token.value.to_s] = value
+  def declare(typedef : Token, identifier : Token, value : LiteralType)
+    @local_variables[identifier.value.to_s] = {typedef.value.to_s, value}
   end
 
-  def lookup_variable(token : Token) : LiteralType
+  def assign(identifier : Token, value : LiteralType)
+    typedef, old_value = @local_variables[identifier.value.to_s]
+    @local_variables[identifier.value.to_s] = {typedef.value.to_s, value}
+  end
+
+  def lookup(token : Token) : LiteralType
     identifier = token.value
-    value = @local_variables.has_key?(identifier) ? @local_variables[identifier] : nil
+    _, value = @local_variables.has_key?(identifier) ? @local_variables[identifier] : nil
     Logger.report_error("Undefined variable", token.value.to_s, token.location.position, token.location.line) if value.nil? && @parent.nil?
     return unwrap.lookup_variable(token) if value.nil? && !@parent.nil?
     value
