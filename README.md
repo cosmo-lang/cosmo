@@ -5,7 +5,6 @@ Cosmo is a statically-typed programming language written in pure Crystal.
 
 ## Things I Gotta Do
 
-- Probably assign types to literals
 - Arrays
 - Some sorta hashmap
 - Interfaces
@@ -15,6 +14,10 @@ Cosmo is a statically-typed programming language written in pure Crystal.
   * visibilities
   * methods
   * $ (this)
+- Better type system
+  * use TypeChecker for all operators
+  * unions/intersections
+  * aliasing
 
 ## Installation
 
