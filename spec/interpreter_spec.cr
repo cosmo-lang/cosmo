@@ -2,6 +2,10 @@ require "./spec_helper"
 
 describe Interpreter do
   interpreter = Interpreter.new(output_ast: false)
+  it "interprets intrinsics" do
+    result = interpreter.interpret("__version", "test")
+    result.should eq "Cosmo v#{`shards version`}".strip
+  end
   it "interprets literals" do
     result = interpreter.interpret("false", "test")
     result.should be_false

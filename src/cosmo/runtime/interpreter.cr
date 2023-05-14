@@ -32,7 +32,7 @@ class Cosmo::Interpreter
     @scope = @globals
     declare_intrinsic("fn", "puts", PutsIntrinsic.new)
 
-    version = "Cosmo v#{`shards version`}"
+    version = "Cosmo v#{`shards version`}".strip
     declare_intrinsic("string", "__version", version)
   end
 
