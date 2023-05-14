@@ -58,7 +58,8 @@ describe Interpreter do
     result.should eq 5
   end
   it "interprets compound assignment" do
-    interpreter.interpret("int a = 5; a += 2", "test")
+    interpreter.interpret("int a = 5", "test")
+    interpreter.interpret("a += 2", "test")
     result = interpreter.interpret("a", "test")
     result.should eq 7
   end
@@ -74,5 +75,11 @@ describe Interpreter do
     interpreter.interpret("float fn half_sum(int a, int b) { (a + b) / 2 }", "test")
     result = interpreter.interpret("half_sum(9, 7) + 2", "test")
     result.should eq 10
+  end
+  it "interprets string concatenation" do
+    interpreter.interpret("string msg = \"\"", "test")
+    interpreter.interpret("msg += \"hello\"", "test")
+    result = interpreter.interpret("msg + \" world\"", "test")
+    result.should eq "hello world"
   end
 end

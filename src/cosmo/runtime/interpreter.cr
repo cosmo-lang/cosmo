@@ -153,6 +153,12 @@ class Cosmo::Interpreter
         else
           report_error("Invalid '+' operand type", value.class.to_s, expr.operator)
         end
+      elsif var.is_a?(String)
+        if value.is_a?(String)
+          @scope.assign(expr.name, var + value)
+        else
+          report_error("Invalid '+' operand type", value.class.to_s, expr.operator)
+        end
       else
         report_error("Invalid '+' operand type", var.class.to_s, expr.operator)
       end
@@ -301,6 +307,12 @@ class Cosmo::Interpreter
           left + right
         elsif right.is_a?(Float)
           left.to_f + right
+        else
+          report_error("Invalid '+' operand type", right.class.to_s, expr.operator)
+        end
+      elsif left.is_a?(String)
+        if right.is_a?(String)
+          left + right
         else
           report_error("Invalid '+' operand type", right.class.to_s, expr.operator)
         end
