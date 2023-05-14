@@ -6,6 +6,23 @@ describe Lexer do
     lexer = Lexer.new("@/\\", "test")
     expect_raises(Exception, "[0:2] Unexpected character: @") { lexer.tokenize }
   end
+  it "skips comments & whitespaces" do
+    lines = [
+      "## single line comment",
+      "#:",
+      "this is",
+      "a big ol",
+      "multiline",
+      "comment",
+      ":#",
+      "\t\n\n",
+      "    "
+    ]
+
+    tokens = Lexer.new(lines.join('\n'), "test").tokenize
+    eof = tokens.pop
+    tokens.empty?.should be_true
+  end
   it "lexes floats" do
     tokens = Lexer.new("1234.4321", "test").tokenize
     tokens.first.type.should eq Syntax::Float

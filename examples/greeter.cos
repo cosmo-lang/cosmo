@@ -4,15 +4,5 @@ any fn greeter(string greeting) {
   }
 }
 
-## single line comment
-puts("goo goo ga ga")
-
-#:
-this is
-a big ol
-multiline
-comment
-:#
-
 any greet = greeter("hello")
 greet()
