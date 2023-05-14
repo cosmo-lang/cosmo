@@ -15,18 +15,22 @@ class Cosmo::Scope
   end
 
   def assign(identifier : Token, value : ValueType)
-    Logger.report_error("Undefined variable", identifier.value.to_s, identifier) unless @variables.has_key?(identifier.value.to_s)
-    typedef, old_value = @variables[identifier.value.to_s]
-    TypeChecker.assert(typedef, value, identifier)
-    @variables[identifier.value.to_s] = {typedef, value}
-    value
+    if @variables.has_key?(identifier.value.to_s)
+      typedef, old_value = @variables[identifier.value.to_s]
+      TypeChecker.assert(typedef, value, identifier)
+      @variables[identifier.value.to_s] = {typedef, value}
+      return value
+    end
+
+    return @parent.not_nil!.assign(identifier, value) unless @parent.nil?
+    Logger.report_error("Undefined variable", identifier.value.to_s, identifier)
   end
 
   def lookup(token : Token) : ValueType
     identifier = token.value
     if @variables.has_key?(identifier)
       typedef, value = @variables[identifier]
-      return value unless typedef.nil? && value.nil?
+      return value
     else
       unless @parent.nil?
         parent = @parent.not_nil!
