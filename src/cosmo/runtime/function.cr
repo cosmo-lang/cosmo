@@ -8,7 +8,7 @@ end
 class Cosmo::Function < Cosmo::Callable
   @interpreter : Interpreter
   @closure : Scope
-  getter definition : AST::Statement::FunctionDef
+  @definition : AST::Statement::FunctionDef
   @non_nullable_params : Array(AST::Expression::Parameter)
 
   def initialize(@interpreter, @closure, @definition)
@@ -27,7 +27,14 @@ class Cosmo::Function < Cosmo::Callable
     @definition.parameters.each_with_index do |param, i|
       scope.declare(param.typedef, param.identifier, args[i])
     end
-    @interpreter.execute_block(@definition.body, scope)
+
+    result = nil
+    begin
+      result = @interpreter.execute_block(@definition.body, scope)
+    rescue returner : Return
+      result = returner.value
+    end
+    result
   end
 
   def arity : Range(UInt32, UInt32)

@@ -31,14 +31,27 @@ class Cosmo::Parser
     callee
   end
 
+  private def parse_statement_expression
+    if match?(Syntax::Return)
+      return parse_return_statement
+    end
+
+    parse_function_definition
+  end
+
   # Parse a statement and return a node
   private def parse_statement : Statement::Base
-    stmt = parse_function_definition
+    stmt = parse_statement_expression
     if stmt.is_a?(Expression::Base)
       Statement::SingleExpression.new(stmt)
     else
       stmt.as Statement::Base
     end
+  end
+
+  private def parse_return_statement : Statement::Return
+    value : Expression::Base? = check?(Syntax::RBrace) ? nil : parse_expression
+    Statement::Return.new(value || Expression::NoneLiteral.new, last_token)
   end
 
   # Parse a block of statements and return a node
@@ -180,7 +193,7 @@ class Cosmo::Parser
   private def parse_compound_assignment_coeff
     left = parse_logical_or
 
-    while match?(Syntax::StarEqual) || match?(Syntax::SlashEqual) || match?(Syntax::PercentEqual)
+    while match?(Syntax::CaratEqual)
       op = last_token
       right = parse_logical_or
       left = Expression::CompoundAssignment.new(peek(-3), op, right)
@@ -350,6 +363,11 @@ class Cosmo::Parser
     end
   end
 
+  private def check?(syntax : Syntax) : Bool
+    return false if finished?
+    peek.type == syntax
+  end
+
   # Return the current token at the current position
   private def current : Token
     peek 0
@@ -365,13 +383,13 @@ class Cosmo::Parser
     peek -1
   end
 
-  private def finished?
+  private def finished? : Bool
     @position >= @tokens.size
   end
 
   # Consumes the token if the syntax matches, returns whether or not it was consumed
   # Basically a safe way to consume and see if it was consumed
-  private def match?(syntax : Syntax)
+  private def match?(syntax : Syntax) : Bool
     return false if finished?
     if current.type == syntax
       consume(syntax)
@@ -383,7 +401,7 @@ class Cosmo::Parser
 
   # Consume the current token and advance position if token syntax
   # matches the expected syntax, else log an error
-  private def consume(syntax : Syntax)
+  private def consume(syntax : Syntax) : Nil
     Logger.report_error("Expected #{syntax}, got", current.type.to_s, current.location.line, current.location.position + 1) unless current.type == syntax
     @position += 1
   end

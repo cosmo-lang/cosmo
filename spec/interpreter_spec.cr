@@ -61,7 +61,7 @@ describe Interpreter do
     result.should eq 7
   end
   it "interprets function definitions & calls" do
-    interpreter.interpret("bool fn is_eq(int a, int b) { a == b }", "test")
+    interpreter.interpret("bool fn is_eq(int a, int b) { return a == b }", "test")
     result = interpreter.interpret("is_eq == none", "test")
     result.should be_false
     result = interpreter.interpret("is_eq(1, 1)", "test")

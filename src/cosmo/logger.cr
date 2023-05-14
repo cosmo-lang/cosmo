@@ -1,6 +1,10 @@
 module Cosmo::Logger
   extend self
 
+  def report_exception(ex : E) forall E
+    raise ex
+  end
+
   def report_error(error_type : String, message : String, token : Token) : Exception
     raise "[#{token.location.line}:#{token.location.position + 1}] #{error_type}: #{message}"
   end

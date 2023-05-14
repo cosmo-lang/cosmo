@@ -1,12 +1,29 @@
 module Cosmo::AST::Statement
   module Visitor(R)
-    abstract def visit_block_stmt(stmt : Block) : R
+    abstract def visit_return_stmt(stmt : Return) : R
     abstract def visit_fn_def_stmt(stmt : FunctionDef) : R
-    abstract def visit_single_expr_stmt(stmt : SingleExpression)
+    abstract def visit_single_expr_stmt(stmt : SingleExpression) : R
+    abstract def visit_block_stmt(stmt : Block) : R
   end
 
   abstract class Base < Node
     abstract def accept(visitor : Visitor(R)) forall R
+  end
+
+  class Return < Base
+    getter value : Expression::Base
+    getter keyword : Token
+
+    def initialize(@value, @keyword)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_return_stmt(self)
+    end
+
+    def to_s
+      "Return<value: #{@value.to_s}>"
+    end
   end
 
   class FunctionDef < Base

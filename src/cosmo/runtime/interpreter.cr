@@ -2,6 +2,14 @@ require "../syntax/parser"; include Cosmo::AST
 require "./function"
 require "./scope"
 
+class Cosmo::Return < Exception
+  getter value : ValueType
+
+  def initialize(@value, token : Token)
+    super "[#{token.location.line}:#{token.location.position + 1}] Invalid return: A return statement can only be used within a function body"
+  end
+end
+
 class Cosmo::Interpreter
   include Expression::Visitor(ValueType)
   include Statement::Visitor(ValueType)
@@ -57,7 +65,7 @@ class Cosmo::Interpreter
     begin # TODO: typecheck return types
       @scope = block_scope
       unless block.nodes.empty?
-        return_node = block.nodes.last
+        return_node = block.nodes.find { |node| node.is_a?(Statement::Return) } || block.nodes.last
         body_nodes = block.nodes[0..-2]
         body_nodes.each { |expr| execute(expr.as Statement::Base) }
         return_value = execute(return_node.as Statement::Base) unless return_node.nil?
@@ -76,6 +84,45 @@ class Cosmo::Interpreter
 
   def visit_block_stmt(stmt : Statement::Block) : ValueType
     execute_block(stmt, Scope.new(@scope))
+  end
+
+  def visit_return_stmt(stmt : Statement::Return) : Nil
+    value = evaluate(stmt.value)
+    raise Return.new(value, stmt.keyword)
+  end
+
+  def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
+    typedef = Token.new(Syntax::TypeDef, "fn", Location.new(@file_path, 0, 0))
+    fn = Function.new(self, @scope, stmt)
+    @scope.declare(typedef, stmt.identifier, fn)
+    fn
+  end
+
+  def visit_fn_call_expr(expr : Expression::FunctionCall) : ValueType
+    fn = @scope.lookup(expr.var.token)
+    unless fn.is_a?(Function) || fn.is_a?(IntrinsicFunction)
+      report_error("Attempt to call", TypeChecker.get_mapped(fn.class), expr.var.token)
+    end
+    unless fn.arity.includes?(expr.arguments.size)
+      report_error("Expected #{fn.arity} arguments, got", expr.arguments.size.to_s, expr.var.token)
+    end
+
+    arg_values = expr.arguments.map { |arg| evaluate(arg.as Expression::Base) }
+    fn.call(arg_values)
+  end
+
+  def visit_var_expr(expr : Expression::Var) : ValueType
+    @scope.lookup(expr.token)
+  end
+
+  def visit_var_declaration_expr(expr : Expression::VarDeclaration) : ValueType
+    value = evaluate(expr.value.as Expression::Base)
+    @scope.declare(expr.typedef, expr.var.token, value)
+  end
+
+  def visit_var_assignment_expr(expr : Expression::VarAssignment) : ValueType
+    value = evaluate(expr.value.as Expression::Base)
+    @scope.assign(expr.var.token, value)
   end
 
   def visit_compound_assignment_expr(expr : Expression::CompoundAssignment) : ValueType
@@ -183,41 +230,27 @@ class Cosmo::Interpreter
       else
         report_error("Invalid '%' operand type", var.class.to_s, expr.operator)
       end
+    when Syntax::CaratEqual
+      if var.is_a?(Float)
+        if value.is_a?(Float)
+          @scope.assign(expr.name, var ** value)
+        elsif value.is_a?(Int)
+          @scope.assign(expr.name, var ** value.to_f)
+        else
+          report_error("Invalid '^' operand type", value.class.to_s, expr.operator)
+        end
+      elsif var.is_a?(Int)
+        if value.is_a?(Int)
+          @scope.assign(expr.name, var ** value)
+        elsif value.is_a?(Float)
+          @scope.assign(expr.name, var.to_f ** value)
+        else
+          report_error("Invalid '^' operand type", value.class.to_s, expr.operator)
+        end
+      else
+        report_error("Invalid '^' operand type", var.class.to_s, expr.operator)
+      end
     end
-  end
-
-  def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
-    typedef = Token.new(Syntax::TypeDef, "fn", Location.new(@file_path, 0, 0))
-    fn = Function.new(self, @scope, stmt)
-    @scope.declare(typedef, stmt.identifier, fn)
-    fn
-  end
-
-  def visit_fn_call_expr(expr : Expression::FunctionCall) : ValueType
-    fn = @scope.lookup(expr.var.token)
-    unless fn.is_a?(Function) || fn.is_a?(IntrinsicFunction)
-      report_error("Attempt to call", TypeChecker.get_mapped(fn.class), expr.var.token)
-    end
-    unless fn.arity.includes?(expr.arguments.size)
-      report_error("Expected #{fn.arity} arguments, got", expr.arguments.size.to_s, expr.var.token)
-    end
-
-    arg_values = expr.arguments.map { |arg| evaluate(arg.as Expression::Base) }
-    fn.call(arg_values)
-  end
-
-  def visit_var_expr(expr : Expression::Var) : ValueType
-    @scope.lookup(expr.token)
-  end
-
-  def visit_var_declaration_expr(expr : Expression::VarDeclaration) : ValueType
-    value = evaluate(expr.value.as Expression::Base)
-    @scope.declare(expr.typedef, expr.var.token, value)
-  end
-
-  def visit_var_assignment_expr(expr : Expression::VarAssignment) : ValueType
-    value = evaluate(expr.value.as Expression::Base)
-    @scope.assign(expr.var.token, value)
   end
 
   def visit_unary_op_expr(expr : Expression::UnaryOp) : ValueType
