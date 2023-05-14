@@ -1,5 +1,8 @@
-void fn increment(int x) {
-  puts(x)
-  x + 1
+void fn greeter(string greeting) {
+  void fn greet() {
+    puts(greeting)
+  }
 }
-puts(increment(1))
+
+any greet = greeter("hello")
+greet()

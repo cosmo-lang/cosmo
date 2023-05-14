@@ -213,7 +213,7 @@ describe Parser do
       "bool fn is_eq(int a, int b) {",
       " a == b",
       "}",
-      "is_eq(1, 1)"
+      "is_eq(1, 1)",
     ]
     stmts = Parser.new(lines.join('\n'), "test").parse
     stmts.empty?.should be_false
@@ -225,11 +225,11 @@ describe Parser do
     function_def.parameters.last.identifier.value.should eq "b"
     function_def.identifier.value.should eq "is_eq"
     function_def.body.nodes.empty?.should be_false
+    function_def.return_typedef.type.should eq Syntax::TypeDef
+    function_def.return_typedef.value.should eq "bool"
 
     expr = function_def.body.nodes.first.as(AST::Statement::SingleExpression).expression
     expr.should be_a AST::Expression::BinaryOp
-    function_def.return_typedef.type.should eq Syntax::TypeDef
-    function_def.return_typedef.value.should eq "bool"
 
     expr = stmts.last.as(AST::Statement::SingleExpression).expression
     function_call = expr.as AST::Expression::FunctionCall
@@ -252,5 +252,36 @@ describe Parser do
 
     binary.operator.type.should eq Syntax::EqualEqual
     binary.right.should be_a AST::Expression::NoneLiteral
+
+    lines = [
+      "void fn say_hi() {",
+      " puts(\"hi\")",
+      "}",
+      "say_hi()",
+    ]
+    stmts = Parser.new(lines.join('\n'), "test").parse
+    stmts.empty?.should be_false
+    function_def = stmts.first.as AST::Statement::FunctionDef
+    function_def.parameters.empty?.should be_true
+    function_def.identifier.value.should eq "say_hi"
+    function_def.body.nodes.empty?.should be_false
+    function_def.return_typedef.type.should eq Syntax::TypeDef
+    function_def.return_typedef.value.should eq "void"
+
+    expr = function_def.body.nodes.first.as(AST::Statement::SingleExpression).expression
+    expr.should be_a AST::Expression::FunctionCall
+    function_call = expr.as AST::Expression::FunctionCall
+    function_call.var.token.type.should eq Syntax::Identifier
+    function_call.var.token.value.should eq "puts"
+
+    arg = function_call.arguments.first
+    arg.should be_a AST::Expression::StringLiteral
+    arg.as(AST::Expression::StringLiteral).value.should eq "hi"
+
+    expr = stmts.last.as(AST::Statement::SingleExpression).expression
+    function_call = expr.as AST::Expression::FunctionCall
+    function_call.var.token.type.should eq Syntax::Identifier
+    function_call.var.token.value.should eq "say_hi"
+    function_call.arguments.empty?.should be_true
   end
 end
