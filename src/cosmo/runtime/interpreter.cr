@@ -9,15 +9,10 @@ class Cosmo::Interpreter
 
   def initialize(@output_ast)
     globals = {
-      "puts" => {"fn", PutsIntrinsic.new(@scope, [
-        AST::Expression::Parameter.new(
-          typedef: Token.new(Syntax::TypeDef, "any", Location.new("intrinsic", 0, 0)),
-          identifier: Token.new(Syntax::Identifier, "msg", Location.new("intrinsic", 0, 0))
-        )
-      ])}
+      "puts" => {"fn", PutsIntrinsic.new}
     } of String => Tuple(String, ValueType)
 
-    @scope.set_global(globals)
+    @scope.variables = globals
   end
 
   def interpret(source : String, @file_path : String) : ValueType
@@ -27,61 +22,39 @@ class Cosmo::Interpreter
     walk(ast)
   end
 
-  private def report_error(error_type : String, message : String, token : Token)
-    Logger.report_error(error_type, message, token.location.line, token.location.position)
+  def walk_block(block : Statement::Block, block_scope : Scope) : ValueType?
+    prev_scope = @scope
+    begin
+      @scope = block_scope
+      return_value = walk(block.single_expression?.not_nil!) unless block.single_expression?.nil?
+      block.nodes.each { |expr| walk(expr) }
+    rescue ex : Exception
+      raise ex
+    ensure
+      @scope = prev_scope
+    end
   end
 
-  private def walk(node : Node) : ValueType?
+  def walk(node : Node) : ValueType?
     case node
     when Statement::Block
-      return walk(node.single_expression?.not_nil!) unless node.single_expression?.nil?
-      node.nodes.each { |expr| walk(expr) }
+      walk_block(node, Scope.new(@scope))
     when Statement::FunctionDef
-      scope = Scope.new(@scope)
-      params = node.parameters
-      non_nullable_params = params.select { |param| !param.default_value.nil? }
-      params.each do |param| # define default values
-        unless param.default_value.nil?
-          value = walk(param.default_value.not_nil!)
-          scope.declare(param.typedef, param.identifier, value)
-        end
-      end
-
-      arity = non_nullable_params.size.to_u..node.parameters.size.to_u
-      fn = Function.new(scope, node.parameters, arity, node.body)
-
-      typedef = Token.new(Syntax::TypeDef, "fn", Location.new(file_path, 0, 0))
+      typedef = Token.new(Syntax::TypeDef, "fn", Location.new(@file_path, 0, 0))
+      fn = Function.new(self, @scope, node)
       @scope.declare(typedef, node.identifier, fn)
       fn
     when Expression::FunctionCall
       fn = @scope.lookup(node.var.token)
-      if fn.is_a?(Function) || fn.is_a?(IntrinsicFunction)
-        unless fn.arity.includes?(node.arguments.size)
-          report_error("Expected #{fn.arity} arguments, got", node.arguments.size.to_s, node.var.token)
-        end
-        fn_scope = fn.scope
-        params = fn.param_nodes
-
-        arg_values = [] of ValueType
-        non_nullable_params = params.select { |param| !param.default_value.nil? }
-        params.each_with_index do |param, i|
-          value = walk(node.arguments[i])
-          unless value.nil? && non_nullable_params.includes?(param)
-            fn_scope.declare(param.typedef, param.identifier, value)
-          end
-          arg_values << value
-        end
-
-        @scope = fn_scope
-        result = fn.intrinsic? ?
-          fn.as(IntrinsicFunction).call(*Tuple(ValueType).from(arg_values))
-          : walk(fn.as(Function).body)
-
-        @scope = @scope.unwrap
-        result
-      else
+      unless fn.is_a?(Function) || fn.is_a?(IntrinsicFunction)
         report_error("Attempt to call", TypeChecker.get_mapped(fn.class), node.var.token)
       end
+      unless fn.arity.includes?(node.arguments.size)
+        report_error("Expected #{fn.arity} arguments, got", node.arguments.size.to_s, node.var.token)
+      end
+
+      arg_values = node.arguments.map { |arg| walk(arg) }
+      fn.call(arg_values)
     when Expression::Var
       @scope.lookup(node.token)
     when Expression::VarDeclaration
@@ -336,5 +309,9 @@ class Cosmo::Interpreter
     else
       raise "Unhandled AST node: #{node.to_s}"
     end
+  end
+
+  private def report_error(error_type : String, message : String, token : Token)
+    Logger.report_error(error_type, message, token.location.line, token.location.position)
   end
 end

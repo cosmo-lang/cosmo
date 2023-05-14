@@ -3,46 +3,38 @@ require "./typechecker"
 
 class Cosmo::Scope
   property parent : Cosmo::Scope?
-  getter local_variables = {} of String => Tuple(String, ValueType)
+  property variables = {} of String => Tuple(String, ValueType)
 
   def initialize(@parent = nil)
   end
 
-  def get_locals
-    @local_variables
-  end
-
-  def set_global(variables : Hash(String, Tuple(String, ValueType)))
-    @local_variables = variables
-  end
-
   def declare(typedef : Token, identifier : Token, value : ValueType)
     TypeChecker.assert(typedef.value.to_s, value, typedef) unless value == nil
-    @local_variables[identifier.value.to_s] = {typedef.value.to_s, value}
+    @variables[identifier.value.to_s] = {typedef.value.to_s, value}
     value
   end
 
   def assign(identifier : Token, value : ValueType)
-    Logger.report_error("Undefined variable", identifier.value.to_s, identifier) unless get_locals.has_key?(identifier.value.to_s)
-    typedef, old_value = get_locals[identifier.value.to_s]
+    Logger.report_error("Undefined variable", identifier.value.to_s, identifier) unless @variables.has_key?(identifier.value.to_s)
+    typedef, old_value = @variables[identifier.value.to_s]
     TypeChecker.assert(typedef, value, identifier)
-    @local_variables[identifier.value.to_s] = {typedef, value}
+    @variables[identifier.value.to_s] = {typedef, value}
     value
   end
 
   def lookup(token : Token) : ValueType
     identifier = token.value
-    if get_locals.has_key?(identifier)
-      typedef, value = get_locals[identifier]
+    if @variables.has_key?(identifier)
+      typedef, value = @variables[identifier]
+      return value unless typedef.nil? && value.nil?
     else
       unless @parent.nil?
         parent = @parent.not_nil!
-        typedef, value = parent.get_locals[identifier] if parent.get_locals.has_key?(identifier)
+        value = parent.lookup(token)
+        return value
       end
     end
-    # puts typedef, value, get_locals
     Logger.report_error("Undefined variable", token.value.to_s, token) if typedef.nil? && value.nil? && @parent.nil?
-    value
   end
 
   def unwrap : Scope
@@ -50,6 +42,6 @@ class Cosmo::Scope
   end
 
   def to_s
-    "Scope<#{@parent ? "parent: " + @parent.to_s + ", " : ""}#{@local_variables}>"
+    "Scope<#{@parent ? "parent: " + @parent.to_s + ", " : ""}#{@variables}>"
   end
 end

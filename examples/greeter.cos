@@ -1,4 +1,5 @@
 void fn increment(int x) {
   puts(x)
+  x
 }
 increment(1)

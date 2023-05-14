@@ -31,8 +31,8 @@ module Cosmo
     begin
       contents = File.read(path)
       read_source(contents, file_path: path)
-    rescue e : Exception
-      abort "Failed to read file \"#{path}\": \n#{e.message}\n\t#{e.backtrace.join("\n\t")}", 1
+    rescue ex : Exception
+      abort "Failed to read file \"#{path}\": \n#{ex.message}\n\t#{ex.backtrace.join("\n\t")}", 1
     end
   end
 
