@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 describe Lexer do
-  unexpected_float = "Unexpected float: Hex/binary numbers must be integers"
+  unexpected_float = "Unexpected float: Hex/octal/binary literals must be integers"
   it "throws for unexpected characters" do
     lexer = Lexer.new("@/\\", "test")
     expect_raises(Exception, "[0:2] Unexpected character: @") { lexer.tokenize }

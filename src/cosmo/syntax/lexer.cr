@@ -205,20 +205,12 @@ class Cosmo::Lexer
     @tokens << Token.new(syntax, value, location)
   end
 
-  private def is_hex?
+  private def is_base?(char : String, radix : Int) : Bool
     current_char == "0" &&
       char_exists?(1) &&
-      peek == "x" &&
+      peek == char &&
       char_exists?(2) &&
-      peek(2).to_i(16)
-  end
-
-  private def is_binary?
-    current_char == "0" &&
-      char_exists?(1) &&
-      peek == "b" &&
-      char_exists?(2) &&
-      peek(2).to_i(2)
+      !peek(2).to_i(radix).nil?
   end
 
   private def skip_comments(multiline : Bool)
@@ -247,14 +239,18 @@ class Cosmo::Lexer
   private def read_number
     num_str = ""
     radix = 10
-    if is_hex?
+    if is_base?("x", 16)
       advance
       advance
-      radix =16
-    elsif is_binary?
+      radix = 16
+    elsif is_base?("b", 2)
       advance
       advance
       radix = 2
+    elsif is_base?("o", 8)
+      advance
+      advance
+      radix = 8
     end
 
     decimal_used = false
@@ -267,7 +263,7 @@ class Cosmo::Lexer
     end
 
     if decimal_used
-      Logger.report_error("Unexpected float", "Hex/binary numbers must be integers", @line, @position) unless radix == 10
+      Logger.report_error("Unexpected float", "Hex/octal/binary literals must be integers", @line, @position) unless radix == 10
       add_token(Syntax::Float, num_str.to_f64)
     else
       add_token(Syntax::Integer, num_str.to_i64(radix))

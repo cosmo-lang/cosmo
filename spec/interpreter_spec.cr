@@ -13,6 +13,8 @@ describe Interpreter do
     result.should eq 7
     result = interpreter.interpret("0xabc", "test")
     result.should eq 2748
+    result = interpreter.interpret("0o2004", "test")
+    result.should eq 1028
     result = interpreter.interpret("10.24335", "test")
     result.should eq 10.24335
     result = interpreter.interpret("\"hello\"", "test")
