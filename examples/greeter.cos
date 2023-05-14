@@ -1,8 +1,9 @@
 any fn greeter(string greeting) {
-  void fn greet() {
-    puts(greeting)
+  void fn greet(string person) {
+    puts(greeting + " " + person)
   }
 }
 
 any greet = greeter("hello")
-greet()
+greet("world")
+greet("bob")
