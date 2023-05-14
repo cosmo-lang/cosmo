@@ -146,7 +146,7 @@ class Cosmo::Interpreter
         elsif value.is_a?(Int)
           @scope.assign(expr.name, var + value.to_f)
         else
-          report_error("Invalid '+' operand type", value.class.to_s, expr.operator)
+          report_error("Invalid '+=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(Int)
         if value.is_a?(Int)
@@ -154,16 +154,16 @@ class Cosmo::Interpreter
         elsif value.is_a?(Float)
           @scope.assign(expr.name, var.to_f + value)
         else
-          report_error("Invalid '+' operand type", value.class.to_s, expr.operator)
+          report_error("Invalid '+=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(String)
         if value.is_a?(String)
           @scope.assign(expr.name, var + value)
         else
-          report_error("Invalid '+' operand type", value.class.to_s, expr.operator)
+          report_error("Invalid '+=' operand type", value.class.to_s, expr.operator)
         end
       else
-        report_error("Invalid '+' operand type", var.class.to_s, expr.operator)
+        report_error("Invalid '+=' operand type", var.class.to_s, expr.operator)
       end
     when Syntax::MinusEqual
       if var.is_a?(Float)
@@ -172,7 +172,7 @@ class Cosmo::Interpreter
         elsif value.is_a?(Int)
           @scope.assign(expr.name, var + value.to_f)
         else
-          report_error("Invalid '+' operand type", value.class.to_s, expr.operator)
+          report_error("Invalid '+=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(Int)
         if value.is_a?(Int)
@@ -180,10 +180,10 @@ class Cosmo::Interpreter
         elsif value.is_a?(Float)
           @scope.assign(expr.name, var.to_f + value)
         else
-          report_error("Invalid '+' operand type", value.class.to_s, expr.operator)
+          report_error("Invalid '+=' operand type", value.class.to_s, expr.operator)
         end
       else
-        report_error("Invalid '+' operand type", var.class.to_s, expr.operator)
+        report_error("Invalid '+=' operand type", var.class.to_s, expr.operator)
       end
     when Syntax::StarEqual
       if var.is_a?(Float)
@@ -192,7 +192,7 @@ class Cosmo::Interpreter
         elsif value.is_a?(Int)
           @scope.assign(expr.name, var * value.to_f)
         else
-          report_error("Invalid '*' operand type", value.class.to_s, expr.operator)
+          report_error("Invalid '*=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(Int)
         if value.is_a?(Int)
@@ -200,10 +200,10 @@ class Cosmo::Interpreter
         elsif value.is_a?(Float)
           @scope.assign(expr.name, var.to_f * value)
         else
-          report_error("Invalid '*' operand type", value.class.to_s, expr.operator)
+          report_error("Invalid '*=' operand type", value.class.to_s, expr.operator)
         end
       else
-        report_error("Invalid '*' operand type", var.class.to_s, expr.operator)
+        report_error("Invalid '*=' operand type", var.class.to_s, expr.operator)
       end
     when Syntax::SlashEqual
       if var.is_a?(Float)
@@ -212,7 +212,7 @@ class Cosmo::Interpreter
         elsif value.is_a?(Int)
           @scope.assign(expr.name, var / value.to_f)
         else
-          report_error("Invalid '/' operand type", value.class.to_s, expr.operator)
+          report_error("Invalid '/=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(Int)
         if value.is_a?(Int)
@@ -220,10 +220,10 @@ class Cosmo::Interpreter
         elsif value.is_a?(Float)
           @scope.assign(expr.name, var.to_f / value)
         else
-          report_error("Invalid '/' operand type", value.class.to_s, expr.operator)
+          report_error("Invalid '/=' operand type", value.class.to_s, expr.operator)
         end
       else
-        report_error("Invalid '/' operand type", var.class.to_s, expr.operator)
+        report_error("Invalid '/=' operand type", var.class.to_s, expr.operator)
       end
     when Syntax::PercentEqual
       if var.is_a?(Float)
@@ -232,7 +232,7 @@ class Cosmo::Interpreter
         elsif value.is_a?(Int)
           @scope.assign(expr.name, var % value.to_f)
         else
-          report_error("Invalid '%' operand type", value.class.to_s, expr.operator)
+          report_error("Invalid '%=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(Int)
         if value.is_a?(Int)
@@ -240,10 +240,10 @@ class Cosmo::Interpreter
         elsif value.is_a?(Float)
           @scope.assign(expr.name, var.to_f % value)
         else
-          report_error("Invalid '%' operand type", value.class.to_s, expr.operator)
+          report_error("Invalid '%=' operand type", value.class.to_s, expr.operator)
         end
       else
-        report_error("Invalid '%' operand type", var.class.to_s, expr.operator)
+        report_error("Invalid '%=' operand type", var.class.to_s, expr.operator)
       end
     when Syntax::CaratEqual
       if var.is_a?(Float)
@@ -252,7 +252,7 @@ class Cosmo::Interpreter
         elsif value.is_a?(Int)
           @scope.assign(expr.name, var ** value.to_f)
         else
-          report_error("Invalid '^' operand type", value.class.to_s, expr.operator)
+          report_error("Invalid '^=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(Int)
         if value.is_a?(Int)
@@ -260,10 +260,10 @@ class Cosmo::Interpreter
         elsif value.is_a?(Float)
           @scope.assign(expr.name, var.to_f ** value)
         else
-          report_error("Invalid '^' operand type", value.class.to_s, expr.operator)
+          report_error("Invalid '^=' operand type", value.class.to_s, expr.operator)
         end
       else
-        report_error("Invalid '^' operand type", var.class.to_s, expr.operator)
+        report_error("Invalid '^=' operand type", var.class.to_s, expr.operator)
       end
     end
   end
