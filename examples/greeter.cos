@@ -5,5 +5,5 @@ any fn greeter(string greeting) {
 }
 
 any greet = greeter("hello")
-greet("world")
-greet("bob")
+greet("world") ## hello world
+greet("bob") ## hello bob

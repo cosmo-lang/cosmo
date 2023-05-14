@@ -17,6 +17,10 @@ module Cosmo
     opts.on("-a", "--ast", "Output the AST") do
       @@options[:ast] = true
     end
+    opts.on("-v", "--version", "Output the current version of Cosmo") do
+      puts "Cosmo v#{`shards version`}"
+      exit
+    end
   end.parse(ARGV)
 
 
