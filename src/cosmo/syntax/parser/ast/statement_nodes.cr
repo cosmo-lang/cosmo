@@ -1,5 +1,15 @@
 module Cosmo::AST::Statement
-  class FunctionDef < Node
+  module Visitor(R)
+    abstract def visit_block_stmt(stmt : Block) : R
+    abstract def visit_fn_def_stmt(stmt : FunctionDef) : R
+    abstract def visit_single_expr_stmt(stmt : SingleExpression)
+  end
+
+  abstract class Base < Node
+    abstract def accept(visitor : Visitor(R)) forall R
+  end
+
+  class FunctionDef < Base
     getter identifier : Token
     getter parameters : Array(Expression::Parameter)
     getter body : Block
@@ -8,12 +18,31 @@ module Cosmo::AST::Statement
     def initialize(@identifier, @parameters, @body, @return_typedef)
     end
 
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_fn_def_stmt(self)
+    end
+
     def to_s
       "FunctionDef<identifier: #{@identifier.value.to_s}, parameters: [#{@parameters.map(&.to_s).join(", ")}], return_typedef: #{@return_typedef.value}, body: #{@body.to_s}>"
     end
   end
 
-  class Block < Node
+  class SingleExpression < Base
+    getter expression : Expression::Base
+
+    def initialize(@expression)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_single_expr_stmt(self)
+    end
+
+    def to_s
+      "SingleExpression<expression: #{@expression.to_s}>"
+    end
+  end
+
+  class Block < Base
     getter nodes : Array(Node)
 
     def initialize(@nodes = [] of Node)
@@ -44,9 +73,13 @@ module Cosmo::AST::Statement
     end
 
     # It yields first node if this holds only one node, or yields `nil`.
-    def single_expression? : Node?
-      return @nodes.first.single_expression if @nodes.size == 1
+    def single_expression? : Expression::Base?
+      return @nodes.first.single_expression.as Expression::Base if @nodes.size == 1
       nil
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_block_stmt(self)
     end
 
     def to_s

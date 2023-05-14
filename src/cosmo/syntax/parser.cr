@@ -12,12 +12,16 @@ class Cosmo::Parser
   end
 
   # Entry point
-  def parse
-    parse_block
+  def parse : Array(Statement::Base)
+    statements = [] of Statement::Base
+    until finished?
+      statements << parse_statement
+    end
+    statements
   end
 
   # Parse an expression and return a node
-  private def parse_expression : Node
+  private def parse_expression : Expression::Base
     callee = parse_var_declaration
 
     if match?(Syntax::LParen)
@@ -28,8 +32,13 @@ class Cosmo::Parser
   end
 
   # Parse a statement and return a node
-  private def parse_statement : Node
-    parse_function_definition
+  private def parse_statement : Statement::Base
+    stmt = parse_function_definition
+    if stmt.is_a?(Expression::Base)
+      Statement::SingleExpression.new(stmt)
+    else
+      stmt.as Statement::Base
+    end
   end
 
   # Parse a block of statements and return a node

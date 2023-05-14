@@ -41,8 +41,18 @@ class Cosmo::Scope
     Logger.report_error("Undefined variable", token.value.to_s, token) if typedef.nil? && value.nil? && @parent.nil?
   end
 
-  def unwrap : Scope
-    @parent || self
+  def lookup_at(distance : UInt32, token : Token) : ValueType
+    var_decl : Tuple(String, ValueType) = ancestor(distance).variables[token.value.to_s]?
+    typedef, value = var_decl
+    value
+  end
+
+  private def ancestor(distance : UInt32) : Scope
+    scope = self
+    distance.times do
+      scope = scope.parent || scope
+    end
+    scope
   end
 
   def to_s

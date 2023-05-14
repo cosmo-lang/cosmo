@@ -1,11 +1,29 @@
 module Cosmo::AST::Expression
   include Cosmo::AST
 
-  class FunctionCall < Node
+  module Visitor(R)
+    abstract def visit_fn_call_expr(expr : FunctionCall) : R
+    abstract def visit_var_declaration_expr(expr : VarDeclaration) : R
+    abstract def visit_var_assignment_expr(expr : VarAssignment) : R
+    abstract def visit_var_expr(expr : Var) : R
+    abstract def visit_binary_op_expr(expr : BinaryOp) : R
+    abstract def visit_unary_op_expr(expr : UnaryOp) : R
+    abstract def visit_literal_expr(expr : Literal) : R
+  end
+
+  abstract class Base < Node
+    abstract def accept(visitor : Visitor(R)) forall R
+  end
+
+  class FunctionCall < Base
     getter var : Var
     getter arguments : Array(Node)
 
     def initialize(@var, @arguments)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_fn_call_expr(self)
     end
 
     def to_s
@@ -13,7 +31,7 @@ module Cosmo::AST::Expression
     end
   end
 
-  class Parameter < Node
+  class Parameter < Base
     getter typedef : Token
     getter identifier : Token
     getter default_value : Node?
@@ -21,12 +39,16 @@ module Cosmo::AST::Expression
     def initialize(@typedef, @identifier, @default_value = NoneLiteral.new)
     end
 
+    def accept(visitor : Visitor(R)) : R forall R
+
+    end
+
     def to_s
       "Parameter<typedef: #{@typedef.value}, identifier: #{@identifier.value.to_s}, value: #{@default_value.nil? ? "none" : @default_value.to_s}>"
     end
   end
 
-  class VarDeclaration < Node
+  class VarDeclaration < Base
     getter typedef : Token
     getter var : Var
     getter value : Node
@@ -34,16 +56,24 @@ module Cosmo::AST::Expression
     def initialize(@typedef, @var, @value)
     end
 
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_var_declaration_expr(self)
+    end
+
     def to_s
       "VarDeclaration<typedef: #{@typedef.value}, var: #{@var.token.value.to_s}, value: #{@value.to_s}>"
     end
   end
 
-  class VarAssignment < Node
+  class VarAssignment < Base
     getter var : Var
     getter value : Node
 
     def initialize(@var, @value)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_var_assignment_expr(self)
     end
 
     def to_s
@@ -51,10 +81,14 @@ module Cosmo::AST::Expression
     end
   end
 
-  class Var < Node
+  class Var < Base
     getter token : Token
 
     def initialize(@token)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_var_expr(self)
     end
 
     def to_s
@@ -62,7 +96,7 @@ module Cosmo::AST::Expression
     end
   end
 
-  class BinaryOp < Node
+  class BinaryOp < Base
     getter left : Node
     getter operator : Token
     getter right : Node
@@ -70,16 +104,24 @@ module Cosmo::AST::Expression
     def initialize(@left, @operator, @right)
     end
 
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_binary_op_expr(self)
+    end
+
     def to_s
       "Binary<left: #{@left.to_s}, operator: #{@operator}, right: #{@right.to_s}>"
     end
   end
 
-  class UnaryOp < Node
+  class UnaryOp < Base
     getter operator : Token
     getter operand : Node
 
     def initialize(@operator, @operand)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_unary_op_expr(self)
     end
 
     def to_s
@@ -87,9 +129,13 @@ module Cosmo::AST::Expression
     end
   end
 
-  abstract class Literal < Node
+  abstract class Literal < Base
     getter value : LiteralType
     def initialize(@value); end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_literal_expr(self)
+    end
   end
 
   class StringLiteral < Literal

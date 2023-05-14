@@ -1,6 +1,6 @@
 MAX_INTRINSIC_PARAMS = 255
 
-abstract class Cosmo::IntrinsicFunction
+abstract class Cosmo::IntrinsicFunction < Cosmo::Callable
   abstract def call(args : Array(ValueType)) : ValueType
 
   def intrinsic? : Bool

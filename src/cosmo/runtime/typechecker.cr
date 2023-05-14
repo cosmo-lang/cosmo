@@ -33,7 +33,7 @@ module Cosmo::TypeChecker
   def assert(typedef : String, value : ValueType, token : Token)
     case typedef
     when "fn"
-      report_mismatch(typedef, value, token) unless value.is_a?(Function)
+      report_mismatch(typedef, value, token) unless value.is_a?(Function) || value.is_a?(IntrinsicFunction)
     when "int"
       report_mismatch(typedef, value, token) unless value.is_a?(Int)
     when "float"

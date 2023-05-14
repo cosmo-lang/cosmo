@@ -15,7 +15,7 @@ class Cosmo::Function < Cosmo::Callable
     params = @definition.parameters
     @non_nullable_params = params.select { |param| !param.default_value.nil? }
     params.each do |param| # initialize params & define default values
-      value = @interpreter.walk(param.default_value.not_nil!) unless param.default_value.nil?
+      value = @interpreter.evaluate(param.default_value.as AST::Expression::Base) unless param.default_value.nil?
       @closure.declare(param.typedef, param.identifier, value)
     end
   end
@@ -27,7 +27,7 @@ class Cosmo::Function < Cosmo::Callable
     @definition.parameters.each_with_index do |param, i|
       scope.declare(param.typedef, param.identifier, args[i])
     end
-    @interpreter.walk_block(@definition.body, scope)
+    @interpreter.execute_block(@definition.body, scope)
   end
 
   def arity : Range(UInt32, UInt32)
