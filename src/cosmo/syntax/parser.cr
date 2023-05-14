@@ -57,14 +57,11 @@ class Cosmo::Parser
   private def parse_function_call(callee : Expression::Var) : Node
     arguments = [] of Node
 
-    unless match?(Syntax::RParen)
+    until match?(Syntax::RParen)
       arguments << parse_expression
-      while match?(Syntax::Comma)
-        arguments << parse_expression
-      end
+      match?(Syntax::Comma)
     end
 
-    consume(Syntax::RParen)
     Expression::FunctionCall.new(callee, arguments)
   end
 
