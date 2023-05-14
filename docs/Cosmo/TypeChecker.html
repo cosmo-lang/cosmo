@@ -51,6 +51,11 @@
   <div class="types-list">
     <ul>
   
+  <li class=" " data-id="Cosmo/toplevel" data-name="top level namespace">
+      <a href="../toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
   <li class="parent open current" data-id="Cosmo/Cosmo" data-name="cosmo">
       <a href="../Cosmo.html">Cosmo</a>
       
@@ -86,6 +91,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/FunctionCall" data-name="cosmo::ast::expression::functioncall">
+      <a href="../Cosmo/AST/Expression/FunctionCall.html">FunctionCall</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/IntLiteral" data-name="cosmo::ast::expression::intliteral">
       <a href="../Cosmo/AST/Expression/IntLiteral.html">IntLiteral</a>
       
@@ -98,6 +108,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/NoneLiteral" data-name="cosmo::ast::expression::noneliteral">
       <a href="../Cosmo/AST/Expression/NoneLiteral.html">NoneLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Parameter" data-name="cosmo::ast::expression::parameter">
+      <a href="../Cosmo/AST/Expression/Parameter.html">Parameter</a>
       
     </li>
   
@@ -146,6 +161,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/FunctionDef" data-name="cosmo::ast::statement::functiondef">
+      <a href="../Cosmo/AST/Statement/FunctionDef.html">FunctionDef</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -161,8 +181,18 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Function" data-name="cosmo::function">
+      <a href="../Cosmo/Function.html">Function</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Interpreter" data-name="cosmo::interpreter">
       <a href="../Cosmo/Interpreter.html">Interpreter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/IntrinsicFunction" data-name="cosmo::intrinsicfunction">
+      <a href="../Cosmo/IntrinsicFunction.html">IntrinsicFunction</a>
       
     </li>
   
@@ -188,6 +218,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Parser" data-name="cosmo::parser">
       <a href="../Cosmo/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/PutsIntrinsic" data-name="cosmo::putsintrinsic">
+      <a href="../Cosmo/PutsIntrinsic.html">PutsIntrinsic</a>
       
     </li>
   
@@ -218,6 +253,11 @@
   
   <li class=" " data-id="Cosmo/LiteralType" data-name="literaltype">
       <a href="../LiteralType.html">LiteralType</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/ValueType" data-name="valuetype">
+      <a href="../ValueType.html">ValueType</a>
       
     </li>
   
@@ -275,7 +315,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/runtime/typechecker.cr#L3" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/typechecker.cr#L6" target="_blank">
         cosmo/runtime/typechecker.cr
       </a>
     
@@ -297,7 +337,7 @@
   <dl>
     
       <dt class="entry-const" id="TYPE_MAP">
-        <strong>TYPE_MAP</strong> = <code>{<span class="t">Int64</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int32</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int16</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int8</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Float64</span> <span class="o">=&gt;</span> <span class="s">&quot;float&quot;</span>, <span class="t">Float32</span> <span class="o">=&gt;</span> <span class="s">&quot;float&quot;</span>, <span class="t">String</span> <span class="o">=&gt;</span> <span class="s">&quot;string&quot;</span>, <span class="t">Char</span> <span class="o">=&gt;</span> <span class="s">&quot;char&quot;</span>, <span class="t">Bool</span> <span class="o">=&gt;</span> <span class="s">&quot;bool&quot;</span>}</code>
+        <strong>TYPE_MAP</strong> = <code>{<span class="t">Int64</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int32</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int16</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int8</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Float64</span> <span class="o">=&gt;</span> <span class="s">&quot;float&quot;</span>, <span class="t">Float32</span> <span class="o">=&gt;</span> <span class="s">&quot;float&quot;</span>, <span class="t">String</span> <span class="o">=&gt;</span> <span class="s">&quot;string&quot;</span>, <span class="t">Char</span> <span class="o">=&gt;</span> <span class="s">&quot;char&quot;</span>, <span class="t">Bool</span> <span class="o">=&gt;</span> <span class="s">&quot;bool&quot;</span>, <span class="t">Nil</span> <span class="o">=&gt;</span> <span class="s">&quot;none&quot;</span>, <span class="t">Function</span> <span class="o">=&gt;</span> <span class="s">&quot;fn&quot;</span>, <span class="t">PutsIntrinsic</span> <span class="o">=&gt;</span> <span class="s">&quot;fn&quot;</span>}</code>
       </dt>
       
     
@@ -320,7 +360,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#assert%28typedef%3AString%2Cvalue%3ALiteralType%2Ctoken%3AToken%29-instance-method" class="signature"><strong>#assert</strong>(typedef : String, value : LiteralType, token : Token)</a>
+        <a href="#assert%28typedef%3AString%2Cvalue%3AValueType%2Ctoken%3AToken%29-instance-method" class="signature"><strong>#assert</strong>(typedef : String, value : ValueType, token : Token)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get_mapped%28t%3AClass%29%3AString-instance-method" class="signature"><strong>#get_mapped</strong>(t : Class) : String</a>
         
       </li>
     
@@ -348,18 +393,34 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="assert(typedef:String,value:LiteralType,token:Token)-instance-method">
+    <div class="entry-detail" id="assert(typedef:String,value:ValueType,token:Token)-instance-method">
       <div class="signature">
         
-        def <strong>assert</strong>(typedef : String, value : <a href="../LiteralType.html">LiteralType</a>, token : <a href="../Cosmo/Token.html">Token</a>)
+        def <strong>assert</strong>(typedef : String, value : <a href="../ValueType.html">ValueType</a>, token : <a href="../Cosmo/Token.html">Token</a>)
 
-        <a class="method-permalink" href="#assert%28typedef%3AString%2Cvalue%3ALiteralType%2Ctoken%3AToken%29-instance-method">#</a>
+        <a class="method-permalink" href="#assert%28typedef%3AString%2Cvalue%3AValueType%2Ctoken%3AToken%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/runtime/typechecker.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/typechecker.cr#L33" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get_mapped(t:Class):String-instance-method">
+      <div class="signature">
+        
+        def <strong>get_mapped</strong>(t : Class) : String
+
+        <a class="method-permalink" href="#get_mapped%28t%3AClass%29%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/typechecker.cr#L29" target="_blank">View source</a>]
         
       </div>
     </div>

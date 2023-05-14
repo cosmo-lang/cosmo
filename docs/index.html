@@ -51,6 +51,11 @@
   <div class="types-list">
     <ul>
   
+  <li class=" " data-id="Cosmo/toplevel" data-name="top level namespace">
+      <a href="toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
   <li class="parent " data-id="Cosmo/Cosmo" data-name="cosmo">
       <a href="Cosmo.html">Cosmo</a>
       
@@ -86,6 +91,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/FunctionCall" data-name="cosmo::ast::expression::functioncall">
+      <a href="Cosmo/AST/Expression/FunctionCall.html">FunctionCall</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/IntLiteral" data-name="cosmo::ast::expression::intliteral">
       <a href="Cosmo/AST/Expression/IntLiteral.html">IntLiteral</a>
       
@@ -98,6 +108,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/NoneLiteral" data-name="cosmo::ast::expression::noneliteral">
       <a href="Cosmo/AST/Expression/NoneLiteral.html">NoneLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Parameter" data-name="cosmo::ast::expression::parameter">
+      <a href="Cosmo/AST/Expression/Parameter.html">Parameter</a>
       
     </li>
   
@@ -146,6 +161,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/FunctionDef" data-name="cosmo::ast::statement::functiondef">
+      <a href="Cosmo/AST/Statement/FunctionDef.html">FunctionDef</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -161,8 +181,18 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Function" data-name="cosmo::function">
+      <a href="Cosmo/Function.html">Function</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Interpreter" data-name="cosmo::interpreter">
       <a href="Cosmo/Interpreter.html">Interpreter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/IntrinsicFunction" data-name="cosmo::intrinsicfunction">
+      <a href="Cosmo/IntrinsicFunction.html">IntrinsicFunction</a>
       
     </li>
   
@@ -188,6 +218,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Parser" data-name="cosmo::parser">
       <a href="Cosmo/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/PutsIntrinsic" data-name="cosmo::putsintrinsic">
+      <a href="Cosmo/PutsIntrinsic.html">PutsIntrinsic</a>
       
     </li>
   
@@ -221,6 +256,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/ValueType" data-name="valuetype">
+      <a href="ValueType.html">ValueType</a>
+      
+    </li>
+  
 </ul>
 
   </div>
@@ -235,6 +275,26 @@
   </svg>
 </a>Cosmo</h1>
 <p>Cosmo is a statically-typed programming language written in pure Crystal.</p>
+<h2><a id="things-i-gotta-do" class="anchor" href="#things-i-gotta-do">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Things I Gotta Do</h2>
+<ul>
+<li>Probably assign types to literals</li>
+<li>Arrays</li>
+<li>Some sorta hashmap</li>
+<li>Interfaces</li>
+<li>Classes
+<ul>
+<li>single inheritance</li>
+<li>mixins</li>
+<li>visibilities</li>
+<li>methods</li>
+<li>$ (this)</li>
+</ul>
+</li>
+</ul>
 <h2><a id="installation" class="anchor" href="#installation">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -254,7 +314,8 @@
 <li>Fork it (<a href="https://github.com/R-unic/cosmo/fork">https://github.com/R-unic/cosmo/fork</a>)</li>
 <li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
 <li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
-<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Test your code (<code>make test</code>)</li>
+<li>Push to the branch (<code>make publish</code>)</li>
 <li>Create a new Pull Request</li>
 </ol>
 <h2><a id="contributors" class="anchor" href="#contributors">

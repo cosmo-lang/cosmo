@@ -51,6 +51,11 @@
   <div class="types-list">
     <ul>
   
+  <li class=" " data-id="Cosmo/toplevel" data-name="top level namespace">
+      <a href="../toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
   <li class="parent open current" data-id="Cosmo/Cosmo" data-name="cosmo">
       <a href="../Cosmo.html">Cosmo</a>
       
@@ -86,6 +91,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/FunctionCall" data-name="cosmo::ast::expression::functioncall">
+      <a href="../Cosmo/AST/Expression/FunctionCall.html">FunctionCall</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/IntLiteral" data-name="cosmo::ast::expression::intliteral">
       <a href="../Cosmo/AST/Expression/IntLiteral.html">IntLiteral</a>
       
@@ -98,6 +108,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/NoneLiteral" data-name="cosmo::ast::expression::noneliteral">
       <a href="../Cosmo/AST/Expression/NoneLiteral.html">NoneLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Parameter" data-name="cosmo::ast::expression::parameter">
+      <a href="../Cosmo/AST/Expression/Parameter.html">Parameter</a>
       
     </li>
   
@@ -146,6 +161,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/FunctionDef" data-name="cosmo::ast::statement::functiondef">
+      <a href="../Cosmo/AST/Statement/FunctionDef.html">FunctionDef</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -161,8 +181,18 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Function" data-name="cosmo::function">
+      <a href="../Cosmo/Function.html">Function</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Interpreter" data-name="cosmo::interpreter">
       <a href="../Cosmo/Interpreter.html">Interpreter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/IntrinsicFunction" data-name="cosmo::intrinsicfunction">
+      <a href="../Cosmo/IntrinsicFunction.html">IntrinsicFunction</a>
       
     </li>
   
@@ -188,6 +218,11 @@
   
   <li class=" current" data-id="Cosmo/Cosmo/Parser" data-name="cosmo::parser">
       <a href="../Cosmo/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/PutsIntrinsic" data-name="cosmo::putsintrinsic">
+      <a href="../Cosmo/PutsIntrinsic.html">PutsIntrinsic</a>
       
     </li>
   
@@ -218,6 +253,11 @@
   
   <li class=" " data-id="Cosmo/LiteralType" data-name="literaltype">
       <a href="../LiteralType.html">LiteralType</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/ValueType" data-name="valuetype">
+      <a href="../ValueType.html">ValueType</a>
       
     </li>
   
@@ -263,7 +303,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/parser.cr#L4" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/parser.cr#L4" target="_blank">
         cosmo/syntax/parser.cr
       </a>
     
@@ -306,23 +346,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#consume_current%3AToken-instance-method" class="signature"><strong>#consume_current</strong> : Token</a>
-        
-          <div class="summary"><p>Consume the current token and advance the position</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#parse-instance-method" class="signature"><strong>#parse</strong></a>
         
           <div class="summary"><p>Entry point</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#peek%28offset%3AInt32%3D1%29%3AToken-instance-method" class="signature"><strong>#peek</strong>(offset : Int32 = <span class="n">1</span>) : Token</a>
-        
-          <div class="summary"><p>Consume the current token and advance the position</p></div>
         
       </li>
     
@@ -387,7 +413,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/parser.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/parser.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -406,27 +432,6 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="consume_current:Token-instance-method">
-      <div class="signature">
-        
-        def <strong>consume_current</strong> : <a href="../Cosmo/Token.html">Token</a>
-
-        <a class="method-permalink" href="#consume_current%3AToken-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Consume the current token and advance the position</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/parser.cr#L272" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="parse-instance-method">
       <div class="signature">
         
@@ -443,28 +448,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/parser.cr#L15" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="peek(offset:Int32=1):Token-instance-method">
-      <div class="signature">
-        
-        def <strong>peek</strong>(offset : Int32 = <span class="n">1</span>) : <a href="../Cosmo/Token.html">Token</a>
-
-        <a class="method-permalink" href="#peek%28offset%3AInt32%3D1%29%3AToken-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Consume the current token and advance the position</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/parser.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/parser.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -480,7 +464,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/parser.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/parser.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -496,7 +480,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/syntax/parser.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/parser.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>

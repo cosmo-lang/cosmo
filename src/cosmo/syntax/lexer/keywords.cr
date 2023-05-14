@@ -20,17 +20,21 @@ module Cosmo::Keywords
     "return" => Syntax::Return
   }
 
-  TYPE_KEYWORDS = ["any", "bool", "string", "char", "int", "float", "void", "none"]
+  # These cannot be any of the keywords above
+  TYPE_KEYWORDS = ["any", "bool", "string", "char", "int", "float", "void"]
 
-  def self.type?(s)
+  # Returns whether or not `s` is a type keyword
+  def self.type?(s : String)
     TYPE_KEYWORDS.includes?(s)
   end
 
-  def self.keyword?(s)
+  # Returns whether or not `s` is a regular keyword
+  def self.keyword?(s : String)
     KEYWORDS.has_key?(s)
   end
 
-  def self.get_syntax(s)
+  # Returns the syntax type of `s` if it is a regular keyword
+  def self.get_syntax(s : String) : Syntax
     KEYWORDS.fetch(s) { raise "Invalid keyword #{s}" }
   end
 end

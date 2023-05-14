@@ -50,14 +50,16 @@ class Cosmo::Interpreter
       arity = non_nullable_params.size.to_u..node.parameters.size.to_u
       fn = Function.new(scope, node.parameters, arity, node.body)
 
-      typedef = Token.new(Syntax::Identifier, "fn", Location.new(file_path, 0, 0))
+      typedef = Token.new(Syntax::TypeDef, "fn", Location.new(file_path, 0, 0))
       @scope.declare(typedef, node.identifier, fn)
       fn
     when Expression::FunctionCall
       fn = @scope.lookup(node.var.token)
       if fn.is_a?(Function) || fn.is_a?(IntrinsicFunction)
-        report_error("Expected #{fn.arity} arguments, got", node.arguments.size.to_s, node.var.token) unless fn.arity.includes?(node.arguments.size)
-        @scope = fn.scope
+        unless fn.arity.includes?(node.arguments.size)
+          report_error("Expected #{fn.arity} arguments, got", node.arguments.size.to_s, node.var.token)
+        end
+        fn_scope = fn.scope
         params = fn.param_nodes
 
         arg_values = [] of ValueType
@@ -65,11 +67,12 @@ class Cosmo::Interpreter
         params.each_with_index do |param, i|
           value = walk(node.arguments[i])
           unless value.nil? && non_nullable_params.includes?(param)
-            fn.scope.declare(param.typedef, param.identifier, value)
+            fn_scope.declare(param.typedef, param.identifier, value)
           end
           arg_values << value
         end
 
+        @scope = fn_scope
         result = fn.intrinsic? ?
           fn.as(IntrinsicFunction).call(*Tuple(ValueType).from(arg_values))
           : walk(fn.as(Function).body)

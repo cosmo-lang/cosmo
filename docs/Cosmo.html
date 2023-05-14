@@ -51,6 +51,11 @@
   <div class="types-list">
     <ul>
   
+  <li class=" " data-id="Cosmo/toplevel" data-name="top level namespace">
+      <a href="toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
   <li class="parent open current" data-id="Cosmo/Cosmo" data-name="cosmo">
       <a href="Cosmo.html">Cosmo</a>
       
@@ -86,6 +91,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/FunctionCall" data-name="cosmo::ast::expression::functioncall">
+      <a href="Cosmo/AST/Expression/FunctionCall.html">FunctionCall</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/IntLiteral" data-name="cosmo::ast::expression::intliteral">
       <a href="Cosmo/AST/Expression/IntLiteral.html">IntLiteral</a>
       
@@ -98,6 +108,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/NoneLiteral" data-name="cosmo::ast::expression::noneliteral">
       <a href="Cosmo/AST/Expression/NoneLiteral.html">NoneLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Parameter" data-name="cosmo::ast::expression::parameter">
+      <a href="Cosmo/AST/Expression/Parameter.html">Parameter</a>
       
     </li>
   
@@ -146,6 +161,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/FunctionDef" data-name="cosmo::ast::statement::functiondef">
+      <a href="Cosmo/AST/Statement/FunctionDef.html">FunctionDef</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -161,8 +181,18 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Function" data-name="cosmo::function">
+      <a href="Cosmo/Function.html">Function</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Interpreter" data-name="cosmo::interpreter">
       <a href="Cosmo/Interpreter.html">Interpreter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/IntrinsicFunction" data-name="cosmo::intrinsicfunction">
+      <a href="Cosmo/IntrinsicFunction.html">IntrinsicFunction</a>
       
     </li>
   
@@ -188,6 +218,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Parser" data-name="cosmo::parser">
       <a href="Cosmo/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/PutsIntrinsic" data-name="cosmo::putsintrinsic">
+      <a href="Cosmo/PutsIntrinsic.html">PutsIntrinsic</a>
       
     </li>
   
@@ -221,6 +256,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/ValueType" data-name="valuetype">
+      <a href="ValueType.html">ValueType</a>
+      
+    </li>
+  
 </ul>
 
   </div>
@@ -244,6 +284,20 @@
 
 
 
+  <h2>
+    <a id="extended-modules" class="anchor" href="#extended-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Extended Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="Cosmo.html">Cosmo</a></li>
+    
+  </ul>
+
 
 
 
@@ -261,14 +315,14 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo.cr#L6" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo.cr#L6" target="_blank">
         cosmo.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo/logger.cr#L1" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/logger.cr#L1" target="_blank">
         cosmo/logger.cr
       </a>
     
@@ -281,43 +335,43 @@
 
 
 
+
+
   <h2>
-    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Class Method Summary
+    Instance Method Summary
   </h2>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#read_file%28path%3AString%29-class-method" class="signature"><strong>.read_file</strong>(path : String)</a>
+        <a href="#read_file%28path%3AString%29-instance-method" class="signature"><strong>#read_file</strong>(path : String)</a>
         
           <div class="summary"><p>Reads a file at <code>path</code> and returns it's contents</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read_line%3AString%7CNil-class-method" class="signature"><strong>.read_line</strong> : String | Nil</a>
+        <a href="#read_line%3AString%7CNil-instance-method" class="signature"><strong>#read_line</strong> : String | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read_source%28source%3AString%2Cfile_path%3AString%29%3ALiteralType-class-method" class="signature"><strong>.read_source</strong>(source : String, file_path : String) : LiteralType</a>
+        <a href="#read_source%28source%3AString%2Cfile_path%3AString%29%3AValueType-instance-method" class="signature"><strong>#read_source</strong>(source : String, file_path : String) : ValueType</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#run_repl-class-method" class="signature"><strong>.run_repl</strong></a>
+        <a href="#run_repl-instance-method" class="signature"><strong>#run_repl</strong></a>
         
           <div class="summary"><p>Starts the REPL</p></div>
         
       </li>
     
   </ul>
-
-
 
 
 
@@ -330,21 +384,23 @@
 
 
 
+
+
   <h2>
-    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Class Method Detail
+    Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="read_file(path:String)-class-method">
+    <div class="entry-detail" id="read_file(path:String)-instance-method">
       <div class="signature">
         
-        def self.<strong>read_file</strong>(path : String)
+        def <strong>read_file</strong>(path : String)
 
-        <a class="method-permalink" href="#read_file%28path%3AString%29-class-method">#</a>
+        <a class="method-permalink" href="#read_file%28path%3AString%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -355,49 +411,49 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo.cr#L30" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="read_line:String|Nil-class-method">
+    <div class="entry-detail" id="read_line:String|Nil-instance-method">
       <div class="signature">
         
-        def self.<strong>read_line</strong> : String | Nil
+        def <strong>read_line</strong> : String | Nil
 
-        <a class="method-permalink" href="#read_line%3AString%7CNil-class-method">#</a>
+        <a class="method-permalink" href="#read_line%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo.cr#L39" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo.cr#L39" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="read_source(source:String,file_path:String):LiteralType-class-method">
+    <div class="entry-detail" id="read_source(source:String,file_path:String):ValueType-instance-method">
       <div class="signature">
         
-        def self.<strong>read_source</strong>(source : String, file_path : String) : <a href="LiteralType.html">LiteralType</a>
+        def <strong>read_source</strong>(source : String, file_path : String) : <a href="ValueType.html">ValueType</a>
 
-        <a class="method-permalink" href="#read_source%28source%3AString%2Cfile_path%3AString%29%3ALiteralType-class-method">#</a>
+        <a class="method-permalink" href="#read_source%28source%3AString%2Cfile_path%3AString%29%3AValueType-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="run_repl-class-method">
+    <div class="entry-detail" id="run_repl-instance-method">
       <div class="signature">
         
-        def self.<strong>run_repl</strong>
+        def <strong>run_repl</strong>
 
-        <a class="method-permalink" href="#run_repl-class-method">#</a>
+        <a class="method-permalink" href="#run_repl-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -408,13 +464,11 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/d08c3dda50965ee197efe1443c052265701b4973/src/cosmo.cr#L44" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo.cr#L44" target="_blank">View source</a>]
         
       </div>
     </div>
   
-
-
 
 
 

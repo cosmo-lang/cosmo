@@ -1,0 +1,4 @@
+void fn increment(int x) {
+  puts(x)
+}
+increment(1)

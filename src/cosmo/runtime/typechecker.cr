@@ -44,7 +44,7 @@ module Cosmo::TypeChecker
       report_mismatch(typedef, value, token) unless value.is_a?(String)
     when "char"
       report_mismatch(typedef, value, token) unless value.is_a?(Char)
-    when "none"
+    when "none", "void"
       report_mismatch(typedef, value, token) unless value == nil
     when "any"
     else

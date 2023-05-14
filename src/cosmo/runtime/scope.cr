@@ -8,6 +8,10 @@ class Cosmo::Scope
   def initialize(@parent = nil)
   end
 
+  def get_locals
+    @local_variables
+  end
+
   def set_global(variables : Hash(String, Tuple(String, ValueType)))
     @local_variables = variables
   end
@@ -19,8 +23,8 @@ class Cosmo::Scope
   end
 
   def assign(identifier : Token, value : ValueType)
-    Logger.report_error("Undefined variable", identifier.value.to_s, identifier) unless @local_variables.has_key?(identifier.value.to_s)
-    typedef, old_value = @local_variables[identifier.value.to_s]
+    Logger.report_error("Undefined variable", identifier.value.to_s, identifier) unless get_locals.has_key?(identifier.value.to_s)
+    typedef, old_value = get_locals[identifier.value.to_s]
     TypeChecker.assert(typedef, value, identifier)
     @local_variables[identifier.value.to_s] = {typedef, value}
     value
@@ -28,9 +32,16 @@ class Cosmo::Scope
 
   def lookup(token : Token) : ValueType
     identifier = token.value
-    typedef, value = @local_variables.has_key?(identifier) ? @local_variables[identifier] : {nil, nil}
-    Logger.report_error("Undefined variable", token.value.to_s, token) if typedef.nil? && @parent.nil?
-    return unwrap.lookup(token) if value.nil? && !@parent.nil?
+    if get_locals.has_key?(identifier)
+      typedef, value = get_locals[identifier]
+    else
+      unless @parent.nil?
+        parent = @parent.not_nil!
+        typedef, value = parent.get_locals[identifier] if parent.get_locals.has_key?(identifier)
+      end
+    end
+    # puts typedef, value, get_locals
+    Logger.report_error("Undefined variable", token.value.to_s, token) if typedef.nil? && value.nil? && @parent.nil?
     value
   end
 

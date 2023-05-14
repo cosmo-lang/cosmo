@@ -3,4 +3,4 @@ bool fn is_eq(int a = 1, int b) {
 }
 
 bool a = is_eq(none, 1)
-a
+puts(a)

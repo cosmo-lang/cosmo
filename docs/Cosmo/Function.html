@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::Scope - Cosmo master</title>
+  <title>Cosmo::Function - Cosmo master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -181,7 +181,7 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/Function" data-name="cosmo::function">
+  <li class=" current" data-id="Cosmo/Cosmo/Function" data-name="cosmo::function">
       <a href="../Cosmo/Function.html">Function</a>
       
     </li>
@@ -226,7 +226,7 @@
       
     </li>
   
-  <li class=" current" data-id="Cosmo/Cosmo/Scope" data-name="cosmo::scope">
+  <li class=" " data-id="Cosmo/Cosmo/Scope" data-name="cosmo::scope">
       <a href="../Cosmo/Scope.html">Scope</a>
       
     </li>
@@ -270,12 +270,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Cosmo::Scope
+  <span class="kind">class</span> Cosmo::Function
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Cosmo/Scope.html">Cosmo::Scope</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Cosmo/Function.html">Cosmo::Function</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -303,8 +303,8 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L4" target="_blank">
-        cosmo/runtime/scope.cr
+      <a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/function.cr#L1" target="_blank">
+        cosmo/runtime/function.cr
       </a>
     
     <br/>
@@ -325,7 +325,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28parent%3ANil%7CCosmo%3A%3AScope%3Dnil%29-class-method" class="signature"><strong>.new</strong>(parent : Nil | Cosmo::Scope = <span class="n">nil</span>)</a>
+        <a href="#new%28scope%3ACosmo%3A%3AScope%2Cparam_nodes%3AArray%28Cosmo%3A%3AAST%3A%3AExpression%3A%3AParameter%29%2Carity%3ARange%28UInt32%2CUInt32%29%2Cbody%3ACosmo%3A%3AAST%3A%3AStatement%3A%3ABlock%29-class-method" class="signature"><strong>.new</strong>(scope : Cosmo::Scope, param_nodes : Array(Cosmo::AST::Expression::Parameter), arity : Range(UInt32, UInt32), body : Cosmo::AST::Statement::Block)</a>
         
       </li>
     
@@ -346,49 +346,27 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#assign%28identifier%3AToken%2Cvalue%3AValueType%29-instance-method" class="signature"><strong>#assign</strong>(identifier : Token, value : ValueType)</a>
+        <a href="#arity%3ARange%28UInt32%2CUInt32%29-instance-method" class="signature"><strong>#arity</strong> : Range(UInt32, UInt32)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#declare%28typedef%3AToken%2Cidentifier%3AToken%2Cvalue%3AValueType%29-instance-method" class="signature"><strong>#declare</strong>(typedef : Token, identifier : Token, value : ValueType)</a>
+        <a href="#body%3AAST%3A%3AStatement%3A%3ABlock-instance-method" class="signature"><strong>#body</strong> : AST::Statement::Block</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#local_variables%3AHash%28String%2C%7BString%2CBool%7CChar%7CCosmo%3A%3AFunction%7CCosmo%3A%3AIntrinsicFunction%7CFloat32%7CFloat64%7CInt16%7CInt32%7CInt64%7CInt8%7CString%7CNil%7D%29-instance-method" class="signature"><strong>#local_variables</strong> : Hash(String, {String, Bool | Char | Cosmo::Function | Cosmo::IntrinsicFunction | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil})</a>
+        <a href="#intrinsic%3F-instance-method" class="signature"><strong>#intrinsic?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#lookup%28token%3AToken%29%3AValueType-instance-method" class="signature"><strong>#lookup</strong>(token : Token) : ValueType</a>
+        <a href="#param_nodes%3AArray%28AST%3A%3AExpression%3A%3AParameter%29-instance-method" class="signature"><strong>#param_nodes</strong> : Array(AST::Expression::Parameter)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#parent%3ACosmo%3A%3AScope%7CNil-instance-method" class="signature"><strong>#parent</strong> : Cosmo::Scope | Nil</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#parent%3D%28parent%3ACosmo%3A%3AScope%7CNil%29-instance-method" class="signature"><strong>#parent=</strong>(parent : Cosmo::Scope | Nil)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#set_global%28variables%3AHash%28String%2CTuple%28String%2CValueType%29%29%29-instance-method" class="signature"><strong>#set_global</strong>(variables : Hash(String, Tuple(String, ValueType)))</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#to_s-instance-method" class="signature"><strong>#to_s</strong></a>
-        
-          <div class="summary"><p>Returns a nicely readable and concise string representation of this object, typically intended for users.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#unwrap%3AScope-instance-method" class="signature"><strong>#unwrap</strong> : Scope</a>
+        <a href="#scope%3AScope-instance-method" class="signature"><strong>#scope</strong> : Scope</a>
         
       </li>
     
@@ -432,18 +410,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(parent:Nil|Cosmo::Scope=nil)-class-method">
+    <div class="entry-detail" id="new(scope:Cosmo::Scope,param_nodes:Array(Cosmo::AST::Expression::Parameter),arity:Range(UInt32,UInt32),body:Cosmo::AST::Statement::Block)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(parent : Nil | <a href="../Cosmo/Scope.html">Cosmo::Scope</a> = <span class="n">nil</span>)
+        def self.<strong>new</strong>(scope : <a href="../Cosmo/Scope.html">Cosmo::Scope</a>, param_nodes : Array(<a href="../Cosmo/AST/Expression/Parameter.html">Cosmo::AST::Expression::Parameter</a>), arity : Range(UInt32, UInt32), body : <a href="../Cosmo/AST/Statement/Block.html">Cosmo::AST::Statement::Block</a>)
 
-        <a class="method-permalink" href="#new%28parent%3ANil%7CCosmo%3A%3AScope%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28scope%3ACosmo%3A%3AScope%2Cparam_nodes%3AArray%28Cosmo%3A%3AAST%3A%3AExpression%3A%3AParameter%29%2Carity%3ARange%28UInt32%2CUInt32%29%2Cbody%3ACosmo%3A%3AAST%3A%3AStatement%3A%3ABlock%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/function.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -462,159 +440,82 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="assign(identifier:Token,value:ValueType)-instance-method">
+    <div class="entry-detail" id="arity:Range(UInt32,UInt32)-instance-method">
       <div class="signature">
         
-        def <strong>assign</strong>(identifier : <a href="../Cosmo/Token.html">Token</a>, value : <a href="../ValueType.html">ValueType</a>)
+        def <strong>arity</strong> : Range(UInt32, UInt32)
 
-        <a class="method-permalink" href="#assign%28identifier%3AToken%2Cvalue%3AValueType%29-instance-method">#</a>
+        <a class="method-permalink" href="#arity%3ARange%28UInt32%2CUInt32%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/function.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="declare(typedef:Token,identifier:Token,value:ValueType)-instance-method">
+    <div class="entry-detail" id="body:AST::Statement::Block-instance-method">
       <div class="signature">
         
-        def <strong>declare</strong>(typedef : <a href="../Cosmo/Token.html">Token</a>, identifier : <a href="../Cosmo/Token.html">Token</a>, value : <a href="../ValueType.html">ValueType</a>)
+        def <strong>body</strong> : <a href="../Cosmo/AST/Statement/Block.html">AST::Statement::Block</a>
 
-        <a class="method-permalink" href="#declare%28typedef%3AToken%2Cidentifier%3AToken%2Cvalue%3AValueType%29-instance-method">#</a>
+        <a class="method-permalink" href="#body%3AAST%3A%3AStatement%3A%3ABlock-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/function.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="local_variables:Hash(String,{String,Bool|Char|Cosmo::Function|Cosmo::IntrinsicFunction|Float32|Float64|Int16|Int32|Int64|Int8|String|Nil})-instance-method">
+    <div class="entry-detail" id="intrinsic?-instance-method">
       <div class="signature">
         
-        def <strong>local_variables</strong> : Hash(String, {String, Bool | Char | <a href="../Cosmo/Function.html">Cosmo::Function</a> | <a href="../Cosmo/IntrinsicFunction.html">Cosmo::IntrinsicFunction</a> | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil})
+        def <strong>intrinsic?</strong>
 
-        <a class="method-permalink" href="#local_variables%3AHash%28String%2C%7BString%2CBool%7CChar%7CCosmo%3A%3AFunction%7CCosmo%3A%3AIntrinsicFunction%7CFloat32%7CFloat64%7CInt16%7CInt32%7CInt64%7CInt8%7CString%7CNil%7D%29-instance-method">#</a>
+        <a class="method-permalink" href="#intrinsic%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/function.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="lookup(token:Token):ValueType-instance-method">
+    <div class="entry-detail" id="param_nodes:Array(AST::Expression::Parameter)-instance-method">
       <div class="signature">
         
-        def <strong>lookup</strong>(token : <a href="../Cosmo/Token.html">Token</a>) : <a href="../ValueType.html">ValueType</a>
+        def <strong>param_nodes</strong> : Array(<a href="../Cosmo/AST/Expression/Parameter.html">AST::Expression::Parameter</a>)
 
-        <a class="method-permalink" href="#lookup%28token%3AToken%29%3AValueType-instance-method">#</a>
+        <a class="method-permalink" href="#param_nodes%3AArray%28AST%3A%3AExpression%3A%3AParameter%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/function.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="parent:Cosmo::Scope|Nil-instance-method">
+    <div class="entry-detail" id="scope:Scope-instance-method">
       <div class="signature">
         
-        def <strong>parent</strong> : <a href="../Cosmo/Scope.html">Cosmo::Scope</a> | Nil
+        def <strong>scope</strong> : <a href="../Cosmo/Scope.html">Scope</a>
 
-        <a class="method-permalink" href="#parent%3ACosmo%3A%3AScope%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#scope%3AScope-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L5" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="parent=(parent:Cosmo::Scope|Nil)-instance-method">
-      <div class="signature">
-        
-        def <strong>parent=</strong>(parent : <a href="../Cosmo/Scope.html">Cosmo::Scope</a> | Nil)
-
-        <a class="method-permalink" href="#parent%3D%28parent%3ACosmo%3A%3AScope%7CNil%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L5" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="set_global(variables:Hash(String,Tuple(String,ValueType)))-instance-method">
-      <div class="signature">
-        
-        def <strong>set_global</strong>(variables : Hash(String, Tuple(String, <a href="../ValueType.html">ValueType</a>)))
-
-        <a class="method-permalink" href="#set_global%28variables%3AHash%28String%2CTuple%28String%2CValueType%29%29%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="to_s-instance-method">
-      <div class="signature">
-        
-        def <strong>to_s</strong>
-
-        <a class="method-permalink" href="#to_s-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from class Object
-            </div>
-          
-          <p>Returns a nicely readable and concise string representation of this object,
-typically intended for users.</p>
-<p>This method should usually <strong>not</strong> be overridden. It delegates to
-<code>#to_s(IO)</code> which can be overridden for custom implementations.</p>
-<p>Also see <code>#inspect</code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L41" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="unwrap:Scope-instance-method">
-      <div class="signature">
-        
-        def <strong>unwrap</strong> : <a href="../Cosmo/Scope.html">Scope</a>
-
-        <a class="method-permalink" href="#unwrap%3AScope-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/function.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
