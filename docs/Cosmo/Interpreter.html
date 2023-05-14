@@ -71,6 +71,11 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Base" data-name="cosmo::ast::expression::base">
+      <a href="../Cosmo/AST/Expression/Base.html">Base</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/BinaryOp" data-name="cosmo::ast::expression::binaryop">
       <a href="../Cosmo/AST/Expression/BinaryOp.html">BinaryOp</a>
       
@@ -83,6 +88,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/CharLiteral" data-name="cosmo::ast::expression::charliteral">
       <a href="../Cosmo/AST/Expression/CharLiteral.html">CharLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/CompoundAssignment" data-name="cosmo::ast::expression::compoundassignment">
+      <a href="../Cosmo/AST/Expression/CompoundAssignment.html">CompoundAssignment</a>
       
     </li>
   
@@ -141,6 +151,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Visitor" data-name="cosmo::ast::expression::visitor(r)">
+      <a href="../Cosmo/AST/Expression/Visitor.html">Visitor</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -156,6 +171,11 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Base" data-name="cosmo::ast::statement::base">
+      <a href="../Cosmo/AST/Statement/Base.html">Base</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Block" data-name="cosmo::ast::statement::block">
       <a href="../Cosmo/AST/Statement/Block.html">Block</a>
       
@@ -163,6 +183,21 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/FunctionDef" data-name="cosmo::ast::statement::functiondef">
       <a href="../Cosmo/AST/Statement/FunctionDef.html">FunctionDef</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Return" data-name="cosmo::ast::statement::return">
+      <a href="../Cosmo/AST/Statement/Return.html">Return</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/SingleExpression" data-name="cosmo::ast::statement::singleexpression">
+      <a href="../Cosmo/AST/Statement/SingleExpression.html">SingleExpression</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Visitor" data-name="cosmo::ast::statement::visitor(r)">
+      <a href="../Cosmo/AST/Statement/Visitor.html">Visitor</a>
       
     </li>
   
@@ -178,6 +213,11 @@
   
 </ul>
 
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Callable" data-name="cosmo::callable">
+      <a href="../Cosmo/Callable.html">Callable</a>
       
     </li>
   
@@ -226,6 +266,16 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Resolver" data-name="cosmo::resolver">
+      <a href="../Cosmo/Resolver.html">Resolver</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Return" data-name="cosmo::return">
+      <a href="../Cosmo/Return.html">Return</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Scope" data-name="cosmo::scope">
       <a href="../Cosmo/Scope.html">Scope</a>
       
@@ -248,6 +298,11 @@
   
 </ul>
 
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/FnType" data-name="fntype">
+      <a href="../FnType.html">FnType</a>
       
     </li>
   
@@ -284,6 +339,22 @@
 
 
 
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../Cosmo/AST/Expression/Visitor.html">Cosmo::AST::Expression::Visitor</a>(Bool | Char | <a href="../Cosmo/Callable.html">Cosmo::Callable</a> | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil)</li>
+    
+      <li class="other-type"><a href="../Cosmo/AST/Statement/Visitor.html">Cosmo::AST::Statement::Visitor</a>(Bool | Char | <a href="../Cosmo/Callable.html">Cosmo::Callable</a> | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil)</li>
+    
+  </ul>
+
 
 
 
@@ -303,7 +374,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/interpreter.cr#L5" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L13" target="_blank">
         cosmo/runtime/interpreter.cr
       </a>
     
@@ -346,7 +417,27 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
+        <a href="#evaluate%28expr%3AExpression%3A%3ABase%29%3AValueType-instance-method" class="signature"><strong>#evaluate</strong>(expr : Expression::Base) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#execute%28stmt%3AStatement%3A%3ABase%29%3AValueType-instance-method" class="signature"><strong>#execute</strong>(stmt : Statement::Base) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#execute_block%28block%3AStatement%3A%3ABlock%2Cblock_scope%3AScope%29%3AValueType-instance-method" class="signature"><strong>#execute_block</strong>(block : Statement::Block, block_scope : Scope) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#file_path%3AString-instance-method" class="signature"><strong>#file_path</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#globals%3ACosmo%3A%3AScope-instance-method" class="signature"><strong>#globals</strong> : Cosmo::Scope</a>
         
       </li>
     
@@ -356,12 +447,72 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#output_ast%3ABool-instance-method" class="signature"><strong>#output_ast</strong> : Bool</a>
+        <a href="#output_ast%3F%3ABool-instance-method" class="signature"><strong>#output_ast?</strong> : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#scope%3ACosmo%3A%3AScope-instance-method" class="signature"><strong>#scope</strong> : Cosmo::Scope</a>
+        <a href="#report_error%28error_type%3AString%2Cmessage%3AString%2Ctoken%3AToken%29-instance-method" class="signature"><strong>#report_error</strong>(error_type : String, message : String, token : Token)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_binary_op_expr%28expr%3AExpression%3A%3ABinaryOp%29%3AValueType-instance-method" class="signature"><strong>#visit_binary_op_expr</strong>(expr : Expression::BinaryOp) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_block_stmt%28stmt%3AStatement%3A%3ABlock%29%3AValueType-instance-method" class="signature"><strong>#visit_block_stmt</strong>(stmt : Statement::Block) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_compound_assignment_expr%28expr%3AExpression%3A%3ACompoundAssignment%29%3AValueType-instance-method" class="signature"><strong>#visit_compound_assignment_expr</strong>(expr : Expression::CompoundAssignment) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_fn_call_expr%28expr%3AExpression%3A%3AFunctionCall%29%3AValueType-instance-method" class="signature"><strong>#visit_fn_call_expr</strong>(expr : Expression::FunctionCall) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_fn_def_stmt%28stmt%3AStatement%3A%3AFunctionDef%29%3AValueType-instance-method" class="signature"><strong>#visit_fn_def_stmt</strong>(stmt : Statement::FunctionDef) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_literal_expr%28expr%3AExpression%3A%3ALiteral%29%3AValueType-instance-method" class="signature"><strong>#visit_literal_expr</strong>(expr : Expression::Literal) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_return_stmt%28stmt%3AStatement%3A%3AReturn%29%3ANil-instance-method" class="signature"><strong>#visit_return_stmt</strong>(stmt : Statement::Return) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_single_expr_stmt%28stmt%3AStatement%3A%3ASingleExpression%29%3AValueType-instance-method" class="signature"><strong>#visit_single_expr_stmt</strong>(stmt : Statement::SingleExpression) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_unary_op_expr%28expr%3AExpression%3A%3AUnaryOp%29%3AValueType-instance-method" class="signature"><strong>#visit_unary_op_expr</strong>(expr : Expression::UnaryOp) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_var_assignment_expr%28expr%3AExpression%3A%3AVarAssignment%29%3AValueType-instance-method" class="signature"><strong>#visit_var_assignment_expr</strong>(expr : Expression::VarAssignment) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_var_declaration_expr%28expr%3AExpression%3A%3AVarDeclaration%29%3AValueType-instance-method" class="signature"><strong>#visit_var_declaration_expr</strong>(expr : Expression::VarDeclaration) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_var_expr%28expr%3AExpression%3A%3AVar%29%3AValueType-instance-method" class="signature"><strong>#visit_var_expr</strong>(expr : Expression::Var) : ValueType</a>
         
       </li>
     
@@ -372,6 +523,89 @@
 
 
 <div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../Cosmo/AST/Statement/Visitor.html">Cosmo::AST::Statement::Visitor</a>(Bool | Char | <a href="../Cosmo/Callable.html">Cosmo::Callable</a> | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil)</code></h3>
+  
+  
+    <a href="../Cosmo/AST/Statement/Visitor.html#visit_block_stmt%28stmt%3ABlock%29%3AR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR-instance-method" class="tooltip">
+      <span>visit_block_stmt(stmt : Block) : R | R | R | R | R | R | R | R | R | R | R</span>
+    visit_block_stmt</a>, 
+    
+  
+    <a href="../Cosmo/AST/Statement/Visitor.html#visit_fn_def_stmt%28stmt%3AFunctionDef%29%3AR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR-instance-method" class="tooltip">
+      <span>visit_fn_def_stmt(stmt : FunctionDef) : R | R | R | R | R | R | R | R | R | R | R</span>
+    visit_fn_def_stmt</a>, 
+    
+  
+    <a href="../Cosmo/AST/Statement/Visitor.html#visit_return_stmt%28stmt%3AReturn%29%3AR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR-instance-method" class="tooltip">
+      <span>visit_return_stmt(stmt : Return) : R | R | R | R | R | R | R | R | R | R | R</span>
+    visit_return_stmt</a>, 
+    
+  
+    <a href="../Cosmo/AST/Statement/Visitor.html#visit_single_expr_stmt%28stmt%3ASingleExpression%29%3AR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR-instance-method" class="tooltip">
+      <span>visit_single_expr_stmt(stmt : SingleExpression) : R | R | R | R | R | R | R | R | R | R | R</span>
+    visit_single_expr_stmt</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../Cosmo/AST/Expression/Visitor.html">Cosmo::AST::Expression::Visitor</a>(Bool | Char | <a href="../Cosmo/Callable.html">Cosmo::Callable</a> | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil)</code></h3>
+  
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_binary_op_expr%28expr%3ABinaryOp%29%3AR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR-instance-method" class="tooltip">
+      <span>visit_binary_op_expr(expr : BinaryOp) : R | R | R | R | R | R | R | R | R | R | R</span>
+    visit_binary_op_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_fn_call_expr%28expr%3AFunctionCall%29%3AR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR-instance-method" class="tooltip">
+      <span>visit_fn_call_expr(expr : FunctionCall) : R | R | R | R | R | R | R | R | R | R | R</span>
+    visit_fn_call_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_literal_expr%28expr%3ALiteral%29%3AR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR-instance-method" class="tooltip">
+      <span>visit_literal_expr(expr : Literal) : R | R | R | R | R | R | R | R | R | R | R</span>
+    visit_literal_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_unary_op_expr%28expr%3AUnaryOp%29%3AR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR-instance-method" class="tooltip">
+      <span>visit_unary_op_expr(expr : UnaryOp) : R | R | R | R | R | R | R | R | R | R | R</span>
+    visit_unary_op_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_var_assignment_expr%28expr%3AVarAssignment%29%3AR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR-instance-method" class="tooltip">
+      <span>visit_var_assignment_expr(expr : VarAssignment) : R | R | R | R | R | R | R | R | R | R | R</span>
+    visit_var_assignment_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_var_declaration_expr%28expr%3AVarDeclaration%29%3AR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR-instance-method" class="tooltip">
+      <span>visit_var_declaration_expr(expr : VarDeclaration) : R | R | R | R | R | R | R | R | R | R | R</span>
+    visit_var_declaration_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_var_expr%28expr%3AVar%29%3AR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR%7CR-instance-method" class="tooltip">
+      <span>visit_var_expr(expr : Var) : R | R | R | R | R | R | R | R | R | R | R</span>
+    visit_var_expr</a>
+    
+  
+
+
+    
+
+
+    
+
+
   
     
 
@@ -416,7 +650,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/interpreter.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -435,6 +669,54 @@
     Instance Method Detail
   </h2>
   
+    <div class="entry-detail" id="evaluate(expr:Expression::Base):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>evaluate</strong>(expr : <a href="../Cosmo/AST/Expression/Base.html">Expression::Base</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#evaluate%28expr%3AExpression%3A%3ABase%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L56" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="execute(stmt:Statement::Base):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>execute</strong>(stmt : <a href="../Cosmo/AST/Statement/Base.html">Statement::Base</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#execute%28stmt%3AStatement%3A%3ABase%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L60" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="execute_block(block:Statement::Block,block_scope:Scope):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>execute_block</strong>(block : <a href="../Cosmo/AST/Statement/Block.html">Statement::Block</a>, block_scope : <a href="../Cosmo/Scope.html">Scope</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#execute_block%28block%3AStatement%3A%3ABlock%2Cblock_scope%3AScope%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L64" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="file_path:String-instance-method">
       <div class="signature">
         
@@ -446,7 +728,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/interpreter.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="globals:Cosmo::Scope-instance-method">
+      <div class="signature">
+        
+        def <strong>globals</strong> : <a href="../Cosmo/Scope.html">Cosmo::Scope</a>
+
+        <a class="method-permalink" href="#globals%3ACosmo%3A%3AScope-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -462,39 +760,231 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/interpreter.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L36" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="output_ast:Bool-instance-method">
+    <div class="entry-detail" id="output_ast?:Bool-instance-method">
       <div class="signature">
         
-        def <strong>output_ast</strong> : Bool
+        def <strong>output_ast?</strong> : Bool
 
-        <a class="method-permalink" href="#output_ast%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#output_ast%3F%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/interpreter.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="scope:Cosmo::Scope-instance-method">
+    <div class="entry-detail" id="report_error(error_type:String,message:String,token:Token)-instance-method">
       <div class="signature">
         
-        def <strong>scope</strong> : <a href="../Cosmo/Scope.html">Cosmo::Scope</a>
+        def <strong>report_error</strong>(error_type : String, message : String, token : <a href="../Cosmo/Token.html">Token</a>)
 
-        <a class="method-permalink" href="#scope%3ACosmo%3A%3AScope-instance-method">#</a>
+        <a class="method-permalink" href="#report_error%28error_type%3AString%2Cmessage%3AString%2Ctoken%3AToken%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/interpreter.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L505" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_binary_op_expr(expr:Expression::BinaryOp):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_binary_op_expr</strong>(expr : <a href="../Cosmo/AST/Expression/BinaryOp.html">Expression::BinaryOp</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#visit_binary_op_expr%28expr%3AExpression%3A%3ABinaryOp%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L286" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_block_stmt(stmt:Statement::Block):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_block_stmt</strong>(stmt : <a href="../Cosmo/AST/Statement/Block.html">Statement::Block</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#visit_block_stmt%28stmt%3AStatement%3A%3ABlock%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L90" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_compound_assignment_expr(expr:Expression::CompoundAssignment):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_compound_assignment_expr</strong>(expr : <a href="../Cosmo/AST/Expression/CompoundAssignment.html">Expression::CompoundAssignment</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#visit_compound_assignment_expr%28expr%3AExpression%3A%3ACompoundAssignment%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L134" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_fn_call_expr(expr:Expression::FunctionCall):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_fn_call_expr</strong>(expr : <a href="../Cosmo/AST/Expression/FunctionCall.html">Expression::FunctionCall</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#visit_fn_call_expr%28expr%3AExpression%3A%3AFunctionCall%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L106" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_fn_def_stmt(stmt:Statement::FunctionDef):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_fn_def_stmt</strong>(stmt : <a href="../Cosmo/AST/Statement/FunctionDef.html">Statement::FunctionDef</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#visit_fn_def_stmt%28stmt%3AStatement%3A%3AFunctionDef%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L99" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_literal_expr(expr:Expression::Literal):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_literal_expr</strong>(expr : <a href="../Cosmo/AST/Expression/Literal.html">Expression::Literal</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#visit_literal_expr%28expr%3AExpression%3A%3ALiteral%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L501" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_return_stmt(stmt:Statement::Return):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_return_stmt</strong>(stmt : <a href="../Cosmo/AST/Statement/Return.html">Statement::Return</a>) : Nil
+
+        <a class="method-permalink" href="#visit_return_stmt%28stmt%3AStatement%3A%3AReturn%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L94" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_single_expr_stmt(stmt:Statement::SingleExpression):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_single_expr_stmt</strong>(stmt : <a href="../Cosmo/AST/Statement/SingleExpression.html">Statement::SingleExpression</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#visit_single_expr_stmt%28stmt%3AStatement%3A%3ASingleExpression%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_unary_op_expr(expr:Expression::UnaryOp):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_unary_op_expr</strong>(expr : <a href="../Cosmo/AST/Expression/UnaryOp.html">Expression::UnaryOp</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#visit_unary_op_expr%28expr%3AExpression%3A%3AUnaryOp%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L262" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_var_assignment_expr(expr:Expression::VarAssignment):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_var_assignment_expr</strong>(expr : <a href="../Cosmo/AST/Expression/VarAssignment.html">Expression::VarAssignment</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#visit_var_assignment_expr%28expr%3AExpression%3A%3AVarAssignment%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L129" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_var_declaration_expr(expr:Expression::VarDeclaration):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_var_declaration_expr</strong>(expr : <a href="../Cosmo/AST/Expression/VarDeclaration.html">Expression::VarDeclaration</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#visit_var_declaration_expr%28expr%3AExpression%3A%3AVarDeclaration%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L124" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_var_expr(expr:Expression::Var):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_var_expr</strong>(expr : <a href="../Cosmo/AST/Expression/Var.html">Expression::Var</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#visit_var_expr%28expr%3AExpression%3A%3AVar%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/interpreter.cr#L120" target="_blank">View source</a>]
         
       </div>
     </div>

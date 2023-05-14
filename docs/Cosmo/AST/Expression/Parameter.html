@@ -71,6 +71,11 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Base" data-name="cosmo::ast::expression::base">
+      <a href="../../../Cosmo/AST/Expression/Base.html">Base</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/BinaryOp" data-name="cosmo::ast::expression::binaryop">
       <a href="../../../Cosmo/AST/Expression/BinaryOp.html">BinaryOp</a>
       
@@ -83,6 +88,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/CharLiteral" data-name="cosmo::ast::expression::charliteral">
       <a href="../../../Cosmo/AST/Expression/CharLiteral.html">CharLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/CompoundAssignment" data-name="cosmo::ast::expression::compoundassignment">
+      <a href="../../../Cosmo/AST/Expression/CompoundAssignment.html">CompoundAssignment</a>
       
     </li>
   
@@ -141,6 +151,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Visitor" data-name="cosmo::ast::expression::visitor(r)">
+      <a href="../../../Cosmo/AST/Expression/Visitor.html">Visitor</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -156,6 +171,11 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Base" data-name="cosmo::ast::statement::base">
+      <a href="../../../Cosmo/AST/Statement/Base.html">Base</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Block" data-name="cosmo::ast::statement::block">
       <a href="../../../Cosmo/AST/Statement/Block.html">Block</a>
       
@@ -163,6 +183,21 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/FunctionDef" data-name="cosmo::ast::statement::functiondef">
       <a href="../../../Cosmo/AST/Statement/FunctionDef.html">FunctionDef</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Return" data-name="cosmo::ast::statement::return">
+      <a href="../../../Cosmo/AST/Statement/Return.html">Return</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/SingleExpression" data-name="cosmo::ast::statement::singleexpression">
+      <a href="../../../Cosmo/AST/Statement/SingleExpression.html">SingleExpression</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Visitor" data-name="cosmo::ast::statement::visitor(r)">
+      <a href="../../../Cosmo/AST/Statement/Visitor.html">Visitor</a>
       
     </li>
   
@@ -178,6 +213,11 @@
   
 </ul>
 
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Callable" data-name="cosmo::callable">
+      <a href="../../../Cosmo/Callable.html">Callable</a>
       
     </li>
   
@@ -226,6 +266,16 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Resolver" data-name="cosmo::resolver">
+      <a href="../../../Cosmo/Resolver.html">Resolver</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Return" data-name="cosmo::return">
+      <a href="../../../Cosmo/Return.html">Return</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Scope" data-name="cosmo::scope">
       <a href="../../../Cosmo/Scope.html">Scope</a>
       
@@ -248,6 +298,11 @@
   
 </ul>
 
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/FnType" data-name="fntype">
+      <a href="../../../FnType.html">FnType</a>
       
     </li>
   
@@ -275,7 +330,7 @@
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../Cosmo/AST/Expression/Parameter.html">Cosmo::AST::Expression::Parameter</a></li><li class="superclass"><a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../Cosmo/AST/Expression/Parameter.html">Cosmo::AST::Expression::Parameter</a></li><li class="superclass"><a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a></li><li class="superclass"><a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -303,7 +358,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/parser/ast/expression_nodes.cr#L16" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/parser/ast/expression_nodes.cr#L38" target="_blank">
         cosmo/syntax/parser/ast/expression_nodes.cr
       </a>
     
@@ -325,7 +380,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28typedef%3ACosmo%3A%3AToken%2Cidentifier%3ACosmo%3A%3AToken%2Cdefault_value%3ACosmo%3A%3AAST%3A%3ANode%7CNil%3DNoneLiteral.new%29-class-method" class="signature"><strong>.new</strong>(typedef : Cosmo::Token, identifier : Cosmo::Token, default_value : Cosmo::AST::Node | Nil = <span class="t">NoneLiteral</span>.new)</a>
+        <a href="#new%28typedef%3ACosmo%3A%3AToken%2Cidentifier%3ACosmo%3A%3AToken%2Cdefault_value%3ACosmo%3A%3AAST%3A%3ANode%7CNil%3DNoneLiteral.new%28nil%2Cidentifier%29%29-class-method" class="signature"><strong>.new</strong>(typedef : Cosmo::Token, identifier : Cosmo::Token, default_value : Cosmo::AST::Node | Nil = <span class="t">NoneLiteral</span>.new(<span class="n">nil</span>, identifier))</a>
         
       </li>
     
@@ -346,6 +401,11 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
+        <a href="#accept%28visitor%3AVisitor%28R%29%29%3ARforallR-instance-method" class="signature"><strong>#accept</strong>(visitor : Visitor(R)) : R forall R</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#default_value%3ANode%7CNil-instance-method" class="signature"><strong>#default_value</strong> : Node | Nil</a>
         
       </li>
@@ -363,6 +423,11 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#token%3AToken-instance-method" class="signature"><strong>#token</strong> : Token</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#typedef%3AToken-instance-method" class="signature"><strong>#typedef</strong> : Token</a>
         
       </li>
@@ -374,6 +439,25 @@
 
 
 <div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a></code></h3>
+  
+  
+    <a href="../../../Cosmo/AST/Expression/Base.html#accept%28visitor%3AVisitor%28R%29%29forallR-instance-method" class="tooltip">
+      <span>accept(visitor : Visitor(R)) forall R</span>
+    accept</a>
+    
+  
+
+
+    
+
+
+    
+
+
   
     
 
@@ -408,6 +492,11 @@
     <a href="../../../Cosmo/AST/Node.html#start_location%3D%28start_location%3ALocation%7CNil%29-instance-method" class="tooltip">
       <span>start_location=(start_location : Location | Nil)</span>
     start_location=</a>, 
+    
+  
+    <a href="../../../Cosmo/AST/Node.html#token%3AToken-instance-method" class="tooltip">
+      <span>token : Token</span>
+    token</a>, 
     
   
     <a href="../../../Cosmo/AST/Node.html#visibility%3ACosmo%3A%3AAST%3A%3AVisibility-instance-method" class="tooltip">
@@ -461,18 +550,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(typedef:Cosmo::Token,identifier:Cosmo::Token,default_value:Cosmo::AST::Node|Nil=NoneLiteral.new)-class-method">
+    <div class="entry-detail" id="new(typedef:Cosmo::Token,identifier:Cosmo::Token,default_value:Cosmo::AST::Node|Nil=NoneLiteral.new(nil,identifier))-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(typedef : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, identifier : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, default_value : <a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a> | Nil = <span class="t">NoneLiteral</span>.new)
+        def self.<strong>new</strong>(typedef : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, identifier : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, default_value : <a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a> | Nil = <span class="t">NoneLiteral</span>.new(<span class="n">nil</span>, identifier))
 
-        <a class="method-permalink" href="#new%28typedef%3ACosmo%3A%3AToken%2Cidentifier%3ACosmo%3A%3AToken%2Cdefault_value%3ACosmo%3A%3AAST%3A%3ANode%7CNil%3DNoneLiteral.new%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28typedef%3ACosmo%3A%3AToken%2Cidentifier%3ACosmo%3A%3AToken%2Cdefault_value%3ACosmo%3A%3AAST%3A%3ANode%7CNil%3DNoneLiteral.new%28nil%2Cidentifier%29%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/parser/ast/expression_nodes.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/parser/ast/expression_nodes.cr#L43" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -491,6 +580,22 @@
     Instance Method Detail
   </h2>
   
+    <div class="entry-detail" id="accept(visitor:Visitor(R)):RforallR-instance-method">
+      <div class="signature">
+        
+        def <strong>accept</strong>(visitor : <a href="../../../Cosmo/AST/Expression/Visitor.html">Visitor</a>(R)) : R forall R
+
+        <a class="method-permalink" href="#accept%28visitor%3AVisitor%28R%29%29%3ARforallR-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/parser/ast/expression_nodes.cr#L46" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="default_value:Node|Nil-instance-method">
       <div class="signature">
         
@@ -502,7 +607,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/parser/ast/expression_nodes.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/parser/ast/expression_nodes.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -518,7 +623,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/parser/ast/expression_nodes.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/parser/ast/expression_nodes.cr#L40" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -547,7 +652,23 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/parser/ast/expression_nodes.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/parser/ast/expression_nodes.cr#L54" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="token:Token-instance-method">
+      <div class="signature">
+        
+        def <strong>token</strong> : <a href="../../../Cosmo/Token.html">Token</a>
+
+        <a class="method-permalink" href="#token%3AToken-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/parser/ast/expression_nodes.cr#L50" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -563,7 +684,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/parser/ast/expression_nodes.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/parser/ast/expression_nodes.cr#L39" target="_blank">View source</a>]
         
       </div>
     </div>

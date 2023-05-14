@@ -13,9 +13,9 @@
 <script type="text/javascript" src="js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo master</title>
+  <title>FnType - Cosmo master</title>
   <script type="text/javascript">
-  CrystalDocs.base_path = "";
+    CrystalDocs.base_path = "";
   </script>
 </head>
 <body>
@@ -301,7 +301,7 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/FnType" data-name="fntype">
+  <li class=" current" data-id="Cosmo/FnType" data-name="fntype">
       <a href="FnType.html">FnType</a>
       
     </li>
@@ -323,64 +323,199 @@
 
 
 <div class="main-content">
-<p><img src="https://github.com/R-unic/cosmo/actions/workflows/crystal.yml/badge.svg" alt="build" /></p>
-<h1><a id="cosmo" class="anchor" href="#cosmo">
+<h1 class="type-name">
+
+  <span class="kind">enum</span> FnType
+
+</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>Cosmo</h1>
-<p>Cosmo is a statically-typed programming language written in pure Crystal.</p>
-<h2><a id="things-i-gotta-do" class="anchor" href="#things-i-gotta-do">
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/resolver.cr#L1" target="_blank">
+        cosmo/runtime/resolver.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="enum-members" class="anchor" href="#enum-members">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>Things I Gotta Do</h2>
-<ul>
-<li>Probably assign types to literals</li>
-<li>Arrays</li>
-<li>Some sorta hashmap</li>
-<li>Interfaces</li>
-<li>Classes
-<ul>
-<li>single inheritance</li>
-<li>mixins</li>
-<li>visibilities</li>
-<li>methods</li>
-<li>$ (this)</li>
-</ul>
-</li>
-</ul>
-<h2><a id="installation" class="anchor" href="#installation">
+</a>
+      Enum Members
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="None">
+        <strong>None</strong> = <code><span class="n">0</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Fn">
+        <strong>Fn</strong> = <code><span class="n">1</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>Installation</h2>
-<ol>
-<li>Install <a href="https://crystal-lang.org/install/">Crystal</a>.</li>
-<li>Run <code>sudo make install</code>.</li>
-<li>Assert everything is working by running <code>cosmo -h</code></li>
-</ol>
-<h2><a id="contributing" class="anchor" href="#contributing">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>Contributing</h2>
-<ol>
-<li>Fork it (<a href="https://github.com/R-unic/cosmo/fork">https://github.com/R-unic/cosmo/fork</a>)</li>
-<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
-<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
-<li>Test your code (<code>make test</code>)</li>
-<li>Push to the branch (<code>make publish</code>)</li>
-<li>Create a new Pull Request</li>
-</ol>
-<h2><a id="contributors" class="anchor" href="#contributors">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>Contributors</h2>
-<ul>
-<li><a href="https://github.com/R-unic">R-unic</a> - creator and maintainer</li>
-</ul>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#fn%3F-instance-method" class="signature"><strong>#fn?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#none%3F-instance-method" class="signature"><strong>#none?</strong></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
 </div>
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="fn?-instance-method">
+      <div class="signature">
+        
+        def <strong>fn?</strong>
+
+        <a class="method-permalink" href="#fn%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/resolver.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="none?-instance-method">
+      <div class="signature">
+        
+        def <strong>none?</strong>
+
+        <a class="method-permalink" href="#none%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/resolver.cr#L2" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
 </body>
 </html>

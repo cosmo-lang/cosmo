@@ -71,6 +71,11 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Base" data-name="cosmo::ast::expression::base">
+      <a href="../Cosmo/AST/Expression/Base.html">Base</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/BinaryOp" data-name="cosmo::ast::expression::binaryop">
       <a href="../Cosmo/AST/Expression/BinaryOp.html">BinaryOp</a>
       
@@ -83,6 +88,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/CharLiteral" data-name="cosmo::ast::expression::charliteral">
       <a href="../Cosmo/AST/Expression/CharLiteral.html">CharLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/CompoundAssignment" data-name="cosmo::ast::expression::compoundassignment">
+      <a href="../Cosmo/AST/Expression/CompoundAssignment.html">CompoundAssignment</a>
       
     </li>
   
@@ -141,6 +151,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Visitor" data-name="cosmo::ast::expression::visitor(r)">
+      <a href="../Cosmo/AST/Expression/Visitor.html">Visitor</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -156,6 +171,11 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Base" data-name="cosmo::ast::statement::base">
+      <a href="../Cosmo/AST/Statement/Base.html">Base</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Block" data-name="cosmo::ast::statement::block">
       <a href="../Cosmo/AST/Statement/Block.html">Block</a>
       
@@ -163,6 +183,21 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/FunctionDef" data-name="cosmo::ast::statement::functiondef">
       <a href="../Cosmo/AST/Statement/FunctionDef.html">FunctionDef</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Return" data-name="cosmo::ast::statement::return">
+      <a href="../Cosmo/AST/Statement/Return.html">Return</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/SingleExpression" data-name="cosmo::ast::statement::singleexpression">
+      <a href="../Cosmo/AST/Statement/SingleExpression.html">SingleExpression</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Visitor" data-name="cosmo::ast::statement::visitor(r)">
+      <a href="../Cosmo/AST/Statement/Visitor.html">Visitor</a>
       
     </li>
   
@@ -178,6 +213,11 @@
   
 </ul>
 
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Callable" data-name="cosmo::callable">
+      <a href="../Cosmo/Callable.html">Callable</a>
       
     </li>
   
@@ -226,6 +266,16 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Resolver" data-name="cosmo::resolver">
+      <a href="../Cosmo/Resolver.html">Resolver</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Return" data-name="cosmo::return">
+      <a href="../Cosmo/Return.html">Return</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Scope" data-name="cosmo::scope">
       <a href="../Cosmo/Scope.html">Scope</a>
       
@@ -248,6 +298,11 @@
   
 </ul>
 
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/FnType" data-name="fntype">
+      <a href="../FnType.html">FnType</a>
       
     </li>
   
@@ -301,7 +356,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/lexer/keywords.cr#L3" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/lexer/keywords.cr#L3" target="_blank">
         cosmo/syntax/lexer/keywords.cr
       </a>
     
@@ -328,8 +383,12 @@
       
     
       <dt class="entry-const" id="TYPE_KEYWORDS">
-        <strong>TYPE_KEYWORDS</strong> = <code>[<span class="s">&quot;any&quot;</span>, <span class="s">&quot;bool&quot;</span>, <span class="s">&quot;string&quot;</span>, <span class="s">&quot;char&quot;</span>, <span class="s">&quot;int&quot;</span>, <span class="s">&quot;float&quot;</span>, <span class="s">&quot;void&quot;</span>, <span class="s">&quot;none&quot;</span>]</code>
+        <strong>TYPE_KEYWORDS</strong> = <code>[<span class="s">&quot;any&quot;</span>, <span class="s">&quot;bool&quot;</span>, <span class="s">&quot;string&quot;</span>, <span class="s">&quot;char&quot;</span>, <span class="s">&quot;int&quot;</span>, <span class="s">&quot;float&quot;</span>, <span class="s">&quot;void&quot;</span>]</code>
       </dt>
+      
+      <dd class="entry-const-doc">
+        <p>These cannot be any of the keywords above</p>
+      </dd>
       
     
   </dl>
@@ -349,17 +408,23 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#get_syntax%28s%29-class-method" class="signature"><strong>.get_syntax</strong>(s)</a>
+        <a href="#get_syntax%28s%3AString%29%3ASyntax-class-method" class="signature"><strong>.get_syntax</strong>(s : String) : Syntax</a>
+        
+          <div class="summary"><p>Returns the syntax type of <code>s</code> if it is a regular keyword</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#keyword%3F%28s%29-class-method" class="signature"><strong>.keyword?</strong>(s)</a>
+        <a href="#keyword%3F%28s%3AString%29-class-method" class="signature"><strong>.keyword?</strong>(s : String)</a>
+        
+          <div class="summary"><p>Returns whether or not <code>s</code> is a regular keyword</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#type%3F%28s%29-class-method" class="signature"><strong>.type?</strong>(s)</a>
+        <a href="#type%3F%28s%3AString%29-class-method" class="signature"><strong>.type?</strong>(s : String)</a>
+        
+          <div class="summary"><p>Returns whether or not <code>s</code> is a type keyword</p></div>
         
       </li>
     
@@ -387,50 +452,65 @@
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="get_syntax(s)-class-method">
+    <div class="entry-detail" id="get_syntax(s:String):Syntax-class-method">
       <div class="signature">
         
-        def self.<strong>get_syntax</strong>(s)
+        def self.<strong>get_syntax</strong>(s : String) : <a href="../Cosmo/Syntax.html">Syntax</a>
 
-        <a class="method-permalink" href="#get_syntax%28s%29-class-method">#</a>
+        <a class="method-permalink" href="#get_syntax%28s%3AString%29%3ASyntax-class-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the syntax type of <code>s</code> if it is a regular keyword</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/lexer/keywords.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/lexer/keywords.cr#L37" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="keyword?(s)-class-method">
+    <div class="entry-detail" id="keyword?(s:String)-class-method">
       <div class="signature">
         
-        def self.<strong>keyword?</strong>(s)
+        def self.<strong>keyword?</strong>(s : String)
 
-        <a class="method-permalink" href="#keyword%3F%28s%29-class-method">#</a>
+        <a class="method-permalink" href="#keyword%3F%28s%3AString%29-class-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns whether or not <code>s</code> is a regular keyword</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/lexer/keywords.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/lexer/keywords.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="type?(s)-class-method">
+    <div class="entry-detail" id="type?(s:String)-class-method">
       <div class="signature">
         
-        def self.<strong>type?</strong>(s)
+        def self.<strong>type?</strong>(s : String)
 
-        <a class="method-permalink" href="#type%3F%28s%29-class-method">#</a>
+        <a class="method-permalink" href="#type%3F%28s%3AString%29-class-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns whether or not <code>s</code> is a type keyword</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/syntax/lexer/keywords.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/lexer/keywords.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -12,4 +12,6 @@ test:
 publish:
 	crystal spec
 	crystal docs --project-name=Cosmo -o docs
+	git add .
+	git commit -m "docs: generate (auto)"
 	git push -u

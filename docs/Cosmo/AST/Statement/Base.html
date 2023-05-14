@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::AST::Expression::FloatLiteral - Cosmo master</title>
+  <title>Cosmo::AST::Statement::Base - Cosmo master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../../";
   </script>
@@ -66,7 +66,7 @@
       
         <ul>
   
-  <li class="parent open current" data-id="Cosmo/Cosmo/AST/Expression" data-name="cosmo::ast::expression">
+  <li class="parent " data-id="Cosmo/Cosmo/AST/Expression" data-name="cosmo::ast::expression">
       <a href="../../../Cosmo/AST/Expression.html">Expression</a>
       
         <ul>
@@ -96,7 +96,7 @@
       
     </li>
   
-  <li class=" current" data-id="Cosmo/Cosmo/AST/Expression/FloatLiteral" data-name="cosmo::ast::expression::floatliteral">
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/FloatLiteral" data-name="cosmo::ast::expression::floatliteral">
       <a href="../../../Cosmo/AST/Expression/FloatLiteral.html">FloatLiteral</a>
       
     </li>
@@ -166,12 +166,12 @@
       
     </li>
   
-  <li class="parent " data-id="Cosmo/Cosmo/AST/Statement" data-name="cosmo::ast::statement">
+  <li class="parent open current" data-id="Cosmo/Cosmo/AST/Statement" data-name="cosmo::ast::statement">
       <a href="../../../Cosmo/AST/Statement.html">Statement</a>
       
         <ul>
   
-  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Base" data-name="cosmo::ast::statement::base">
+  <li class=" current" data-id="Cosmo/Cosmo/AST/Statement/Base" data-name="cosmo::ast::statement::base">
       <a href="../../../Cosmo/AST/Statement/Base.html">Base</a>
       
     </li>
@@ -325,12 +325,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Cosmo::AST::Expression::FloatLiteral
+  <span class="kind">abstract class</span> Cosmo::AST::Statement::Base
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../Cosmo/AST/Expression/FloatLiteral.html">Cosmo::AST::Expression::FloatLiteral</a></li><li class="superclass"><a href="../../../Cosmo/AST/Expression/Literal.html">Cosmo::AST::Expression::Literal</a></li><li class="superclass"><a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a></li><li class="superclass"><a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../Cosmo/AST/Statement/Base.html">Cosmo::AST::Statement::Base</a></li><li class="superclass"><a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -342,6 +342,26 @@
 
 
 
+
+  <h2>
+    <a id="direct-known-subclasses" class="anchor" href="#direct-known-subclasses">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Direct Known Subclasses
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../../../Cosmo/AST/Statement/Block.html">Cosmo::AST::Statement::Block</a></li>
+    
+      <li class="other-type"><a href="../../../Cosmo/AST/Statement/FunctionDef.html">Cosmo::AST::Statement::FunctionDef</a></li>
+    
+      <li class="other-type"><a href="../../../Cosmo/AST/Statement/Return.html">Cosmo::AST::Statement::Return</a></li>
+    
+      <li class="other-type"><a href="../../../Cosmo/AST/Statement/SingleExpression.html">Cosmo::AST::Statement::SingleExpression</a></li>
+    
+  </ul>
 
 
 
@@ -358,8 +378,8 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/parser/ast/expression_nodes.cr#L209" target="_blank">
-        cosmo/syntax/parser/ast/expression_nodes.cr
+      <a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/parser/ast/statement_nodes.cr#L9" target="_blank">
+        cosmo/syntax/parser/ast/statement_nodes.cr
       </a>
     
     <br/>
@@ -368,23 +388,6 @@
 
 
 
-
-  <h2>
-    <a id="constructors" class="anchor" href="#constructors">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructors
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#new%28value%3AFloat64%7CFloat32%7CFloat16%7CFloat8%2Ctoken%29-class-method" class="signature"><strong>.new</strong>(value : Float64 | Float32 | Float16 | Float8, token)</a>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -401,9 +404,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#to_s-instance-method" class="signature"><strong>#to_s</strong></a>
-        
-          <div class="summary"><p>Returns a nicely readable and concise string representation of this object, typically intended for users.</p></div>
+        <a href="#accept%28visitor%3AVisitor%28R%29%29forallR-instance-method" class="signature"><strong>#accept</strong>(visitor : Visitor(R)) forall R</a>
         
       </li>
     
@@ -414,63 +415,6 @@
 
 
 <div class="methods-inherited">
-  
-    
-
-  <h3>Instance methods inherited from class <code><a href="../../../Cosmo/AST/Expression/Literal.html">Cosmo::AST::Expression::Literal</a></code></h3>
-  
-  
-    <a href="../../../Cosmo/AST/Expression/Literal.html#accept%28visitor%3AVisitor%28R%29%29%3ARforallR-instance-method" class="tooltip">
-      <span>accept(visitor : Visitor(R)) : R forall R</span>
-    accept</a>, 
-    
-  
-    <a href="../../../Cosmo/AST/Expression/Literal.html#token%3AToken-instance-method" class="tooltip">
-      <span>token : Token</span>
-    token</a>, 
-    
-  
-    <a href="../../../Cosmo/AST/Expression/Literal.html#value%3ALiteralType-instance-method" class="tooltip">
-      <span>value : LiteralType</span>
-    value</a>
-    
-  
-
-
-    
-
-  <h3>Constructor methods inherited from class <code><a href="../../../Cosmo/AST/Expression/Literal.html">Cosmo::AST::Expression::Literal</a></code></h3>
-  
-  
-    <a href="../../../Cosmo/AST/Expression/Literal.html#new%28value%3ABool%7CChar%7CFloat32%7CFloat64%7CInt16%7CInt32%7CInt64%7CInt8%7CString%7CNil%2Ctoken%3ACosmo%3A%3AToken%29-class-method" class="tooltip">
-      <span>new(value : Bool | Char | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil, token : Cosmo::Token)</span>
-    new</a>
-    
-  
-
-
-    
-
-
-  
-    
-
-  <h3>Instance methods inherited from class <code><a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a></code></h3>
-  
-  
-    <a href="../../../Cosmo/AST/Expression/Base.html#accept%28visitor%3AVisitor%28R%29%29forallR-instance-method" class="tooltip">
-      <span>accept(visitor : Visitor(R)) forall R</span>
-    accept</a>
-    
-  
-
-
-    
-
-
-    
-
-
   
     
 
@@ -554,32 +498,6 @@
 </div>
 
 
-  <h2>
-    <a id="constructor-detail" class="anchor" href="#constructor-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructor Detail
-  </h2>
-  
-    <div class="entry-detail" id="new(value:Float64|Float32|Float16|Float8,token)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(value : Float64 | Float32 | Float16 | Float8, token)
-
-        <a class="method-permalink" href="#new%28value%3AFloat64%7CFloat32%7CFloat16%7CFloat8%2Ctoken%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/parser/ast/expression_nodes.cr#L210" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-
 
 
 
@@ -593,31 +511,18 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="to_s-instance-method">
+    <div class="entry-detail" id="accept(visitor:Visitor(R))forallR-instance-method">
       <div class="signature">
-        
-        def <strong>to_s</strong>
+        abstract 
+        def <strong>accept</strong>(visitor : <a href="../../../Cosmo/AST/Statement/Visitor.html">Visitor</a>(R)) forall R
 
-        <a class="method-permalink" href="#to_s-instance-method">#</a>
+        <a class="method-permalink" href="#accept%28visitor%3AVisitor%28R%29%29forallR-instance-method">#</a>
       </div>
-      
-        <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from class Object
-            </div>
-          
-          <p>Returns a nicely readable and concise string representation of this object,
-typically intended for users.</p>
-<p>This method should usually <strong>not</strong> be overridden. It delegates to
-<code>#to_s(IO)</code> which can be overridden for custom implementations.</p>
-<p>Also see <code>#inspect</code>.</p>
-        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/parser/ast/expression_nodes.cr#L211" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/syntax/parser/ast/statement_nodes.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>

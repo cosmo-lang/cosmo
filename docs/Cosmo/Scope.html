@@ -71,6 +71,11 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Base" data-name="cosmo::ast::expression::base">
+      <a href="../Cosmo/AST/Expression/Base.html">Base</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/BinaryOp" data-name="cosmo::ast::expression::binaryop">
       <a href="../Cosmo/AST/Expression/BinaryOp.html">BinaryOp</a>
       
@@ -83,6 +88,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/CharLiteral" data-name="cosmo::ast::expression::charliteral">
       <a href="../Cosmo/AST/Expression/CharLiteral.html">CharLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/CompoundAssignment" data-name="cosmo::ast::expression::compoundassignment">
+      <a href="../Cosmo/AST/Expression/CompoundAssignment.html">CompoundAssignment</a>
       
     </li>
   
@@ -141,6 +151,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Visitor" data-name="cosmo::ast::expression::visitor(r)">
+      <a href="../Cosmo/AST/Expression/Visitor.html">Visitor</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -156,6 +171,11 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Base" data-name="cosmo::ast::statement::base">
+      <a href="../Cosmo/AST/Statement/Base.html">Base</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Block" data-name="cosmo::ast::statement::block">
       <a href="../Cosmo/AST/Statement/Block.html">Block</a>
       
@@ -163,6 +183,21 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/FunctionDef" data-name="cosmo::ast::statement::functiondef">
       <a href="../Cosmo/AST/Statement/FunctionDef.html">FunctionDef</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Return" data-name="cosmo::ast::statement::return">
+      <a href="../Cosmo/AST/Statement/Return.html">Return</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/SingleExpression" data-name="cosmo::ast::statement::singleexpression">
+      <a href="../Cosmo/AST/Statement/SingleExpression.html">SingleExpression</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Visitor" data-name="cosmo::ast::statement::visitor(r)">
+      <a href="../Cosmo/AST/Statement/Visitor.html">Visitor</a>
       
     </li>
   
@@ -178,6 +213,11 @@
   
 </ul>
 
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Callable" data-name="cosmo::callable">
+      <a href="../Cosmo/Callable.html">Callable</a>
       
     </li>
   
@@ -226,6 +266,16 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Resolver" data-name="cosmo::resolver">
+      <a href="../Cosmo/Resolver.html">Resolver</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Return" data-name="cosmo::return">
+      <a href="../Cosmo/Return.html">Return</a>
+      
+    </li>
+  
   <li class=" current" data-id="Cosmo/Cosmo/Scope" data-name="cosmo::scope">
       <a href="../Cosmo/Scope.html">Scope</a>
       
@@ -248,6 +298,11 @@
   
 </ul>
 
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/FnType" data-name="fntype">
+      <a href="../FnType.html">FnType</a>
       
     </li>
   
@@ -303,7 +358,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L4" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/scope.cr#L4" target="_blank">
         cosmo/runtime/scope.cr
       </a>
     
@@ -356,12 +411,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#local_variables%3AHash%28String%2C%7BString%2CBool%7CChar%7CCosmo%3A%3AFunction%7CCosmo%3A%3AIntrinsicFunction%7CFloat32%7CFloat64%7CInt16%7CInt32%7CInt64%7CInt8%7CString%7CNil%7D%29-instance-method" class="signature"><strong>#local_variables</strong> : Hash(String, {String, Bool | Char | Cosmo::Function | Cosmo::IntrinsicFunction | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil})</a>
+        <a href="#lookup%28token%3AToken%29%3AValueType-instance-method" class="signature"><strong>#lookup</strong>(token : Token) : ValueType</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#lookup%28token%3AToken%29%3AValueType-instance-method" class="signature"><strong>#lookup</strong>(token : Token) : ValueType</a>
+        <a href="#lookup_at%28distance%3AUInt32%2Ctoken%3AToken%29%3AValueType-instance-method" class="signature"><strong>#lookup_at</strong>(distance : UInt32, token : Token) : ValueType</a>
         
       </li>
     
@@ -376,11 +431,6 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#set_global%28variables%3AHash%28String%2CTuple%28String%2CValueType%29%29%29-instance-method" class="signature"><strong>#set_global</strong>(variables : Hash(String, Tuple(String, ValueType)))</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#to_s-instance-method" class="signature"><strong>#to_s</strong></a>
         
           <div class="summary"><p>Returns a nicely readable and concise string representation of this object, typically intended for users.</p></div>
@@ -388,7 +438,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#unwrap%3AScope-instance-method" class="signature"><strong>#unwrap</strong> : Scope</a>
+        <a href="#variables%3AHash%28String%2C%7BString%2CBool%7CChar%7CCosmo%3A%3ACallable%7CFloat32%7CFloat64%7CInt16%7CInt32%7CInt64%7CInt8%7CString%7CNil%7D%29-instance-method" class="signature"><strong>#variables</strong> : Hash(String, {String, Bool | Char | Cosmo::Callable | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil})</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#variables%3D%28variables%3AHash%28String%2CTuple%28String%2CBool%7CChar%7CCosmo%3A%3ACallable%7CFloat32%7CFloat64%7CInt16%7CInt32%7CInt64%7CInt8%7CString%7CNil%29%29%29-instance-method" class="signature"><strong>#variables=</strong>(variables : Hash(String, Tuple(String, Bool | Char | Cosmo::Callable | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil)))</a>
         
       </li>
     
@@ -443,7 +498,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/scope.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -473,7 +528,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/scope.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -489,23 +544,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L15" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="local_variables:Hash(String,{String,Bool|Char|Cosmo::Function|Cosmo::IntrinsicFunction|Float32|Float64|Int16|Int32|Int64|Int8|String|Nil})-instance-method">
-      <div class="signature">
-        
-        def <strong>local_variables</strong> : Hash(String, {String, Bool | Char | <a href="../Cosmo/Function.html">Cosmo::Function</a> | <a href="../Cosmo/IntrinsicFunction.html">Cosmo::IntrinsicFunction</a> | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil})
-
-        <a class="method-permalink" href="#local_variables%3AHash%28String%2C%7BString%2CBool%7CChar%7CCosmo%3A%3AFunction%7CCosmo%3A%3AIntrinsicFunction%7CFloat32%7CFloat64%7CInt16%7CInt32%7CInt64%7CInt8%7CString%7CNil%7D%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/scope.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -521,7 +560,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/scope.cr#L29" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lookup_at(distance:UInt32,token:Token):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>lookup_at</strong>(distance : UInt32, token : <a href="../Cosmo/Token.html">Token</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#lookup_at%28distance%3AUInt32%2Ctoken%3AToken%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/scope.cr#L44" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -537,7 +592,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/scope.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -553,23 +608,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L5" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="set_global(variables:Hash(String,Tuple(String,ValueType)))-instance-method">
-      <div class="signature">
-        
-        def <strong>set_global</strong>(variables : Hash(String, Tuple(String, <a href="../ValueType.html">ValueType</a>)))
-
-        <a class="method-permalink" href="#set_global%28variables%3AHash%28String%2CTuple%28String%2CValueType%29%29%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/scope.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -598,23 +637,39 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L41" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/scope.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="unwrap:Scope-instance-method">
+    <div class="entry-detail" id="variables:Hash(String,{String,Bool|Char|Cosmo::Callable|Float32|Float64|Int16|Int32|Int64|Int8|String|Nil})-instance-method">
       <div class="signature">
         
-        def <strong>unwrap</strong> : <a href="../Cosmo/Scope.html">Scope</a>
+        def <strong>variables</strong> : Hash(String, {String, Bool | Char | <a href="../Cosmo/Callable.html">Cosmo::Callable</a> | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil})
 
-        <a class="method-permalink" href="#unwrap%3AScope-instance-method">#</a>
+        <a class="method-permalink" href="#variables%3AHash%28String%2C%7BString%2CBool%7CChar%7CCosmo%3A%3ACallable%7CFloat32%7CFloat64%7CInt16%7CInt32%7CInt64%7CInt8%7CString%7CNil%7D%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/7994bca3807a6196391bad1eeb61d40561b9114f/src/cosmo/runtime/scope.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/scope.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="variables=(variables:Hash(String,Tuple(String,Bool|Char|Cosmo::Callable|Float32|Float64|Int16|Int32|Int64|Int8|String|Nil)))-instance-method">
+      <div class="signature">
+        
+        def <strong>variables=</strong>(variables : Hash(String, Tuple(String, Bool | Char | <a href="../Cosmo/Callable.html">Cosmo::Callable</a> | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil)))
+
+        <a class="method-permalink" href="#variables%3D%28variables%3AHash%28String%2CTuple%28String%2CBool%7CChar%7CCosmo%3A%3ACallable%7CFloat32%7CFloat64%7CInt16%7CInt32%7CInt64%7CInt8%7CString%7CNil%29%29%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/11ccdef90a51709dc2dd1a271a8d03ab9c785aba/src/cosmo/runtime/scope.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
