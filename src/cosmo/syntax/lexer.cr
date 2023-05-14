@@ -67,8 +67,9 @@ class Cosmo::Lexer
       read_char(char)
     when "#"
       if match_char?("#")
-        is_multiline = match_char?(":")
-        skip_comments(is_multiline)
+        skip_comments(multiline: false)
+      elsif match_char?(":")
+        skip_comments(multiline: true)
       else
         add_token(Syntax::Hashtag, nil)
       end
@@ -220,14 +221,14 @@ class Cosmo::Lexer
       peek(2).to_i(2)
   end
 
-  private def skip_comments(multiline)
+  private def skip_comments(multiline : Bool)
     advance
     while !end_of_comment(multiline, @line)
       advance
     end
   end
 
-  private def end_of_comment(multiline, current_line)
+  private def end_of_comment(multiline : Bool, current_line : UInt32)
     if multiline
       match_char?(":") &&
         match_char?("#") &&
@@ -275,7 +276,7 @@ class Cosmo::Lexer
     @position -= 1
   end
 
-  private def read_string(delim)
+  private def read_string(delim : String)
     advance
     res_str = ""
     until finished? || current_char == delim
@@ -284,7 +285,7 @@ class Cosmo::Lexer
     add_token(Syntax::String, res_str)
   end
 
-  private def read_char(delim)
+  private def read_char(delim : String)
     advance
     res_str = ""
     until finished? || current_char == delim
