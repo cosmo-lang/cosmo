@@ -140,15 +140,50 @@ class Cosmo::Parser
 
   # Parse a variable assignment expression and return a node
   private def parse_assignment : Node
-    left = parse_logical_or
+    left = parse_compound_assignment
 
     while match?(Syntax::Equal)
-      if left.is_a?(Expression::Var)
-        value = parse_expression
-        left = Expression::VarAssignment.new(left, value)
-      else
+      unless left.is_a?(Expression::Var)
         Logger.report_error("Expected identifier, got", peek(-2).type.to_s, peek(-2))
       end
+      value = parse_assignment
+      left = Expression::VarAssignment.new(left, value)
+    end
+
+    left
+  end
+
+  private def parse_compound_assignment
+    left = parse_compound_assignment_factor
+
+    while match?(Syntax::PlusEqual) || match?(Syntax::MinusEqual)
+      op = last_token
+      right = parse_compound_assignment_factor
+      left = Expression::CompoundAssignment.new(peek(-3), op, right)
+    end
+
+    left
+  end
+
+  private def parse_compound_assignment_factor
+    left = parse_compound_assignment_coeff
+
+    while match?(Syntax::StarEqual) || match?(Syntax::SlashEqual) || match?(Syntax::PercentEqual)
+      op = last_token
+      right = parse_compound_assignment_coeff
+      left = Expression::CompoundAssignment.new(peek(-3), op, right)
+    end
+
+    left
+  end
+
+  private def parse_compound_assignment_coeff
+    left = parse_logical_or
+
+    while match?(Syntax::StarEqual) || match?(Syntax::SlashEqual) || match?(Syntax::PercentEqual)
+      op = last_token
+      right = parse_logical_or
+      left = Expression::CompoundAssignment.new(peek(-3), op, right)
     end
 
     left

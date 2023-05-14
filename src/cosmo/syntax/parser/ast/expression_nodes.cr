@@ -48,6 +48,23 @@ module Cosmo::AST::Expression
     end
   end
 
+  class CompoundAssignment < Base
+    getter name : Token
+    getter operator : Token
+    getter value : Node
+
+    def initialize(@name, @operator, @value)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_compound_assignment_expr(self)
+    end
+
+    def to_s
+      "CompoundAssignment<name: #{@name.value}, operator: #{@operator.to_s}, value: #{@value.to_s}>"
+    end
+  end
+
   class VarDeclaration < Base
     getter typedef : Token
     getter var : Var
@@ -109,7 +126,7 @@ module Cosmo::AST::Expression
     end
 
     def to_s
-      "Binary<left: #{@left.to_s}, operator: #{@operator}, right: #{@right.to_s}>"
+      "Binary<left: #{@left.to_s}, operator: #{@operator.to_s}, right: #{@right.to_s}>"
     end
   end
 
@@ -125,7 +142,7 @@ module Cosmo::AST::Expression
     end
 
     def to_s
-      "Unary<operator: #{@operator}, operand: #{@operand.to_s}>"
+      "Unary<operator: #{@operator.to_s}, operand: #{@operand.to_s}>"
     end
   end
 

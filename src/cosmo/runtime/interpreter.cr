@@ -78,6 +78,114 @@ class Cosmo::Interpreter
     execute_block(stmt, Scope.new(@scope))
   end
 
+  def visit_compound_assignment_expr(expr : Expression::CompoundAssignment) : ValueType
+    var = @scope.lookup(expr.name)
+    value = evaluate(expr.value.as Expression::Base)
+
+    case expr.operator.type
+    when Syntax::PlusEqual
+      if var.is_a?(Float)
+        if value.is_a?(Float)
+          @scope.assign(expr.name, var + value)
+        elsif value.is_a?(Int)
+          @scope.assign(expr.name, var + value.to_f)
+        else
+          report_error("Invalid '+' operand type", value.class.to_s, expr.operator)
+        end
+      elsif var.is_a?(Int)
+        if value.is_a?(Int)
+          @scope.assign(expr.name, var + value)
+        elsif value.is_a?(Float)
+          @scope.assign(expr.name, var.to_f + value)
+        else
+          report_error("Invalid '+' operand type", value.class.to_s, expr.operator)
+        end
+      else
+        report_error("Invalid '+' operand type", var.class.to_s, expr.operator)
+      end
+    when Syntax::MinusEqual
+      if var.is_a?(Float)
+        if value.is_a?(Float)
+          @scope.assign(expr.name, var + value)
+        elsif value.is_a?(Int)
+          @scope.assign(expr.name, var + value.to_f)
+        else
+          report_error("Invalid '+' operand type", value.class.to_s, expr.operator)
+        end
+      elsif var.is_a?(Int)
+        if value.is_a?(Int)
+          @scope.assign(expr.name, var + value)
+        elsif value.is_a?(Float)
+          @scope.assign(expr.name, var.to_f + value)
+        else
+          report_error("Invalid '+' operand type", value.class.to_s, expr.operator)
+        end
+      else
+        report_error("Invalid '+' operand type", var.class.to_s, expr.operator)
+      end
+    when Syntax::StarEqual
+      if var.is_a?(Float)
+        if value.is_a?(Float)
+          @scope.assign(expr.name, var * value)
+        elsif value.is_a?(Int)
+          @scope.assign(expr.name, var * value.to_f)
+        else
+          report_error("Invalid '*' operand type", value.class.to_s, expr.operator)
+        end
+      elsif var.is_a?(Int)
+        if value.is_a?(Int)
+          @scope.assign(expr.name, var * value)
+        elsif value.is_a?(Float)
+          @scope.assign(expr.name, var.to_f * value)
+        else
+          report_error("Invalid '*' operand type", value.class.to_s, expr.operator)
+        end
+      else
+        report_error("Invalid '*' operand type", var.class.to_s, expr.operator)
+      end
+    when Syntax::SlashEqual
+      if var.is_a?(Float)
+        if value.is_a?(Float)
+          @scope.assign(expr.name, var / value)
+        elsif value.is_a?(Int)
+          @scope.assign(expr.name, var / value.to_f)
+        else
+          report_error("Invalid '/' operand type", value.class.to_s, expr.operator)
+        end
+      elsif var.is_a?(Int)
+        if value.is_a?(Int)
+          @scope.assign(expr.name, var / value)
+        elsif value.is_a?(Float)
+          @scope.assign(expr.name, var.to_f / value)
+        else
+          report_error("Invalid '/' operand type", value.class.to_s, expr.operator)
+        end
+      else
+        report_error("Invalid '/' operand type", var.class.to_s, expr.operator)
+      end
+    when Syntax::PercentEqual
+      if var.is_a?(Float)
+        if value.is_a?(Float)
+          @scope.assign(expr.name, var % value)
+        elsif value.is_a?(Int)
+          @scope.assign(expr.name, var % value.to_f)
+        else
+          report_error("Invalid '%' operand type", value.class.to_s, expr.operator)
+        end
+      elsif var.is_a?(Int)
+        if value.is_a?(Int)
+          @scope.assign(expr.name, var % value)
+        elsif value.is_a?(Float)
+          @scope.assign(expr.name, var.to_f % value)
+        else
+          report_error("Invalid '%' operand type", value.class.to_s, expr.operator)
+        end
+      else
+        report_error("Invalid '%' operand type", var.class.to_s, expr.operator)
+      end
+    end
+  end
+
   def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
     typedef = Token.new(Syntax::TypeDef, "fn", Location.new(@file_path, 0, 0))
     fn = Function.new(self, @scope, stmt)

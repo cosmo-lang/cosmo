@@ -208,6 +208,31 @@ describe Parser do
     literal.should be_a AST::Expression::BooleanLiteral
     literal.value.should be_false
   end
+  it "parses compound assignment" do
+    stmts = Parser.new("int a = 5; a += 2", "test").parse
+    stmts.empty?.should be_false
+    expr = stmts.first.as(AST::Statement::SingleExpression).expression
+    expr.should be_a AST::Expression::VarDeclaration
+    declaration = expr.as AST::Expression::VarDeclaration
+    declaration.typedef.type.should eq Syntax::TypeDef
+    declaration.typedef.value.should eq "int"
+    declaration.var.should be_a AST::Expression::Var
+    declaration.var.token.type.should eq Syntax::Identifier
+    declaration.var.token.value.should eq "a"
+    literal = declaration.value.as AST::Expression::IntLiteral
+    literal.should be_a AST::Expression::IntLiteral
+    literal.value.should eq 5
+
+    expr = stmts.last.as(AST::Statement::SingleExpression).expression
+    expr.should be_a AST::Expression::CompoundAssignment
+    assignment = expr.as AST::Expression::CompoundAssignment
+    assignment.name.type.should eq Syntax::Identifier
+    assignment.name.value.should eq "a"
+    assignment.operator.type.should eq Syntax::PlusEqual
+    literal = assignment.value.as AST::Expression::IntLiteral
+    literal.should be_a AST::Expression::IntLiteral
+    literal.value.should eq 2
+  end
   it "parses function definitions & calls" do
     lines = [
       "bool fn is_eq(int a, int b) {",

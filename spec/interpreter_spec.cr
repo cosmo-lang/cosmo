@@ -55,6 +55,11 @@ describe Interpreter do
     result = interpreter.interpret("x = 5", "test")
     result.should eq 5
   end
+  it "interprets compound assignment" do
+    interpreter.interpret("int a = 5; a += 2", "test")
+    result = interpreter.interpret("a", "test")
+    result.should eq 7
+  end
   it "interprets function definitions & calls" do
     interpreter.interpret("bool fn is_eq(int a, int b) { a == b }", "test")
     result = interpreter.interpret("is_eq == none", "test")
