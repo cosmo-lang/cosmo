@@ -54,10 +54,14 @@ class Cosmo::Interpreter
 
   def execute_block(block : Statement::Block, block_scope : Scope) : ValueType
     prev_scope = @scope
-    begin
+    begin # TODO: typecheck return types
       @scope = block_scope
-      return_value = evaluate(block.single_expression?.not_nil!) unless block.single_expression?.nil?
-      block.nodes.each { |expr| execute(expr.as Statement::Base) }
+      unless block.nodes.empty?
+        return_node = block.nodes.last
+        body_nodes = block.nodes[0..-2]
+        body_nodes.each { |expr| execute(expr.as Statement::Base) }
+        return_value = execute(return_node.as Statement::Base) unless return_node.nil?
+      end
       return_value
     rescue ex : Exception
       raise ex
