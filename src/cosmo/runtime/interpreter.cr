@@ -6,7 +6,7 @@ class Cosmo::Interpreter
   include Expression::Visitor(ValueType)
   include Statement::Visitor(ValueType)
 
-  getter output_ast : Bool = false
+  getter? output_ast = false
   getter file_path : String = ""
   getter globals = Scope.new
   @scope : Scope
@@ -31,7 +31,11 @@ class Cosmo::Interpreter
 
     # init resolver here
 
-    statements.each { |stmt| execute(stmt) }
+    result = nil
+    statements.each do |stmt|
+      result = execute(stmt)
+    end
+    result
   end
 
   private def lookup_variable(identifier : Token, expr : Expression::Base) : ValueType
@@ -53,7 +57,8 @@ class Cosmo::Interpreter
     begin
       @scope = block_scope
       return_value = evaluate(block.single_expression?.not_nil!) unless block.single_expression?.nil?
-      block.nodes.each { |expr| evaluate(expr.as Expression::Base) }
+      block.nodes.each { |expr| execute(expr.as Statement::Base) }
+      return_value
     rescue ex : Exception
       raise ex
     ensure
@@ -65,11 +70,11 @@ class Cosmo::Interpreter
     evaluate(stmt.expression)
   end
 
-  def visit_block_stmt(stmt : Statement::Block) : Callable?
+  def visit_block_stmt(stmt : Statement::Block) : ValueType
     execute_block(stmt, Scope.new(@scope))
   end
 
-  def visit_fn_def_stmt(stmt : Statement::FunctionDef) : Function
+  def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
     typedef = Token.new(Syntax::TypeDef, "fn", Location.new(@file_path, 0, 0))
     fn = Function.new(self, @scope, stmt)
     @scope.declare(typedef, stmt.identifier, fn)

@@ -74,8 +74,16 @@ module Cosmo::AST::Statement
 
     # It yields first node if this holds only one node, or yields `nil`.
     def single_expression? : Expression::Base?
-      return @nodes.first.single_expression.as Expression::Base if @nodes.size == 1
-      nil
+      if @nodes.size == 1
+        expr = @nodes.first.single_expression
+        if expr.is_a?(Statement::SingleExpression)
+          expr.expression
+        else
+          expr.as Expression::Base
+        end
+      else
+        nil
+      end
     end
 
     def accept(visitor : Visitor(R)) : R forall R
