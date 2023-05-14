@@ -21,16 +21,19 @@ class Cosmo::Interpreter
   @locals = {} of Expression::Base => UInt32
   @meta = {} of String => String
 
-  private def declare_intrinsic(ident : String, value : ValueType)
+  private def declare_intrinsic(type : String, ident : String, value : ValueType)
     location = Location.new("intrinsic", 0, 0)
     ident_token = Token.new(Syntax::Identifier, ident, location)
-    typedef_token = Token.new(Syntax::TypeDef, "fn", location)
+    typedef_token = Token.new(Syntax::TypeDef, type, location)
     @globals.declare(typedef_token, ident_token, value)
   end
 
   def initialize(@output_ast)
     @scope = @globals
-    declare_intrinsic("puts", PutsIntrinsic.new)
+    declare_intrinsic("fn", "puts", PutsIntrinsic.new)
+
+    version = "Cosmo v#{`shards version`}"
+    declare_intrinsic("string", "__version", version)
   end
 
   def interpret(source : String, @file_path : String) : ValueType
