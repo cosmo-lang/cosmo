@@ -10,6 +10,197 @@ class Cosmo::Return < Exception
   end
 end
 
+module Cosmo::Operator
+  abstract class Base
+    def initialize(@interpreter : Interpreter)
+    end
+    abstract def apply(expr : Expression::BinaryOp) : ValueType
+  end
+
+  class Plus < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left.as Expression::Base)
+      right = @interpreter.evaluate(expr.right.as Expression::Base)
+      op = '+'
+      if left.is_a?(Float)
+        return left + right if right.is_a?(Float)
+        return left + right.to_f if right.is_a?(Int)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(Int)
+        return left + right if right.is_a?(Int)
+        return left.to_f + right if right.is_a?(Float)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(String)
+        return left + right if right.is_a?(String)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+    end
+  end
+
+  class Minus < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left.as Expression::Base)
+      right = @interpreter.evaluate(expr.right.as Expression::Base)
+      op = '-'
+      if left.is_a?(Float)
+        return left - right if right.is_a?(Float)
+        return left - right.to_f if right.is_a?(Int)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(Int)
+        return left - right if right.is_a?(Int)
+        return left.to_f - right if right.is_a?(Float)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+    end
+  end
+
+  class Mul < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left.as Expression::Base)
+      right = @interpreter.evaluate(expr.right.as Expression::Base)
+      op = '*'
+      if left.is_a?(Float)
+        return left * right if right.is_a?(Float)
+        return left * right.to_f if right.is_a?(Int)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(Int)
+        return left * right if right.is_a?(Int)
+        return left.to_f * right if right.is_a?(Float)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+    end
+  end
+
+  class Div < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left.as Expression::Base)
+      right = @interpreter.evaluate(expr.right.as Expression::Base)
+      op = '/'
+      if left.is_a?(Float)
+        return left / right if right.is_a?(Float)
+        return left / right.to_f if right.is_a?(Int)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(Int)
+        return left / right if right.is_a?(Int)
+        return left.to_f / right if right.is_a?(Float)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+    end
+  end
+
+  class Pow < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left.as Expression::Base)
+      right = @interpreter.evaluate(expr.right.as Expression::Base)
+      op = '^'
+      if left.is_a?(Float)
+        return left ** right if right.is_a?(Float)
+        return left ** right.to_f if right.is_a?(Int)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(Int)
+        return left ** right if right.is_a?(Int)
+        return left.to_f ** right if right.is_a?(Float)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+    end
+  end
+
+  class Mod < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left.as Expression::Base)
+      right = @interpreter.evaluate(expr.right.as Expression::Base)
+      op = '%'
+      if left.is_a?(Float)
+        return left % right if right.is_a?(Float)
+        return left % right.to_f if right.is_a?(Int)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(Int)
+        return left % right if right.is_a?(Int)
+        return left.to_f % right if right.is_a?(Float)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+    end
+  end
+
+  class LT < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left.as Expression::Base)
+      right = @interpreter.evaluate(expr.right.as Expression::Base)
+      op = '<'
+      if left.is_a?(Float)
+        return left < right if right.is_a?(Float)
+        return left < right.to_f if right.is_a?(Int)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(Int)
+        return left < right if right.is_a?(Int)
+        return left.to_f < right if right.is_a?(Float)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+    end
+  end
+
+  class LTE < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left.as Expression::Base)
+      right = @interpreter.evaluate(expr.right.as Expression::Base)
+      op = "<="
+      if left.is_a?(Float)
+        return left <= right if right.is_a?(Float)
+        return left <= right.to_f if right.is_a?(Int)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(Int)
+        return left <= right if right.is_a?(Int)
+        return left.to_f <= right if right.is_a?(Float)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+    end
+  end
+
+  class GT < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left.as Expression::Base)
+      right = @interpreter.evaluate(expr.right.as Expression::Base)
+      op = '>'
+      if left.is_a?(Float)
+        return left > right if right.is_a?(Float)
+        return left > right.to_f if right.is_a?(Int)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(Int)
+        return left > right if right.is_a?(Int)
+        return left.to_f > right if right.is_a?(Float)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+    end
+  end
+
+  class GTE < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left.as Expression::Base)
+      right = @interpreter.evaluate(expr.right.as Expression::Base)
+      op = ">="
+      if left.is_a?(Float)
+        return left >= right if right.is_a?(Float)
+        return left >= right.to_f if right.is_a?(Int)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(Int)
+        return left >= right if right.is_a?(Int)
+        return left.to_f >= right if right.is_a?(Float)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+    end
+  end
+end
+
 class Cosmo::Interpreter
   include Expression::Visitor(ValueType)
   include Statement::Visitor(ValueType)
@@ -109,10 +300,10 @@ class Cosmo::Interpreter
   def visit_fn_call_expr(expr : Expression::FunctionCall) : ValueType
     fn = @scope.lookup(expr.var.token)
     unless fn.is_a?(Function) || fn.is_a?(IntrinsicFunction)
-      report_error("Attempt to call", TypeChecker.get_mapped(fn.class), expr.var.token)
+      Logger.report_error("Attempt to call", TypeChecker.get_mapped(fn.class), expr.var.token)
     end
     unless fn.arity.includes?(expr.arguments.size)
-      report_error("Expected #{fn.arity} arguments, got", expr.arguments.size.to_s, expr.var.token)
+      Logger.report_error("Expected #{fn.arity} arguments, got", expr.arguments.size.to_s, expr.var.token)
     end
 
     @meta["block_return_type"] = fn.definition.return_typedef.value.to_s unless fn.is_a?(IntrinsicFunction)
@@ -146,7 +337,7 @@ class Cosmo::Interpreter
         elsif value.is_a?(Int)
           @scope.assign(expr.name, var + value.to_f)
         else
-          report_error("Invalid '+=' operand type", value.class.to_s, expr.operator)
+          Logger.report_error("Invalid '+=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(Int)
         if value.is_a?(Int)
@@ -154,16 +345,16 @@ class Cosmo::Interpreter
         elsif value.is_a?(Float)
           @scope.assign(expr.name, var.to_f + value)
         else
-          report_error("Invalid '+=' operand type", value.class.to_s, expr.operator)
+          Logger.report_error("Invalid '+=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(String)
         if value.is_a?(String)
           @scope.assign(expr.name, var + value)
         else
-          report_error("Invalid '+=' operand type", value.class.to_s, expr.operator)
+          Logger.report_error("Invalid '+=' operand type", value.class.to_s, expr.operator)
         end
       else
-        report_error("Invalid '+=' operand type", var.class.to_s, expr.operator)
+        Logger.report_error("Invalid '+=' operand type", var.class.to_s, expr.operator)
       end
     when Syntax::MinusEqual
       if var.is_a?(Float)
@@ -172,7 +363,7 @@ class Cosmo::Interpreter
         elsif value.is_a?(Int)
           @scope.assign(expr.name, var + value.to_f)
         else
-          report_error("Invalid '+=' operand type", value.class.to_s, expr.operator)
+          Logger.report_error("Invalid '-=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(Int)
         if value.is_a?(Int)
@@ -180,10 +371,10 @@ class Cosmo::Interpreter
         elsif value.is_a?(Float)
           @scope.assign(expr.name, var.to_f + value)
         else
-          report_error("Invalid '+=' operand type", value.class.to_s, expr.operator)
+          Logger.report_error("Invalid '-=' operand type", value.class.to_s, expr.operator)
         end
       else
-        report_error("Invalid '+=' operand type", var.class.to_s, expr.operator)
+        Logger.report_error("Invalid '-=' operand type", var.class.to_s, expr.operator)
       end
     when Syntax::StarEqual
       if var.is_a?(Float)
@@ -192,7 +383,7 @@ class Cosmo::Interpreter
         elsif value.is_a?(Int)
           @scope.assign(expr.name, var * value.to_f)
         else
-          report_error("Invalid '*=' operand type", value.class.to_s, expr.operator)
+          Logger.report_error("Invalid '*=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(Int)
         if value.is_a?(Int)
@@ -200,10 +391,10 @@ class Cosmo::Interpreter
         elsif value.is_a?(Float)
           @scope.assign(expr.name, var.to_f * value)
         else
-          report_error("Invalid '*=' operand type", value.class.to_s, expr.operator)
+          Logger.report_error("Invalid '*=' operand type", value.class.to_s, expr.operator)
         end
       else
-        report_error("Invalid '*=' operand type", var.class.to_s, expr.operator)
+        Logger.report_error("Invalid '*=' operand type", var.class.to_s, expr.operator)
       end
     when Syntax::SlashEqual
       if var.is_a?(Float)
@@ -212,7 +403,7 @@ class Cosmo::Interpreter
         elsif value.is_a?(Int)
           @scope.assign(expr.name, var / value.to_f)
         else
-          report_error("Invalid '/=' operand type", value.class.to_s, expr.operator)
+          Logger.report_error("Invalid '/=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(Int)
         if value.is_a?(Int)
@@ -220,10 +411,10 @@ class Cosmo::Interpreter
         elsif value.is_a?(Float)
           @scope.assign(expr.name, var.to_f / value)
         else
-          report_error("Invalid '/=' operand type", value.class.to_s, expr.operator)
+          Logger.report_error("Invalid '/=' operand type", value.class.to_s, expr.operator)
         end
       else
-        report_error("Invalid '/=' operand type", var.class.to_s, expr.operator)
+        Logger.report_error("Invalid '/=' operand type", var.class.to_s, expr.operator)
       end
     when Syntax::PercentEqual
       if var.is_a?(Float)
@@ -232,7 +423,7 @@ class Cosmo::Interpreter
         elsif value.is_a?(Int)
           @scope.assign(expr.name, var % value.to_f)
         else
-          report_error("Invalid '%=' operand type", value.class.to_s, expr.operator)
+          Logger.report_error("Invalid '%=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(Int)
         if value.is_a?(Int)
@@ -240,10 +431,10 @@ class Cosmo::Interpreter
         elsif value.is_a?(Float)
           @scope.assign(expr.name, var.to_f % value)
         else
-          report_error("Invalid '%=' operand type", value.class.to_s, expr.operator)
+          Logger.report_error("Invalid '%=' operand type", value.class.to_s, expr.operator)
         end
       else
-        report_error("Invalid '%=' operand type", var.class.to_s, expr.operator)
+        Logger.report_error("Invalid '%=' operand type", var.class.to_s, expr.operator)
       end
     when Syntax::CaratEqual
       if var.is_a?(Float)
@@ -252,7 +443,7 @@ class Cosmo::Interpreter
         elsif value.is_a?(Int)
           @scope.assign(expr.name, var ** value.to_f)
         else
-          report_error("Invalid '^=' operand type", value.class.to_s, expr.operator)
+          Logger.report_error("Invalid '^=' operand type", value.class.to_s, expr.operator)
         end
       elsif var.is_a?(Int)
         if value.is_a?(Int)
@@ -260,10 +451,10 @@ class Cosmo::Interpreter
         elsif value.is_a?(Float)
           @scope.assign(expr.name, var.to_f ** value)
         else
-          report_error("Invalid '^=' operand type", value.class.to_s, expr.operator)
+          Logger.report_error("Invalid '^=' operand type", value.class.to_s, expr.operator)
         end
       else
-        report_error("Invalid '^=' operand type", var.class.to_s, expr.operator)
+        Logger.report_error("Invalid '^=' operand type", var.class.to_s, expr.operator)
       end
     end
   end
@@ -275,13 +466,13 @@ class Cosmo::Interpreter
       if operand.is_a?(Float) || operand.is_a?(Int)
         operand.abs
       else
-        report_error("Invalid '+' operand type", operand.class.to_s, expr.operator)
+        Logger.report_error("Invalid '+' operand type", operand.class.to_s, expr.operator)
       end
     when Syntax::Minus
       if operand.is_a?(Float) || operand.is_a?(Int)
         -operand
       else
-        report_error("Invalid '-' operand type", operand.class.to_s, expr.operator)
+        Logger.report_error("Invalid '-' operand type", operand.class.to_s, expr.operator)
       end
     when Syntax::Bang
       !operand
@@ -297,131 +488,23 @@ class Cosmo::Interpreter
     right = evaluate(expr.right.as Expression::Base)
     case expr.operator.type # TODO: better typechecking
     when Syntax::Plus
-      if left.is_a?(Float)
-        if right.is_a?(Float)
-          left + right
-        elsif right.is_a?(Int)
-          left + right.to_f
-        else
-          report_error("Invalid '+' operand type", right.class.to_s, expr.operator)
-        end
-      elsif left.is_a?(Int)
-        if right.is_a?(Int)
-          left + right
-        elsif right.is_a?(Float)
-          left.to_f + right
-        else
-          report_error("Invalid '+' operand type", right.class.to_s, expr.operator)
-        end
-      elsif left.is_a?(String)
-        if right.is_a?(String)
-          left + right
-        else
-          report_error("Invalid '+' operand type", right.class.to_s, expr.operator)
-        end
-      else
-        report_error("Invalid '+' operand type", left.class.to_s, expr.operator)
-      end
+      op = Operator::Plus.new(self)
+      op.apply(expr)
     when Syntax::Minus
-      if left.is_a?(Float)
-        if right.is_a?(Float)
-          left - right
-        elsif right.is_a?(Int)
-          left - right.to_f
-        else
-          report_error("Invalid '-' operand type", right.class.to_s, expr.operator)
-        end
-      elsif left.is_a?(Int)
-        if right.is_a?(Int)
-          left - right
-        elsif right.is_a?(Float)
-          left.to_f - right
-        else
-          report_error("Invalid '-' operand type", right.class.to_s, expr.operator)
-        end
-      else
-        report_error("Invalid '-' operand type", left.class.to_s, expr.operator)
-      end
+      op = Operator::Minus.new(self)
+      op.apply(expr)
     when Syntax::Star
-      if left.is_a?(Float)
-        if right.is_a?(Float)
-          left * right
-        elsif right.is_a?(Int)
-          left * right.to_f
-        else
-          report_error("Invalid '*' operand type", right.class.to_s, expr.operator)
-        end
-      elsif left.is_a?(Int)
-        if right.is_a?(Int)
-          left * right
-        elsif right.is_a?(Float)
-          left.to_f * right
-        else
-          report_error("Invalid '*' operand type", right.class.to_s, expr.operator)
-        end
-      else
-        report_error("Invalid '*' operand type", left.class.to_s, expr.operator)
-      end
+      op = Operator::Mul.new(self)
+      op.apply(expr)
     when Syntax::Slash
-      if left.is_a?(Float)
-        if right.is_a?(Float)
-          left / right
-        elsif right.is_a?(Int)
-          left / right.to_f
-        else
-          report_error("Invalid '/' operand type", right.class.to_s, expr.operator)
-        end
-      elsif left.is_a?(Int)
-        if right.is_a?(Int)
-          left / right
-        elsif right.is_a?(Float)
-          left.to_f / right
-        else
-          report_error("Invalid '/' operand type", right.class.to_s, expr.operator)
-        end
-      else
-        report_error("Invalid '/' operand type", left.class.to_s, expr.operator)
-      end
+      op = Operator::Div.new(self)
+      op.apply(expr)
     when Syntax::Carat
-      if left.is_a?(Float)
-        if right.is_a?(Float)
-          left ** right
-        elsif right.is_a?(Int)
-          left ** right.to_f
-        else
-          report_error("Invalid '^' operand type", right.class.to_s, expr.operator)
-        end
-      elsif left.is_a?(Int)
-        if right.is_a?(Int)
-          left ** right
-        elsif right.is_a?(Float)
-          left.to_f ** right
-        else
-          report_error("Invalid '^' operand type", right.class.to_s, expr.operator)
-        end
-      else
-        report_error("Invalid '^' operand type", left.class.to_s, expr.operator)
-      end
+      op = Operator::Pow.new(self)
+      op.apply(expr)
     when Syntax::Percent
-      if left.is_a?(Float)
-        if right.is_a?(Float)
-          left % right
-        elsif right.is_a?(Int)
-          left % right.to_f
-        else
-          report_error("Invalid '%' operand type", right.class.to_s, expr.operator)
-        end
-      elsif left.is_a?(Int)
-        if right.is_a?(Int)
-          left % right
-        elsif right.is_a?(Float)
-          left.to_f % right
-        else
-          report_error("Invalid '%' operand type", right.class.to_s, expr.operator)
-        end
-      else
-        report_error("Invalid '%' operand type", left.class.to_s, expr.operator)
-      end
+      op = Operator::Mod.new(self)
+      op.apply(expr)
     when Syntax::Ampersand
       left && right
     when Syntax::Pipe
@@ -431,93 +514,21 @@ class Cosmo::Interpreter
     when Syntax::BangEqual
       left != right
     when Syntax::Less
-      if left.is_a?(Float)
-        if right.is_a?(Float)
-          left < right
-        elsif right.is_a?(Int)
-          left < right.to_f
-        else
-          report_error("Invalid '<' operand type", right.class.to_s, expr.operator)
-        end
-      elsif left.is_a?(Int)
-        if right.is_a?(Int)
-          left < right
-        elsif right.is_a?(Float)
-          left.to_f < right
-        else
-          report_error("Invalid '<' operand type", right.class.to_s, expr.operator)
-        end
-      else
-        report_error("Invalid '<' operand type", left.class.to_s, expr.operator)
-      end
+      op = Operator::LT.new(self)
+      op.apply(expr)
     when Syntax::LessEqual
-      if left.is_a?(Float)
-        if right.is_a?(Float)
-          left <= right
-        elsif right.is_a?(Int)
-          left <= right.to_f
-        else
-          report_error("Invalid '<=' operand type", right.class.to_s, expr.operator)
-        end
-      elsif left.is_a?(Int)
-        if right.is_a?(Int)
-          left <= right
-        elsif right.is_a?(Float)
-          left.to_f <= right
-        else
-          report_error("Invalid '<=' operand type", right.class.to_s, expr.operator)
-        end
-      else
-        report_error("Invalid '<=' operand type", left.class.to_s, expr.operator)
-      end
+      op = Operator::LTE.new(self)
+      op.apply(expr)
     when Syntax::Greater
-      if left.is_a?(Float)
-        if right.is_a?(Float)
-          left > right
-        elsif right.is_a?(Int)
-          left > right.to_f
-        else
-          report_error("Invalid '>' operand type", right.class.to_s, expr.operator)
-        end
-      elsif left.is_a?(Int)
-        if right.is_a?(Int)
-          left > right
-        elsif right.is_a?(Float)
-          left.to_f > right
-        else
-          report_error("Invalid '>' operand type", right.class.to_s, expr.operator)
-        end
-      else
-        report_error("Invalid '>' operand type", left.class.to_s, expr.operator)
-      end
+      op = Operator::GT.new(self)
+      op.apply(expr)
     when Syntax::GreaterEqual
-      if left.is_a?(Float)
-        if right.is_a?(Float)
-          left >= right
-        elsif right.is_a?(Int)
-          left >= right.to_f
-        else
-          report_error("Invalid '>=' operand type", right.class.to_s, expr.operator)
-        end
-      elsif left.is_a?(Int)
-        if right.is_a?(Int)
-          left >= right
-        elsif right.is_a?(Float)
-          left.to_f >= right
-        else
-          report_error("Invalid '>=' operand type", right.class.to_s, expr.operator)
-        end
-      else
-        report_error("Invalid '>=' operand type", left.class.to_s, expr.operator)
-      end
+      op = Operator::GTE.new(self)
+      op.apply(expr)
     end
   end
 
   def visit_literal_expr(expr : Expression::Literal) : ValueType
     expr.value
-  end
-
-  def report_error(error_type : String, message : String, token : Token)
-    Logger.report_error(error_type, message, token.location.line, token.location.position)
   end
 end

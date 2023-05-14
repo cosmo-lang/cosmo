@@ -44,7 +44,6 @@ module Cosmo::AST::Expression
     end
 
     def accept(visitor : Visitor(R)) : R forall R
-
     end
 
     def token : Token
