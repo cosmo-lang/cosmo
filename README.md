@@ -16,7 +16,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * methods
   * $ (this)
 - Better type system
-  * use TypeChecker for all operators
   * unions/intersections
   * aliasing
 
