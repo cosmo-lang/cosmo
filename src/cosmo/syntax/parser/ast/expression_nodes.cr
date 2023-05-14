@@ -26,6 +26,10 @@ module Cosmo::AST::Expression
       visitor.visit_fn_call_expr(self)
     end
 
+    def token : Token
+      @var.token
+    end
+
     def to_s
       "FunctionCall<var: #{@var.to_s}, argu: [#{@arguments.map(&.to_s).join(", ")}]>"
     end
@@ -36,11 +40,15 @@ module Cosmo::AST::Expression
     getter identifier : Token
     getter default_value : Node?
 
-    def initialize(@typedef, @identifier, @default_value = NoneLiteral.new)
+    def initialize(@typedef, @identifier, @default_value = NoneLiteral.new(nil, identifier))
     end
 
     def accept(visitor : Visitor(R)) : R forall R
 
+    end
+
+    def token : Token
+      @identifier
     end
 
     def to_s
@@ -60,6 +68,10 @@ module Cosmo::AST::Expression
       visitor.visit_compound_assignment_expr(self)
     end
 
+    def token : Token
+      @name
+    end
+
     def to_s
       "CompoundAssignment<name: #{@name.value}, operator: #{@operator.to_s}, value: #{@value.to_s}>"
     end
@@ -77,6 +89,10 @@ module Cosmo::AST::Expression
       visitor.visit_var_declaration_expr(self)
     end
 
+    def token : Token
+      @var.token
+    end
+
     def to_s
       "VarDeclaration<typedef: #{@typedef.value}, var: #{@var.token.value.to_s}, value: #{@value.to_s}>"
     end
@@ -91,6 +107,10 @@ module Cosmo::AST::Expression
 
     def accept(visitor : Visitor(R)) : R forall R
       visitor.visit_var_assignment_expr(self)
+    end
+
+    def token : Token
+      @var.token
     end
 
     def to_s
@@ -125,6 +145,10 @@ module Cosmo::AST::Expression
       visitor.visit_binary_op_expr(self)
     end
 
+    def token : Token
+      @left.token
+    end
+
     def to_s
       "Binary<left: #{@left.to_s}, operator: #{@operator.to_s}, right: #{@right.to_s}>"
     end
@@ -141,14 +165,20 @@ module Cosmo::AST::Expression
       visitor.visit_unary_op_expr(self)
     end
 
+    def token : Token
+      @operator
+    end
+
     def to_s
       "Unary<operator: #{@operator.to_s}, operand: #{@operand.to_s}>"
     end
   end
 
   abstract class Literal < Base
+    getter token : Token
     getter value : LiteralType
-    def initialize(@value); end
+
+    def initialize(@value, @token); end
 
     def accept(visitor : Visitor(R)) : R forall R
       visitor.visit_literal_expr(self)
@@ -156,44 +186,42 @@ module Cosmo::AST::Expression
   end
 
   class StringLiteral < Literal
-    def initialize(@value : String); end
+    def initialize(@value : String, @token); end
     def to_s
       "Literal<\"#{value}\">"
     end
   end
 
   class CharLiteral < Literal
-    def initialize(@value : Char); end
+    def initialize(@value : Char, @token); end
     def to_s
       "Literal<'#{value}'>"
     end
   end
 
   class IntLiteral < Literal
-    def initialize(@value : Int64 | Int32 | Int16 | Int8); end
+    def initialize(@value : Int64 | Int32 | Int16 | Int8, @token); end
     def to_s
       "Literal<#{value}>"
     end
   end
 
   class FloatLiteral < Literal
-    def initialize(@value : Float64 | Float32 | Float16 | Float8); end
+    def initialize(@value : Float64 | Float32 | Float16 | Float8, @token); end
     def to_s
       "Literal<#{value}>"
     end
   end
 
   class BooleanLiteral < Literal
-    def initialize(@value : Bool); end
+    def initialize(@value : Bool, @token); end
     def to_s
       "Literal<#{value}>"
     end
   end
 
   class NoneLiteral < Literal
-    def initialize
-      super nil
-    end
+    def initialize(@value : Nil, @token); end
     def to_s
       "Literal<none>"
     end

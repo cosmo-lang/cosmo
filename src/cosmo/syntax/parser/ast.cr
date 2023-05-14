@@ -10,6 +10,8 @@ module Cosmo::AST
     property end_location : Location?
     property visibility = Visibility::Public
 
+    abstract def token : Token
+
     # It yields itself for any node, but if it's a
     # `Statement::ExpressionList`, then it returns the
     # first node of the `ExpressionList` statement

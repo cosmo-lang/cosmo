@@ -8,8 +8,8 @@ end
 class Cosmo::Function < Cosmo::Callable
   @interpreter : Interpreter
   @closure : Scope
-  @definition : AST::Statement::FunctionDef
   @non_nullable_params : Array(AST::Expression::Parameter)
+  getter definition : AST::Statement::FunctionDef
 
   def initialize(@interpreter, @closure, @definition)
     params = @definition.parameters

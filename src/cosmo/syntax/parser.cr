@@ -51,7 +51,7 @@ class Cosmo::Parser
 
   private def parse_return_statement : Statement::Return
     value : Expression::Base? = check?(Syntax::RBrace) ? nil : parse_expression
-    Statement::Return.new(value || Expression::NoneLiteral.new, last_token)
+    Statement::Return.new(value || Expression::NoneLiteral.new(nil, last_token), last_token)
   end
 
   # Parse a block of statements and return a node
@@ -141,7 +141,7 @@ class Cosmo::Parser
           value = parse_expression
           Expression::VarDeclaration.new(variable_type, identifier, value)
         else
-          Expression::VarDeclaration.new(variable_type, identifier, Expression::NoneLiteral.new)
+          Expression::VarDeclaration.new(variable_type, identifier, Expression::NoneLiteral.new(nil, variable_name))
         end
       else
         Logger.report_error("Expected identifier, got", last_token.type.to_s, last_token)
@@ -323,22 +323,22 @@ class Cosmo::Parser
     case current.type
     when Syntax::Integer
       consume_current
-      Expression::IntLiteral.new(value.as(Int))
+      Expression::IntLiteral.new(value.as(Int), last_token)
     when Syntax::Float
       consume_current
-      Expression::FloatLiteral.new(value.as(Float))
+      Expression::FloatLiteral.new(value.as(Float), last_token)
     when Syntax::Boolean
       consume_current
-      Expression::BooleanLiteral.new(value.as(Bool))
+      Expression::BooleanLiteral.new(value.as(Bool), last_token)
     when Syntax::String
       consume_current
-      Expression::StringLiteral.new(value.to_s)
+      Expression::StringLiteral.new(value.to_s, last_token)
     when Syntax::Char
       consume_current
-      Expression::CharLiteral.new(value.as(Char))
+      Expression::CharLiteral.new(value.as(Char), last_token)
     when Syntax::None
       consume_current
-      Expression::NoneLiteral.new
+      Expression::NoneLiteral.new(nil, last_token)
     else
       raise "Unhandled syntax type: #{current.type}"
     end

@@ -19,6 +19,7 @@ class Cosmo::Interpreter
   getter globals = Scope.new
   @scope : Scope
   @locals = {} of Expression::Base => UInt32
+  @meta = {} of String => String
 
   private def declare_intrinsic(ident : String, value : ValueType)
     location = Location.new("intrinsic", 0, 0)
@@ -70,6 +71,10 @@ class Cosmo::Interpreter
         body_nodes.each { |expr| execute(expr.as Statement::Base) }
         return_value = execute(return_node.as Statement::Base) unless return_node.nil?
       end
+
+      return_type = @meta["block_return_type"] || "void"
+      token = return_node.nil? ? Token.new(Syntax::None, nil, Location.new("", 0, 0)) : return_node.token
+      TypeChecker.assert(return_type, return_value, token)
       return_value
     rescue ex : Exception
       raise ex
@@ -107,6 +112,7 @@ class Cosmo::Interpreter
       report_error("Expected #{fn.arity} arguments, got", expr.arguments.size.to_s, expr.var.token)
     end
 
+    @meta["block_return_type"] = fn.definition.return_typedef.value.to_s unless fn.is_a?(IntrinsicFunction)
     arg_values = expr.arguments.map { |arg| evaluate(arg.as Expression::Base) }
     fn.call(arg_values)
   end

@@ -21,6 +21,10 @@ module Cosmo::AST::Statement
       visitor.visit_return_stmt(self)
     end
 
+    def token : Token
+      @keyword
+    end
+
     def to_s
       "Return<value: #{@value.to_s}>"
     end
@@ -39,6 +43,10 @@ module Cosmo::AST::Statement
       visitor.visit_fn_def_stmt(self)
     end
 
+    def token : Token
+      @identifier
+    end
+
     def to_s
       "FunctionDef<identifier: #{@identifier.value.to_s}, parameters: [#{@parameters.map(&.to_s).join(", ")}], return_typedef: #{@return_typedef.value}, body: #{@body.to_s}>"
     end
@@ -52,6 +60,10 @@ module Cosmo::AST::Statement
 
     def accept(visitor : Visitor(R)) : R forall R
       visitor.visit_single_expr_stmt(self)
+    end
+
+    def token : Token
+      @expression.token
     end
 
     def to_s
@@ -105,6 +117,10 @@ module Cosmo::AST::Statement
 
     def accept(visitor : Visitor(R)) : R forall R
       visitor.visit_block_stmt(self)
+    end
+
+    def token : Token
+      @nodes.empty? ? Token.new(Syntax::None, nil, Location.new("", 0, 0)) : @nodes.first.token
     end
 
     def to_s
