@@ -1,7 +1,8 @@
 ![build](https://github.com/R-unic/cosmo/actions/workflows/crystal.yml/badge.svg)
 # Cosmo
 
-Cosmo is a statically-typed programming language written in pure Crystal.
+Cosmo is a statically-typed programming language written in pure Crystal.<br>
+We have an [extension for VS code](https://marketplace.visualstudio.com/items?itemName=cosmo.vscode-cosmo) ([source](https://github.com/R-unic/vscode-cosmo)), however currently only features syntax highlighting.
 
 ## Things I Gotta Do
 
