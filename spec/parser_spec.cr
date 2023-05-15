@@ -77,6 +77,22 @@ describe Parser do
       two.as(AST::Expression::IntLiteral).value.should eq 2
       three.as(AST::Expression::IntLiteral).value.should eq 3
     end
+    it "tables" do
+      stmts = Parser.new("any valid = {yes -> true, no -> false}", "test").parse
+      stmts.should_not be_empty
+      expr = stmts.first.as(AST::Statement::SingleExpression).expression
+      expr.should be_a AST::Expression::VarDeclaration
+      declaration = expr.as AST::Expression::VarDeclaration
+      declaration.typedef.type.should eq Syntax::TypeDef
+      declaration.typedef.value.should eq "any"
+      declaration.var.should be_a AST::Expression::Var
+      declaration.var.token.type.should eq Syntax::Identifier
+      declaration.var.token.value.should eq "valid"
+      table = declaration.value.as AST::Expression::TableLiteral
+      table.should be_a AST::Expression::TableLiteral
+
+
+    end
   end
   it "parses unary operators" do
     stmts = Parser.new("+-12", "test").parse

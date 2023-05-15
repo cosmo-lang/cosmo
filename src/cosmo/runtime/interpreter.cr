@@ -148,6 +148,16 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_table_literal_expr(expr : Expression::TableLiteral) : Hash(ValueType, ValueType)
+    hash = {} of  ValueType => ValueType
+    expr.hashmap.each do |k, v|
+      key = evaluate(k)
+      value = evaluate(v)
+      hash[key] = value
+    end
+    hash
+  end
+
   def visit_vector_literal_expr(expr : Expression::VectorLiteral) : Array(ValueType)
     expr.values.map { |v| evaluate(v) }
   end

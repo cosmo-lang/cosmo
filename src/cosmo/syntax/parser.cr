@@ -430,34 +430,34 @@ class Cosmo::Parser
     end
   end
 
-  # private def parse_table_key : Expression::Base
-  #   if match?(Syntax::Identifier)
-  #     Expression::StringLiteral.new(last_token.value.to_s, last_token)
-  #   elsif match?(Syntax::String)
-  #     Expression::StringLiteral.new(last_token.value.to_s, last_token)
-  #   else
-  #     Logger.report_error("Invalid table key", current.value.to_s, current)
-  #   end
-  # end
+  private def parse_table_key : Expression::Base
+    if match?(Syntax::Identifier)
+      Expression::StringLiteral.new(last_token.value.to_s, last_token)
+    elsif match?(Syntax::String)
+      Expression::StringLiteral.new(last_token.value.to_s, last_token)
+    else
+      Logger.report_error("Invalid table key", current.value.to_s, current)
+    end
+  end
 
-  # private def parse_table_literal
-  #   hash = {} of Expression::Base => Expression::Base
+  private def parse_table_literal
+    hash = {} of Expression::Base => Expression::Base
 
-  #   until match?(Syntax::RBrace)
-  #     if match?(Syntax::LBracket)
-  #       key = parse_expression
-  #       consume(Syntax::RBracket)
-  #     else
-  #       key = parse_table_key
-  #     end
-  #     consume(Syntax::HyphenArrow)
-  #     value = parse_expression
-  #     hash[key] = value
-  #     match?(Syntax::Comma)
-  #   end
+    until match?(Syntax::RBrace)
+      if match?(Syntax::LBracket)
+        key = parse_expression
+        consume(Syntax::RBracket)
+      else
+        key = parse_table_key
+      end
+      consume(Syntax::HyphenArrow)
+      value = parse_expression
+      hash[key] = value
+      match?(Syntax::Comma)
+    end
 
-  #   Expression::TableLiteral.new(hash, last_token)
-  # end
+    Expression::TableLiteral.new(hash, last_token)
+  end
 
   private def parse_vector_literal : Expression::VectorLiteral
     elements = [] of Expression::Base
@@ -477,9 +477,9 @@ class Cosmo::Parser
     when Syntax::LBracket
       consume_current
       parse_vector_literal
-    # when Syntax::LBrace
-    #   consume_current
-    #   parse_table_literal
+    when Syntax::LBrace
+      consume_current
+      parse_table_literal
     when Syntax::Integer
       consume_current
       Expression::IntLiteral.new(value.as(Int), last_token)

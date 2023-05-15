@@ -246,6 +246,21 @@ module Cosmo::AST::Expression
     end
   end
 
+  class TableLiteral < Base
+    getter token : Token
+    getter hashmap : Hash(Base, Base)
+
+    def initialize(@hashmap, @token); end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_table_literal_expr(self)
+    end
+
+    def to_s
+      "Literal<#{@hashmap.to_s}>"
+    end
+  end
+
   class VectorLiteral < Base
     getter token : Token
     getter values : Array(Base)

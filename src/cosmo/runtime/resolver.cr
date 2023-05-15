@@ -171,6 +171,10 @@ class Cosmo::Resolver
     resolve_local(expr, expr.token)
   end
 
+  def visit_table_literal_expr(expr : Expression::TableLiteral) : Nil
+    # do nothing
+  end
+
   def visit_vector_literal_expr(expr : Expression::VectorLiteral) : Nil
     # do nothing
   end
