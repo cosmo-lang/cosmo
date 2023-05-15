@@ -347,7 +347,7 @@ describe Parser do
     function_call.var.token.value.should eq "say_hi"
     function_call.arguments.empty?.should be_true
   end
-  it "parses indexing" do
+  it "parses vector indexing" do
     stmts = Parser.new("any x = [1, 2]; x[0]", "test").parse
     stmts.should_not be_empty
     expr = stmts.last.as(AST::Statement::SingleExpression).expression

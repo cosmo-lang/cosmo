@@ -53,7 +53,7 @@ class Cosmo::Parser
   # Parse a block of statements and return a node
   private def parse_block : Statement::Block
     match?(Syntax::LBrace)
-    statements = [] of Node
+    statements = [] of Statement::Base
 
     until finished? || match?(Syntax::RBrace)
       statements << parse_statement

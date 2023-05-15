@@ -43,7 +43,7 @@ module Cosmo::AST::Expression
     def initialize(@name)
     end
 
-    def accept(visitor : Visitor(R)) : Type forall R
+    def accept(visitor : Visitor(R)) : R forall R
       visitor.visit_type_ref_expr(self)
     end
 

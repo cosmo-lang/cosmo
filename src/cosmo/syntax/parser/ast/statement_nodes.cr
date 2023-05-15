@@ -158,7 +158,7 @@ module Cosmo::AST::Statement
   end
 
   class Block < Base
-    getter nodes : Array(Node)
+    getter nodes : Array(Base)
 
     def initialize(@nodes = [] of Node)
     end
@@ -206,7 +206,7 @@ module Cosmo::AST::Statement
     end
 
     def token : Token
-      @nodes.empty? ? Token.new(Syntax::None, nil, Location.new("", 0, 0)) : @nodes.first.token
+      @nodes.empty? ? Token.new("none", Syntax::None, nil, Location.new("", 0, 0)) : @nodes.first.token
     end
 
     def to_s

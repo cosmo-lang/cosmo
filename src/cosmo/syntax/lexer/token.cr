@@ -5,8 +5,9 @@ struct Cosmo::Token
   getter type : Syntax
   getter value : LiteralType
   getter location : Location
+  getter lexeme : String
 
-  def initialize(@type, @value, @location)
+  def initialize(@lexeme, @type, @value, @location)
   end
 
   private def value_str

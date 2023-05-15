@@ -7,15 +7,14 @@ alias LiteralType =
   Bool | String | Char | Nil
 
 class Cosmo::Lexer
-  getter source : String
-  getter tokens : Array(Token)
-  getter line : UInt32 = 1
-  getter position : UInt32 = 0
-  getter char_pos : UInt32 = 0
-  getter tokens = [] of Token
-  getter file_path : String
+  @tokens : Array(Token)
+  @line : UInt32 = 1
+  @position : UInt32 = 0
+  @char_pos : UInt32 = 0
+  @tokens = [] of Token
+  @current_lexeme : String = ""
 
-  def initialize(@source, @file_path)
+  def initialize(@source : String, @file_path : String)
   end
 
   def tokenize : Array(Token)
@@ -29,6 +28,8 @@ class Cosmo::Lexer
 
   private def lex
     char = current_char
+    @current_lexeme += char
+
     case char
     when "."
       if char_exists?(1) && peek.match(/[0-9]/)
@@ -202,7 +203,8 @@ class Cosmo::Lexer
 
   private def add_token(syntax : Syntax, value : LiteralType)
     location = Location.new(@file_path, @line, @char_pos + 1)
-    @tokens << Token.new(syntax, value, location)
+    @tokens << Token.new(@current_lexeme, syntax, value, location)
+    @current_lexeme = ""
   end
 
   private def is_base?(char : String, radix : Int) : Bool
@@ -214,6 +216,7 @@ class Cosmo::Lexer
   end
 
   private def skip_comments(multiline : Bool)
+    @current_lexeme = ""
     advance
     until end_of_comment(multiline, @line)
       advance
@@ -227,6 +230,7 @@ class Cosmo::Lexer
   end
 
   private def skip_whitespace
+    @current_lexeme = ""
     until finished? || !current_char.blank?
       advance
     end
@@ -258,6 +262,7 @@ class Cosmo::Lexer
       num_str += advance.to_s
     end
 
+    @current_lexeme = num_str
     if decimal_used
       Logger.report_error("Unexpected float", "Hex/octal/binary literals must be integers", @line, @position) unless radix == 10
       add_token(Syntax::Float, num_str.to_f64)
@@ -274,6 +279,8 @@ class Cosmo::Lexer
     until finished? || current_char == delim
       res_str += advance.to_s
     end
+
+    @current_lexeme = res_str
     add_token(Syntax::String, res_str)
   end
 
@@ -287,6 +294,8 @@ class Cosmo::Lexer
         break
       end
     end
+
+    @current_lexeme = res_str
     add_token(Syntax::Char, res_str.chars.first)
   end
 
@@ -302,6 +311,7 @@ class Cosmo::Lexer
     end
     ident_str = ident_str.strip
 
+    @current_lexeme = ident_str
     if Keywords.keyword?(ident_str)
       syntax_type = Keywords.get_syntax(ident_str)
       value = true if ident_str == "true"

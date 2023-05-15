@@ -3,6 +3,7 @@ require "./function"
 require "./scope"
 require "./operator"
 require "./type"
+require "./resolver"
 
 class Cosmo::Return < Exception
   getter value : ValueType
@@ -25,8 +26,8 @@ class Cosmo::Interpreter
 
   private def declare_intrinsic(type : String, ident : String, value : ValueType)
     location = Location.new("intrinsic", 0, 0)
-    ident_token = Token.new(Syntax::Identifier, ident, location)
-    typedef_token = Token.new(Syntax::TypeDef, type, location)
+    ident_token = Token.new(ident, Syntax::Identifier, ident, location)
+    typedef_token = Token.new(type, Syntax::TypeDef, type, location)
     @globals.declare(typedef_token, ident_token, value)
   end
 
@@ -45,13 +46,18 @@ class Cosmo::Interpreter
     statements = parser.parse
     puts statements.map(&.to_s) if @output_ast
 
-    # init resolver here
+    resolver = Resolver.new(self)
+    resolver.resolve(statements)
 
     result = nil
     statements.each do |stmt|
       result = execute(stmt)
     end
     result
+  end
+
+  def resolve(expr : Expression::Base, depth : UInt32) : Nil
+    @locals[expr] = depth
   end
 
   private def lookup_variable(identifier : Token, expr : Expression::Base) : ValueType
@@ -80,7 +86,7 @@ class Cosmo::Interpreter
       end
       if is_fn
         return_type = @meta["block_return_type"]? || "void"
-        token = return_node.nil? ? Token.new(Syntax::None, nil, Location.new("", 0, 0)) : return_node.token
+        token = return_node.nil? ? Token.new("none", Syntax::None, nil, Location.new("", 0, 0)) : return_node.token
         TypeChecker.assert(return_type, return_value, token)
       end
       return_value
@@ -153,7 +159,7 @@ class Cosmo::Interpreter
   end
 
   def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
-    typedef = Token.new(Syntax::TypeDef, "fn", Location.new(@file_path, 0, 0))
+    typedef = Token.new("fn", Syntax::TypeDef, "fn", Location.new(@file_path, 0, 0))
     fn = Function.new(self, @scope, stmt)
     @scope.declare(typedef, stmt.identifier, fn)
     fn
