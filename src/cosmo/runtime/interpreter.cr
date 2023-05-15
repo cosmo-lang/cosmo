@@ -68,7 +68,7 @@ class Cosmo::Interpreter
     stmt.accept(self)
   end
 
-  def execute_block(block : Statement::Block, block_scope : Scope) : ValueType
+  def execute_block(block : Statement::Block, block_scope : Scope, is_fn : Bool = false) : ValueType
     prev_scope = @scope
     begin
       @scope = block_scope
@@ -78,10 +78,11 @@ class Cosmo::Interpreter
         body_nodes.each { |expr| execute(expr.as Statement::Base) }
         return_value = execute(return_node.as Statement::Base) unless return_node.nil?
       end
-
-      return_type = @meta["block_return_type"] || "void"
-      token = return_node.nil? ? Token.new(Syntax::None, nil, Location.new("", 0, 0)) : return_node.token
-      TypeChecker.assert(return_type, return_value, token)
+      if is_fn
+        return_type = @meta["block_return_type"]? || "void"
+        token = return_node.nil? ? Token.new(Syntax::None, nil, Location.new("", 0, 0)) : return_node.token
+        TypeChecker.assert(return_type, return_value, token)
+      end
       return_value
     rescue ex : Exception
       raise ex

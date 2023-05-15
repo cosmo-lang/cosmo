@@ -30,7 +30,7 @@ class Cosmo::Function < Cosmo::Callable
 
     result = nil
     begin
-      result = @interpreter.execute_block(@definition.body, scope)
+      result = @interpreter.execute_block(@definition.body, scope, is_fn: true)
     rescue returner : Return
       result = returner.value
     end

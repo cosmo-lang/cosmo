@@ -92,4 +92,19 @@ describe Interpreter do
     result = interpreter.interpret("x", "test")
     result.should eq 123
   end
+  it "interprets if statements" do
+    lines = [
+      "int x = 5",
+      "int doubled",
+      "if x == 5 {",
+      " doubled = x * 2",
+      "} else {",
+      " doubled = x",
+      "}",
+      "doubled"
+    ]
+
+    result = interpreter.interpret(lines.join('\n'), "test")
+    result.should eq 10
+  end
 end
