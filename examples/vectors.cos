@@ -1,3 +1,3 @@
 ## string[] letters = ["a", "b", "c"]
 any letters = ["a", "b", "c"]
-puts(letters[0])
+puts(letters[0], letters[1], letters[2]) ## a b c
