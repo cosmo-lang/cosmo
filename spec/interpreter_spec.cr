@@ -60,12 +60,6 @@ describe Interpreter do
     result = interpreter.interpret("string z = \"hello world\"", "test")
     result.should eq "hello world"
   end
-  it "throws when types mismatch" do
-    interpreter.interpret("int x = 1", "test")
-    expect_raises(Exception, "[1:2] Type mismatch: Expected 'int', got 'float'") do
-      interpreter.interpret("x = 2.0", "test")
-    end
-  end
   it "interprets variable assignments" do
     interpreter.interpret("int x = 0b11", "test")
     result = interpreter.interpret("x = 5", "test")
@@ -160,5 +154,14 @@ describe Interpreter do
 
     result = interpreter.interpret(lines.join('\n'), "test")
     result.should eq 15
+  end
+  it "throws when types mismatch" do
+    interpreter.interpret("int x = 1", "test")
+    expect_raises(Exception, "[1:2] Type mismatch: Expected 'int', got 'float'") do
+      interpreter.interpret("x = 2.0", "test")
+    end
+    expect_raises(Exception, "[1:3] Invalid '+' operand type: Char") do
+      interpreter.interpret("x + 'h'", "test")
+    end
   end
 end
