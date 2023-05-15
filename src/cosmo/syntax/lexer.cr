@@ -149,7 +149,7 @@ class Cosmo::Lexer
       end
     else
       default_char = @source[@position].to_s
-      return skip_whitespace if default_char.match(/\s/)
+      return skip_whitespace if default_char.blank?
 
       is_ident = default_char.match(/[a-zA-Z_$]/)
       is_number = default_char.match(/\d/) ||
@@ -227,7 +227,7 @@ class Cosmo::Lexer
   end
 
   private def skip_whitespace
-    while !finished? && current_char =~ /\s/
+    until finished? || !current_char.blank?
       advance
     end
   end

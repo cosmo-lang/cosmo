@@ -350,7 +350,7 @@ describe Parser do
     function_call.var.token.value.should eq "say_hi"
     function_call.arguments.empty?.should be_true
   end
-  it "parses if statements" do
+  it "parses if/unless statements" do
     lines = [
       "int x = 5",
       "if x == 5 {",
@@ -379,5 +379,63 @@ describe Parser do
     if_stmt.condition.should be_a AST::Expression::BinaryOp
     if_stmt.then.should be_a AST::Statement::Block
     if_stmt.else.should be_a AST::Statement::Block
+
+    lines = [
+      "string name = \"bob\"",
+      "unless name == \"bob\" {",
+      " puts(\"ur not bob... >:(\")",
+      "} else {",
+      " puts(\"it's bob!!!!11 :D\")",
+      "}"
+    ]
+
+    stmts = Parser.new(lines.join('\n'), "test").parse
+    stmts.should_not be_empty
+    expr = stmts.first.as(AST::Statement::SingleExpression).expression
+    expr.should be_a AST::Expression::VarDeclaration
+    declaration = expr.as AST::Expression::VarDeclaration
+    declaration.typedef.type.should eq Syntax::TypeDef
+    declaration.typedef.value.should eq "string"
+    declaration.var.should be_a AST::Expression::Var
+    declaration.var.token.type.should eq Syntax::Identifier
+    declaration.var.token.value.should eq "name"
+    literal = declaration.value.as AST::Expression::StringLiteral
+    literal.should be_a AST::Expression::StringLiteral
+    literal.value.should eq "bob"
+
+    stmts.last.should be_a AST::Statement::Unless
+    unless_stmt = stmts.last.as AST::Statement::Unless
+    unless_stmt.condition.should be_a AST::Expression::BinaryOp
+    unless_stmt.then.should be_a AST::Statement::Block
+    unless_stmt.else.should be_a AST::Statement::Block
+  end
+  it "parses while/until statements" do
+    lines = [
+      "while true {",
+      " puts(\"h\")",
+      "}"
+    ]
+
+    stmts = Parser.new(lines.join('\n'), "test").parse
+    stmts.should_not be_empty
+    stmts.first.should be_a AST::Statement::While
+    while_stmt = stmts.first.as AST::Statement::While
+    while_stmt.condition.should be_a AST::Expression::BooleanLiteral
+    while_stmt.condition.as(AST::Expression::BooleanLiteral).value.should eq true
+    while_stmt.block.should be_a AST::Statement::Block
+
+    lines = [
+      "until false {",
+      " puts(\"h\")",
+      "}"
+    ]
+
+    stmts = Parser.new(lines.join('\n'), "test").parse
+    stmts.should_not be_empty
+    stmts.first.should be_a AST::Statement::Until
+    while_stmt = stmts.first.as AST::Statement::Until
+    while_stmt.condition.should be_a AST::Expression::BooleanLiteral
+    while_stmt.condition.as(AST::Expression::BooleanLiteral).value.should eq false
+    while_stmt.block.should be_a AST::Statement::Block
   end
 end

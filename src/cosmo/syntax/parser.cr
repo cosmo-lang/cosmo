@@ -70,13 +70,31 @@ class Cosmo::Parser
       parse_if_statement
     elsif match?(Syntax::Unless)
       parse_unless_statement
+    elsif match?(Syntax::While)
+      parse_while_statement
+    elsif match?(Syntax::Until)
+      parse_until_statement
     else
       parse_expression
     end
   end
 
+  private def parse_while_statement : Statement::While
+    token = last_token
+    condition = parse_expression
+    block = parse_block
+    Statement::While.new(token, condition, block)
+  end
+
+  private def parse_until_statement : Statement::Until
+    token = last_token
+    condition = parse_expression
+    block = parse_block
+    Statement::Until.new(token, condition, block)
+  end
+
   private def parse_if_statement : Statement::If
-    if_token = last_token
+    token = last_token
     condition = parse_expression
     then_block = parse_block
     if match?(Syntax::Else)
@@ -86,11 +104,11 @@ class Cosmo::Parser
         else_block = parse_block
       end
     end
-    Statement::If.new(if_token, condition, then_block, else_block)
+    Statement::If.new(token, condition, then_block, else_block)
   end
 
   private def parse_unless_statement : Statement::Unless
-    if_token = last_token
+    token = last_token
     condition = parse_expression
     then_block = parse_block
     if match?(Syntax::Else)
@@ -100,7 +118,7 @@ class Cosmo::Parser
         else_block = parse_block
       end
     end
-    Statement::Unless.new(if_token, condition, then_block, else_block)
+    Statement::Unless.new(token, condition, then_block, else_block)
   end
 
   private def parse_return_statement : Statement::Return

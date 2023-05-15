@@ -92,7 +92,7 @@ describe Interpreter do
     result = interpreter.interpret("x", "test")
     result.should eq 123
   end
-  it "interprets if statements" do
+  it "interprets if/unless statements" do
     lines = [
       "int x = 5",
       "int doubled",
@@ -106,5 +106,42 @@ describe Interpreter do
 
     result = interpreter.interpret(lines.join('\n'), "test")
     result.should eq 10
+
+    lines = [
+      "int x = 5",
+      "int doubled",
+      "unless x == 5 {",
+      " doubled = x * 2",
+      "} else {",
+      " doubled = x",
+      "}",
+      "doubled"
+    ]
+
+    result = interpreter.interpret(lines.join('\n'), "test")
+    result.should eq 5
+  end
+  it "interprets while/until statements" do
+    lines = [
+      "int x = 0",
+      "while x < 10 {",
+      " x += 1",
+      "}",
+      "x"
+    ]
+
+    result = interpreter.interpret(lines.join('\n'), "test")
+    result.should eq 10
+
+    lines = [
+      "int x = 0",
+      "until x == 15 {",
+      " x += 1",
+      "}",
+      "x"
+    ]
+
+    result = interpreter.interpret(lines.join('\n'), "test")
+    result.should eq 15
   end
 end

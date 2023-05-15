@@ -91,6 +91,18 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_until_stmt(stmt : Statement::Until) : Nil
+    until evaluate(stmt.condition)
+      execute(stmt.block)
+    end
+  end
+
+  def visit_while_stmt(stmt : Statement::While) : Nil
+    while evaluate(stmt.condition)
+      execute(stmt.block)
+    end
+  end
+
   def visit_unless_stmt(stmt : Statement::Unless) : ValueType
     condition = evaluate(stmt.condition)
     unless condition

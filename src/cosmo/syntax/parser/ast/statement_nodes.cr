@@ -10,6 +10,48 @@ module Cosmo::AST::Statement
     abstract def accept(visitor : Visitor(R)) forall R
   end
 
+  class While < Base
+    getter keyword : Token
+    getter condition : Expression::Base
+    getter block : Block
+
+    def initialize(@keyword, @condition, @block)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_while_stmt(self)
+    end
+
+    def token : Token
+      @keyword
+    end
+
+    def to_s
+      "While<condition: #{@condition.to_s}, do: #{@block.to_s}>"
+    end
+  end
+
+  class Until < Base
+    getter keyword : Token
+    getter condition : Expression::Base
+    getter block : Block
+
+    def initialize(@keyword, @condition, @block)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_until_stmt(self)
+    end
+
+    def token : Token
+      @keyword
+    end
+
+    def to_s
+      "Until<condition: #{@condition.to_s}, do: #{@block.to_s}>"
+    end
+  end
+
   class If < Base
     getter keyword : Token
     getter condition : Expression::Base
