@@ -10,6 +10,28 @@ module Cosmo::AST::Statement
     abstract def accept(visitor : Visitor(R)) forall R
   end
 
+  class If < Base
+    getter keyword : Token
+    getter condition : Expression::Base
+    getter then : Block
+    getter else : (If | Block)?
+
+    def initialize(@keyword, @condition, @then, @else)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_if_stmt(self)
+    end
+
+    def token : Token
+      @keyword
+    end
+
+    def to_s
+      "If<condition: #{@condition.to_s}, then: #{@then.to_s}, else: #{@else.to_s}>"
+    end
+  end
+
   class Return < Base
     getter value : Expression::Base
     getter keyword : Token

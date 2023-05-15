@@ -70,7 +70,7 @@ class Cosmo::Interpreter
 
   def execute_block(block : Statement::Block, block_scope : Scope) : ValueType
     prev_scope = @scope
-    begin # TODO: typecheck return types
+    begin
       @scope = block_scope
       unless block.nodes.empty?
         return_node = block.nodes.find { |node| node.is_a?(Statement::Return) } || block.nodes.last
@@ -87,6 +87,15 @@ class Cosmo::Interpreter
       raise ex
     ensure
       @scope = prev_scope
+    end
+  end
+
+  def visit_if_stmt(stmt : Statement::If) : ValueType
+    condition = evaluate(stmt.condition)
+    if condition
+      execute(stmt.then)
+    else
+      execute(stmt.else.not_nil!) unless stmt.else.nil?
     end
   end
 
@@ -140,9 +149,6 @@ class Cosmo::Interpreter
   end
 
   def visit_compound_assignment_expr(expr : Expression::CompoundAssignment) : ValueType
-    var = @scope.lookup(expr.name)
-    value = evaluate(expr.value.as Expression::Base)
-
     case expr.operator.type
     when Syntax::PlusEqual
       op = Operator::PlusAssign.new(self)
@@ -192,7 +198,7 @@ class Cosmo::Interpreter
   def visit_binary_op_expr(expr : Expression::BinaryOp) : ValueType
     left = evaluate(expr.left.as Expression::Base)
     right = evaluate(expr.right.as Expression::Base)
-    case expr.operator.type # TODO: better typechecking
+    case expr.operator.type
     when Syntax::Plus
       op = Operator::Plus.new(self)
       op.apply(expr)
