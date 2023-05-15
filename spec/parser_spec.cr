@@ -90,8 +90,7 @@ describe Parser do
       declaration.var.token.value.should eq "valid"
       table = declaration.value.as AST::Expression::TableLiteral
       table.should be_a AST::Expression::TableLiteral
-
-
+      table.hashmap.should_not be_empty
     end
   end
   it "parses unary operators" do
