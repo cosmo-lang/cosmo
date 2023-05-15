@@ -32,6 +32,28 @@ module Cosmo::AST::Statement
     end
   end
 
+  class Unless < Base
+    getter keyword : Token
+    getter condition : Expression::Base
+    getter then : Block
+    getter else : (Unless | Block)?
+
+    def initialize(@keyword, @condition, @then, @else)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_unless_stmt(self)
+    end
+
+    def token : Token
+      @keyword
+    end
+
+    def to_s
+      "Unless<condition: #{@condition.to_s}, then: #{@then.to_s}, else: #{@else.to_s}>"
+    end
+  end
+
   class Return < Base
     getter value : Expression::Base
     getter keyword : Token

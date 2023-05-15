@@ -13,11 +13,11 @@ enum Cosmo::Syntax
   Comma
   Hashtag
   Function
-  If
+  If; Unless
   In; Of
   Else
   For
-  While
+  While; Until
   Global
   Constant
   Break

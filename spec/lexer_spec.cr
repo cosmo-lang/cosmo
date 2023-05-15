@@ -9,6 +9,7 @@ describe Lexer do
   it "skips comments & whitespaces" do
     lines = [
       "## single line comment",
+      "## another single line foo",
       "#:",
       "this is",
       "a big ol",

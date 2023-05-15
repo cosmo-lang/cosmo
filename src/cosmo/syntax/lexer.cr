@@ -215,19 +215,15 @@ class Cosmo::Lexer
 
   private def skip_comments(multiline : Bool)
     advance
-    while !end_of_comment(multiline, @line)
+    until end_of_comment(multiline, @line)
       advance
     end
   end
 
   private def end_of_comment(multiline : Bool, current_line : UInt32)
-    if multiline
-      match_char?(":") &&
-        match_char?("#") &&
-        match_char?("#")
-    else
-      @line != current_line || finished?
-    end
+    multiline ?
+      match_char?(":") && match_char?("#")
+      : match_char?("\n") || finished?
   end
 
   private def skip_whitespace

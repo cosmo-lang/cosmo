@@ -91,6 +91,15 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_unless_stmt(stmt : Statement::Unless) : ValueType
+    condition = evaluate(stmt.condition)
+    unless condition
+      execute(stmt.then)
+    else
+      execute(stmt.else.not_nil!) unless stmt.else.nil?
+    end
+  end
+
   def visit_if_stmt(stmt : Statement::If) : ValueType
     condition = evaluate(stmt.condition)
     if condition
