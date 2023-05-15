@@ -2,6 +2,7 @@ require "../syntax/parser"; include Cosmo::AST
 require "./function"
 require "./scope"
 require "./operator"
+require "./type"
 
 class Cosmo::Return < Exception
   getter value : ValueType
@@ -30,6 +31,8 @@ class Cosmo::Interpreter
   end
 
   def initialize(@output_ast)
+    TypeChecker.register_intrinsics
+
     @scope = @globals
     declare_intrinsic("fn", "puts", PutsIntrinsic.new)
 
@@ -87,12 +90,13 @@ class Cosmo::Interpreter
     end
   end
 
-  def visit_single_expr_stmt(stmt : Statement::SingleExpression) : ValueType
-    evaluate(stmt.expression)
+  def visit_type_ref_expr(expr : Expression::TypeRef) : Type
+    TypeChecker.get_registered_type(expr.name.value.to_s, expr.name)
   end
 
-  def visit_block_stmt(stmt : Statement::Block) : ValueType
-    execute_block(stmt, Scope.new(@scope))
+  def visit_type_alias_expr(expr : Expression::TypeAlias) : Nil
+    value = evaluate(expr.value.as Expression::Base)
+    @scope.declare(expr.type_token, expr.token, value)
   end
 
   def visit_return_stmt(stmt : Statement::Return) : Nil
@@ -232,5 +236,13 @@ class Cosmo::Interpreter
 
   def visit_literal_expr(expr : Expression::Literal) : ValueType
     expr.value
+  end
+
+  def visit_single_expr_stmt(stmt : Statement::SingleExpression) : ValueType
+    evaluate(stmt.expression)
+  end
+
+  def visit_block_stmt(stmt : Statement::Block) : ValueType
+    execute_block(stmt, Scope.new(@scope))
   end
 end

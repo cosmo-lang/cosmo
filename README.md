@@ -17,7 +17,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * $ (this)
 - Better type system
   * unions/intersections
-  * aliasing
 
 ## Installation
 

@@ -86,4 +86,10 @@ describe Interpreter do
     result = interpreter.interpret("msg + \" world\"", "test")
     result.should eq "hello world"
   end
+  it "interprets type aliases" do
+    interpreter.interpret("type MyInt = int", "test")
+    interpreter.interpret("MyInt x = 123", "test")
+    result = interpreter.interpret("x", "test")
+    result.should eq 123
+  end
 end

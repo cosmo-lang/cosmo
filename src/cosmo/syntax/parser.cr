@@ -6,6 +6,7 @@ class Cosmo::Parser
   getter tokens : Array(Token)
 
   def initialize(source : String, file_path : String)
+    TypeChecker.reset if file_path == "test"
     lexer = Lexer.new(source, file_path)
     @tokens = lexer.tokenize
     @tokens.pop
@@ -81,8 +82,8 @@ class Cosmo::Parser
   # Parse a function definition and return a node
   private def parse_function_definition : Node
     if current.type == Syntax::TypeDef && peek.type == Syntax::Function
-      consume(Syntax::TypeDef)
-      return_typedef = last_token
+      type_info = parse_type(required: true)
+      return_typedef = type_info[:variable_type].not_nil!
       consume(Syntax::Function)
       consume(Syntax::Identifier)
       function_ident = last_token
@@ -129,22 +130,65 @@ class Cosmo::Parser
     params
   end
 
+  private def parse_type(as_value : Bool = false, required : Bool = true) : NamedTuple(found_typedef: Bool, variable_type: Token?, type_ref: Expression::TypeRef?)
+    if required
+      consume(Syntax::TypeDef)
+      found_typedef = true
+    else
+      found_typedef = match?(Syntax::TypeDef)
+      found_custom_type = !finished? && current.type == Syntax::Identifier && !TypeChecker.get_registered_type?(current.value.to_s, current).nil?
+    end
+
+    if as_value
+      variable_type = last_token
+    else
+      variable_type = last_token if found_typedef
+      if found_custom_type
+        variable_type = current
+        consume_current
+      end
+    end
+
+    type_ref = Expression::TypeRef.new(variable_type) unless variable_type.nil?
+    {
+      found_typedef: found_typedef,
+      variable_type: variable_type,
+      type_ref: type_ref
+    }
+  end
+
+  private def parse_type_alias(type_token : Token, identifier : Expression::Var) : Expression::TypeAlias
+    if match?(Syntax::Equal)
+      type_info = parse_type(as_value: true)
+      type_ref = type_info[:type_ref].not_nil!
+      TypeChecker.alias_type(identifier.token.value.to_s, type_ref.name.value.to_s)
+      Expression::TypeAlias.new(type_token, identifier, type_ref)
+    else
+      Expression::TypeAlias.new(type_token, identifier, nil)
+    end
+  end
+
   # Parse a variable declaration and return a node
   private def parse_var_declaration : Node
-    if match?(Syntax::TypeDef)
-      variable_type = last_token
+    type_info = parse_type(required: false)
+    unless type_info[:variable_type].nil? && type_info[:type_ref].nil?
+      typedef = type_info[:variable_type] || type_info[:type_ref].not_nil!.name
 
       if match?(Syntax::Identifier)
         variable_name = last_token
         identifier = Expression::Var.new(variable_name)
-        if match?(Syntax::Equal)
-          value = parse_expression
-          Expression::VarDeclaration.new(variable_type, identifier, value)
+        if typedef.value == "type"
+          parse_type_alias(typedef, identifier)
         else
-          Expression::VarDeclaration.new(variable_type, identifier, Expression::NoneLiteral.new(nil, variable_name))
+          if match?(Syntax::Equal)
+            value = parse_expression
+            Expression::VarDeclaration.new(typedef, identifier, value)
+          else
+            Expression::VarDeclaration.new(typedef, identifier, Expression::NoneLiteral.new(nil, variable_name))
+          end
         end
       else
-        Logger.report_error("Expected identifier, got", last_token.type.to_s, last_token)
+        Logger.report_error("Expected identifier, got", current.type.to_s, current)
       end
     else
       parse_assignment
@@ -317,10 +361,56 @@ class Cosmo::Parser
     end
   end
 
+  # private def parse_table_key : Expression::Base
+  #   if match?(Syntax::Identifier)
+  #     Expression::StringLiteral.new(last_token.value.to_s, last_token)
+  #   elsif match?(Syntax::String)
+  #     Expression::StringLiteral.new(last_token.value.to_s, last_token)
+  #   else
+  #     Logger.report_error("Invalid table key", current.value.to_s, current)
+  #   end
+  # end
+
+  # private def parse_table_literal
+  #   hash = {} of Expression::Base => Expression::Base
+
+  #   until match?(Syntax::RBrace)
+  #     if match?(Syntax::LBracket)
+  #       key = parse_expression
+  #       consume(Syntax::RBracket)
+  #     else
+  #       key = parse_table_key
+  #     end
+  #     consume(Syntax::HyphenArrow)
+  #     value = parse_expression
+  #     hash[key] = value
+  #     match?(Syntax::Comma)
+  #   end
+
+  #   Expression::TableLiteral.new(hash, last_token)
+  # end
+
+  # private def parse_vector_literal
+  #   elements = [] of Expression::Base
+
+  #   until match?(Syntax::RBracket)
+  #     elements << parse_expression
+  #     match?(Syntax::Comma)
+  #   end
+
+  #   Expression::VectorLiteral.new(elements, last_token)
+  # end
+
   # Parse a number and return an AST node
   private def parse_literal : Expression::Literal
     value = current.value
     case current.type
+    # when Syntax::LBracket
+    #   consume_current
+    #   parse_vector_literal
+    # when Syntax::LBrace
+    #   consume_current
+    #   parse_table_literal
     when Syntax::Integer
       consume_current
       Expression::IntLiteral.new(value.as(Int), last_token)

@@ -21,7 +21,7 @@ module Cosmo::Keywords
   }
 
   # These cannot be any of the keywords above
-  TYPE_KEYWORDS = ["any", "bool", "string", "char", "int", "float", "void"]
+  TYPE_KEYWORDS = ["type", "any", "bool", "string", "char", "int", "float", "void"]
 
   # Returns whether or not `s` is a type keyword
   def self.type?(s : String)

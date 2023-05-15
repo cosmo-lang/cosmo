@@ -55,6 +55,31 @@ describe Parser do
       literal.should be_a AST::Expression::NoneLiteral
       literal.value.should eq nil
     end
+  #   it "vectors" do
+  #     stmts = Parser.new("int[] nums = [1, 2, 3]", "test").parse
+  #     stmts.empty?.should be_false
+  #     expr = stmts.first.as(AST::Statement::SingleExpression).expression
+  #     expr.should be_a AST::Expression::VarDeclaration
+  #     declaration = expr.as AST::Expression::VarDeclaration
+  #     declaration.typedef.type.should eq Syntax::TypeDef
+  #     declaration.typedef.value.should eq "int[]"
+  #     declaration.var.should be_a AST::Expression::Var
+  #     declaration.var.token.type.should eq Syntax::Identifier
+  #     declaration.var.token.value.should eq "nums"
+  #     vector = declaration.value.as AST::Expression::VectorLiteral
+  #     vector.should be_a AST::Expression::VectorLiteral
+  #     vector.value.should be_a Array(AST::Expression::IntLiteral)
+
+  #     list = vector.value.as Array(AST::Expression::IntLiteral)
+  #     list.empty?.should be_false
+  #     one, two, three = list
+  #     one.should be_a AST::Expression::IntLiteral
+  #     two.should be_a AST::Expression::IntLiteral
+  #     three.should be_a AST::Expression::IntLiteral
+  #     one.value.should eq 1
+  #     two.value.should eq 2
+  #     three.value.should eq 3
+  #   end
   end
   it "parses unary operators" do
     stmts = Parser.new("+-12", "test").parse
@@ -207,6 +232,22 @@ describe Parser do
     literal = declaration.value.as AST::Expression::BooleanLiteral
     literal.should be_a AST::Expression::BooleanLiteral
     literal.value.should be_false
+  end
+  it "parses type aliases" do
+    stmts = Parser.new("type MyInt = int", "test").parse
+    stmts.empty?.should be_false
+    expr = stmts.first.as(AST::Statement::SingleExpression).expression
+    expr.should be_a AST::Expression::TypeAlias
+    type_alias = expr.as AST::Expression::TypeAlias
+    type_alias.type_token.type.should eq Syntax::TypeDef
+    type_alias.type_token.value.should eq "type"
+    type_alias.var.should be_a AST::Expression::Var
+    type_alias.var.token.type.should eq Syntax::Identifier
+    type_alias.var.token.value.should eq "MyInt"
+
+    type_alias.value.should be_a AST::Expression::TypeRef
+    alias_value = type_alias.value.as AST::Expression::TypeRef
+    alias_value.name.value.should eq "int"
   end
   it "parses compound assignment" do
     stmts = Parser.new("int a = 5; a += 2", "test").parse

@@ -2,6 +2,7 @@ module Cosmo::AST::Expression
   include Cosmo::AST
 
   module Visitor(R)
+    abstract def visit_type_alias_expr(expr : TypeAlias) : R
     abstract def visit_fn_call_expr(expr : FunctionCall) : R
     abstract def visit_var_declaration_expr(expr : VarDeclaration) : R
     abstract def visit_var_assignment_expr(expr : VarAssignment) : R
@@ -13,6 +14,46 @@ module Cosmo::AST::Expression
 
   abstract class Base < Node
     abstract def accept(visitor : Visitor(R)) forall R
+  end
+
+  class TypeRef < Base
+    getter name : Token
+
+    def initialize(@name)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_type_ref_expr(self)
+    end
+
+    def token : Token
+      @name
+    end
+
+    def to_s
+      "TypeRef<\"#{@name}\">"
+    end
+  end
+
+  class TypeAlias < Base
+    getter type_token : Token
+    getter var : Var
+    getter value : Node?
+
+    def initialize(@type_token, @var, @value)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_type_alias_expr(self)
+    end
+
+    def token : Token
+      @var.token
+    end
+
+    def to_s
+      "TypeAlias<#{@var.token.value.to_s}: #{@value.to_s}>"
+    end
   end
 
   class FunctionCall < Base
@@ -175,7 +216,7 @@ module Cosmo::AST::Expression
 
   abstract class Literal < Base
     getter token : Token
-    getter value : LiteralType
+    getter value : LiteralType #| Array(Base) | Hash(Base, Base)
 
     def initialize(@value, @token); end
 
@@ -187,35 +228,35 @@ module Cosmo::AST::Expression
   class StringLiteral < Literal
     def initialize(@value : String, @token); end
     def to_s
-      "Literal<\"#{value}\">"
+      "Literal<\"#{@value}\">"
     end
   end
 
   class CharLiteral < Literal
     def initialize(@value : Char, @token); end
     def to_s
-      "Literal<'#{value}'>"
+      "Literal<'#{@value}'>"
     end
   end
 
   class IntLiteral < Literal
     def initialize(@value : Int64 | Int32 | Int16 | Int8, @token); end
     def to_s
-      "Literal<#{value}>"
+      "Literal<#{@value}>"
     end
   end
 
   class FloatLiteral < Literal
     def initialize(@value : Float64 | Float32 | Float16 | Float8, @token); end
     def to_s
-      "Literal<#{value}>"
+      "Literal<#{@value}>"
     end
   end
 
   class BooleanLiteral < Literal
     def initialize(@value : Bool, @token); end
     def to_s
-      "Literal<#{value}>"
+      "Literal<#{@value}>"
     end
   end
 
