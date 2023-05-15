@@ -221,7 +221,7 @@ class Cosmo::Parser
           Logger.report_error("Expected table value type, got", current.type.to_s, current)
         end
 
-        table_type = "{#{variable_type.lexeme} -> #{type_info[:variable_type].not_nil!.lexeme}}"
+        table_type = "#{variable_type.lexeme}->#{type_info[:variable_type].not_nil!.lexeme}"
         table_type_token = Token.new(table_type, variable_type.type, table_type, variable_type.location)
         variable_type = table_type_token
         type_ref = Expression::TypeRef.new(table_type_token)
