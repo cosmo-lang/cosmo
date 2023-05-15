@@ -350,4 +350,34 @@ describe Parser do
     function_call.var.token.value.should eq "say_hi"
     function_call.arguments.empty?.should be_true
   end
+  it "parses if statements" do
+    lines = [
+      "int x = 5",
+      "if x == 5 {",
+      " puts(\"x is 5\")",
+      "} else {",
+      " puts(\"x is not 5\")",
+      "}"
+    ]
+
+    stmts = Parser.new(lines.join('\n'), "test").parse
+    stmts.empty?.should be_false
+    expr = stmts.first.as(AST::Statement::SingleExpression).expression
+    expr.should be_a AST::Expression::VarDeclaration
+    declaration = expr.as AST::Expression::VarDeclaration
+    declaration.typedef.type.should eq Syntax::TypeDef
+    declaration.typedef.value.should eq "int"
+    declaration.var.should be_a AST::Expression::Var
+    declaration.var.token.type.should eq Syntax::Identifier
+    declaration.var.token.value.should eq "x"
+    literal = declaration.value.as AST::Expression::IntLiteral
+    literal.should be_a AST::Expression::IntLiteral
+    literal.value.should eq 5
+
+    stmts.last.should be_a AST::Statement::If
+    if_stmt = stmts.last.as AST::Statement::If
+    if_stmt.condition.should be_a AST::Expression::BinaryOp
+    if_stmt.then.should be_a AST::Statement::Block
+    if_stmt.else.should be_a AST::Statement::Block
+  end
 end
