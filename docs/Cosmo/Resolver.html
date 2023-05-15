@@ -396,8 +396,18 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/Parser" data-name="cosmo::parser">
+  <li class="parent " data-id="Cosmo/Cosmo/Parser" data-name="cosmo::parser">
       <a href="../Cosmo/Parser.html">Parser</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Parser/TypeInfo" data-name="cosmo::parser::typeinfo">
+      <a href="../Cosmo/Parser/TypeInfo.html">TypeInfo</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -489,6 +499,22 @@
 
 
 
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../Cosmo/AST/Expression/Visitor.html">Cosmo::AST::Expression::Visitor(Nil)</a></li>
+    
+      <li class="other-type"><a href="../Cosmo/AST/Statement/Visitor.html">Cosmo::AST::Statement::Visitor(Nil)</a></li>
+    
+  </ul>
+
 
 
 
@@ -508,7 +534,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/f015a3391467a4dd273c8a1acc106dc9f6e0d3b2/src/cosmo/runtime/resolver.cr#L6" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L6" target="_blank">
         cosmo/runtime/resolver.cr
       </a>
     
@@ -551,7 +577,107 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#resolve%28block%3AAST%3A%3AStatement%3A%3ABlock%29-instance-method" class="signature"><strong>#resolve</strong>(block : AST::Statement::Block)</a>
+        <a href="#resolve%28statements%3AExpression%3A%3ABase%7CStatement%3A%3ABase%7CArray%28Statement%3A%3ABase%29%29%3ANil-instance-method" class="signature"><strong>#resolve</strong>(statements : Expression::Base | Statement::Base | Array(Statement::Base)) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_binary_op_expr%28expr%3AExpression%3A%3ABinaryOp%29%3ANil-instance-method" class="signature"><strong>#visit_binary_op_expr</strong>(expr : Expression::BinaryOp) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_block_stmt%28stmt%3AStatement%3A%3ABlock%29%3ANil-instance-method" class="signature"><strong>#visit_block_stmt</strong>(stmt : Statement::Block) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_compound_assignment_expr%28expr%3AExpression%3A%3ACompoundAssignment%29%3ANil-instance-method" class="signature"><strong>#visit_compound_assignment_expr</strong>(expr : Expression::CompoundAssignment) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_fn_call_expr%28expr%3AExpression%3A%3AFunctionCall%29%3ANil-instance-method" class="signature"><strong>#visit_fn_call_expr</strong>(expr : Expression::FunctionCall) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_fn_def_stmt%28stmt%3AStatement%3A%3AFunctionDef%29%3ANil-instance-method" class="signature"><strong>#visit_fn_def_stmt</strong>(stmt : Statement::FunctionDef) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_if_stmt%28stmt%3AStatement%3A%3AIf%29%3ANil-instance-method" class="signature"><strong>#visit_if_stmt</strong>(stmt : Statement::If) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_index_expr%28expr%3AExpression%3A%3AIndex%29%3ANil-instance-method" class="signature"><strong>#visit_index_expr</strong>(expr : Expression::Index) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_literal_expr%28expr%3AExpression%3A%3ALiteral%29%3ANil-instance-method" class="signature"><strong>#visit_literal_expr</strong>(expr : Expression::Literal) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_return_stmt%28stmt%3AStatement%3A%3AReturn%29%3ANil-instance-method" class="signature"><strong>#visit_return_stmt</strong>(stmt : Statement::Return) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_single_expr_stmt%28stmt%3AStatement%3A%3ASingleExpression%29%3ANil-instance-method" class="signature"><strong>#visit_single_expr_stmt</strong>(stmt : Statement::SingleExpression) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_type_alias_expr%28expr%3AExpression%3A%3ATypeAlias%29%3ANil-instance-method" class="signature"><strong>#visit_type_alias_expr</strong>(expr : Expression::TypeAlias) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_type_ref_expr%28expr%3AExpression%3A%3ATypeRef%29%3ANil-instance-method" class="signature"><strong>#visit_type_ref_expr</strong>(expr : Expression::TypeRef) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_unary_op_expr%28expr%3AExpression%3A%3AUnaryOp%29%3ANil-instance-method" class="signature"><strong>#visit_unary_op_expr</strong>(expr : Expression::UnaryOp) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_unless_stmt%28stmt%3AStatement%3A%3AUnless%29%3ANil-instance-method" class="signature"><strong>#visit_unless_stmt</strong>(stmt : Statement::Unless) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_until_stmt%28stmt%3AStatement%3A%3AUntil%29%3ANil-instance-method" class="signature"><strong>#visit_until_stmt</strong>(stmt : Statement::Until) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_var_assignment_expr%28expr%3AExpression%3A%3AVarAssignment%29%3ANil-instance-method" class="signature"><strong>#visit_var_assignment_expr</strong>(expr : Expression::VarAssignment) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_var_declaration_expr%28expr%3AExpression%3A%3AVarDeclaration%29%3ANil-instance-method" class="signature"><strong>#visit_var_declaration_expr</strong>(expr : Expression::VarDeclaration) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_var_expr%28expr%3AExpression%3A%3AVar%29%3ANil-instance-method" class="signature"><strong>#visit_var_expr</strong>(expr : Expression::Var) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_vector_literal_expr%28expr%3AExpression%3A%3AVectorLiteral%29%3ANil-instance-method" class="signature"><strong>#visit_vector_literal_expr</strong>(expr : Expression::VectorLiteral) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_while_stmt%28stmt%3AStatement%3A%3AWhile%29%3ANil-instance-method" class="signature"><strong>#visit_while_stmt</strong>(stmt : Statement::While) : Nil</a>
         
       </li>
     
@@ -562,6 +688,99 @@
 
 
 <div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../Cosmo/AST/Statement/Visitor.html">Cosmo::AST::Statement::Visitor(Nil)</a></code></h3>
+  
+  
+    <a href="../Cosmo/AST/Statement/Visitor.html#visit_block_stmt%28stmt%3ABlock%29%3AR-instance-method" class="tooltip">
+      <span>visit_block_stmt(stmt : Block) : R</span>
+    visit_block_stmt</a>, 
+    
+  
+    <a href="../Cosmo/AST/Statement/Visitor.html#visit_fn_def_stmt%28stmt%3AFunctionDef%29%3AR-instance-method" class="tooltip">
+      <span>visit_fn_def_stmt(stmt : FunctionDef) : R</span>
+    visit_fn_def_stmt</a>, 
+    
+  
+    <a href="../Cosmo/AST/Statement/Visitor.html#visit_return_stmt%28stmt%3AReturn%29%3AR-instance-method" class="tooltip">
+      <span>visit_return_stmt(stmt : Return) : R</span>
+    visit_return_stmt</a>, 
+    
+  
+    <a href="../Cosmo/AST/Statement/Visitor.html#visit_single_expr_stmt%28stmt%3ASingleExpression%29%3AR-instance-method" class="tooltip">
+      <span>visit_single_expr_stmt(stmt : SingleExpression) : R</span>
+    visit_single_expr_stmt</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../Cosmo/AST/Expression/Visitor.html">Cosmo::AST::Expression::Visitor(Nil)</a></code></h3>
+  
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_binary_op_expr%28expr%3ABinaryOp%29%3AR-instance-method" class="tooltip">
+      <span>visit_binary_op_expr(expr : BinaryOp) : R</span>
+    visit_binary_op_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_fn_call_expr%28expr%3AFunctionCall%29%3AR-instance-method" class="tooltip">
+      <span>visit_fn_call_expr(expr : FunctionCall) : R</span>
+    visit_fn_call_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_literal_expr%28expr%3ALiteral%29%3AR-instance-method" class="tooltip">
+      <span>visit_literal_expr(expr : Literal) : R</span>
+    visit_literal_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_type_alias_expr%28expr%3ATypeAlias%29%3AR-instance-method" class="tooltip">
+      <span>visit_type_alias_expr(expr : TypeAlias) : R</span>
+    visit_type_alias_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_unary_op_expr%28expr%3AUnaryOp%29%3AR-instance-method" class="tooltip">
+      <span>visit_unary_op_expr(expr : UnaryOp) : R</span>
+    visit_unary_op_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_var_assignment_expr%28expr%3AVarAssignment%29%3AR-instance-method" class="tooltip">
+      <span>visit_var_assignment_expr(expr : VarAssignment) : R</span>
+    visit_var_assignment_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_var_declaration_expr%28expr%3AVarDeclaration%29%3AR-instance-method" class="tooltip">
+      <span>visit_var_declaration_expr(expr : VarDeclaration) : R</span>
+    visit_var_declaration_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_var_expr%28expr%3AVar%29%3AR-instance-method" class="tooltip">
+      <span>visit_var_expr(expr : Var) : R</span>
+    visit_var_expr</a>, 
+    
+  
+    <a href="../Cosmo/AST/Expression/Visitor.html#visit_vector_literal_expr%28expr%3AVectorLiteral%29%3AR-instance-method" class="tooltip">
+      <span>visit_vector_literal_expr(expr : VectorLiteral) : R</span>
+    visit_vector_literal_expr</a>
+    
+  
+
+
+    
+
+
+    
+
+
   
     
 
@@ -606,7 +825,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f015a3391467a4dd273c8a1acc106dc9f6e0d3b2/src/cosmo/runtime/resolver.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -625,18 +844,338 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="resolve(block:AST::Statement::Block)-instance-method">
+    <div class="entry-detail" id="resolve(statements:Expression::Base|Statement::Base|Array(Statement::Base)):Nil-instance-method">
       <div class="signature">
         
-        def <strong>resolve</strong>(block : <a href="../Cosmo/AST/Statement/Block.html">AST::Statement::Block</a>)
+        def <strong>resolve</strong>(statements : <a href="../Cosmo/AST/Expression/Base.html">Expression::Base</a> | <a href="../Cosmo/AST/Statement/Base.html">Statement::Base</a> | Array(<a href="../Cosmo/AST/Statement/Base.html">Statement::Base</a>)) : Nil
 
-        <a class="method-permalink" href="#resolve%28block%3AAST%3A%3AStatement%3A%3ABlock%29-instance-method">#</a>
+        <a class="method-permalink" href="#resolve%28statements%3AExpression%3A%3ABase%7CStatement%3A%3ABase%7CArray%28Statement%3A%3ABase%29%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f015a3391467a4dd273c8a1acc106dc9f6e0d3b2/src/cosmo/runtime/resolver.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L16" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_binary_op_expr(expr:Expression::BinaryOp):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_binary_op_expr</strong>(expr : <a href="../Cosmo/AST/Expression/BinaryOp.html">Expression::BinaryOp</a>) : Nil
+
+        <a class="method-permalink" href="#visit_binary_op_expr%28expr%3AExpression%3A%3ABinaryOp%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L151" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_block_stmt(stmt:Statement::Block):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_block_stmt</strong>(stmt : <a href="../Cosmo/AST/Statement/Block.html">Statement::Block</a>) : Nil
+
+        <a class="method-permalink" href="#visit_block_stmt%28stmt%3AStatement%3A%3ABlock%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L74" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_compound_assignment_expr(expr:Expression::CompoundAssignment):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_compound_assignment_expr</strong>(expr : <a href="../Cosmo/AST/Expression/CompoundAssignment.html">Expression::CompoundAssignment</a>) : Nil
+
+        <a class="method-permalink" href="#visit_compound_assignment_expr%28expr%3AExpression%3A%3ACompoundAssignment%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L146" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_fn_call_expr(expr:Expression::FunctionCall):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_fn_call_expr</strong>(expr : <a href="../Cosmo/AST/Expression/FunctionCall.html">Expression::FunctionCall</a>) : Nil
+
+        <a class="method-permalink" href="#visit_fn_call_expr%28expr%3AExpression%3A%3AFunctionCall%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L136" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_fn_def_stmt(stmt:Statement::FunctionDef):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_fn_def_stmt</strong>(stmt : <a href="../Cosmo/AST/Statement/FunctionDef.html">Statement::FunctionDef</a>) : Nil
+
+        <a class="method-permalink" href="#visit_fn_def_stmt%28stmt%3AStatement%3A%3AFunctionDef%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L103" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_if_stmt(stmt:Statement::If):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_if_stmt</strong>(stmt : <a href="../Cosmo/AST/Statement/If.html">Statement::If</a>) : Nil
+
+        <a class="method-permalink" href="#visit_if_stmt%28stmt%3AStatement%3A%3AIf%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L84" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_index_expr(expr:Expression::Index):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_index_expr</strong>(expr : <a href="../Cosmo/AST/Expression/Index.html">Expression::Index</a>) : Nil
+
+        <a class="method-permalink" href="#visit_index_expr%28expr%3AExpression%3A%3AIndex%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L141" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_literal_expr(expr:Expression::Literal):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_literal_expr</strong>(expr : <a href="../Cosmo/AST/Expression/Literal.html">Expression::Literal</a>) : Nil
+
+        <a class="method-permalink" href="#visit_literal_expr%28expr%3AExpression%3A%3ALiteral%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L178" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_return_stmt(stmt:Statement::Return):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_return_stmt</strong>(stmt : <a href="../Cosmo/AST/Statement/Return.html">Statement::Return</a>) : Nil
+
+        <a class="method-permalink" href="#visit_return_stmt%28stmt%3AStatement%3A%3AReturn%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L96" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_single_expr_stmt(stmt:Statement::SingleExpression):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_single_expr_stmt</strong>(stmt : <a href="../Cosmo/AST/Statement/SingleExpression.html">Statement::SingleExpression</a>) : Nil
+
+        <a class="method-permalink" href="#visit_single_expr_stmt%28stmt%3AStatement%3A%3ASingleExpression%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L80" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_type_alias_expr(expr:Expression::TypeAlias):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_type_alias_expr</strong>(expr : <a href="../Cosmo/AST/Expression/TypeAlias.html">Expression::TypeAlias</a>) : Nil
+
+        <a class="method-permalink" href="#visit_type_alias_expr%28expr%3AExpression%3A%3ATypeAlias%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L130" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_type_ref_expr(expr:Expression::TypeRef):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_type_ref_expr</strong>(expr : <a href="../Cosmo/AST/Expression/TypeRef.html">Expression::TypeRef</a>) : Nil
+
+        <a class="method-permalink" href="#visit_type_ref_expr%28expr%3AExpression%3A%3ATypeRef%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L167" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_unary_op_expr(expr:Expression::UnaryOp):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_unary_op_expr</strong>(expr : <a href="../Cosmo/AST/Expression/UnaryOp.html">Expression::UnaryOp</a>) : Nil
+
+        <a class="method-permalink" href="#visit_unary_op_expr%28expr%3AExpression%3A%3AUnaryOp%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L156" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_unless_stmt(stmt:Statement::Unless):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_unless_stmt</strong>(stmt : <a href="../Cosmo/AST/Statement/Unless.html">Statement::Unless</a>) : Nil
+
+        <a class="method-permalink" href="#visit_unless_stmt%28stmt%3AStatement%3A%3AUnless%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L90" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_until_stmt(stmt:Statement::Until):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_until_stmt</strong>(stmt : <a href="../Cosmo/AST/Statement/Until.html">Statement::Until</a>) : Nil
+
+        <a class="method-permalink" href="#visit_until_stmt%28stmt%3AStatement%3A%3AUntil%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L114" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_var_assignment_expr(expr:Expression::VarAssignment):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_var_assignment_expr</strong>(expr : <a href="../Cosmo/AST/Expression/VarAssignment.html">Expression::VarAssignment</a>) : Nil
+
+        <a class="method-permalink" href="#visit_var_assignment_expr%28expr%3AExpression%3A%3AVarAssignment%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L125" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_var_declaration_expr(expr:Expression::VarDeclaration):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_var_declaration_expr</strong>(expr : <a href="../Cosmo/AST/Expression/VarDeclaration.html">Expression::VarDeclaration</a>) : Nil
+
+        <a class="method-permalink" href="#visit_var_declaration_expr%28expr%3AExpression%3A%3AVarDeclaration%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L119" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_var_expr(expr:Expression::Var):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_var_expr</strong>(expr : <a href="../Cosmo/AST/Expression/Var.html">Expression::Var</a>) : Nil
+
+        <a class="method-permalink" href="#visit_var_expr%28expr%3AExpression%3A%3AVar%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L160" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_vector_literal_expr(expr:Expression::VectorLiteral):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_vector_literal_expr</strong>(expr : <a href="../Cosmo/AST/Expression/VectorLiteral.html">Expression::VectorLiteral</a>) : Nil
+
+        <a class="method-permalink" href="#visit_vector_literal_expr%28expr%3AExpression%3A%3AVectorLiteral%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L174" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_while_stmt(stmt:Statement::While):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_while_stmt</strong>(stmt : <a href="../Cosmo/AST/Statement/While.html">Statement::While</a>) : Nil
+
+        <a class="method-permalink" href="#visit_while_stmt%28stmt%3AStatement%3A%3AWhile%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/runtime/resolver.cr#L109" target="_blank">View source</a>]
         
       </div>
     </div>

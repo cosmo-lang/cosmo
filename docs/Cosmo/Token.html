@@ -396,8 +396,18 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/Parser" data-name="cosmo::parser">
+  <li class="parent " data-id="Cosmo/Cosmo/Parser" data-name="cosmo::parser">
       <a href="../Cosmo/Parser.html">Parser</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Parser/TypeInfo" data-name="cosmo::parser::typeinfo">
+      <a href="../Cosmo/Parser/TypeInfo.html">TypeInfo</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -508,7 +518,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/f015a3391467a4dd273c8a1acc106dc9f6e0d3b2/src/cosmo/syntax/lexer/token.cr#L4" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/syntax/lexer/token.cr#L4" target="_blank">
         cosmo/syntax/lexer/token.cr
       </a>
     
@@ -530,7 +540,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28type%3ACosmo%3A%3ASyntax%2Cvalue%3ABool%7CChar%7CFloat32%7CFloat64%7CInt16%7CInt32%7CInt64%7CInt8%7CString%7CNil%2Clocation%3ACosmo%3A%3ALocation%29-class-method" class="signature"><strong>.new</strong>(type : Cosmo::Syntax, value : Bool | Char | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil, location : Cosmo::Location)</a>
+        <a href="#new%28lexeme%3AString%2Ctype%3ACosmo%3A%3ASyntax%2Cvalue%3ABool%7CChar%7CFloat32%7CFloat64%7CInt16%7CInt32%7CInt64%7CInt8%7CString%7CNil%2Clocation%3ACosmo%3A%3ALocation%29-class-method" class="signature"><strong>.new</strong>(lexeme : String, type : Cosmo::Syntax, value : Bool | Char | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil, location : Cosmo::Location)</a>
         
       </li>
     
@@ -549,6 +559,11 @@
     Instance Method Summary
   </h2>
   <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#lexeme%3AString-instance-method" class="signature"><strong>#lexeme</strong> : String</a>
+        
+      </li>
     
       <li class="entry-summary">
         <a href="#location%3ALocation-instance-method" class="signature"><strong>#location</strong> : Location</a>
@@ -622,18 +637,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(type:Cosmo::Syntax,value:Bool|Char|Float32|Float64|Int16|Int32|Int64|Int8|String|Nil,location:Cosmo::Location)-class-method">
+    <div class="entry-detail" id="new(lexeme:String,type:Cosmo::Syntax,value:Bool|Char|Float32|Float64|Int16|Int32|Int64|Int8|String|Nil,location:Cosmo::Location)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(type : <a href="../Cosmo/Syntax.html">Cosmo::Syntax</a>, value : Bool | Char | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil, location : <a href="../Cosmo/Location.html">Cosmo::Location</a>)
+        def self.<strong>new</strong>(lexeme : String, type : <a href="../Cosmo/Syntax.html">Cosmo::Syntax</a>, value : Bool | Char | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | String | Nil, location : <a href="../Cosmo/Location.html">Cosmo::Location</a>)
 
-        <a class="method-permalink" href="#new%28type%3ACosmo%3A%3ASyntax%2Cvalue%3ABool%7CChar%7CFloat32%7CFloat64%7CInt16%7CInt32%7CInt64%7CInt8%7CString%7CNil%2Clocation%3ACosmo%3A%3ALocation%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28lexeme%3AString%2Ctype%3ACosmo%3A%3ASyntax%2Cvalue%3ABool%7CChar%7CFloat32%7CFloat64%7CInt16%7CInt32%7CInt64%7CInt8%7CString%7CNil%2Clocation%3ACosmo%3A%3ALocation%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f015a3391467a4dd273c8a1acc106dc9f6e0d3b2/src/cosmo/syntax/lexer/token.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/syntax/lexer/token.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -652,6 +667,22 @@
     Instance Method Detail
   </h2>
   
+    <div class="entry-detail" id="lexeme:String-instance-method">
+      <div class="signature">
+        
+        def <strong>lexeme</strong> : String
+
+        <a class="method-permalink" href="#lexeme%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/syntax/lexer/token.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="location:Location-instance-method">
       <div class="signature">
         
@@ -663,7 +694,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f015a3391467a4dd273c8a1acc106dc9f6e0d3b2/src/cosmo/syntax/lexer/token.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/syntax/lexer/token.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -692,7 +723,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f015a3391467a4dd273c8a1acc106dc9f6e0d3b2/src/cosmo/syntax/lexer/token.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/syntax/lexer/token.cr#L30" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -708,7 +739,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f015a3391467a4dd273c8a1acc106dc9f6e0d3b2/src/cosmo/syntax/lexer/token.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/syntax/lexer/token.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -724,7 +755,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f015a3391467a4dd273c8a1acc106dc9f6e0d3b2/src/cosmo/syntax/lexer/token.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/af17e2265a5e4bf69190fa725037304399f0a64c/src/cosmo/syntax/lexer/token.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
