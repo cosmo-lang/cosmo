@@ -191,7 +191,7 @@ class Cosmo::Parser
     Expression::FunctionCall.new(callee, arguments)
   end
 
-  alias TypeInfo = NamedTuple(found_typedef: Bool, variable_type: Token?, type_ref: Expression::TypeRef?)
+  private alias TypeInfo = NamedTuple(found_typedef: Bool, variable_type: Token?, type_ref: Expression::TypeRef?)
   private def parse_type(required : Bool = true) : TypeInfo
     if required
       consume(Syntax::Identifier) unless match?(Syntax::TypeDef)

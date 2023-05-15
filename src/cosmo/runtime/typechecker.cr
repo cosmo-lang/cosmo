@@ -2,7 +2,7 @@ require "../logger"
 require "./intrinsics"
 require "./type"
 
-alias NonNestableValueType = LiteralType | Cosmo::Callable | Cosmo::Type
+private alias NonNestableValueType = LiteralType | Cosmo::Callable | Cosmo::Type
 alias ValueType = NonNestableValueType | Array(ValueType) #| Hash(ValueType, ValueType)
 
 module Cosmo::TypeChecker

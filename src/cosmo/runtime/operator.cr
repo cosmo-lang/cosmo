@@ -1,7 +1,7 @@
 module Cosmo::Operator
-  alias ExprType = Expression::BinaryOp | Expression::CompoundAssignment
+  private alias ExprType = Expression::BinaryOp | Expression::CompoundAssignment
 
-  abstract class Base
+  private abstract class Base
     def initialize(@interpreter : Interpreter)
     end
     abstract def apply(expr : E) : ValueType forall E
