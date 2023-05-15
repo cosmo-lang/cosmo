@@ -191,26 +191,34 @@ class Cosmo::Parser
     Expression::FunctionCall.new(callee, arguments)
   end
 
-  private def parse_type(as_value : Bool = false, required : Bool = true) : NamedTuple(found_typedef: Bool, variable_type: Token?, type_ref: Expression::TypeRef?)
+  alias TypeInfo = NamedTuple(found_typedef: Bool, variable_type: Token?, type_ref: Expression::TypeRef?)
+  private def parse_type(required : Bool = true) : TypeInfo
     if required
       consume(Syntax::Identifier) unless match?(Syntax::TypeDef)
       found_typedef = true
     else
       found_typedef = match?(Syntax::TypeDef)
-      found_custom_type = !finished? && current.type == Syntax::Identifier && !TypeChecker.get_registered_type?(current.value.to_s, current).nil?
+      found_registered_type = !finished? &&
+        current.type == Syntax::Identifier &&
+        !TypeChecker.get_registered_type?(current.value.to_s, current).nil?
     end
 
-    if as_value
-      variable_type = last_token
-    else
-      variable_type = last_token if found_typedef
-      if found_custom_type
-        variable_type = current
-        consume_current
+    variable_type = last_token if found_typedef
+    if found_registered_type
+      variable_type = current
+      consume_current
+    end
+    unless variable_type.nil?
+      if match?(Syntax::LBracket)
+        consume(Syntax::RBracket)
+        vector_type = variable_type.lexeme + "[]"
+        vector_type_token = Token.new(vector_type, variable_type.type, vector_type, variable_type.location)
+        type_ref = Expression::TypeRef.new(vector_type_token)
+      else
+        type_ref = Expression::TypeRef.new(variable_type)
       end
     end
 
-    type_ref = Expression::TypeRef.new(variable_type) unless variable_type.nil?
     {
       found_typedef: found_typedef,
       variable_type: variable_type,
@@ -220,7 +228,7 @@ class Cosmo::Parser
 
   private def parse_type_alias(type_token : Token, identifier : Expression::Var) : Expression::TypeAlias
     if match?(Syntax::Equal)
-      type_info = parse_type(as_value: true)
+      type_info = parse_type
       type_ref = type_info[:type_ref].not_nil!
       TypeChecker.alias_type(identifier.token.value.to_s, type_ref.name.value.to_s)
       Expression::TypeAlias.new(type_token, identifier, type_ref)
@@ -232,8 +240,8 @@ class Cosmo::Parser
   # Parse a variable declaration and return a node
   private def parse_var_declaration : Node
     type_info = parse_type(required: false)
-    unless type_info[:variable_type].nil? && type_info[:type_ref].nil?
-      typedef = type_info[:variable_type] || type_info[:type_ref].not_nil!.name
+    unless type_info[:variable_type].nil? || type_info[:type_ref].nil?
+      typedef = type_info[:type_ref].nil? ? type_info[:variable_type].not_nil! : type_info[:type_ref].not_nil!.name
 
       if match?(Syntax::Identifier)
         variable_name = last_token

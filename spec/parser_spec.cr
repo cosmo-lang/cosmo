@@ -56,13 +56,13 @@ describe Parser do
       literal.value.should eq nil
     end
     it "vectors" do
-      stmts = Parser.new("any nums = [1, 2, 3]", "test").parse
+      stmts = Parser.new("int[] nums = [1, 2, 3]", "test").parse
       stmts.should_not be_empty
       expr = stmts.first.as(AST::Statement::SingleExpression).expression
       expr.should be_a AST::Expression::VarDeclaration
       declaration = expr.as AST::Expression::VarDeclaration
       declaration.typedef.type.should eq Syntax::TypeDef
-      declaration.typedef.value.should eq "any"
+      declaration.typedef.value.should eq "int[]"
       declaration.var.should be_a AST::Expression::Var
       declaration.var.token.type.should eq Syntax::Identifier
       declaration.var.token.value.should eq "nums"
@@ -348,7 +348,7 @@ describe Parser do
     function_call.arguments.empty?.should be_true
   end
   it "parses vector indexing" do
-    stmts = Parser.new("any x = [1, 2]; x[0]", "test").parse
+    stmts = Parser.new("int[] x = [1, 2]; x[0]", "test").parse
     stmts.should_not be_empty
     expr = stmts.last.as(AST::Statement::SingleExpression).expression
     index = expr.as AST::Expression::Index

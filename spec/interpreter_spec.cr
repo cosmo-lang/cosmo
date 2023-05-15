@@ -59,17 +59,25 @@ describe Interpreter do
     result.should eq 'h'
     result = interpreter.interpret("string z = \"hello world\"", "test")
     result.should eq "hello world"
+    result = interpreter.interpret("char[] word = ['h', 'e', 'l', 'l', 'o']", "test")
+    result.should be_a Array(ValueType)
+    result.as(Array(ValueType)).join.should eq "hello"
   end
   it "interprets variable assignments" do
     interpreter.interpret("int x = 0b11", "test")
     result = interpreter.interpret("x = 5", "test")
     result.should eq 5
+    result = interpreter.interpret("x = 12", "test")
+    result.should eq 12
   end
   it "interprets compound assignment" do
     interpreter.interpret("int a = 5", "test")
     interpreter.interpret("a += 2", "test")
     result = interpreter.interpret("a", "test")
     result.should eq 7
+    interpreter.interpret("a -= 17", "test")
+    result = interpreter.interpret("a", "test")
+    result.should eq -10
   end
   it "interprets function definitions & calls" do
     interpreter.interpret("bool fn is_eq(int a, int b) { return a == b }", "test")

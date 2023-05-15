@@ -20,7 +20,18 @@ module Cosmo::TypeChecker
     Bool => "bool",
     Nil => "none",
     Function => "fn",
-    PutsIntrinsic => "fn"
+    PutsIntrinsic => "fn",
+    Array(Int64) => "int[]",
+    Array(Int32) => "int[]",
+    Array(Int16) => "int[]",
+    Array(Int8) => "int[]",
+    Array(Float64) => "float[]",
+    Array(Float32) => "float[]",
+    Array(String) => "string[]",
+    Array(Char) => "char[]",
+    Array(Bool) => "bool[]",
+    Array(Function) => "fn[]",
+    Array => "any[]"
   }
 
   REGISTERED = [] of Type
@@ -91,13 +102,20 @@ module Cosmo::TypeChecker
       report_mismatch(typedef, value, token) unless value == nil
     when "any"
     else
-      registered = get_registered_type?(typedef, token)
-      unless registered.nil?
-        if ALIASES.has_key?(registered.name)
-          unaliased = ALIASES[registered.name]
-          return assert(unaliased, value, token) unless typedef == unaliased
-        else
-          raise "Type is registered, but has no alias and is unhandled in TypeChecker."
+      if typedef.ends_with?("[]")
+        value_type = typedef[0..-3]
+        report_mismatch(typedef, value, token) unless value.is_a?(Array)
+        value.as(Array).each { |v| assert(value_type, v, token) }
+        return
+      else
+        registered = get_registered_type?(typedef, token)
+        unless registered.nil?
+          if ALIASES.has_key?(registered.name)
+            unaliased = ALIASES[registered.name]
+            return assert(unaliased, value, token) unless typedef == unaliased
+          else
+            raise "Type is registered, but has no alias and is unhandled in TypeChecker."
+          end
         end
       end
       raise "Unhandled type '#{typedef}' in TypeChecker"
