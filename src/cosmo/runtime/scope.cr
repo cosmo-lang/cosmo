@@ -3,22 +3,28 @@ require "./typechecker"
 
 class Cosmo::Scope
   property parent : Cosmo::Scope?
-  property variables = {} of String => Tuple(String, ValueType)
+  property variables = {} of String => NamedTuple(type: String, value: ValueType)
 
   def initialize(@parent = nil)
   end
 
-  def declare(typedef : Token, identifier : Token, value : ValueType)
-    TypeChecker.assert(typedef.value.to_s, value, typedef) unless value == nil
-    @variables[identifier.value.to_s] = {typedef.value.to_s, value}
+  def declare(typedef : Token, identifier : Token, value : ValueType) : ValueType
+    TypeChecker.assert(typedef.value.to_s, value, typedef) unless value.nil?
+    @variables[identifier.value.to_s] = {
+      type: typedef.value.to_s,
+      value: value
+    }
     value
   end
 
-  def assign(identifier : Token, value : ValueType)
+  def assign(identifier : Token, value : ValueType) : ValueType
     if @variables.has_key?(identifier.value.to_s)
-      typedef, old_value = @variables[identifier.value.to_s]
-      TypeChecker.assert(typedef, value, identifier)
-      @variables[identifier.value.to_s] = {typedef, value}
+      var = @variables[identifier.value.to_s]
+      TypeChecker.assert(var[:type], value, identifier)
+      @variables[identifier.value.to_s] = {
+        type: var[:type],
+        value: value
+      }
       return value
     end
 
@@ -29,8 +35,9 @@ class Cosmo::Scope
   def lookup(token : Token) : ValueType
     identifier = token.value
     if @variables.has_key?(identifier)
-      typedef, value = @variables[identifier]
-      return value
+      var = @variables[identifier]
+      typedef = var[:type]
+      return var[:value]
     else
       unless @parent.nil?
         parent = @parent.not_nil!
@@ -42,9 +49,8 @@ class Cosmo::Scope
   end
 
   def lookup_at(distance : UInt32, token : Token) : ValueType
-    var_decl : Tuple(String, ValueType) = ancestor(distance).variables[token.value.to_s]?
-    typedef, value = var_decl
-    value
+    var = ancestor(distance).variables[token.value.to_s]?
+    var.value
   end
 
   private def ancestor(distance : UInt32) : Scope

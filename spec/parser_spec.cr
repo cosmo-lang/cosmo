@@ -55,31 +55,28 @@ describe Parser do
       literal.should be_a AST::Expression::NoneLiteral
       literal.value.should eq nil
     end
-  #   it "vectors" do
-  #     stmts = Parser.new("int[] nums = [1, 2, 3]", "test").parse
-  #     stmts.should_not be_empty
-  #     expr = stmts.first.as(AST::Statement::SingleExpression).expression
-  #     expr.should be_a AST::Expression::VarDeclaration
-  #     declaration = expr.as AST::Expression::VarDeclaration
-  #     declaration.typedef.type.should eq Syntax::TypeDef
-  #     declaration.typedef.value.should eq "int[]"
-  #     declaration.var.should be_a AST::Expression::Var
-  #     declaration.var.token.type.should eq Syntax::Identifier
-  #     declaration.var.token.value.should eq "nums"
-  #     vector = declaration.value.as AST::Expression::VectorLiteral
-  #     vector.should be_a AST::Expression::VectorLiteral
-  #     vector.value.should be_a Array(AST::Expression::IntLiteral)
+    it "vectors" do
+      stmts = Parser.new("any nums = [1, 2, 3]", "test").parse
+      stmts.should_not be_empty
+      expr = stmts.first.as(AST::Statement::SingleExpression).expression
+      expr.should be_a AST::Expression::VarDeclaration
+      declaration = expr.as AST::Expression::VarDeclaration
+      declaration.typedef.type.should eq Syntax::TypeDef
+      declaration.typedef.value.should eq "any"
+      declaration.var.should be_a AST::Expression::Var
+      declaration.var.token.type.should eq Syntax::Identifier
+      declaration.var.token.value.should eq "nums"
+      vector = declaration.value.as AST::Expression::VectorLiteral
+      vector.should be_a AST::Expression::VectorLiteral
 
-  #     list = vector.value.as Array(AST::Expression::IntLiteral)
-  #     list.should_not be_empty
-  #     one, two, three = list
-  #     one.should be_a AST::Expression::IntLiteral
-  #     two.should be_a AST::Expression::IntLiteral
-  #     three.should be_a AST::Expression::IntLiteral
-  #     one.value.should eq 1
-  #     two.value.should eq 2
-  #     three.value.should eq 3
-  #   end
+      vector.values.should be_a Array(AST::Expression::Base)
+      list = vector.values.as Array(AST::Expression::Base)
+      list.should_not be_empty
+      one, two, three = list
+      one.as(AST::Expression::IntLiteral).value.should eq 1
+      two.as(AST::Expression::IntLiteral).value.should eq 2
+      three.as(AST::Expression::IntLiteral).value.should eq 3
+    end
   end
   it "parses unary operators" do
     stmts = Parser.new("+-12", "test").parse

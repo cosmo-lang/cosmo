@@ -2,6 +2,7 @@ module Cosmo::AST::Expression
   include Cosmo::AST
 
   module Visitor(R)
+    abstract def visit_vector_literal_expr(expr : VectorLiteral) : R
     abstract def visit_type_alias_expr(expr : TypeAlias) : R
     abstract def visit_fn_call_expr(expr : FunctionCall) : R
     abstract def visit_var_declaration_expr(expr : VarDeclaration) : R
@@ -22,7 +23,7 @@ module Cosmo::AST::Expression
     def initialize(@name)
     end
 
-    def accept(visitor : Visitor(R)) : R forall R
+    def accept(visitor : Visitor(R)) : Type forall R
       visitor.visit_type_ref_expr(self)
     end
 
@@ -216,12 +217,27 @@ module Cosmo::AST::Expression
 
   abstract class Literal < Base
     getter token : Token
-    getter value : LiteralType #| Array(Base) | Hash(Base, Base)
+    getter value : LiteralType
 
     def initialize(@value, @token); end
 
     def accept(visitor : Visitor(R)) : R forall R
       visitor.visit_literal_expr(self)
+    end
+  end
+
+  class VectorLiteral < Base
+    getter token : Token
+    getter values : Array(Base)
+
+    def initialize(@values, @token); end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_vector_literal_expr(self)
+    end
+
+    def to_s
+      "Literal<[#{@values.map(&.to_s).join(", ")}]>"
     end
   end
 

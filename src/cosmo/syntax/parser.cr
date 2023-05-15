@@ -186,7 +186,7 @@ class Cosmo::Parser
 
   private def parse_type(as_value : Bool = false, required : Bool = true) : NamedTuple(found_typedef: Bool, variable_type: Token?, type_ref: Expression::TypeRef?)
     if required
-      consume(Syntax::TypeDef)
+      consume(Syntax::Identifier) unless match?(Syntax::TypeDef)
       found_typedef = true
     else
       found_typedef = match?(Syntax::TypeDef)
@@ -444,24 +444,24 @@ class Cosmo::Parser
   #   Expression::TableLiteral.new(hash, last_token)
   # end
 
-  # private def parse_vector_literal
-  #   elements = [] of Expression::Base
+  private def parse_vector_literal : Expression::VectorLiteral
+    elements = [] of Expression::Base
 
-  #   until match?(Syntax::RBracket)
-  #     elements << parse_expression
-  #     match?(Syntax::Comma)
-  #   end
+    until match?(Syntax::RBracket)
+      elements << parse_expression
+      match?(Syntax::Comma)
+    end
 
-  #   Expression::VectorLiteral.new(elements, last_token)
-  # end
+    Expression::VectorLiteral.new(elements, last_token)
+  end
 
   # Parse a number and return an AST node
-  private def parse_literal : Expression::Literal
+  private def parse_literal : Expression::Literal | Expression::VectorLiteral
     value = current.value
     case current.type
-    # when Syntax::LBracket
-    #   consume_current
-    #   parse_vector_literal
+    when Syntax::LBracket
+      consume_current
+      parse_vector_literal
     # when Syntax::LBrace
     #   consume_current
     #   parse_table_literal

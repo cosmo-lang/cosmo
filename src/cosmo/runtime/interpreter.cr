@@ -121,6 +121,10 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_vector_literal_expr(expr : Expression::VectorLiteral) : Array(ValueType)
+    expr.values.map { |v| evaluate(v) }
+  end
+
   def visit_type_ref_expr(expr : Expression::TypeRef) : Type
     TypeChecker.get_registered_type(expr.name.value.to_s, expr.name)
   end

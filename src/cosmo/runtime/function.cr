@@ -1,5 +1,5 @@
 abstract class Cosmo::Callable
-  abstract def call(args : Array(ValueType)) : ValueType?
+  abstract def call(args : Array(ValueType)) : ValueType
   abstract def arity : Range(UInt32, UInt32)
   abstract def intrinsic? : Bool
   abstract def to_s : String
@@ -20,7 +20,7 @@ class Cosmo::Function < Cosmo::Callable
     end
   end
 
-  def call(args : Array(ValueType)) : ValueType?
+  def call(args : Array(ValueType)) : ValueType
     scope = Scope.new(@closure)
 
     # assign params
