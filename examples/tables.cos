@@ -1,5 +1,6 @@
-{string -> bool} valids = {
+string -> bool valids = {
   yes -> true,
   no -> false
 }
 puts(valids)
+puts(valid["yes"])

@@ -32,11 +32,8 @@ class Cosmo::Parser
     callee
   end
 
-  private def parse_statement_expression
-    if match?(Syntax::Return)
-      return parse_return_statement
-    end
-
+  private def parse_statement_expression : Node
+    return parse_return_statement if match?(Syntax::Return)
     parse_regular_statement
   end
 
@@ -216,6 +213,18 @@ class Cosmo::Parser
         type_ref = Expression::TypeRef.new(vector_type_token)
       else
         type_ref = Expression::TypeRef.new(variable_type)
+      end
+      if match?(Syntax::HyphenArrow)
+        # type_ref is the key, parse the value type
+        type_info = parse_type(required: required)
+        if type_info[:variable_type].nil?
+          Logger.report_error("Expected table value type, got", current.type.to_s, current)
+        end
+
+        table_type = "{#{variable_type.lexeme} -> #{type_info[:variable_type].not_nil!.lexeme}}"
+        table_type_token = Token.new(table_type, variable_type.type, table_type, variable_type.location)
+        variable_type = table_type_token
+        type_ref = Expression::TypeRef.new(table_type_token)
       end
     end
 
@@ -558,6 +567,12 @@ class Cosmo::Parser
     else
       false
     end
+  end
+
+  # Consume the current token and advance position if token syntax
+  # matches the expected syntax, else log an error
+  private def go_back : Nil
+    @position -= 1
   end
 
   # Consume the current token and advance position if token syntax

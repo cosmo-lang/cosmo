@@ -183,6 +183,7 @@ class Cosmo::Lexer
     return false unless char_exists?(1)
     return false unless peek == expected
     advance
+    @current_lexeme += current_char
     true
   end
 

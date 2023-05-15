@@ -29,6 +29,8 @@ describe Interpreter do
     result.should eq 'e'
     result = interpreter.interpret("[1, 2, 3]", "test")
     result.should eq [1, 2, 3]
+    result = interpreter.interpret("{yes -> true, [123] -> false}", "test")
+    result.should eq ({"yes" => true, 123 => false})
   end
   it "interprets unary operators" do
     result = interpreter.interpret("!false", "test")
