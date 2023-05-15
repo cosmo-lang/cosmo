@@ -11,6 +11,8 @@ describe Interpreter do
     result.should be_false
     result = interpreter.interpret("true", "test")
     result.should be_true
+    result = interpreter.interpret("none", "test")
+    result.should be_nil
     result = interpreter.interpret("123", "test")
     result.should eq 123
     result = interpreter.interpret("0b111", "test")
@@ -25,6 +27,8 @@ describe Interpreter do
     result.should eq "hello"
     result = interpreter.interpret("'e'", "test")
     result.should eq 'e'
+    result = interpreter.interpret("[1, 2, 3]", "test")
+    result.should eq [1, 2, 3]
   end
   it "interprets unary operators" do
     result = interpreter.interpret("!false", "test")
