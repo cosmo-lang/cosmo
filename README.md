@@ -6,8 +6,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ## Things I Gotta Do
 
-- Main fn
-  * argc, argv
 - Tables (hashmap/dictionary)
 - Interfaces
 - Classes
@@ -17,7 +15,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * methods
   * $ (this)
 - Better type system
-  * Vector types (`int[]`, `char[]`, etc.)
   * unions/intersections
 
 ## Installation
