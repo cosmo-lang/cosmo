@@ -64,6 +64,8 @@ describe Interpreter do
     result = interpreter.interpret("char[] word = ['h', 'e', 'l', 'l', 'o']", "test")
     result.should be_a Array(ValueType)
     result.as(Array(ValueType)).join.should eq "hello"
+    result = interpreter.interpret("any->bool valids = {yes -> true, [123] -> false}", "test")
+    result.should eq ({"yes" => true, 123 => false})
   end
   it "interprets variable assignments" do
     interpreter.interpret("int x = 0b11", "test")
