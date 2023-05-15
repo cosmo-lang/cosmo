@@ -1,0 +1,3 @@
+void fn main(int argc, any argv) {
+  puts("hello, world!", argc, argv)
+}

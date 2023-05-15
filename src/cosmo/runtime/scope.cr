@@ -1,38 +1,49 @@
 require "../syntax/lexer/token"
 require "./typechecker"
 
+private alias Variable = NamedTuple(type: String, value: ValueType)
 class Cosmo::Scope
   property parent : Cosmo::Scope?
-  property variables = {} of String => NamedTuple(type: String, value: ValueType)
+  property variables = {} of String => Variable
+
 
   def initialize(@parent = nil)
   end
 
+  private def cast_array(arr : Array(T)) : Array(ValueType) forall T
+    arr.map { |e| cast(e) }
+  end
+
+  private def cast(value : T) : ValueType forall T
+    value.is_a?(Array) ? cast_array(value) : value.as ValueType
+  end
+
+  private def create_variable(typedef : Token | String, identifier : Token, value : V) : ValueType forall V
+    casted_value = cast(value)
+    @variables[identifier.value.to_s] = {
+      type: typedef.is_a?(Token) ? typedef.value.to_s : typedef,
+      value: casted_value
+    }
+    casted_value
+  end
+
   def declare(typedef : Token, identifier : Token, value : ValueType) : ValueType
     TypeChecker.assert(typedef.value.to_s, value, typedef) unless value.nil?
-    @variables[identifier.value.to_s] = {
-      type: typedef.value.to_s,
-      value: value
-    }
-    value
+    create_variable(typedef, identifier, value)
   end
 
   def assign(identifier : Token, value : ValueType) : ValueType
     if @variables.has_key?(identifier.value.to_s)
       var = @variables[identifier.value.to_s]
       TypeChecker.assert(var[:type], value, identifier)
-      @variables[identifier.value.to_s] = {
-        type: var[:type],
-        value: value
-      }
-      return value
+      return create_variable(var[:type], identifier, value)
     end
 
     return @parent.not_nil!.assign(identifier, value) unless @parent.nil?
-    Logger.report_error("Undefined variable", identifier.value.to_s, identifier)
+    Logger.report_error("Attempt to assign to undefined variable", identifier.value.to_s, identifier)
   end
 
-  def lookup(token : Token) : ValueType
+  def lookup?(token : Token) : ValueType
     identifier = token.value
     if @variables.has_key?(identifier)
       var = @variables[identifier]
@@ -45,7 +56,15 @@ class Cosmo::Scope
         return value
       end
     end
-    Logger.report_error("Undefined variable", token.value.to_s, token) if typedef.nil? && value.nil? && @parent.nil?
+    nil
+  end
+
+  def lookup(token : Token) : ValueType
+    value = lookup?(token)
+    if value.nil?
+      Logger.report_error("Undefined variable", token.value.to_s, token) if value.nil? && @parent.nil?
+    end
+    value
   end
 
   def lookup_at(distance : UInt32, token : Token) : ValueType

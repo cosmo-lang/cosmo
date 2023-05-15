@@ -53,6 +53,14 @@ class Cosmo::Interpreter
     statements.each do |stmt|
       result = execute(stmt)
     end
+
+    # Check if "main" fn exists and call it
+    main_fn = @globals.lookup?(Token.new("main", Syntax::Identifier, "main", Location.new("", 0, 0)))
+    if !main_fn.nil? && main_fn.is_a?(Function)
+      main_result = main_fn.call([ARGV.size, ARGV])
+      result = main_result unless main_result.nil?
+    end
+
     result
   end
 
