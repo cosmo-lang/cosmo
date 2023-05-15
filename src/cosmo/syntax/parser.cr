@@ -210,7 +210,15 @@ class Cosmo::Parser
         consume(Syntax::RBracket)
         vector_type = variable_type.lexeme + "[]"
         vector_type_token = Token.new(vector_type, variable_type.type, vector_type, variable_type.location)
-        type_ref = Expression::TypeRef.new(vector_type_token)
+        variable_type = vector_type_token
+        type_ref = Expression::TypeRef.new(variable_type)
+        while match?(Syntax::LBracket)
+          consume(Syntax::RBracket)
+          vector_type = variable_type.lexeme + "[]"
+          vector_type_token = Token.new(vector_type, variable_type.type, vector_type, variable_type.location)
+          variable_type = vector_type_token
+          type_ref = Expression::TypeRef.new(variable_type)
+        end
       else
         type_ref = Expression::TypeRef.new(variable_type)
       end
@@ -224,7 +232,7 @@ class Cosmo::Parser
         table_type = "#{variable_type.lexeme}->#{type_info[:variable_type].not_nil!.lexeme}"
         table_type_token = Token.new(table_type, variable_type.type, table_type, variable_type.location)
         variable_type = table_type_token
-        type_ref = Expression::TypeRef.new(table_type_token)
+        type_ref = Expression::TypeRef.new(variable_type)
       end
     end
 
