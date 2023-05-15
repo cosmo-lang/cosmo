@@ -172,6 +172,13 @@ class Cosmo::Parser
     params
   end
 
+  # Parse indexing
+  private def parse_index(ref : Expression::Var) : Node
+    key = parse_expression
+    consume(Syntax::RBracket)
+    Expression::Index.new(ref, key)
+  end
+
   # Parse a function call and return a node
   private def parse_function_call(callee : Expression::Var) : Node
     arguments = [] of Node
@@ -496,11 +503,13 @@ class Cosmo::Parser
       node
     elsif match?(Syntax::Identifier)
       ident = last_token
+      ref = Expression::Var.new(ident)
       if match?(Syntax::LParen) # it's a function call
-        callee = Expression::Var.new(ident)
-        parse_function_call(callee)
+        parse_function_call(ref)
+      elsif match?(Syntax::LBracket) # it's an index
+        parse_index(ref)
       else # it's a regular var ref
-        Expression::Var.new(ident)
+        ref
       end
     else
       parse_literal

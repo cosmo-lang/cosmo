@@ -90,6 +90,13 @@ describe Interpreter do
     result = interpreter.interpret("msg + \" world\"", "test")
     result.should eq "hello world"
   end
+  it "interprets vector indexing" do
+    interpreter.interpret("any x = [1, 2]", "test")
+    result = interpreter.interpret("x[0]", "test")
+    result.should eq 1
+    result = interpreter.interpret("x[1]", "test")
+    result.should eq 2
+  end
   it "interprets type aliases" do
     interpreter.interpret("type MyInt = int", "test")
     interpreter.interpret("MyInt x = 123", "test")

@@ -121,6 +121,19 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_index_expr(expr : Expression::Index) : ValueType
+    ref = evaluate(expr.ref)
+    unless ref.is_a?(Array)
+      Logger.report_error("Attempt to index", TypeChecker.get_mapped(ref.class), expr.ref.token)
+    end
+    key = evaluate(expr.key)
+    if key.is_a?(Int)
+      ref[key]
+    else
+      Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.ref.token)
+    end
+  end
+
   def visit_vector_literal_expr(expr : Expression::VectorLiteral) : Array(ValueType)
     expr.values.map { |v| evaluate(v) }
   end

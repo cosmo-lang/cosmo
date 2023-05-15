@@ -17,6 +17,26 @@ module Cosmo::AST::Expression
     abstract def accept(visitor : Visitor(R)) forall R
   end
 
+  class Index < Base
+    getter ref : Var
+    getter key : Expression::Base
+
+    def initialize(@ref, @key)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_index_expr(self)
+    end
+
+    def token : Token
+      @ref.token
+    end
+
+    def to_s
+      "Index<ref: #{@ref.to_s}, key: #{@key.to_s}>"
+    end
+  end
+
   class TypeRef < Base
     getter name : Token
 
@@ -73,7 +93,7 @@ module Cosmo::AST::Expression
     end
 
     def to_s
-      "FunctionCall<var: #{@var.to_s}, argu: [#{@arguments.map(&.to_s).join(", ")}]>"
+      "FunctionCall<var: #{@var.to_s}, arguments: [#{@arguments.map(&.to_s).join(", ")}]>"
     end
   end
 

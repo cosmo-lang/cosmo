@@ -347,6 +347,18 @@ describe Parser do
     function_call.var.token.value.should eq "say_hi"
     function_call.arguments.empty?.should be_true
   end
+  it "parses indexing" do
+    stmts = Parser.new("any x = [1, 2]; x[0]", "test").parse
+    stmts.should_not be_empty
+    expr = stmts.last.as(AST::Statement::SingleExpression).expression
+    index = expr.as AST::Expression::Index
+    index.ref.token.type.should eq Syntax::Identifier
+    index.ref.token.value.should eq "x"
+
+    index.key.should be_a AST::Expression::IntLiteral
+    key = index.key.as AST::Expression::IntLiteral
+    key.value.should eq 0
+  end
   it "parses if/unless statements" do
     lines = [
       "int x = 5",
