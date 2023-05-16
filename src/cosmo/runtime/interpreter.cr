@@ -41,6 +41,13 @@ class Cosmo::Interpreter
     declare_intrinsic("string", "__version", version)
   end
 
+  def reset
+    @locals = {} of Expression::Base => UInt32
+    @meta = {} of String => String
+    @scope = Scope.new
+    TypeChecker.reset
+  end
+
   def interpret(source : String, @file_path : String) : ValueType
     parser = Parser.new(source, @file_path)
     statements = parser.parse
@@ -135,17 +142,27 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_access_expr(expr : Expression::Access) : ValueType
+    object = evaluate(expr.object)
+    key = expr.key.value.to_s
+    if object.is_a?(Hash)
+      object[key]
+    else
+      Logger.report_error("Attempt to index", TypeChecker.get_mapped(object.class), expr.token)
+    end
+  end
+
   def visit_index_expr(expr : Expression::Index) : ValueType
     ref = evaluate(expr.ref)
     key = evaluate(expr.key)
     if ref.is_a?(String)
       unless key.is_a?(Int)
-        Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.ref.token)
+        Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.token)
       end
       ref[key]
     elsif ref.is_a?(Array)
       unless key.is_a?(Int)
-        Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.ref.token)
+        Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.token)
       end
       ref[key]
     elsif ref.is_a?(Hash)

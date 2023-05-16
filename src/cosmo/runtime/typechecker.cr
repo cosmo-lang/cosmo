@@ -31,7 +31,8 @@ module Cosmo::TypeChecker
     Array(Char) => "char[]",
     Array(Bool) => "bool[]",
     Array(Function) => "fn[]",
-    Array => "any[]"
+    Array => "any[]",
+    Hash => "table"
   }
 
   REGISTERED = [] of Type

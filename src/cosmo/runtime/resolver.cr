@@ -138,6 +138,11 @@ class Cosmo::Resolver
     expr.arguments.each { |arg| resolve(arg) }
   end
 
+  def visit_access_expr(expr : Expression::Access) : Nil
+    resolve(expr.object)
+    resolve_local(expr, expr.token)
+  end
+
   def visit_index_expr(expr : Expression::Index) : Nil
     resolve(expr.key)
     resolve_local(expr, expr.token)

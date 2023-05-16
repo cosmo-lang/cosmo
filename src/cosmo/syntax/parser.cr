@@ -169,6 +169,13 @@ class Cosmo::Parser
     params
   end
 
+  # Parse property accessing
+  private def parse_access(object : Expression::Var) : Node
+    consume(Syntax::Identifier)
+    key = last_token
+    Expression::Access.new(object, key)
+  end
+
   # Parse indexing
   private def parse_index(ref : Expression::Var) : Node
     key = parse_expression
@@ -533,6 +540,8 @@ class Cosmo::Parser
         parse_function_call(ref)
       elsif match?(Syntax::LBracket) # it's an index
         parse_index(ref)
+      elsif match?(Syntax::Dot) || match?(Syntax::ColonColon) # it's a property access
+        parse_access(ref)
       else # it's a regular var ref
         ref
       end

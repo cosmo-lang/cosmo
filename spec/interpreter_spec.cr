@@ -67,6 +67,10 @@ describe Interpreter do
     result = interpreter.interpret("any->bool valids = {yes -> true, [123] -> false}", "test")
     result.should eq ({"yes" => true, 123 => false})
   end
+  it "interprets type aliases" do
+    result = interpreter.interpret("type MyInt = int; MyInt my_int = 123", "test")
+    result.should eq 123
+  end
   it "interprets variable assignments" do
     interpreter.interpret("int x = 0b11", "test")
     result = interpreter.interpret("x = 5", "test")
@@ -103,17 +107,20 @@ describe Interpreter do
     result.should eq "hello world"
   end
   it "interprets vector indexing" do
-    interpreter.interpret("any x = [1, 2]", "test")
+    interpreter.interpret("int[] x = [1, 2]", "test")
     result = interpreter.interpret("x[0]", "test")
     result.should eq 1
     result = interpreter.interpret("x[1]", "test")
     result.should eq 2
   end
-  it "interprets type aliases" do
-    interpreter.interpret("type MyInt = int", "test")
-    interpreter.interpret("MyInt x = 123", "test")
-    result = interpreter.interpret("x", "test")
-    result.should eq 123
+  it "interprets table indexing" do
+    interpreter.interpret("string->bool bad_people = {[\"billy bob\"] -> false, mj -> true}", "test")
+    result = interpreter.interpret("bad_people[\"billy bob\"]", "test")
+    result.should eq false
+    result = interpreter.interpret("bad_people.mj", "test")
+    result.should eq true
+    result = interpreter.interpret("bad_people::mj", "test")
+    result.should eq true
   end
   it "interprets if/unless statements" do
     lines = [
@@ -174,6 +181,9 @@ describe Interpreter do
     end
     expect_raises(Exception, "[1:3] Invalid '+' operand type: Char") do
       interpreter.interpret("x + 'h'", "test")
+    end
+    expect_raises(Exception, "[1:6] Type mismatch: Expected 'float', got 'int'") do
+      interpreter.interpret("float[] aba = [x, 2.0]", "test")
     end
   end
 end

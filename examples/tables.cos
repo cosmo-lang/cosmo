@@ -5,4 +5,4 @@ string->bool valids = {
 
 puts(valids)
 puts(valids["yes"])
-## puts(valids.no)
+puts(valids.no)
