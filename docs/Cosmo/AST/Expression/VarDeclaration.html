@@ -538,7 +538,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/syntax/parser/ast/expression_nodes.cr#L202" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L202" target="_blank">
         cosmo/syntax/parser/ast/expression_nodes.cr
       </a>
     
@@ -560,7 +560,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28typedef%3ACosmo%3A%3AToken%2Cvar%3ACosmo%3A%3AAST%3A%3AExpression%3A%3AVar%2Cvalue%3ACosmo%3A%3AAST%3A%3ANode%29-class-method" class="signature"><strong>.new</strong>(typedef : Cosmo::Token, var : Cosmo::AST::Expression::Var, value : Cosmo::AST::Node)</a>
+        <a href="#new%28typedef%3ACosmo%3A%3AToken%2Cvar%3ACosmo%3A%3AAST%3A%3AExpression%3A%3AVar%2Cvalue%3ACosmo%3A%3AAST%3A%3ANode%2Cconstant%3ABool%29-class-method" class="signature"><strong>.new</strong>(typedef : Cosmo::Token, var : Cosmo::AST::Expression::Var, value : Cosmo::AST::Node, constant : Bool)</a>
         
       </li>
     
@@ -582,6 +582,11 @@
     
       <li class="entry-summary">
         <a href="#accept%28visitor%3AVisitor%28R%29%29%3ARforallR-instance-method" class="signature"><strong>#accept</strong>(visitor : Visitor(R)) : R forall R</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#constant%3F%3ABool-instance-method" class="signature"><strong>#constant?</strong> : Bool</a>
         
       </li>
     
@@ -730,18 +735,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(typedef:Cosmo::Token,var:Cosmo::AST::Expression::Var,value:Cosmo::AST::Node)-class-method">
+    <div class="entry-detail" id="new(typedef:Cosmo::Token,var:Cosmo::AST::Expression::Var,value:Cosmo::AST::Node,constant:Bool)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(typedef : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, var : <a href="../../../Cosmo/AST/Expression/Var.html">Cosmo::AST::Expression::Var</a>, value : <a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a>)
+        def self.<strong>new</strong>(typedef : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, var : <a href="../../../Cosmo/AST/Expression/Var.html">Cosmo::AST::Expression::Var</a>, value : <a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a>, constant : Bool)
 
-        <a class="method-permalink" href="#new%28typedef%3ACosmo%3A%3AToken%2Cvar%3ACosmo%3A%3AAST%3A%3AExpression%3A%3AVar%2Cvalue%3ACosmo%3A%3AAST%3A%3ANode%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28typedef%3ACosmo%3A%3AToken%2Cvar%3ACosmo%3A%3AAST%3A%3AExpression%3A%3AVar%2Cvalue%3ACosmo%3A%3AAST%3A%3ANode%2Cconstant%3ABool%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/syntax/parser/ast/expression_nodes.cr#L207" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L208" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -771,7 +776,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/syntax/parser/ast/expression_nodes.cr#L210" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L211" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="constant?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>constant?</strong> : Bool
+
+        <a class="method-permalink" href="#constant%3F%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L206" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -800,7 +821,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/syntax/parser/ast/expression_nodes.cr#L218" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L219" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -816,7 +837,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/syntax/parser/ast/expression_nodes.cr#L214" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L215" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -832,7 +853,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/syntax/parser/ast/expression_nodes.cr#L203" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L203" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -848,7 +869,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/syntax/parser/ast/expression_nodes.cr#L205" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L205" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -864,7 +885,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/syntax/parser/ast/expression_nodes.cr#L204" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L204" target="_blank">View source</a>]
         
       </div>
     </div>

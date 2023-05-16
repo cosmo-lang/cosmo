@@ -538,7 +538,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/runtime/scope.cr#L5" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/runtime/scope.cr#L5" target="_blank">
         cosmo/runtime/scope.cr
       </a>
     
@@ -591,6 +591,11 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#declare_const%28typedef%3AToken%2Cidentifier%3AToken%2Cvalue%3AValueType%29%3AValueType-instance-method" class="signature"><strong>#declare_const</strong>(typedef : Token, identifier : Token, value : ValueType) : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#lookup%28token%3AToken%29%3AValueType-instance-method" class="signature"><strong>#lookup</strong>(token : Token) : ValueType</a>
         
       </li>
@@ -623,12 +628,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#variables%3AHash%28String%2C%7Btype%3AString%2Cvalue%3AValueType%7D%29-instance-method" class="signature"><strong>#variables</strong> : Hash(String, {type: String, value: ValueType})</a>
+        <a href="#variables%3AHash%28String%2C%7Btype%3AString%2Cvalue%3AValueType%2Cconstant%3ABool%7D%29-instance-method" class="signature"><strong>#variables</strong> : Hash(String, {type: String, value: ValueType, constant: Bool})</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#variables%3D%28variables%3AHash%28String%2CNamedTuple%28type%3AString%2Cvalue%3AValueType%29%29%29-instance-method" class="signature"><strong>#variables=</strong>(variables : Hash(String, NamedTuple(type: String, value: ValueType)))</a>
+        <a href="#variables%3D%28variables%3AHash%28String%2CNamedTuple%28type%3AString%2Cvalue%3AValueType%2Cconstant%3ABool%29%29%29-instance-method" class="signature"><strong>#variables=</strong>(variables : Hash(String, NamedTuple(type: String, value: ValueType, constant: Bool)))</a>
         
       </li>
     
@@ -683,7 +688,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/runtime/scope.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/runtime/scope.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -713,7 +718,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/runtime/scope.cr#L35" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/runtime/scope.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -729,7 +734,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/runtime/scope.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/runtime/scope.cr#L36" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="declare_const(typedef:Token,identifier:Token,value:ValueType):ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>declare_const</strong>(typedef : <a href="../Cosmo/Token.html">Token</a>, identifier : <a href="../Cosmo/Token.html">Token</a>, value : <a href="../ValueType.html">ValueType</a>) : <a href="../ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#declare_const%28typedef%3AToken%2Cidentifier%3AToken%2Cvalue%3AValueType%29%3AValueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/runtime/scope.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -745,7 +766,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/runtime/scope.cr#L62" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/runtime/scope.cr#L71" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -761,7 +782,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/runtime/scope.cr#L46" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/runtime/scope.cr#L55" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -777,7 +798,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/runtime/scope.cr#L70" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/runtime/scope.cr#L79" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -793,7 +814,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/runtime/scope.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/runtime/scope.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -809,7 +830,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/runtime/scope.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/runtime/scope.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -838,39 +859,39 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/runtime/scope.cr#L83" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/runtime/scope.cr#L92" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="variables:Hash(String,{type:String,value:ValueType})-instance-method">
+    <div class="entry-detail" id="variables:Hash(String,{type:String,value:ValueType,constant:Bool})-instance-method">
       <div class="signature">
         
-        def <strong>variables</strong> : Hash(String, {type: String, value: <a href="../ValueType.html">ValueType</a>})
+        def <strong>variables</strong> : Hash(String, {type: String, value: <a href="../ValueType.html">ValueType</a>, constant: Bool})
 
-        <a class="method-permalink" href="#variables%3AHash%28String%2C%7Btype%3AString%2Cvalue%3AValueType%7D%29-instance-method">#</a>
+        <a class="method-permalink" href="#variables%3AHash%28String%2C%7Btype%3AString%2Cvalue%3AValueType%2Cconstant%3ABool%7D%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/runtime/scope.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/runtime/scope.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="variables=(variables:Hash(String,NamedTuple(type:String,value:ValueType)))-instance-method">
+    <div class="entry-detail" id="variables=(variables:Hash(String,NamedTuple(type:String,value:ValueType,constant:Bool)))-instance-method">
       <div class="signature">
         
-        def <strong>variables=</strong>(variables : Hash(String, NamedTuple(type: String, value: <a href="../ValueType.html">ValueType</a>)))
+        def <strong>variables=</strong>(variables : Hash(String, NamedTuple(type: String, value: <a href="../ValueType.html">ValueType</a>, constant: Bool)))
 
-        <a class="method-permalink" href="#variables%3D%28variables%3AHash%28String%2CNamedTuple%28type%3AString%2Cvalue%3AValueType%29%29%29-instance-method">#</a>
+        <a class="method-permalink" href="#variables%3D%28variables%3AHash%28String%2CNamedTuple%28type%3AString%2Cvalue%3AValueType%2Cconstant%3ABool%29%29%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/5af98f4b07ceb1f210e1f83a9bd716cb0b51b978/src/cosmo/runtime/scope.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/b2e1953b9d271f438e342916d3e1d20dcdec23b5/src/cosmo/runtime/scope.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
