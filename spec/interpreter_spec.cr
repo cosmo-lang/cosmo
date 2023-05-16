@@ -15,7 +15,6 @@ def shutup(&block : ->) # sick hack
     STDOUT.close_on_exec = close_on_exec
   ensure
     o.close if o
-    i.flush if i
     i.close if i
   end
 end
@@ -268,5 +267,6 @@ describe Interpreter do
         end
       end
     end
+    puts ""
   end
 end
