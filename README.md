@@ -7,6 +7,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 ## Things I Gotta Do
 
 - Constant variables (functions should be constant by default)
+- Ternary operator
 - Somehow typecheck blocks before execution
 - Fix weird expression parsing ([0].123 evaluates to 0.123??)
 - Fix funky function return type parsing
@@ -19,6 +20,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * methods
   * $ (this)
 - Better type system
+  * typeof keyword
   * unions/intersections
 
 ## Gotchas
