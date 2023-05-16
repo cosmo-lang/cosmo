@@ -6,10 +6,11 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ## Things I Gotta Do
 
+- Index/access assignment(`a[0] =" abc"` `or a->b = "c"`)
 - Constant variables (functions should be constant by default)
 - Ternary operator
 - Somehow typecheck blocks before execution
-- Fix weird expression parsing ([0].123 evaluates to 0.123??)
+- Fix weird expression parsing (`[0].123` evaluates to 0.123??)
 - Fix funky function return type parsing
 - Literal wrapper classes (vector, table)
 - Interfaces
