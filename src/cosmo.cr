@@ -12,7 +12,7 @@ module Cosmo
 
   begin
     OptionParser.new do |opts|
-      opts.banner = "Usage: cosmo [OPTIONS] [FILE]"
+      opts.banner = "Thank you for using Cosmo!\nUsage: cosmo [OPTIONS] [FILE]"
       opts.on("-h", "--help", "Outputs help menu for Cosmo CLI") do
         puts opts
         exit
