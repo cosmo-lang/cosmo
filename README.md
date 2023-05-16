@@ -36,6 +36,11 @@ MyTable->string weird_table = {
 }
 puts(weird_table[{"some" -> "thing"}]) ## hello world
 ```
+Another issue is with arrays.
+```go
+string->string[]
+```
+Is this type an array of string->string tables? Or is it a table of strings to arrays of strings?
 
 ## Installation
 
