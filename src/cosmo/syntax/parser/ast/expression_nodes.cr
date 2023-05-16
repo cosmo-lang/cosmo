@@ -52,8 +52,11 @@ module Cosmo::AST::Expression
       @object.token
     end
 
-    def to_s
-      "Access<object: #{@object.to_s}, key: #{@key.to_s}>"
+    def to_s(indent : Int = 0)
+      "Access<\n" +
+      "  #{TAB * indent}object: #{@object.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}key: #{@key.to_s}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -72,8 +75,11 @@ module Cosmo::AST::Expression
       @ref.token
     end
 
-    def to_s
-      "Index<ref: #{@ref.to_s}, key: #{@key.to_s}>"
+    def to_s(indent : Int = 0)
+      "Index<\n" +
+      "  #{TAB * indent}ref: #{@ref.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}key: #{@key.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -91,8 +97,8 @@ module Cosmo::AST::Expression
       @name
     end
 
-    def to_s
-      "TypeRef<\"#{@name}\">"
+    def to_s(indent : Int = 0)
+      "TypeRef<\"#{@name.value.to_s}\">"
     end
   end
 
@@ -112,8 +118,10 @@ module Cosmo::AST::Expression
       @var.token
     end
 
-    def to_s
-      "TypeAlias<#{@var.token.value.to_s}: #{@value.to_s}>"
+    def to_s(indent : Int = 0)
+      "TypeAlias<\n" +
+      "  #{TAB * indent}#{@var.token.value.to_s}: #{@value.nil? ? "none" : @value.not_nil!.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -132,8 +140,13 @@ module Cosmo::AST::Expression
       @var.token
     end
 
-    def to_s
-      "FunctionCall<var: #{@var.to_s}, arguments: [#{@arguments.map(&.to_s).join(", ")}]>"
+    def to_s(indent : Int = 0)
+      "FunctionCall<\n" +
+      "  #{TAB * indent}var: #{@var.to_s},\n" +
+      "  #{TAB * indent}arguments: [\n" +
+      "    #{TAB * indent}#{@arguments.map(&.to_s(indent + 2)).join(", ")}\n" +
+      "  #{TAB * indent}]\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -152,8 +165,12 @@ module Cosmo::AST::Expression
       @identifier
     end
 
-    def to_s
-      "Parameter<typedef: #{@typedef.value}, identifier: #{@identifier.value.to_s}, value: #{@default_value.nil? ? "none" : @default_value.to_s}>"
+    def to_s(indent : Int = 0)
+      "Parameter<\n" +
+      "  #{TAB * indent}typedef: #{@typedef.value},\n" +
+      "  #{TAB * indent}identifier: #{@identifier.value.to_s},\n" +
+      "  #{TAB * indent}value: #{@default_value.nil? ? "none" : @default_value.not_nil!.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -173,8 +190,12 @@ module Cosmo::AST::Expression
       @name
     end
 
-    def to_s
-      "CompoundAssignment<name: #{@name.value}, operator: #{@operator.to_s}, value: #{@value.to_s}>"
+    def to_s(indent : Int = 0)
+      "CompoundAssignment<\n"
+      "  #{TAB * indent}name: #{@name.value},\n"
+      "  #{TAB * indent}operator: #{@operator.to_s},\n"
+      "  #{TAB * indent}value: #{@value.to_s(indent + 1)}\n"
+      "#{TAB * indent}>"
     end
   end
 
@@ -194,8 +215,12 @@ module Cosmo::AST::Expression
       @var.token
     end
 
-    def to_s
-      "VarDeclaration<typedef: #{@typedef.value}, var: #{@var.token.value.to_s}, value: #{@value.to_s}>"
+    def to_s(indent : Int = 0)
+      "VarDeclaration<\n" +
+      "  #{TAB * indent}typedef: #{@typedef.value},\n" +
+      "  #{TAB * indent}var: #{@var.token.value.to_s},\n" +
+      "  #{TAB * indent}value: #{@value.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -214,8 +239,11 @@ module Cosmo::AST::Expression
       @var.token
     end
 
-    def to_s
-      "VarAssignment<var: #{@var.token.value.to_s}, value: #{@value.to_s}>"
+    def to_s(indent : Int = 0)
+      "VarAssignment<\n" +
+      "  #{TAB * indent}var: #{@var.token.value.to_s},\n" +
+      "  #{TAB * indent}value: #{@value.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -229,8 +257,8 @@ module Cosmo::AST::Expression
       visitor.visit_var_expr(self)
     end
 
-    def to_s
-      "Var<token: #{@token.to_s}>"
+    def to_s(indent : Int = 0)
+      "Var<\"#{@token.value.to_s}\">"
     end
   end
 
@@ -250,8 +278,12 @@ module Cosmo::AST::Expression
       @left.token
     end
 
-    def to_s
-      "Binary<left: #{@left.to_s}, operator: #{@operator.to_s}, right: #{@right.to_s}>"
+    def to_s(indent : Int = 0)
+      "Binary<\n" +
+      "  #{TAB * indent}left: #{@left.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}operator: #{@operator.to_s},\n" +
+      "  #{TAB * indent}right: #{@right.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -270,8 +302,11 @@ module Cosmo::AST::Expression
       @operator
     end
 
-    def to_s
-      "Unary<operator: #{@operator.to_s}, operand: #{@operand.to_s}>"
+    def to_s(indent : Int = 0)
+      "Unary<\n" +
+      "  #{TAB * indent}operator: #{@operator.to_s},\n" +
+      "  #{TAB * indent}operand: #{@operand.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -296,8 +331,16 @@ module Cosmo::AST::Expression
       visitor.visit_table_literal_expr(self)
     end
 
-    def to_s
-      "Literal<#{@hashmap.to_s}>"
+    def to_s(indent : Int = 0)
+      s = "Literal<{\n"
+      @hashmap.keys.each do |k|
+        s += TAB * (indent + 1)
+        s += k.to_s(indent + 1)
+        s += " -> "
+        s += @hashmap[k].to_s(indent + 1)
+        s += "\n"
+      end
+      s + "#{TAB * indent}}>"
     end
   end
 
@@ -311,49 +354,51 @@ module Cosmo::AST::Expression
       visitor.visit_vector_literal_expr(self)
     end
 
-    def to_s
-      "Literal<[#{@values.map(&.to_s).join(", ")}]>"
+    def to_s(indent : Int = 0)
+      "Literal<[\n" +
+      "  #{TAB * indent}#{@values.map(&.to_s(indent + 2)).join(",\n#{TAB * (indent + 2)}")}\n" +
+      "#{TAB * indent}]>"
     end
   end
 
   class StringLiteral < Literal
     def initialize(@value : String, @token); end
-    def to_s
+    def to_s(indent : Int = 0)
       "Literal<\"#{@value}\">"
     end
   end
 
   class CharLiteral < Literal
     def initialize(@value : Char, @token); end
-    def to_s
+    def to_s(indent : Int = 0)
       "Literal<'#{@value}'>"
     end
   end
 
   class IntLiteral < Literal
     def initialize(@value : Int64 | Int32 | Int16 | Int8, @token); end
-    def to_s
+    def to_s(indent : Int = 0)
       "Literal<#{@value}>"
     end
   end
 
   class FloatLiteral < Literal
     def initialize(@value : Float64 | Float32 | Float16 | Float8, @token); end
-    def to_s
+    def to_s(indent : Int = 0)
       "Literal<#{@value}>"
     end
   end
 
   class BooleanLiteral < Literal
     def initialize(@value : Bool, @token); end
-    def to_s
+    def to_s(indent : Int = 0)
       "Literal<#{@value}>"
     end
   end
 
   class NoneLiteral < Literal
     def initialize(@value : Nil, @token); end
-    def to_s
+    def to_s(indent : Int = 0)
       "Literal<none>"
     end
   end

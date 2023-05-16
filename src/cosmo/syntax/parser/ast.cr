@@ -1,3 +1,4 @@
+TAB = "  "
 module Cosmo::AST
   enum Visibility
     Public

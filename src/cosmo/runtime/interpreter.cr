@@ -51,7 +51,13 @@ class Cosmo::Interpreter
   def interpret(source : String, @file_path : String) : ValueType
     parser = Parser.new(source, @file_path)
     statements = parser.parse
-    puts statements.map(&.to_s) if @output_ast
+
+    statement_list_str = ""
+    statements.each do |stmt|
+      statement_list_str += stmt.to_s + "\n"
+    end
+
+    puts statement_list_str if @output_ast
 
     resolver = Resolver.new(self)
     resolver.resolve(statements)

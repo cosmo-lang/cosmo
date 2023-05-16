@@ -28,6 +28,6 @@ struct Cosmo::Token
   end
 
   def to_s
-    "Token<type: #{@type}, value: #{value_str}, location: [#{@location.to_s}]"
+    "Token<type: #{@type}, value: #{value_str}, location: [#{@location.to_s}]>"
   end
 end

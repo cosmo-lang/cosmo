@@ -26,8 +26,11 @@ module Cosmo::AST::Statement
       @keyword
     end
 
-    def to_s
-      "While<condition: #{@condition.to_s}, do: #{@block.to_s}>"
+    def to_s(indent : Int = 0)
+      "While<\n" +
+      "  #{TAB * indent}condition: #{@condition.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}do: #{@block.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -47,8 +50,11 @@ module Cosmo::AST::Statement
       @keyword
     end
 
-    def to_s
-      "Until<condition: #{@condition.to_s}, do: #{@block.to_s}>"
+    def to_s(indent : Int = 0)
+      "Until<\n" +
+      "  #{TAB * indent}condition: #{@condition.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}do: #{@block.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -69,8 +75,12 @@ module Cosmo::AST::Statement
       @keyword
     end
 
-    def to_s
-      "If<condition: #{@condition.to_s}, then: #{@then.to_s}, else: #{@else.to_s}>"
+    def to_s(indent : Int = 0)
+      "If<\n" +
+      "  #{TAB * indent}condition: #{@condition.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}then: #{@then.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}else: #{@else.nil? ? "none" : @else.not_nil!.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -91,8 +101,12 @@ module Cosmo::AST::Statement
       @keyword
     end
 
-    def to_s
-      "Unless<condition: #{@condition.to_s}, then: #{@then.to_s}, else: #{@else.to_s}>"
+    def to_s(indent : Int = 0)
+      "Unless<\n" +
+      "  #{TAB * indent}condition: #{@condition.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}then: #{@then.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}else: #{@else.nil? ? "none" : @else.not_nil!.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -111,8 +125,10 @@ module Cosmo::AST::Statement
       @keyword
     end
 
-    def to_s
-      "Return<value: #{@value.to_s}>"
+    def to_s(indent : Int = 0)
+      "Return<\n" +
+      "  #{TAB * indent}value: #{@value.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -133,8 +149,15 @@ module Cosmo::AST::Statement
       @identifier
     end
 
-    def to_s
-      "FunctionDef<identifier: #{@identifier.value.to_s}, parameters: [#{@parameters.map(&.to_s).join(", ")}], return_typedef: #{@return_typedef.value}, body: #{@body.to_s}>"
+    def to_s(indent : Int = 0)
+      "FunctionDef<\n" +
+      "  #{TAB * indent}identifier: #{@identifier.value.to_s},\n" +
+      "  #{TAB * indent}parameters: [\n" +
+      "    #{TAB * indent}#{@parameters.map(&.to_s(indent + 2)).join(",\n#{TAB * (indent + 2)}")}\n" +
+      "  #{TAB * indent}],\n" +
+      "  #{TAB * indent}return_typedef: #{@return_typedef.value},\n" +
+      "  #{TAB * indent}body: #{@body.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -152,8 +175,10 @@ module Cosmo::AST::Statement
       @expression.token
     end
 
-    def to_s
-      "SingleExpression<expression: #{@expression.to_s}>"
+    def to_s(indent : Int = 0)
+      "SingleExpression<\n" +
+      "  #{TAB * indent}expression: #{@expression.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 
@@ -209,8 +234,10 @@ module Cosmo::AST::Statement
       @nodes.empty? ? Token.new("none", Syntax::None, nil, Location.new("", 0, 0)) : @nodes.first.token
     end
 
-    def to_s
-      "Block<nodes: [#{@nodes.map(&.to_s).join(", ")}]>"
+    def to_s(indent : Int = 0)
+      "Block<nodes: [\n" +
+      "  #{TAB * indent}#{@nodes.map(&.to_s(indent + 1)).join(",\n#{TAB * (indent + 1)}")}\n" +
+      "#{TAB * indent}]>"
     end
   end
 end
