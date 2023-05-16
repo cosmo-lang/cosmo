@@ -3,7 +3,9 @@ any fn doubled(int[] nums) {
   int fn generator() {
     int value = nums[idx]
     idx += 1
-    nums[idx] * 2
+    unless value == none {
+      value * 2
+    }
   }
   generator
 }

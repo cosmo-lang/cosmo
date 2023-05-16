@@ -152,7 +152,7 @@ class Cosmo::Parser
 
   private def parse_fn_def_statement
     type_info = parse_type(required: true)
-    return_typedef = type_info[:variable_type].not_nil!
+    return_typedef = type_info[:type_ref].not_nil!.name
     consume(Syntax::Function)
     consume(Syntax::Identifier)
     function_ident = last_token
@@ -167,8 +167,9 @@ class Cosmo::Parser
   private def parse_fn_params : Array(Expression::Parameter)
     params = [] of Expression::Parameter
 
-    if match?(Syntax::TypeDef)
-      param_type = last_token
+    type_info = parse_type(required: false)
+    if type_info[:found_typedef]
+      param_type = type_info[:type_ref].not_nil!.name
       consume(Syntax::Identifier)
       param_ident = last_token
 
