@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::Operator::PlusAssign - Cosmo master-dev</title>
+  <title>Cosmo::HookedExceptions::Next - Cosmo master-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -291,7 +291,7 @@
       
     </li>
   
-  <li class="parent " data-id="Cosmo/Cosmo/HookedExceptions" data-name="cosmo::hookedexceptions">
+  <li class="parent open current" data-id="Cosmo/Cosmo/HookedExceptions" data-name="cosmo::hookedexceptions">
       <a href="../../Cosmo/HookedExceptions.html">HookedExceptions</a>
       
         <ul>
@@ -301,7 +301,7 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/HookedExceptions/Next" data-name="cosmo::hookedexceptions::next">
+  <li class=" current" data-id="Cosmo/Cosmo/HookedExceptions/Next" data-name="cosmo::hookedexceptions::next">
       <a href="../../Cosmo/HookedExceptions/Next.html">Next</a>
       
     </li>
@@ -346,7 +346,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="Cosmo/Cosmo/Operator" data-name="cosmo::operator">
+  <li class="parent " data-id="Cosmo/Cosmo/Operator" data-name="cosmo::operator">
       <a href="../../Cosmo/Operator.html">Operator</a>
       
         <ul>
@@ -416,7 +416,7 @@
       
     </li>
   
-  <li class=" current" data-id="Cosmo/Cosmo/Operator/PlusAssign" data-name="cosmo::operator::plusassign">
+  <li class=" " data-id="Cosmo/Cosmo/Operator/PlusAssign" data-name="cosmo::operator::plusassign">
       <a href="../../Cosmo/Operator/PlusAssign.html">PlusAssign</a>
       
     </li>
@@ -505,12 +505,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Cosmo::Operator::PlusAssign
+  <span class="kind">class</span> Cosmo::HookedExceptions::Next
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Cosmo/Operator/PlusAssign.html">Cosmo::Operator::PlusAssign</a></li><li class="superclass">Cosmo::Operator::Base</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Cosmo/HookedExceptions/Next.html">Cosmo::HookedExceptions::Next</a></li><li class="superclass">Cosmo::HookedExceptions::HookedException</li><li class="superclass">Exception</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -538,7 +538,7 @@
   </h2>
   
     
-      cosmo/runtime/operator.cr
+      cosmo/runtime/hooked_exceptions.cr
     
     <br/>
   
@@ -547,22 +547,18 @@
 
 
 
-
-
-
-
   <h2>
-    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+    <a id="constructors" class="anchor" href="#constructors">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Instance Method Summary
+    Constructors
   </h2>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#apply%28expr%3AExpression%3A%3ACompoundAssignment%29%3AValueType-instance-method" class="signature"><strong>#apply</strong>(expr : Expression::CompoundAssignment) : ValueType</a>
+        <a href="#new%28token%3AToken%29-class-method" class="signature"><strong>.new</strong>(token : Token)</a>
         
       </li>
     
@@ -572,27 +568,22 @@
 
 
 
+
+
+
+
 <div class="methods-inherited">
   
     
 
-  <h3>Instance methods inherited from class <code>Cosmo::Operator::Base</code></h3>
-  
-  
-    <a href="../../Cosmo/Operator/Base.html#apply%28expr%3AE%29%3AValueTypeforallE-instance-method" class="tooltip">
-      <span>apply(expr : E) : ValueType forall E</span>
-    apply</a>
-    
-  
-
 
     
 
-  <h3>Constructor methods inherited from class <code>Cosmo::Operator::Base</code></h3>
+  <h3>Constructor methods inherited from class <code>Cosmo::HookedExceptions::HookedException</code></h3>
   
   
-    <a href="../../Cosmo/Operator/Base.html#new%28interpreter%3AInterpreter%29-class-method" class="tooltip">
-      <span>new(interpreter : Interpreter)</span>
+    <a href="../../Cosmo/HookedExceptions/HookedException.html#new%28token%3AToken%2Cmessage%3AString%29-class-method" class="tooltip">
+      <span>new(token : Token, message : String)</span>
     new</a>
     
   
@@ -622,28 +613,34 @@
 
 
   
+    
+
+
+    
+
+
+    
+
+
+  
 </div>
 
 
-
-
-
-
   <h2>
-    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Instance Method Detail
+    Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="apply(expr:Expression::CompoundAssignment):ValueType-instance-method">
+    <div class="entry-detail" id="new(token:Token)-class-method">
       <div class="signature">
         
-        def <strong>apply</strong>(expr : <a href="../../Cosmo/AST/Expression/CompoundAssignment.html">Expression::CompoundAssignment</a>) : <a href="../../ValueType.html">ValueType</a>
+        def self.<strong>new</strong>(token : <a href="../../Cosmo/Token.html">Token</a>)
 
-        <a class="method-permalink" href="#apply%28expr%3AExpression%3A%3ACompoundAssignment%29%3AValueType-instance-method">#</a>
+        <a class="method-permalink" href="#new%28token%3AToken%29-class-method">#</a>
       </div>
       
       <br/>
@@ -652,6 +649,10 @@
       </div>
     </div>
   
+
+
+
+
 
 
 
