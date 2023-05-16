@@ -73,8 +73,18 @@ module Cosmo::TypeChecker
     register_type(alias_name)
   end
 
-  def get_registered_type?(name : String, token : Token) : Type?
-    REGISTERED.find { |t| t.name == name }
+  def get_registered_type?(typedef : String, token : Token) : Type?
+    if typedef.ends_with?("[]")
+      value_type = typedef[0..-3]
+      Type.new(typedef) unless get_registered_type?(value_type, token).nil?
+    elsif typedef.includes?("->") && typedef.split("->", 2).size == 2
+      types = typedef.split("->", 2)
+      key_type = types.first
+      value_type = types.last
+      Type.new(typedef) unless get_registered_type?(key_type, token).nil? && get_registered_type?(value_type, token).nil?
+    else
+      REGISTERED.find { |t| t.name == typedef }
+    end
   end
 
   def get_registered_type(name : String, token : Token) : Type?

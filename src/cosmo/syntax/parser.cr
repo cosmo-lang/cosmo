@@ -61,7 +61,8 @@ class Cosmo::Parser
 
   # Parse a function definition and return a node
   private def parse_regular_statement : Node
-    if current.type == Syntax::TypeDef && peek.type == Syntax::Function
+    puts current.type, peek.type
+    if (current.type == Syntax::TypeDef || current.type == Syntax::Identifier) && peek.type == Syntax::Function
       parse_function_def_statement
     elsif match?(Syntax::If)
       parse_if_statement
@@ -258,7 +259,7 @@ class Cosmo::Parser
 
   private def parse_type_alias(type_token : Token, identifier : Expression::Var) : Expression::TypeAlias
     if match?(Syntax::Equal)
-      type_info = parse_type
+      type_info = parse_type(required: false)
       type_ref = type_info[:type_ref].not_nil!
       TypeChecker.alias_type(identifier.token.value.to_s, type_ref.name.value.to_s)
       Expression::TypeAlias.new(type_token, identifier, type_ref)

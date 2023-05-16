@@ -6,6 +6,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ## Things I Gotta Do
 
+- Fix funky function return type parsing
 - Literal wrapper classes (vector, table)
 - Interfaces
 - Classes
