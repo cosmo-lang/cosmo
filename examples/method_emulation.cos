@@ -1,5 +1,6 @@
 string->any my_obj
 
+## make a closure for the object methods
 if true {
   void fn my_method(string msg) {
     puts("hello " + msg)
@@ -10,4 +11,6 @@ if true {
   }
 }
 
-my_obj::my_method("world")
+my_obj->my_method("world") ## valid
+my_obj::my_method("joe") ## also valid
+my_obj.my_method("bob") ## also valid

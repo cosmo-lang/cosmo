@@ -1,7 +1,7 @@
 any fn doubled(const int[] nums) {
   int idx = 0
   int fn generator() {
-    int value = nums[idx]
+    const int value = nums[idx]
     idx += 1
     unless value == none {
       value * 2
