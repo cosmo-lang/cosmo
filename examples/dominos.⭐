@@ -1,4 +1,4 @@
-string fn domino(string sequence) {
+string fn domino(const string sequence) {
   string result = ""
   bool finished = false
 

@@ -1,4 +1,4 @@
-any fn doubled(int[] nums) {
+any fn doubled(const int[] nums) {
   int idx = 0
   int fn generator() {
     int value = nums[idx]
@@ -11,6 +11,6 @@ any fn doubled(int[] nums) {
 }
 
 ## 2, 4, 6, 8
-every int even in doubled([1, 2, 3, 4]) {
+every const int even in doubled([1, 2, 3, 4]) {
   puts(even)
 }

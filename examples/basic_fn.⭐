@@ -2,5 +2,5 @@ bool fn is_eq(int a = 1, int b) {
   a == b
 }
 
-bool a = is_eq(none, 1)
+const bool a = is_eq(none, 1)
 puts(a) ## true

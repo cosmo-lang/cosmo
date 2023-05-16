@@ -15,6 +15,7 @@ def shutup(&block : ->) # sick hack
     STDOUT.close_on_exec = close_on_exec
   ensure
     o.close if o
+    i.flush if i
     i.close if i
   end
 end
@@ -87,6 +88,11 @@ describe Interpreter do
 
     result = interpreter.interpret("bool abc = false", "test")
     result.should eq false
+
+    interpreter.interpret("const int foo = 10", "test")
+    expect_raises(Exception, "[1:4] Attempt to assign to constant variable: foo") do
+      interpreter.interpret("foo = 15", "test")
+    end
 
     result = interpreter.interpret("char[] word = ['h', 'e', 'l', 'l', 'o']", "test")
     result.should be_a Array(ValueType)
@@ -254,7 +260,7 @@ describe Interpreter do
       interpreter.interpret("float[] aba = [x, 2.0]", "test")
     end
   end
-  describe "interprets example: " do
+  describe "interprets examples: " do
     example_files = Dir.entries "examples/"
     example_files.each do |example_file|
       next if example_file.starts_with?(".")
@@ -267,6 +273,5 @@ describe Interpreter do
         end
       end
     end
-    puts ""
   end
 end

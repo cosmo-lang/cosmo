@@ -5,7 +5,7 @@
 ##   n
 ## }
 
-int fn fib(int n) {
+int fn fib(const int n) {
   unless n <= 1 {
     return fib(n - 1) + fib(n - 2)
   }

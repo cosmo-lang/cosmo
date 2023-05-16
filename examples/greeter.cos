@@ -1,9 +1,9 @@
-any fn greeter(string greeting) {
-  void fn greet(string person) {
+any fn greeter(const string greeting) {
+  void fn greet(const string person) {
     puts(greeting + " " + person)
   }
 }
 
-any greet = greeter("hello")
+const any greet = greeter("hello")
 greet("world") ## hello world
 greet("bob") ## hello bob

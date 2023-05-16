@@ -2,5 +2,5 @@ bool fn is_cool() {
   true
 }
 
-any[] methods = [is_cool]
+const any[] methods = [is_cool]
 puts(methods[0]())
