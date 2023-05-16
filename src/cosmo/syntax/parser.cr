@@ -169,12 +169,15 @@ class Cosmo::Parser
     params
   end
 
+  ACCESS_SYNTAXES = [Syntax::ColonColon, Syntax::Dot, Syntax::HyphenArrow]
   # Parse property accessing
   private def parse_access(object : Expression::Var) : Node
     consume(Syntax::Identifier)
     key = last_token
     access = Expression::Access.new(object, key)
-    while match?(Syntax::ColonColon)
+
+    while !finished? && token_exists? && ACCESS_SYNTAXES.includes?(current.type)
+      consume_current
       consume(Syntax::Identifier)
       key = last_token
       access = Expression::Access.new(access, key)
@@ -546,7 +549,8 @@ class Cosmo::Parser
         parse_function_call(ref)
       elsif match?(Syntax::LBracket) # it's an index
         parse_index(ref)
-      elsif match?(Syntax::Dot) || match?(Syntax::ColonColon) # it's a property access
+      elsif !finished? && token_exists? && ACCESS_SYNTAXES.includes?(current.type) # it's a property access
+        consume_current
         parse_access(ref)
       else # it's a regular var ref
         ref
@@ -576,7 +580,8 @@ class Cosmo::Parser
     peek -1
   end
 
-  private def token_exists?(offset : UInt32) : Bool
+  # Default offset *IS ZERO* for this method.
+  private def token_exists?(offset : UInt32 = 0) : Bool
     !@tokens[@position + offset]?.nil?
   end
 
