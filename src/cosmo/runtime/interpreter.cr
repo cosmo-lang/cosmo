@@ -69,8 +69,12 @@ class Cosmo::Interpreter
     puts "Interpreter took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
 
     if !main_fn.nil? && main_fn.is_a?(Function)
-      code = main_result.as(Int64).not_nil!
-      Process.exit(code)
+      code = main_result.not_nil!.as(Int64)
+      if code == 0 # success
+        Process.exit(code)
+      else
+        raise "Process exited with code #{code}"
+      end
     end
 
     result
