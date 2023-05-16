@@ -71,6 +71,11 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Access" data-name="cosmo::ast::expression::access">
+      <a href="Cosmo/AST/Expression/Access.html">Access</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Base" data-name="cosmo::ast::expression::base">
       <a href="Cosmo/AST/Expression/Base.html">Base</a>
       
@@ -477,6 +482,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Things I Gotta Do</h2>
 <ul>
+<li>Fix funky function return type parsing</li>
 <li>Literal wrapper classes (vector, table)</li>
 <li>Interfaces</li>
 <li>Classes
@@ -494,6 +500,30 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </ul>
 </li>
 </ul>
+<h2><a id="gotchas" class="anchor" href="#gotchas">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Gotchas</h2>
+<h3><a id="table-type-definitions" class="anchor" href="#table-type-definitions">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Table type definitions</h3>
+<p>Type definitions for tables can be amibigous.<br>
+I plan to fix this in the future. For example:</p>
+<pre><code class="language-go">string-&gt;string-&gt;string my_table</code></pre>
+<p>Currently, this type resolves to a table with string keys, and string-&gt;string values.<br>
+Using a type alias here is broken currently, but is clearly what makes sense to use.<br>
+In the future (but not right now), this code should be valid:</p>
+<pre><code class="language-crystal"><span class="k">type</span> <span class="t">MyTable</span> <span class="o">=</span> string<span class="o">-&gt;</span>string
+<span class="t">MyTable</span><span class="o">-&gt;</span>string weird_table <span class="o">=</span> {
+  [{<span class="s">&quot;some&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;thing&quot;</span>}] <span class="o">-&gt;</span> <span class="s">&quot;hello world&quot;</span>
+}
+puts(weird_table[{<span class="s">&quot;some&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;thing&quot;</span>}]) <span class="c">## hello world</span></code></pre>
+<p>Another issue is with arrays.</p>
+<pre><code class="language-go">string-&gt;string[]</code></pre>
+<p>Is this type an array of string-&gt;string tables? Or is it a table of strings to arrays of strings?</p>
 <h2><a id="installation" class="anchor" href="#installation">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
