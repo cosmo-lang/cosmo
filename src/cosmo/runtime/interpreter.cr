@@ -59,12 +59,19 @@ class Cosmo::Interpreter
     # Check if "main" fn exists and call it
     main_fn = @globals.lookup?(Token.new("main", Syntax::Identifier, "main", Location.new("", 0, 0)))
     if !main_fn.nil? && main_fn.is_a?(Function)
+      return_typedef = main_fn.definition.return_typedef
+      @meta["block_return_type"] = return_typedef.value.to_s
       main_result = main_fn.call([ARGV.size, ARGV.map(&.as ValueType)])
-      result = main_result unless main_result.nil?
+      TypeChecker.assert("int", main_result, return_typedef)
     end
 
     end_time = Time.monotonic
     puts "Interpreter took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
+
+    if !main_fn.nil? && main_fn.is_a?(Function)
+      code = main_result.as(Int64).not_nil!
+      Process.exit(code)
+    end
 
     result
   end

@@ -1,3 +1,4 @@
-void fn main(int argc, string[] argv) {
+int fn main(int argc, string[] argv) {
   puts("hello, world!", argc, argv)
+  0
 }

@@ -1,5 +1,25 @@
 require "./spec_helper"
 
+lib LibC
+  fun dup(oldfd : LibC::Int) : LibC::Int
+end
+
+def shutup(&block : ->) # sick hack
+  close_on_exec = STDOUT.close_on_exec?
+  begin
+    o, i = IO.pipe
+    dup = LibC.dup(STDOUT.fd)
+    STDOUT.reopen(i)
+    yield
+    LibC.dup2(dup, STDOUT.fd)
+    STDOUT.close_on_exec = close_on_exec
+  ensure
+    o.close if o
+    i.flush if i
+    i.close if i
+  end
+end
+
 describe Interpreter do
   interpreter = Interpreter.new(output_ast: false, run_benchmarks: false)
   it "interprets intrinsics" do
@@ -243,7 +263,9 @@ describe Interpreter do
         interpreter = Interpreter.new(output_ast: false, run_benchmarks: false)
         path = File.join "examples", example_file
         source = File.read(path)
-        interpreter.interpret(source, "test")
+        shutup do
+          interpreter.interpret(source, "test")
+        end
       end
     end
   end
