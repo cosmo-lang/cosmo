@@ -214,16 +214,16 @@ class Cosmo::Interpreter
   end
 
   def visit_fn_call_expr(expr : Expression::FunctionCall) : ValueType
-    fn = @scope.lookup(expr.var.token)
+    fn = evaluate(expr.callee)
     unless fn.is_a?(Function) || fn.is_a?(IntrinsicFunction)
-      Logger.report_error("Attempt to call", TypeChecker.get_mapped(fn.class), expr.var.token)
+      Logger.report_error("Attempt to call", TypeChecker.get_mapped(fn.class), expr.token)
     end
     unless fn.arity.includes?(expr.arguments.size)
-      Logger.report_error("Expected #{fn.arity} arguments, got", expr.arguments.size.to_s, expr.var.token)
+      Logger.report_error("Expected #{fn.arity} arguments, got", expr.arguments.size.to_s, expr.token)
     end
 
     @meta["block_return_type"] = fn.definition.return_typedef.value.to_s unless fn.is_a?(IntrinsicFunction)
-    arg_values = expr.arguments.map { |arg| evaluate(arg.as Expression::Base) }
+    arg_values = expr.arguments.map { |arg| evaluate(arg) }
     fn.call(arg_values)
   end
 

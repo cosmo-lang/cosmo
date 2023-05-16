@@ -134,7 +134,7 @@ class Cosmo::Resolver
   end
 
   def visit_fn_call_expr(expr : Expression::FunctionCall) : Nil
-    resolve(expr.var)
+    resolve(expr.callee)
     expr.arguments.each { |arg| resolve(arg) }
   end
 

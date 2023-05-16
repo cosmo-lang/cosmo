@@ -311,8 +311,8 @@ describe Parser do
 
     expr = stmts.last.as(AST::Statement::SingleExpression).expression
     function_call = expr.as AST::Expression::FunctionCall
-    function_call.var.token.type.should eq Syntax::Identifier
-    function_call.var.token.value.should eq "is_eq"
+    function_call.token.type.should eq Syntax::Identifier
+    function_call.token.value.should eq "is_eq"
     arg1, arg2 = function_call.arguments
 
     arg1.should be_a AST::Expression::IntLiteral
@@ -325,8 +325,8 @@ describe Parser do
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     binary = expr.as AST::Expression::BinaryOp
     function_call = binary.left.as AST::Expression::FunctionCall
-    function_call.var.token.type.should eq Syntax::Identifier
-    function_call.var.token.value.should eq "is_eq"
+    function_call.token.type.should eq Syntax::Identifier
+    function_call.token.value.should eq "is_eq"
 
     binary.operator.type.should eq Syntax::EqualEqual
     binary.right.should be_a AST::Expression::NoneLiteral
@@ -349,8 +349,8 @@ describe Parser do
     expr = function_def.body.nodes.first.as(AST::Statement::SingleExpression).expression
     expr.should be_a AST::Expression::FunctionCall
     function_call = expr.as AST::Expression::FunctionCall
-    function_call.var.token.type.should eq Syntax::Identifier
-    function_call.var.token.value.should eq "puts"
+    function_call.token.type.should eq Syntax::Identifier
+    function_call.token.value.should eq "puts"
 
     arg = function_call.arguments.first
     arg.should be_a AST::Expression::StringLiteral
@@ -358,8 +358,8 @@ describe Parser do
 
     expr = stmts.last.as(AST::Statement::SingleExpression).expression
     function_call = expr.as AST::Expression::FunctionCall
-    function_call.var.token.type.should eq Syntax::Identifier
-    function_call.var.token.value.should eq "say_hi"
+    function_call.token.type.should eq Syntax::Identifier
+    function_call.token.value.should eq "say_hi"
     function_call.arguments.empty?.should be_true
   end
   it "parses vector indexing" do

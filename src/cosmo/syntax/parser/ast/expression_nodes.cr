@@ -126,10 +126,10 @@ module Cosmo::AST::Expression
   end
 
   class FunctionCall < Base
-    getter var : Var
-    getter arguments : Array(Node)
+    getter callee : Expression::Base
+    getter arguments : Array(Expression::Base)
 
-    def initialize(@var, @arguments)
+    def initialize(@callee, @arguments)
     end
 
     def accept(visitor : Visitor(R)) : R forall R
@@ -137,12 +137,12 @@ module Cosmo::AST::Expression
     end
 
     def token : Token
-      @var.token
+      @callee.token
     end
 
     def to_s(indent : Int = 0)
       "FunctionCall<\n" +
-      "  #{TAB * indent}var: #{@var.to_s},\n" +
+      "  #{TAB * indent}var: #{@callee.to_s(indent + 1)},\n" +
       "  #{TAB * indent}arguments: [\n" +
       "    #{TAB * indent}#{@arguments.map(&.to_s(indent + 2)).join(", ")}\n" +
       "  #{TAB * indent}]\n" +

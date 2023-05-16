@@ -1,0 +1,13 @@
+string->any my_obj
+
+if true {
+  void fn my_method(string msg) {
+    puts("hello " + msg)
+  }
+
+  my_obj = {
+    my_method -> my_method
+  }
+}
+
+my_obj::my_method("world")

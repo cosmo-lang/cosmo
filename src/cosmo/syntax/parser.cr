@@ -26,7 +26,7 @@ class Cosmo::Parser
     callee = parse_var_declaration
 
     if match?(Syntax::LParen)
-      callee = parse_function_call(callee.as Expression::Var)
+      callee = parse_function_call(callee)
     end
 
     callee
@@ -193,8 +193,8 @@ class Cosmo::Parser
   end
 
   # Parse a function call and return a node
-  private def parse_function_call(callee : Expression::Var) : Node
-    arguments = [] of Node
+  private def parse_function_call(callee : Expression::Base) : Node
+    arguments = [] of Expression::Base
 
     until match?(Syntax::RParen)
       arguments << parse_expression
