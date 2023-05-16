@@ -7,10 +7,10 @@ install:
 	echo "Successfully installed Cosmo!"
 
 test:
-	crystal spec -v
+	crystal spec -v --fail-fast
 
 publish:
-	crystal spec
+	crystal spec --fail-fast
 	crystal docs --project-name=Cosmo -o docs
 	git add .
 	git commit -m "docs: generate (auto)"
