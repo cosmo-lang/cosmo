@@ -8,6 +8,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 - Make an installer
 - Performance boosts lol
+- Range literals
 - Index/access assignment(`a[0] =" abc"` `or a->b = "c"`)
 - Ternary operator
 - Somehow typecheck blocks before execution
