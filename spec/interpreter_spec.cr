@@ -57,13 +57,28 @@ describe Interpreter do
   it "interprets variable declarations" do
     result = interpreter.interpret("int x = 0b11", "test")
     result.should eq 3
+
     result = interpreter.interpret("char y = 'h'", "test")
     result.should eq 'h'
+
     result = interpreter.interpret("string z = \"hello world\"", "test")
     result.should eq "hello world"
+
     result = interpreter.interpret("char[] word = ['h', 'e', 'l', 'l', 'o']", "test")
     result.should be_a Array(ValueType)
     result.as(Array(ValueType)).join.should eq "hello"
+
+    result = interpreter.interpret("int[][] matrix = [[1,2,3], [4,5,6]]", "test")
+    result.should be_a Array(ValueType)
+    matrix = result.as Array(ValueType)
+    matrix[0].should be_a Array(ValueType)
+    matrix[1].should be_a Array(ValueType)
+
+    sum = 0
+    matrix[0].as(Array(ValueType)).each { |v| sum += v.as Int64 }
+    matrix[1].as(Array(ValueType)).each { |v| sum += v.as Int64 }
+    sum.should eq 21
+
     result = interpreter.interpret("any->bool valids = {yes -> true, [123] -> false}", "test")
     result.should eq ({"yes" => true, 123 => false})
   end
