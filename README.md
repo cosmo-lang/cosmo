@@ -6,6 +6,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ## Things I Gotta Do
 
+- Somehow typecheck blocks before execution
 - Fix weird expression parsing ([0].123 evaluates to 0.123??)
 - Fix funky function return type parsing
 - Literal wrapper classes (vector, table)
