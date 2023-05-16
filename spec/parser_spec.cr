@@ -1,5 +1,16 @@
 require "./spec_helper"
 
+def assert_var_declaration(expr : AST::Expression::Base, type : String, ident : String) : AST::Expression::Base
+  expr.should be_a AST::Expression::VarDeclaration
+  declaration = expr.as AST::Expression::VarDeclaration
+  declaration.typedef.type.should eq Syntax::TypeDef
+  declaration.typedef.value.should eq type
+  declaration.var.should be_a AST::Expression::Var
+  declaration.var.token.type.should eq Syntax::Identifier
+  declaration.var.token.value.should eq ident
+  declaration
+end
+
 describe Parser do
   describe "parses literals" do
     it "floats" do
@@ -265,13 +276,7 @@ describe Parser do
     stmts = Parser.new("int a = 5; a += 2", "test").parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
-    expr.should be_a AST::Expression::VarDeclaration
-    declaration = expr.as AST::Expression::VarDeclaration
-    declaration.typedef.type.should eq Syntax::TypeDef
-    declaration.typedef.value.should eq "int"
-    declaration.var.should be_a AST::Expression::Var
-    declaration.var.token.type.should eq Syntax::Identifier
-    declaration.var.token.value.should eq "a"
+    declaration = assert_var_declaration(expr, "int", "a")
     literal = declaration.value.as AST::Expression::IntLiteral
     literal.should be_a AST::Expression::IntLiteral
     literal.value.should eq 5
@@ -387,13 +392,7 @@ describe Parser do
     stmts = Parser.new(lines.join('\n'), "test").parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
-    expr.should be_a AST::Expression::VarDeclaration
-    declaration = expr.as AST::Expression::VarDeclaration
-    declaration.typedef.type.should eq Syntax::TypeDef
-    declaration.typedef.value.should eq "int"
-    declaration.var.should be_a AST::Expression::Var
-    declaration.var.token.type.should eq Syntax::Identifier
-    declaration.var.token.value.should eq "x"
+    declaration = assert_var_declaration(expr, "int", "x")
     literal = declaration.value.as AST::Expression::IntLiteral
     literal.should be_a AST::Expression::IntLiteral
     literal.value.should eq 5
@@ -416,13 +415,7 @@ describe Parser do
     stmts = Parser.new(lines.join('\n'), "test").parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
-    expr.should be_a AST::Expression::VarDeclaration
-    declaration = expr.as AST::Expression::VarDeclaration
-    declaration.typedef.type.should eq Syntax::TypeDef
-    declaration.typedef.value.should eq "string"
-    declaration.var.should be_a AST::Expression::Var
-    declaration.var.token.type.should eq Syntax::Identifier
-    declaration.var.token.value.should eq "name"
+    declaration = assert_var_declaration(expr, "string", "name")
     literal = declaration.value.as AST::Expression::StringLiteral
     literal.should be_a AST::Expression::StringLiteral
     literal.value.should eq "bob"
@@ -461,5 +454,39 @@ describe Parser do
     while_stmt.condition.should be_a AST::Expression::BooleanLiteral
     while_stmt.condition.as(AST::Expression::BooleanLiteral).value.should eq false
     while_stmt.block.should be_a AST::Statement::Block
+  end
+  it "parses every statements" do
+    lines = [
+      "int[] nums = [1,2,3]",
+      "int sum = 0",
+      "every int n in nums {",
+      " sum += n",
+      "}"
+    ]
+
+    stmts = Parser.new(lines.join('\n'), "test").parse
+    stmts.should_not be_empty
+
+    expr = stmts.first.as(AST::Statement::SingleExpression).expression
+    declaration = assert_var_declaration(expr, "int[]", "nums")
+    literal = declaration.value.as AST::Expression::VectorLiteral
+    literal.should be_a AST::Expression::VectorLiteral
+    literal.values.first.should be_a AST::Expression::IntLiteral
+
+    expr = stmts[1].as(AST::Statement::SingleExpression).expression
+    declaration = assert_var_declaration(expr, "int", "sum")
+    literal = declaration.value.as AST::Expression::IntLiteral
+    literal.should be_a AST::Expression::IntLiteral
+    literal.value.should eq 0
+
+    stmts.last.should be_a AST::Statement::Every
+    every_stmt = stmts.last.as AST::Statement::Every
+    every_stmt.var.should be_a AST::Expression::VarDeclaration
+    every_stmt.var.typedef.lexeme.should eq "int"
+    every_stmt.var.token.lexeme.should eq "n"
+    every_stmt.enumerable.should be_a AST::Expression::Var
+    every_stmt.block.nodes.first.should be_a AST::Statement::SingleExpression
+    expr = every_stmt.block.nodes.first.as AST::Statement::SingleExpression
+    expr.expression.should be_a AST::Expression::CompoundAssignment
   end
 end
