@@ -300,6 +300,7 @@ class Cosmo::Parser
 
   # Parse a variable declaration and return a node
   private def parse_var_declaration : Node
+    # is_const = current.type == Syntax::Const
     type_info = parse_type(required: false)
     unless type_info[:variable_type].nil? || type_info[:type_ref].nil?
       typedef = type_info[:type_ref].nil? ? type_info[:variable_type].not_nil! : type_info[:type_ref].not_nil!.name

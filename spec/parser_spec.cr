@@ -14,7 +14,7 @@ end
 describe Parser do
   describe "parses literals" do
     it "floats" do
-      stmts = Parser.new("6.54321", "test").parse
+      stmts = Parser.new("6.54321", "test", false).parse
       stmts.should_not be_empty
       expr = stmts.first.as(AST::Statement::SingleExpression).expression
       literal = expr.as AST::Expression::FloatLiteral
@@ -22,21 +22,21 @@ describe Parser do
       literal.value.should eq 6.54321
     end
     it "integers" do
-      stmts = Parser.new("1234", "test").parse
+      stmts = Parser.new("1234", "test", false).parse
       stmts.should_not be_empty
       expr = stmts.first.as(AST::Statement::SingleExpression).expression
       literal = expr.as AST::Expression::IntLiteral
       literal.should be_a AST::Expression::IntLiteral
       literal.as(AST::Expression::IntLiteral).value.should eq 1234
 
-      stmts = Parser.new("0xABC", "test").parse
+      stmts = Parser.new("0xABC", "test", false).parse
       stmts.should_not be_empty
       expr = stmts.first.as(AST::Statement::SingleExpression).expression
       literal = expr.as AST::Expression::IntLiteral
       literal.should be_a AST::Expression::IntLiteral
       literal.as(AST::Expression::IntLiteral).value.should eq 2748
 
-      stmts = Parser.new("0b1111", "test").parse
+      stmts = Parser.new("0b1111", "test", false).parse
       stmts.should_not be_empty
       expr = stmts.first.as(AST::Statement::SingleExpression).expression
       literal = expr.as AST::Expression::IntLiteral
@@ -44,14 +44,14 @@ describe Parser do
       literal.value.should eq 15
     end
     it "booleans" do
-      stmts = Parser.new("false", "test").parse
+      stmts = Parser.new("false", "test", false).parse
       stmts.should_not be_empty
       expr = stmts.first.as(AST::Statement::SingleExpression).expression
       literal = expr.as AST::Expression::BooleanLiteral
       literal.should be_a AST::Expression::BooleanLiteral
       literal.value.should be_false
 
-      stmts = Parser.new("true", "test").parse
+      stmts = Parser.new("true", "test", false).parse
       stmts.should_not be_empty
       expr = stmts.first.as(AST::Statement::SingleExpression).expression
       literal = expr.as AST::Expression::BooleanLiteral
@@ -59,7 +59,7 @@ describe Parser do
       literal.value.should be_true
     end
     it "none" do
-      stmts = Parser.new("none", "test").parse
+      stmts = Parser.new("none", "test", false).parse
       stmts.should_not be_empty
       expr = stmts.first.as(AST::Statement::SingleExpression).expression
       literal = expr.as AST::Expression::NoneLiteral
@@ -67,7 +67,7 @@ describe Parser do
       literal.value.should eq nil
     end
     it "vectors" do
-      stmts = Parser.new("int[] nums = [1, 2, 3]", "test").parse
+      stmts = Parser.new("int[] nums = [1, 2, 3]", "test", false).parse
       stmts.should_not be_empty
       expr = stmts.first.as(AST::Statement::SingleExpression).expression
       expr.should be_a AST::Expression::VarDeclaration
@@ -89,7 +89,7 @@ describe Parser do
       three.as(AST::Expression::IntLiteral).value.should eq 3
     end
     it "tables" do
-      stmts = Parser.new("any valid = {yes -> true, no -> false}", "test").parse
+      stmts = Parser.new("any valid = {yes -> true, no -> false}", "test", false).parse
       stmts.should_not be_empty
       expr = stmts.first.as(AST::Statement::SingleExpression).expression
       expr.should be_a AST::Expression::VarDeclaration
@@ -105,7 +105,7 @@ describe Parser do
     end
   end
   it "parses unary operators" do
-    stmts = Parser.new("+-12", "test").parse
+    stmts = Parser.new("+-12", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     unary = expr.as AST::Expression::UnaryOp
@@ -120,7 +120,7 @@ describe Parser do
     literal.should be_a AST::Expression::IntLiteral
     literal.value.should eq 12
 
-    stmts = Parser.new("!true", "test").parse
+    stmts = Parser.new("!true", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     unary = expr.as AST::Expression::UnaryOp
@@ -131,7 +131,7 @@ describe Parser do
     literal.should be_a AST::Expression::BooleanLiteral
     literal.value.should be_true
 
-    stmts = Parser.new("*something", "test").parse
+    stmts = Parser.new("*something", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     unary = expr.as AST::Expression::UnaryOp
@@ -144,7 +144,7 @@ describe Parser do
     literal.token.value.should eq "something"
   end
   it "parses binary operators" do
-    stmts = Parser.new("false & true", "test").parse
+    stmts = Parser.new("false & true", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     binary = expr.as AST::Expression::BinaryOp
@@ -159,7 +159,7 @@ describe Parser do
     right.should be_a AST::Expression::BooleanLiteral
     right.value.should be_true
 
-    stmts = Parser.new("10 % 2", "test").parse
+    stmts = Parser.new("10 % 2", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     binary = expr.as AST::Expression::BinaryOp
@@ -174,7 +174,7 @@ describe Parser do
     right.should be_a AST::Expression::IntLiteral
     right.value.should eq 2
 
-    stmts = Parser.new("16.23 <= 46", "test").parse
+    stmts = Parser.new("16.23 <= 46", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     binary = expr.as AST::Expression::BinaryOp
@@ -190,7 +190,7 @@ describe Parser do
     right.value.should eq 46
   end
   it "parses variable references" do
-    stmts = Parser.new("abc", "test").parse
+    stmts = Parser.new("abc", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     var = expr.as AST::Expression::Var
@@ -198,7 +198,7 @@ describe Parser do
     var.token.type.should eq Syntax::Identifier
     var.token.value.should eq "abc"
 
-    stmts = Parser.new("_this_isValid$", "test").parse
+    stmts = Parser.new("_this_isValid$", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     var = expr.as AST::Expression::Var
@@ -207,7 +207,7 @@ describe Parser do
     var.token.value.should eq "_this_isValid$"
   end
   it "parses variable assignments" do
-    stmts = Parser.new("abc = 1.234", "test").parse
+    stmts = Parser.new("abc = 1.234", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     assignment = expr.as AST::Expression::VarAssignment
@@ -218,7 +218,7 @@ describe Parser do
     literal.should be_a AST::Expression::FloatLiteral
     literal.value.should eq 1.234
 
-    stmts = Parser.new("_this_isValid$ = false", "test").parse
+    stmts = Parser.new("_this_isValid$ = false", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     assignment = expr.as AST::Expression::VarAssignment
@@ -230,7 +230,7 @@ describe Parser do
     literal.value.should be_false
   end
   it "parses variable declarations" do
-    stmts = Parser.new("float abc = 1.234", "test").parse
+    stmts = Parser.new("float abc = 1.234", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     expr.should be_a AST::Expression::VarDeclaration
@@ -244,7 +244,7 @@ describe Parser do
     literal.should be_a AST::Expression::FloatLiteral
     literal.value.should eq 1.234
 
-    stmts = Parser.new("bool _this_isValid$ = false", "test").parse
+    stmts = Parser.new("bool _this_isValid$ = false", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     declaration = expr.as AST::Expression::VarDeclaration
@@ -257,7 +257,7 @@ describe Parser do
     literal.value.should be_false
   end
   it "parses type aliases" do
-    stmts = Parser.new("type MyInt = int", "test").parse
+    stmts = Parser.new("type MyInt = int", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     expr.should be_a AST::Expression::TypeAlias
@@ -273,7 +273,7 @@ describe Parser do
     alias_value.name.value.should eq "int"
   end
   it "parses compound assignment" do
-    stmts = Parser.new("int a = 5; a += 2", "test").parse
+    stmts = Parser.new("int a = 5; a += 2", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     declaration = assert_var_declaration(expr, "int", "a")
@@ -298,7 +298,7 @@ describe Parser do
       "}",
       "is_eq(1, 1)",
     ]
-    stmts = Parser.new(lines.join('\n'), "test").parse
+    stmts = Parser.new(lines.join('\n'), "test", false).parse
     stmts.should_not be_empty
     function_def = stmts.first.as AST::Statement::FunctionDef
     function_def.parameters.should_not be_empty
@@ -325,7 +325,7 @@ describe Parser do
     arg2.should be_a AST::Expression::IntLiteral
     arg2.as(AST::Expression::IntLiteral).value.should eq 1
 
-    stmts = Parser.new(lines.last + " == none", "test").parse
+    stmts = Parser.new(lines.last + " == none", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     binary = expr.as AST::Expression::BinaryOp
@@ -342,7 +342,7 @@ describe Parser do
       "}",
       "say_hi()",
     ]
-    stmts = Parser.new(lines.join('\n'), "test").parse
+    stmts = Parser.new(lines.join('\n'), "test", false).parse
     stmts.should_not be_empty
     function_def = stmts.first.as AST::Statement::FunctionDef
     function_def.parameters.empty?.should be_true
@@ -368,7 +368,7 @@ describe Parser do
     function_call.arguments.empty?.should be_true
   end
   it "parses vector indexing" do
-    stmts = Parser.new("int[] x = [1, 2]; x[0]", "test").parse
+    stmts = Parser.new("int[] x = [1, 2]; x[0]", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.last.as(AST::Statement::SingleExpression).expression
     index = expr.as AST::Expression::Index
@@ -389,7 +389,7 @@ describe Parser do
       "}"
     ]
 
-    stmts = Parser.new(lines.join('\n'), "test").parse
+    stmts = Parser.new(lines.join('\n'), "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     declaration = assert_var_declaration(expr, "int", "x")
@@ -412,7 +412,7 @@ describe Parser do
       "}"
     ]
 
-    stmts = Parser.new(lines.join('\n'), "test").parse
+    stmts = Parser.new(lines.join('\n'), "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
     declaration = assert_var_declaration(expr, "string", "name")
@@ -433,7 +433,7 @@ describe Parser do
       "}"
     ]
 
-    stmts = Parser.new(lines.join('\n'), "test").parse
+    stmts = Parser.new(lines.join('\n'), "test", false).parse
     stmts.should_not be_empty
     stmts.first.should be_a AST::Statement::While
     while_stmt = stmts.first.as AST::Statement::While
@@ -447,7 +447,7 @@ describe Parser do
       "}"
     ]
 
-    stmts = Parser.new(lines.join('\n'), "test").parse
+    stmts = Parser.new(lines.join('\n'), "test", false).parse
     stmts.should_not be_empty
     stmts.first.should be_a AST::Statement::Until
     while_stmt = stmts.first.as AST::Statement::Until
@@ -464,7 +464,7 @@ describe Parser do
       "}"
     ]
 
-    stmts = Parser.new(lines.join('\n'), "test").parse
+    stmts = Parser.new(lines.join('\n'), "test", false).parse
     stmts.should_not be_empty
 
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
