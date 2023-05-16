@@ -14,15 +14,20 @@ class Cosmo::Lexer
   @tokens = [] of Token
   @current_lexeme : String = ""
 
-  def initialize(@source : String, @file_path : String)
+  def initialize(@source : String, @file_path : String, @run_benchmarks : Bool)
   end
 
   def tokenize : Array(Token)
+    start_time = Time.monotonic
+
     until finished?
       lex
     end
 
     add_token(Syntax::EOF, nil)
+    end_time = Time.monotonic
+    puts "Lexer took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
+
     @tokens
   end
 

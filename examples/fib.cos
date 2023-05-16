@@ -12,4 +12,4 @@ int fn fib(int n) {
   n
 }
 
-puts(fib(10)) ## 55
+puts(fib(13)) ## 55

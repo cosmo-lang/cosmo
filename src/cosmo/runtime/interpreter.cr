@@ -17,12 +17,11 @@ class Cosmo::Interpreter
   include Expression::Visitor(ValueType)
   include Statement::Visitor(ValueType)
 
-  getter? output_ast = false
-  getter file_path : String = ""
   getter globals = Scope.new
   getter scope : Scope
   @locals = {} of Expression::Base => UInt32
   @meta = {} of String => String
+  @file_path : String = ""
 
   private def declare_intrinsic(type : String, ident : String, value : ValueType)
     location = Location.new("intrinsic", 0, 0)
@@ -31,7 +30,7 @@ class Cosmo::Interpreter
     @globals.declare(typedef_token, ident_token, value)
   end
 
-  def initialize(@output_ast)
+  def initialize(@output_ast : Bool, @run_benchmarks : Bool)
     TypeChecker.register_intrinsics
 
     @scope = @globals
@@ -42,14 +41,14 @@ class Cosmo::Interpreter
   end
 
   def reset
-    @locals = {} of Expression::Base => UInt32
-    @meta = {} of String => String
+    @locals.clear
+    @meta.clear
     @scope = Scope.new
     TypeChecker.reset
   end
 
   def interpret(source : String, @file_path : String) : ValueType
-    parser = Parser.new(source, @file_path)
+    parser = Parser.new(source, @file_path, @run_benchmarks)
     statements = parser.parse
 
     statement_list_str = ""
@@ -61,6 +60,10 @@ class Cosmo::Interpreter
 
     resolver = Resolver.new(self)
     resolver.resolve(statements)
+    end_time = Time.monotonic
+    puts "Resolver took #{get_elapsed(resolver.start_time, end_time)}." if @run_benchmarks
+
+    start_time = Time.monotonic
 
     result = nil
     statements.each do |stmt|
@@ -73,6 +76,9 @@ class Cosmo::Interpreter
       main_result = main_fn.call([ARGV.size, ARGV])
       result = main_result unless main_result.nil?
     end
+
+    end_time = Time.monotonic
+    puts "Interpreter took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
 
     result
   end

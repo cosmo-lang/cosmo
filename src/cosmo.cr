@@ -1,4 +1,5 @@
 require "./cosmo/logger"
+require "./util/time"
 require "./cosmo/runtime/interpreter"
 require "option_parser"
 require "readline"
@@ -8,23 +9,33 @@ module Cosmo
 
   # Parse options
   @@options = {} of Symbol => Bool
-  OptionParser.new do |opts|
-    opts.banner = "Usage: cosmo [OPTIONS] [FILE]"
-    opts.on("-h", "--help", "Outputs help menu for Cosmo CLI") do
-      puts opts
-      exit
-    end
-    opts.on("-a", "--ast", "Output the AST") do
-      @@options[:ast] = true
-    end
-    opts.on("-v", "--version", "Output the current version of Cosmo") do
-      puts "Cosmo v#{`shards version`}"
-      exit
-    end
-  end.parse(ARGV)
 
+  begin
+    OptionParser.new do |opts|
+      opts.banner = "Usage: cosmo [OPTIONS] [FILE]"
+      opts.on("-h", "--help", "Outputs help menu for Cosmo CLI") do
+        puts opts
+        exit
+      end
+      opts.on("-a", "--ast", "Outputs the AST") do
+        @@options[:ast] = true
+      end
+      opts.on("-B", "--benchmark", "Outputs the execution time of the lexer, parser, resolver, and interpreter") do
+        @@options[:benchmark] = true
+      end
+      opts.on("-v", "--version", "Outputs the current version of Cosmo") do
+        puts "Cosmo v#{`shards version`}"
+        exit
+      end
+    end.parse(ARGV)
+  rescue ex : OptionParser::InvalidOption
+    puts ex.message
+  end
 
-  @@interpreter = Interpreter.new(output_ast: @@options.has_key?(:ast))
+  @@interpreter = Interpreter.new(
+    output_ast: @@options.has_key?(:ast),
+    run_benchmarks: @@options.has_key?(:benchmark)
+  )
 
   def read_source(source : String, file_path : String) : ValueType
     @@interpreter.interpret(source, file_path)

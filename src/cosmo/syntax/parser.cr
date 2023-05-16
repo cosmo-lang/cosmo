@@ -5,19 +5,24 @@ class Cosmo::Parser
   getter position : UInt32 = 0
   getter tokens : Array(Token)
 
-  def initialize(source : String, file_path : String)
+  def initialize(source : String, file_path : String, @run_benchmarks : Bool)
     TypeChecker.reset if file_path == "test"
-    lexer = Lexer.new(source, file_path)
+    lexer = Lexer.new(source, file_path, @run_benchmarks)
     @tokens = lexer.tokenize
     @tokens.pop
   end
 
   # Entry point
   def parse : Array(Statement::Base)
+    start_time = Time.monotonic
+
     statements = [] of Statement::Base
     until finished?
       statements << parse_statement
     end
+
+    end_time = Time.monotonic
+    puts "Parser took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
     statements
   end
 

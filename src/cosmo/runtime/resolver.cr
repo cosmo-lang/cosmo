@@ -9,8 +9,10 @@ class Cosmo::Resolver
 
   @scopes = [] of Hash(String, Bool)
   @current_fn = FnType::None
+  getter start_time : Time::Span
 
   def initialize(@interpreter : Interpreter)
+    @start_time = Time.monotonic
   end
 
   def resolve(statements : Expression::Base | Statement::Base | Array(Statement::Base)) : Nil
