@@ -1,4 +1,0 @@
-int[] nums = [1, 2, 3]
-every int n in nums {
-  puts(n)
-}

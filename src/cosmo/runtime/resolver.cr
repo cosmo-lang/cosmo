@@ -195,4 +195,12 @@ class Cosmo::Resolver
   def visit_literal_expr(expr : Expression::Literal) : Nil
     # do nothing
   end
+
+  def visit_break_stmt(stmt : Statement::Break) : Nil
+    # do nothing
+  end
+
+  def visit_next_stmt(stmt : Statement::Next) : Nil
+    # do nothing
+  end
 end

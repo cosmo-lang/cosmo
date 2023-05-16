@@ -68,6 +68,10 @@ class Cosmo::Parser
   private def parse_regular_statement : Node
     if !finished? && token_exists?(1) && (current.type == Syntax::TypeDef || current.type == Syntax::Identifier) && peek.type == Syntax::Function
       parse_fn_def_statement
+    elsif match?(Syntax::Break)
+      Statement::Break.new(last_token)
+    elsif match?(Syntax::Next)
+      Statement::Next.new(last_token)
     elsif match?(Syntax::If)
       parse_if_statement
     elsif match?(Syntax::Unless)

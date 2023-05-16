@@ -1,0 +1,10 @@
+int[] nums = [1, 2, 3, 4, 5, 6, 7, 8]
+int sum = 0
+every int n in nums {
+  if n % 2 == 0 {
+    next
+  }
+  sum += n
+}
+
+puts(sum) ## 16

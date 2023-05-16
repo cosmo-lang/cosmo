@@ -32,7 +32,7 @@ class Cosmo::Function < Cosmo::Callable
     result = nil
     begin
       result = @interpreter.execute_block(@definition.body, scope, is_fn: true)
-    rescue returner : Return
+    rescue returner : HookedExceptions::Return
       result = returner.value
     end
     result

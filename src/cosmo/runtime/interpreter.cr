@@ -1,17 +1,10 @@
 require "../syntax/parser"; include Cosmo::AST
+require "./hooked_exceptions"
 require "./function"
 require "./scope"
 require "./operator"
 require "./type"
 require "./resolver"
-
-class Cosmo::Return < Exception
-  getter value : ValueType
-
-  def initialize(@value, token : Token)
-    super "[#{token.location.line}:#{token.location.position + 1}] Invalid return: A return statement can only be used within a function body"
-  end
-end
 
 class Cosmo::Interpreter
   include Expression::Visitor(ValueType)
@@ -134,19 +127,46 @@ class Cosmo::Interpreter
     if enumerable.is_a?(Array)
       enumerable.each do |value|
         @scope.assign(stmt.var.token, value)
-        execute_block(stmt.block, scope)
+        begin
+          execute_block(stmt.block, scope)
+        rescue _break : HookedExceptions::Break
+          break
+        rescue _next : HookedExceptions::Next
+          next
+        end
       end
     elsif enumerable.is_a?(String)
       enumerable.chars.each do |value|
         @scope.assign(stmt.var.token, value)
-        execute_block(stmt.block, scope)
+        begin
+          execute_block(stmt.block, scope)
+        rescue _break : HookedExceptions::Break
+          break
+        rescue _next : HookedExceptions::Next
+          next
+        end
       end
     elsif enumerable.is_a?(Callable)
-      value = enumerable.call([] of ValueType)
-      @scope.assign(stmt.var.token, value)
-      execute_block(stmt.block, scope)
+      if enumerable.is_a?(IntrinsicFunction)
+        Logger.report_error("Invalid iterator", "An iterator cannot be an intrinsic function", stmt.enumerable.token)
+      end
+      unless enumerable.is_a?(Function)
+        Logger.report_error("Invalid iterator", "An iterator must return a generator function", stmt.enumerable.token)
+      end
+
+      # keep looping until the iterator returns none
+      until (value = enumerable.call([] of ValueType)).nil?
+        @scope.assign(stmt.var.token, value)
+        begin
+          execute_block(stmt.block, scope)
+        rescue _break : HookedExceptions::Break
+          break
+        rescue _next : HookedExceptions::Next
+          next
+        end
+      end
     else
-      Logger.report_error("Invalid enumerable type:", TypeChecker.get_mapped(enumerable.class), stmt.token)
+      Logger.report_error("Invalid iterator type", TypeChecker.get_mapped(enumerable.class), stmt.token)
     end
 
     @scope = enclosing
@@ -154,13 +174,25 @@ class Cosmo::Interpreter
 
   def visit_until_stmt(stmt : Statement::Until) : Nil
     until evaluate(stmt.condition)
-      execute(stmt.block)
+      begin
+        execute(stmt.block)
+      rescue _break : HookedExceptions::Break
+        break
+      rescue _next : HookedExceptions::Next
+        next
+      end
     end
   end
 
   def visit_while_stmt(stmt : Statement::While) : Nil
     while evaluate(stmt.condition)
-      execute(stmt.block)
+      begin
+        execute(stmt.block)
+      rescue _break : HookedExceptions::Break
+        break
+      rescue _next : HookedExceptions::Next
+        next
+      end
     end
   end
 
@@ -235,9 +267,17 @@ class Cosmo::Interpreter
     @scope.declare(expr.type_token, expr.token, value)
   end
 
+  def visit_next_stmt(stmt : Statement::Next) : Nil
+    raise HookedExceptions::Next.new(stmt.keyword)
+  end
+
+  def visit_break_stmt(stmt : Statement::Break) : Nil
+    raise HookedExceptions::Break.new(stmt.keyword)
+  end
+
   def visit_return_stmt(stmt : Statement::Return) : Nil
     value = evaluate(stmt.value)
-    raise Return.new(value, stmt.keyword)
+    raise HookedExceptions::Return.new(value, stmt.keyword)
   end
 
   def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType

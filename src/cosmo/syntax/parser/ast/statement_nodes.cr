@@ -15,6 +15,44 @@ module Cosmo::AST::Statement
     abstract def accept(visitor : Visitor(R)) forall R
   end
 
+  class Next < Base
+    getter keyword : Token
+
+    def initialize(@keyword)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_next_stmt(self)
+    end
+
+    def token : Token
+      @keyword
+    end
+
+    def to_s(indent : Int = 0)
+      "Next"
+    end
+  end
+
+  class Break < Base
+    getter keyword : Token
+
+    def initialize(@keyword)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_break_stmt(self)
+    end
+
+    def token : Token
+      @keyword
+    end
+
+    def to_s(indent : Int = 0)
+      "Break"
+    end
+  end
+
   class Every < Base
     getter keyword : Token
     getter var : Expression::VarDeclaration
