@@ -211,6 +211,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Every" data-name="cosmo::ast::statement::every">
+      <a href="../Cosmo/AST/Statement/Every.html">Every</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/FunctionDef" data-name="cosmo::ast::statement::functiondef">
       <a href="../Cosmo/AST/Statement/FunctionDef.html">FunctionDef</a>
       
@@ -519,7 +524,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L6" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L6" target="_blank">
         cosmo/runtime/resolver.cr
       </a>
     
@@ -583,6 +588,11 @@
     
       <li class="entry-summary">
         <a href="#visit_compound_assignment_expr%28expr%3AExpression%3A%3ACompoundAssignment%29%3ANil-instance-method" class="signature"><strong>#visit_compound_assignment_expr</strong>(expr : Expression::CompoundAssignment) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_every_stmt%28stmt%3AStatement%3A%3AEvery%29%3ANil-instance-method" class="signature"><strong>#visit_every_stmt</strong>(stmt : Statement::Every) : Nil</a>
         
       </li>
     
@@ -694,9 +704,19 @@
     visit_block_stmt</a>, 
     
   
+    <a href="../Cosmo/AST/Statement/Visitor.html#visit_every_stmt%28stmt%3AEvery%29%3AR-instance-method" class="tooltip">
+      <span>visit_every_stmt(stmt : Every) : R</span>
+    visit_every_stmt</a>, 
+    
+  
     <a href="../Cosmo/AST/Statement/Visitor.html#visit_fn_def_stmt%28stmt%3AFunctionDef%29%3AR-instance-method" class="tooltip">
       <span>visit_fn_def_stmt(stmt : FunctionDef) : R</span>
     visit_fn_def_stmt</a>, 
+    
+  
+    <a href="../Cosmo/AST/Statement/Visitor.html#visit_if_stmt%28stmt%3AIf%29%3AR-instance-method" class="tooltip">
+      <span>visit_if_stmt(stmt : If) : R</span>
+    visit_if_stmt</a>, 
     
   
     <a href="../Cosmo/AST/Statement/Visitor.html#visit_return_stmt%28stmt%3AReturn%29%3AR-instance-method" class="tooltip">
@@ -706,7 +726,22 @@
   
     <a href="../Cosmo/AST/Statement/Visitor.html#visit_single_expr_stmt%28stmt%3ASingleExpression%29%3AR-instance-method" class="tooltip">
       <span>visit_single_expr_stmt(stmt : SingleExpression) : R</span>
-    visit_single_expr_stmt</a>
+    visit_single_expr_stmt</a>, 
+    
+  
+    <a href="../Cosmo/AST/Statement/Visitor.html#visit_unless_stmt%28stmt%3AUnless%29%3AR-instance-method" class="tooltip">
+      <span>visit_unless_stmt(stmt : Unless) : R</span>
+    visit_unless_stmt</a>, 
+    
+  
+    <a href="../Cosmo/AST/Statement/Visitor.html#visit_until_stmt%28stmt%3AUntil%29%3AR-instance-method" class="tooltip">
+      <span>visit_until_stmt(stmt : Until) : R</span>
+    visit_until_stmt</a>, 
+    
+  
+    <a href="../Cosmo/AST/Statement/Visitor.html#visit_while_stmt%28stmt%3AWhile%29%3AR-instance-method" class="tooltip">
+      <span>visit_while_stmt(stmt : While) : R</span>
+    visit_while_stmt</a>
     
   
 
@@ -820,7 +855,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -850,7 +885,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -866,7 +901,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L141" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L147" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -882,7 +917,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L156" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -898,7 +933,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L74" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L74" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -914,7 +949,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L151" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L157" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_every_stmt(stmt:Statement::Every):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>visit_every_stmt</strong>(stmt : <a href="../Cosmo/AST/Statement/Every.html">Statement::Every</a>) : Nil
+
+        <a class="method-permalink" href="#visit_every_stmt%28stmt%3AStatement%3A%3AEvery%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L80" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -930,7 +981,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L136" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L142" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -946,7 +997,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L103" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L109" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -962,7 +1013,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L84" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L90" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -978,7 +1029,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L146" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L152" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -994,7 +1045,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L187" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L193" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1010,7 +1061,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L96" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L102" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1026,7 +1077,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L80" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L86" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1042,7 +1093,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L179" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L185" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1058,7 +1109,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L130" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L136" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1074,7 +1125,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L172" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L178" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1090,7 +1141,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L161" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L167" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1106,7 +1157,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L90" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L96" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1122,7 +1173,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L114" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L120" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1138,7 +1189,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L125" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L131" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1154,7 +1205,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L119" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L125" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1170,7 +1221,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L165" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L171" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1186,7 +1237,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L183" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L189" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1202,7 +1253,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/896152443407c5a85d6bd4912da1df5287f0c27a/src/cosmo/runtime/resolver.cr#L109" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/45a51c8e4eabf17aa6eca88099602789dd681b96/src/cosmo/runtime/resolver.cr#L115" target="_blank">View source</a>]
         
       </div>
     </div>
