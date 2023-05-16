@@ -23,7 +23,12 @@ class Cosmo::Interpreter
     @globals.declare(typedef_token, ident_token, value)
   end
 
-  def initialize(@output_ast : Bool, @run_benchmarks : Bool)
+  def initialize(
+    @output_ast : Bool,
+    @run_benchmarks : Bool,
+    debug_mode : Bool
+  )
+    Logger.debug = debug_mode
     TypeChecker.register_intrinsics
 
     @scope = @globals
@@ -58,7 +63,9 @@ class Cosmo::Interpreter
 
     # Check if "main" fn exists and call it
     main_fn = @globals.lookup?(Token.new("main", Syntax::Identifier, "main", Location.new("", 0, 0)))
-    if !main_fn.nil? && main_fn.is_a?(Function)
+    found_main = !main_fn.nil? && main_fn.is_a?(Function)
+    if found_main
+      main_fn = main_fn.as(Function)
       return_typedef = main_fn.definition.return_typedef
       @meta["block_return_type"] = return_typedef.value.to_s
       main_result = main_fn.call([ARGV.size, ARGV.map(&.as ValueType)])
@@ -68,7 +75,7 @@ class Cosmo::Interpreter
     end_time = Time.monotonic
     puts "Interpreter took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
 
-    if !main_fn.nil? && main_fn.is_a?(Function) && @file_path != "test" && @file_path != "repl"
+    if found_main && @file_path != "test" && @file_path != "repl"
       code = main_result.not_nil!.as(Int64)
       if code == 0 # success
         Process.exit(code)

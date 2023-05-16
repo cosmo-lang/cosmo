@@ -23,6 +23,9 @@ module Cosmo
       opts.on("-B", "--benchmark", "Outputs the execution time of the lexer, parser, resolver, and interpreter") do
         @@options[:benchmark] = true
       end
+      opts.on("-d", "--debug", "Toggles debug mode (full error messages)") do
+        @@options[:debug] = true
+      end
       opts.on("-v", "--version", "Outputs the current version of Cosmo") do
         puts "Cosmo v#{`shards version`}"
         exit
@@ -34,7 +37,8 @@ module Cosmo
 
   @@interpreter = Interpreter.new(
     output_ast: @@options.has_key?(:ast),
-    run_benchmarks: @@options.has_key?(:benchmark)
+    run_benchmarks: @@options.has_key?(:benchmark),
+    debug_mode: @@options.has_key?(:debug)
   )
 
   def read_source(source : String, file_path : String) : ValueType
