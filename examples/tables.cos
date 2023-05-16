@@ -1,8 +1,16 @@
-string->bool valids = {
-  yes -> true,
-  no -> false
-}
+string->any[] people = [
+  {
+    name -> "bobert jr",
+    address -> "123 bobert st"
+    father -> {
+      name -> "bobert sr",
+      address -> "321 big bobert st"
+    }
+  }
+]
 
-puts(valids)
-puts(valids["yes"])
-puts(valids.no)
+string->any bobert = people[0]
+puts(bobert::name)
+puts(bobert::address)
+puts(bobert::father)
+puts(bobert::father::name)

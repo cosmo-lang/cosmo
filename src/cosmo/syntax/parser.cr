@@ -173,7 +173,13 @@ class Cosmo::Parser
   private def parse_access(object : Expression::Var) : Node
     consume(Syntax::Identifier)
     key = last_token
-    Expression::Access.new(object, key)
+    access = Expression::Access.new(object, key)
+    while match?(Syntax::ColonColon)
+      consume(Syntax::Identifier)
+      key = last_token
+      access = Expression::Access.new(access, key)
+    end
+    access
   end
 
   # Parse indexing
