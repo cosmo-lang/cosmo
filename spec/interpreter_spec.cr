@@ -210,6 +210,19 @@ describe Interpreter do
     result = interpreter.interpret(lines.join('\n'), "test")
     result.should eq 15
   end
+  it "interprets every statements" do
+    lines = [
+      "int[] nums = [1,2,3]",
+      "int sum = 0",
+      "every int n in nums {",
+      " sum += n",
+      "}",
+      "sum"
+    ]
+
+    result = interpreter.interpret(lines.join('\n'), "test")
+    result.should eq 6
+  end
   it "throws when types mismatch" do
     interpreter.interpret("int x = 1", "test")
     expect_raises(Exception, "[1:2] Type mismatch: Expected 'int', got 'float'") do
