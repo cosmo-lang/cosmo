@@ -17,6 +17,26 @@ module Cosmo::AST::Expression
     abstract def accept(visitor : Visitor(R)) forall R
   end
 
+  class AccessAssign < Base
+    getter name : Access
+    getter value : Expression::Base
+
+    def initialize(@object, @key)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_access_expr(self)
+    end
+
+    def token : Token
+      @object.token
+    end
+
+    def to_s
+      "Access<object: #{@object.to_s}, key: #{@key.to_s}>"
+    end
+  end
+
   class Access < Base
     getter object : Var | Access
     getter key : Token

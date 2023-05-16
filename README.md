@@ -18,6 +18,25 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Better type system
   * unions/intersections
 
+## Gotchas
+
+### Table type definitions
+Type definitions for tables can be amibigous.<br>
+I plan to fix this in the future. For example:
+```go
+string->string->string my_table
+```
+Currently, this type resolves to a table with string keys, and string->string values.<br>
+Using a type alias here is broken currently, but is clearly what makes sense to use.<br>
+In the future (but not right now), this code should be valid:
+```crystal
+type MyTable = string->string
+MyTable->string weird_table = {
+  [{"some" -> "thing"}] -> "hello world"
+}
+puts(weird_table[{"some" -> "thing"}]) ## hello world
+```
+
 ## Installation
 
 1. Install [Crystal](https://crystal-lang.org/install/).
