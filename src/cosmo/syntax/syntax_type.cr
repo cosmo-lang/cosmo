@@ -19,7 +19,7 @@ enum Cosmo::Syntax
   Else
   Every
   While; Until
-  Constant
+  Const
   Break
   Next
   Match

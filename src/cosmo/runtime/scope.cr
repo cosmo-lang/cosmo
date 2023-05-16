@@ -1,7 +1,7 @@
 require "../syntax/lexer/token"
 require "./typechecker"
 
-private alias Variable = NamedTuple(type: String, value: ValueType)
+private alias Variable = NamedTuple(type: String, value: ValueType, constant: Bool)
 class Cosmo::Scope
   property parent : Cosmo::Scope?
   property variables = {} of String => Variable
@@ -18,25 +18,34 @@ class Cosmo::Scope
     value.is_a?(Array) ? cast_array(value) : value.as ValueType
   end
 
-  private def create_variable(typedef : Token | String, identifier : Token, value : V) : ValueType forall V
+  private def create_variable(typedef : Token | String, identifier : Token, value : V, constant : Bool) : ValueType forall V
     casted_value = cast(value)
     @variables[identifier.value.to_s] = {
       type: typedef.is_a?(Token) ? typedef.value.to_s : typedef,
-      value: casted_value
+      value: casted_value,
+      constant: constant
     }
     casted_value
   end
 
+  def declare_const(typedef : Token, identifier : Token, value : ValueType) : ValueType
+    TypeChecker.assert(typedef.value.to_s, value, typedef) unless value.nil?
+    create_variable(typedef, identifier, value, constant: true)
+  end
+
   def declare(typedef : Token, identifier : Token, value : ValueType) : ValueType
     TypeChecker.assert(typedef.value.to_s, value, typedef) unless value.nil?
-    create_variable(typedef, identifier, value)
+    create_variable(typedef, identifier, value, constant: false)
   end
 
   def assign(identifier : Token, value : ValueType) : ValueType
     if @variables.has_key?(identifier.value.to_s)
-      var = @variables[identifier.value.to_s]
-      TypeChecker.assert(var[:type], value, identifier)
-      return create_variable(var[:type], identifier, value)
+      info = @variables[identifier.value.to_s]
+      if info[:constant]
+        Logger.report_error("Attempt to assign to constant variable", identifier.value.to_s, identifier)
+      end
+      TypeChecker.assert(info[:type], value, identifier)
+      return create_variable(info[:type], identifier, value, false)
     end
 
     return @parent.not_nil!.assign(identifier, value) unless @parent.nil?

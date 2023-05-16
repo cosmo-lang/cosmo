@@ -18,7 +18,7 @@ module Cosmo::Keywords
     "break" => Syntax::Break,
     "next" => Syntax::Next,
     "match" => Syntax::Match,
-    "const" => Syntax::Constant,
+    "const" => Syntax::Const,
     "return" => Syntax::Return
   }
 

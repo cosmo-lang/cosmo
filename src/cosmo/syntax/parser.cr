@@ -95,7 +95,7 @@ class Cosmo::Parser
     consume(Syntax::Identifier)
     ident = last_token
     var = Expression::Var.new(ident)
-    var_declaration = Expression::VarDeclaration.new(typedef, var, Expression::NoneLiteral.new(nil, ident))
+    var_declaration = Expression::VarDeclaration.new(typedef, var, Expression::NoneLiteral.new(nil, ident), type_info[:is_const])
 
     consume(Syntax::In)
     enumerable = parse_expression
@@ -232,8 +232,9 @@ class Cosmo::Parser
     Expression::FunctionCall.new(callee, arguments)
   end
 
-  private alias TypeInfo = NamedTuple(found_typedef: Bool, variable_type: Token?, type_ref: Expression::TypeRef?)
+  private alias TypeInfo = NamedTuple(found_typedef: Bool, variable_type: Token?, type_ref: Expression::TypeRef?, is_const: Bool)
   private def parse_type(required : Bool = true) : TypeInfo
+    is_const = match?(Syntax::Const)
     if required
       consume(Syntax::Identifier) unless match?(Syntax::TypeDef)
       found_typedef = true
@@ -283,7 +284,8 @@ class Cosmo::Parser
     {
       found_typedef: found_typedef,
       variable_type: variable_type,
-      type_ref: type_ref
+      type_ref: type_ref,
+      is_const: is_const
     }
   end
 
@@ -300,7 +302,6 @@ class Cosmo::Parser
 
   # Parse a variable declaration and return a node
   private def parse_var_declaration : Node
-    # is_const = current.type == Syntax::Const
     type_info = parse_type(required: false)
     unless type_info[:variable_type].nil? || type_info[:type_ref].nil?
       typedef = type_info[:type_ref].nil? ? type_info[:variable_type].not_nil! : type_info[:type_ref].not_nil!.name
@@ -313,9 +314,9 @@ class Cosmo::Parser
         else
           if match?(Syntax::Equal)
             value = parse_expression
-            Expression::VarDeclaration.new(typedef, identifier, value)
+            Expression::VarDeclaration.new(typedef, identifier, value, type_info[:is_const])
           else
-            Expression::VarDeclaration.new(typedef, identifier, Expression::NoneLiteral.new(nil, variable_name))
+            Expression::VarDeclaration.new(typedef, identifier, Expression::NoneLiteral.new(nil, variable_name), type_info[:is_const])
           end
         end
       else

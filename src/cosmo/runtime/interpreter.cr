@@ -310,7 +310,11 @@ class Cosmo::Interpreter
 
   def visit_var_declaration_expr(expr : Expression::VarDeclaration) : ValueType
     value = evaluate(expr.value.as Expression::Base)
-    @scope.declare(expr.typedef, expr.var.token, value)
+    if expr.constant?
+      @scope.declare_const(expr.typedef, expr.var.token, value)
+    else
+      @scope.declare(expr.typedef, expr.var.token, value)
+    end
   end
 
   def visit_var_assignment_expr(expr : Expression::VarAssignment) : ValueType

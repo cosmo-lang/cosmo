@@ -203,8 +203,9 @@ module Cosmo::AST::Expression
     getter typedef : Token
     getter var : Var
     getter value : Node
+    getter? constant : Bool
 
-    def initialize(@typedef, @var, @value)
+    def initialize(@typedef, @var, @value, @constant)
     end
 
     def accept(visitor : Visitor(R)) : R forall R
