@@ -121,21 +121,32 @@ describe Interpreter do
     result = interpreter.interpret("msg + \" world\"", "test")
     result.should eq "hello world"
   end
-  it "interprets vector indexing" do
-    interpreter.interpret("int[] x = [1, 2]", "test")
-    result = interpreter.interpret("x[0]", "test")
-    result.should eq 1
-    result = interpreter.interpret("x[1]", "test")
-    result.should eq 2
-  end
-  it "interprets table indexing" do
-    interpreter.interpret("string->bool bad_people = {[\"billy bob\"] -> false, mj -> true}", "test")
-    result = interpreter.interpret("bad_people[\"billy bob\"]", "test")
-    result.should eq false
-    result = interpreter.interpret("bad_people.mj", "test")
-    result.should eq true
-    result = interpreter.interpret("bad_people::mj", "test")
-    result.should eq true
+  describe "interprets indexing" do
+    it "strings" do
+      interpreter.interpret("string word = \"hey\"", "test")
+      result = interpreter.interpret("word[0]", "test")
+      result.should eq 'h'
+      result = interpreter.interpret("word[1]", "test")
+      result.should eq 'e'
+      result = interpreter.interpret("word[2]", "test")
+      result.should eq 'y'
+    end
+    it "vectors" do
+      interpreter.interpret("int[] x = [1, 2]", "test")
+      result = interpreter.interpret("x[0]", "test")
+      result.should eq 1
+      result = interpreter.interpret("x[1]", "test")
+      result.should eq 2
+    end
+    it "tables" do
+      interpreter.interpret("string->bool bad_people = {[\"billy bob\"] -> false, mj -> true}", "test")
+      result = interpreter.interpret("bad_people[\"billy bob\"]", "test")
+      result.should eq false
+      result = interpreter.interpret("bad_people.mj", "test")
+      result.should eq true
+      result = interpreter.interpret("bad_people::mj", "test")
+      result.should eq true
+    end
   end
   it "interprets if/unless statements" do
     lines = [
