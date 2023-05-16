@@ -61,8 +61,7 @@ class Cosmo::Parser
 
   # Parse a function definition and return a node
   private def parse_regular_statement : Node
-    puts current.type, peek.type
-    if (current.type == Syntax::TypeDef || current.type == Syntax::Identifier) && peek.type == Syntax::Function
+    if !finished? && token_exists?(1) && (current.type == Syntax::TypeDef || current.type == Syntax::Identifier) && peek.type == Syntax::Function
       parse_function_def_statement
     elsif match?(Syntax::If)
       parse_if_statement
@@ -577,6 +576,10 @@ class Cosmo::Parser
     peek -1
   end
 
+  private def token_exists?(offset : UInt32) : Bool
+    !@tokens[@position + offset]?.nil?
+  end
+
   private def finished? : Bool
     @position >= @tokens.size
   end
@@ -591,12 +594,6 @@ class Cosmo::Parser
     else
       false
     end
-  end
-
-  # Consume the current token and advance position if token syntax
-  # matches the expected syntax, else log an error
-  private def go_back : Nil
-    @position -= 1
   end
 
   # Consume the current token and advance position if token syntax
