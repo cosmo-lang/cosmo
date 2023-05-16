@@ -141,14 +141,16 @@ describe Lexer do
     fn.lexeme.should eq "fn"
   end
   it "lexes type keywords" do
-    tokens = Lexer.new("int void string char any type", "test", false).tokenize
-    int, void, string, char, any, type = tokens
+    tokens = Lexer.new("int void string bool char any type", "test", false).tokenize
+    int, void, string, bool, char, any, type = tokens
     int.type.should eq Syntax::TypeDef
     int.value.should eq "int"
     void.type.should eq Syntax::TypeDef
     void.value.should eq "void"
     string.type.should eq Syntax::TypeDef
     string.value.should eq "string"
+    bool.type.should eq Syntax::TypeDef
+    bool.value.should eq "bool"
     char.type.should eq Syntax::TypeDef
     char.value.should eq "char"
     any.type.should eq Syntax::TypeDef
@@ -157,14 +159,14 @@ describe Lexer do
     type.value.should eq "type"
   end
   it "lexes other characters" do
-    tokens = Lexer.new("$ -> >= & :: .. . # !", "test", false).tokenize
-    this, hyph_arrow, gr_eq, amper, double_colon, dotdot, dot, hashtag, bang = tokens
+    tokens = Lexer.new("$ -> %= & :: .. . # !", "test", false).tokenize
+    this, hyph_arrow, perc_eq, amper, double_colon, dotdot, dot, hashtag, bang = tokens
     this.type.should eq Syntax::This
     this.value.should eq nil
     hyph_arrow.type.should eq Syntax::HyphenArrow
     hyph_arrow.value.should eq nil
-    gr_eq.type.should eq Syntax::GreaterEqual
-    gr_eq.value.should eq nil
+    perc_eq.type.should eq Syntax::PercentEqual
+    perc_eq.value.should eq nil
     amper.type.should eq Syntax::Ampersand
     amper.value.should eq nil
     double_colon.type.should eq Syntax::ColonColon

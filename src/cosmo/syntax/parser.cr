@@ -471,7 +471,7 @@ class Cosmo::Parser
 
   # Parse a unary expression and return a node
   private def parse_unary : Node
-    if match?(Syntax::Plus) || match?(Syntax::Minus) || match?(Syntax::Bang) || match?(Syntax::Star)
+    if match?(Syntax::Plus) || match?(Syntax::Minus) || match?(Syntax::Bang) || match?(Syntax::Star) || match?(Syntax::Hashtag)
       op = last_token
       operand = parse_unary
       Expression::UnaryOp.new(op, operand)

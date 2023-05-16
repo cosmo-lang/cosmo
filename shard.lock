@@ -4,3 +4,7 @@ shards:
     git: https://github.com/crystal-lang/crystal-readline.git
     version: 0.1.1
 
+  stdio:
+    git: https://github.com/mosop/stdio.git
+    version: 0.1.4
+

@@ -1,13 +1,21 @@
 require "./spec_helper"
 
-def assert_var_declaration(expr : AST::Expression::Base, type : String, ident : String) : AST::Expression::Base
+def assert_var_declaration(
+  expr : AST::Expression::Base,
+  type : String,
+  ident : String,
+  constant : Bool = false
+) : AST::Expression::Base
   expr.should be_a AST::Expression::VarDeclaration
   declaration = expr.as AST::Expression::VarDeclaration
+  declaration.constant?.should eq constant
   declaration.typedef.type.should eq Syntax::TypeDef
   declaration.typedef.value.should eq type
+  declaration.typedef.lexeme.should eq type
   declaration.var.should be_a AST::Expression::Var
   declaration.var.token.type.should eq Syntax::Identifier
   declaration.var.token.value.should eq ident
+  declaration.var.token.lexeme.should eq ident
   declaration
 end
 
@@ -142,6 +150,17 @@ describe Parser do
     literal.should be_a AST::Expression::Var
     literal.token.type.should eq Syntax::Identifier
     literal.token.value.should eq "something"
+    stmts = Parser.new("#my_vec", "test", false).parse
+    stmts.should_not be_empty
+    expr = stmts.first.as(AST::Statement::SingleExpression).expression
+    unary = expr.as AST::Expression::UnaryOp
+    unary.should be_a AST::Expression::UnaryOp
+    unary.operator.type.should eq Syntax::Hashtag
+
+    literal = unary.operand.as AST::Expression::Var
+    literal.should be_a AST::Expression::Var
+    literal.token.type.should eq Syntax::Identifier
+    literal.token.value.should eq "my_vec"
   end
   it "parses binary operators" do
     stmts = Parser.new("false & true", "test", false).parse
@@ -457,9 +476,9 @@ describe Parser do
   end
   it "parses every statements" do
     lines = [
-      "int[] nums = [1,2,3]",
+      "const int[] nums = [1,2,3]",
       "int sum = 0",
-      "every int n in nums {",
+      "every const int n in nums {",
       " sum += n",
       "}"
     ]
@@ -468,7 +487,7 @@ describe Parser do
     stmts.should_not be_empty
 
     expr = stmts.first.as(AST::Statement::SingleExpression).expression
-    declaration = assert_var_declaration(expr, "int[]", "nums")
+    declaration = assert_var_declaration(expr, "int[]", "nums", constant: true)
     literal = declaration.value.as AST::Expression::VectorLiteral
     literal.should be_a AST::Expression::VectorLiteral
     literal.values.first.should be_a AST::Expression::IntLiteral
@@ -481,9 +500,7 @@ describe Parser do
 
     stmts.last.should be_a AST::Statement::Every
     every_stmt = stmts.last.as AST::Statement::Every
-    every_stmt.var.should be_a AST::Expression::VarDeclaration
-    every_stmt.var.typedef.lexeme.should eq "int"
-    every_stmt.var.token.lexeme.should eq "n"
+    declaration = assert_var_declaration(every_stmt.var, "int", "n", constant: true)
     every_stmt.enumerable.should be_a AST::Expression::Var
     every_stmt.block.nodes.first.should be_a AST::Statement::SingleExpression
     expr = every_stmt.block.nodes.first.as AST::Statement::SingleExpression

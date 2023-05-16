@@ -68,7 +68,7 @@ class Cosmo::Interpreter
     end_time = Time.monotonic
     puts "Interpreter took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
 
-    if !main_fn.nil? && main_fn.is_a?(Function)
+    if !main_fn.nil? && main_fn.is_a?(Function) && @file_path != "test" && @file_path != "repl"
       code = main_result.not_nil!.as(Int64)
       if code == 0 # success
         Process.exit(code)

@@ -1,22 +1,13 @@
 require "./spec_helper"
 
-lib LibC
-  fun dup(oldfd : LibC::Int) : LibC::Int
-end
-
-def shutup(&block : ->) # sick hack
-  close_on_exec = STDOUT.close_on_exec?
-  begin
-    o, i = IO.pipe
-    dup = LibC.dup(STDOUT.fd)
-    STDOUT.reopen(i)
-    yield
-    LibC.dup2(dup, STDOUT.fd)
-    STDOUT.close_on_exec = close_on_exec
-  ensure
-    o.close if o
-    i.flush if i
-    i.close if i
+# this still sucks
+def shutup(&block : ->)
+  out, err, in = Stdio.capture do |io|
+    STDOUT.puts ":)"
+    STDERR.puts ":("
+    io.in.puts ":P"
+    block.call
+    [io.out.gets, io.err.gets, STDIN.gets]
   end
 end
 
@@ -25,6 +16,10 @@ describe Interpreter do
   it "interprets intrinsics" do
     result = interpreter.interpret("__version", "test")
     result.should eq "Cosmo v#{`shards version`}".strip
+
+    result = interpreter.interpret("puts", "test")
+    result.should be_a Callable
+    result.should be_a IntrinsicFunction
   end
   it "interprets literals" do
     result = interpreter.interpret("false", "test")
@@ -49,6 +44,8 @@ describe Interpreter do
     result.should eq 'e'
     result = interpreter.interpret("[1, 2, 3]", "test")
     result.should eq [1, 2, 3]
+    result = interpreter.interpret("[[1,2,3], [4,5,6], ['a', 'b', 'c']]", "test")
+    result.should eq [[1,2,3], [4,5,6], ['a', 'b', 'c']]
     result = interpreter.interpret("{yes -> true, [123] -> false}", "test")
     result.should eq ({"yes" => true, 123 => false})
   end
@@ -75,10 +72,12 @@ describe Interpreter do
     result.should eq 7320947.960482759
     result = interpreter.interpret("true == false", "test")
     result.should eq false
+    result = interpreter.interpret("true == false == false != true", "test")
+    result.should eq false
   end
   it "interprets variable declarations" do
-    result = interpreter.interpret("int x = 0b11", "test")
-    result.should eq 3
+    result = interpreter.interpret("int x = 0b11 - 0b11011", "test")
+    result.should eq -24
 
     result = interpreter.interpret("char y = 'h'", "test")
     result.should eq 'h'
@@ -133,8 +132,16 @@ describe Interpreter do
     result = interpreter.interpret("a *= 4", "test")
     result.should eq -40
   end
-  it "interprets function definitions & calls" do
-    interpreter.interpret("bool fn is_eq(int a = 5, int b) { return a == b }", "test")
+  it "interprets function definitions" do
+    result = interpreter.interpret("bool fn is_eq(int a = 5, int b) { return a == b }", "test")
+    result.should be_a Callable
+    result.should be_a Function
+
+    result = interpreter.interpret("float fn half_sum(int a, int b) { (a + b) / 2 }", "test")
+    result.should be_a Callable
+    result.should be_a Function
+  end
+  it "interprets function calls" do
     result = interpreter.interpret("is_eq == none", "test")
     result.should be_false
     result = interpreter.interpret("is_eq(1, 1)", "test")
@@ -144,7 +151,6 @@ describe Interpreter do
     result = interpreter.interpret("is_eq(1, 2)", "test")
     result.should be_false
 
-    interpreter.interpret("float fn half_sum(int a, int b) { (a + b) / 2 }", "test")
     result = interpreter.interpret("half_sum(9, 7) + 2", "test")
     result.should eq 10
   end

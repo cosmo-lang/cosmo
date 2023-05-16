@@ -11,6 +11,8 @@ targets:
 dependencies:
   readline:
     github: crystal-lang/crystal-readline
+  stdio:
+    github: mosop/stdio
 
 crystal: 1.8.1
 

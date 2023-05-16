@@ -6,6 +6,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ## Things I Gotta Do
 
+- Performance boosts lol
 - Index/access assignment(`a[0] =" abc"` `or a->b = "c"`)
 - Ternary operator
 - Somehow typecheck blocks before execution
@@ -50,7 +51,9 @@ Another issue is with arrays.
 ```go
 string->string[]
 ```
-Is this type an array of string->string tables? Or is it a table of strings to arrays of strings?
+Is this type an array of string->string tables? Or is it a table of strings to arrays of strings?<br>
+Then again, you can always just use the `any` type to bypass any of this and let hell run loose at runtime.<br>
+As stated before though, I would like to fix this.
 
 ## Installation
 
