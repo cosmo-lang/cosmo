@@ -114,8 +114,8 @@ describe Interpreter do
     result.should be_false
     result = interpreter.interpret("is_eq(1, 1)", "test")
     result.should be_true
-    # result = interpreter.interpret("is_eq(none, 5)", "test")
-    # result.should be_true
+    result = interpreter.interpret("is_eq(none, 5)", "test")
+    result.should be_true
     result = interpreter.interpret("is_eq(1, 2)", "test")
     result.should be_false
 

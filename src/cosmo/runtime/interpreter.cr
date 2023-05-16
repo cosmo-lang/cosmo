@@ -207,10 +207,9 @@ class Cosmo::Interpreter
   end
 
   def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
-    typedef = Token.new("fn", Syntax::TypeDef, "fn", Location.new(@file_path, 0, 0))
     fn = Function.new(self, @scope, stmt)
+    typedef = Token.new("fn", Syntax::TypeDef, "fn", Location.new(@file_path, 0, 0))
     @scope.declare(typedef, stmt.identifier, fn)
-    fn
   end
 
   def visit_fn_call_expr(expr : Expression::FunctionCall) : ValueType

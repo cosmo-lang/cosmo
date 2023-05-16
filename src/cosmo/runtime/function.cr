@@ -25,9 +25,11 @@ class Cosmo::Function < Cosmo::Callable
 
     # assign params
     @definition.parameters.each_with_index do |param, i|
-      scope.declare(param.typedef, param.identifier, args[i])
+      value = (args[i] || (param.default_value.nil? ? nil : @interpreter.evaluate(param.default_value.not_nil!))).as ValueType
+      scope.declare(param.typedef, param.identifier, value)
     end
 
+    puts scope.variables
     result = nil
     begin
       result = @interpreter.execute_block(@definition.body, scope, is_fn: true)

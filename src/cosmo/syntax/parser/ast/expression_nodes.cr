@@ -153,7 +153,7 @@ module Cosmo::AST::Expression
   class Parameter < Base
     getter typedef : Token
     getter identifier : Token
-    getter default_value : Node?
+    getter default_value : Expression::Base?
 
     def initialize(@typedef, @identifier, @default_value = NoneLiteral.new(nil, identifier))
     end

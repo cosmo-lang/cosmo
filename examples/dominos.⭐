@@ -1,7 +1,17 @@
 string fn domino(string sequence) {
   string result = ""
-  for ch in sequence {
-    result += ch
+  bool finished = false
+
+  for char ch in sequence {
+    if !finished & (ch == '/' | ch == ' ') {
+      finished = true
+      result += ch
+    } else {
+      result += ch
+    }
   }
+
   result
 }
+
+puts(domino("||//||")) ## ////||

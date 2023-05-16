@@ -210,6 +210,11 @@ module Cosmo::Operator
         Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
       elsif var.is_a?(String)
         return @interpreter.scope.assign(expr.name, var + value) if value.is_a?(String)
+        return @interpreter.scope.assign(expr.name, var + value.to_s) if value.is_a?(Char)
+        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
+      elsif var.is_a?(Char)
+        return @interpreter.scope.assign(expr.name, var.to_s + value.to_s) if value.is_a?(Char)
+        return @interpreter.scope.assign(expr.name, var.to_s + value) if value.is_a?(String)
         Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
       end
       Logger.report_error("Invalid '#{op}' operand type", var.class.to_s, expr.operator)
