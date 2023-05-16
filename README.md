@@ -6,6 +6,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ## Things I Gotta Do
 
+- Make `main()` return an exit code
 - Index/access assignment(`a[0] =" abc"` `or a->b = "c"`)
 - Constant variables (functions should be constant by default)
 - Ternary operator

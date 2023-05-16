@@ -181,8 +181,8 @@ class Cosmo::Parser
       end
 
       while match?(Syntax::Comma)
-        consume(Syntax::TypeDef)
-        param_type = last_token
+        type_info = parse_type(required: true)
+        param_type = type_info[:type_ref].not_nil!.name
         consume(Syntax::Identifier)
         param_ident = last_token
         if match?(Syntax::Equal)

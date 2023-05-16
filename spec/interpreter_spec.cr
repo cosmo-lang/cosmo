@@ -235,4 +235,16 @@ describe Interpreter do
       interpreter.interpret("float[] aba = [x, 2.0]", "test")
     end
   end
+  describe "interprets example: " do
+    example_files = Dir.entries "examples/"
+    example_files.each do |example_file|
+      next if example_file.starts_with?(".")
+      it example_file do
+        interpreter = Interpreter.new(output_ast: false, run_benchmarks: false)
+        path = File.join "examples", example_file
+        source = File.read(path)
+        interpreter.interpret(source, "test")
+      end
+    end
+  end
 end

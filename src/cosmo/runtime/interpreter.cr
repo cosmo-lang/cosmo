@@ -33,13 +33,6 @@ class Cosmo::Interpreter
     declare_intrinsic("string", "__version", version)
   end
 
-  def reset
-    @locals.clear
-    @meta.clear
-    @scope = Scope.new
-    TypeChecker.reset
-  end
-
   def interpret(source : String, @file_path : String) : ValueType
     parser = Parser.new(source, @file_path, @run_benchmarks)
     statements = parser.parse
@@ -66,7 +59,7 @@ class Cosmo::Interpreter
     # Check if "main" fn exists and call it
     main_fn = @globals.lookup?(Token.new("main", Syntax::Identifier, "main", Location.new("", 0, 0)))
     if !main_fn.nil? && main_fn.is_a?(Function)
-      main_result = main_fn.call([ARGV.size, ARGV])
+      main_result = main_fn.call([ARGV.size, ARGV.map(&.as ValueType)])
       result = main_result unless main_result.nil?
     end
 
