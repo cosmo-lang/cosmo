@@ -15,10 +15,10 @@ enum Cosmo::Syntax
   Function
   If; Unless
   In; Of
+  Is
   Else
-  For
+  Every
   While; Until
-  Global
   Constant
   Break
   Next

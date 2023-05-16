@@ -1,5 +1,10 @@
 module Cosmo::AST::Statement
   module Visitor(R)
+    abstract def visit_every_stmt(stmt : Every) : R
+    abstract def visit_while_stmt(stmt : While) : R
+    abstract def visit_until_stmt(stmt : Until) : R
+    abstract def visit_if_stmt(stmt : If) : R
+    abstract def visit_unless_stmt(stmt : Unless) : R
     abstract def visit_return_stmt(stmt : Return) : R
     abstract def visit_fn_def_stmt(stmt : FunctionDef) : R
     abstract def visit_single_expr_stmt(stmt : SingleExpression) : R
@@ -8,6 +13,32 @@ module Cosmo::AST::Statement
 
   abstract class Base < Node
     abstract def accept(visitor : Visitor(R)) forall R
+  end
+
+  class Every < Base
+    getter keyword : Token
+    getter var : Expression::VarDeclaration
+    getter enumerable : Expression::Base
+    getter block : Block
+
+    def initialize(@keyword, @var, @enumerable, @block)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_every_stmt(self)
+    end
+
+    def token : Token
+      @keyword
+    end
+
+    def to_s(indent : Int = 0)
+      "Every<\n" +
+      "  #{TAB * indent}var: #{@var.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}in: #{@enumerable.to_s(indent + 1)}\n" +
+      "  #{TAB * indent}do: #{@block.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
+    end
   end
 
   class While < Base

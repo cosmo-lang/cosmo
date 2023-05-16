@@ -118,6 +118,34 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_every_stmt(stmt : Statement::Every) : Nil
+    enclosing = @scope
+    @scope = Scope.new(@scope)
+
+    enumerable = evaluate(stmt.enumerable)
+
+    @scope.declare(stmt.var.typedef, stmt.var.token, nil)
+    if enumerable.is_a?(Array)
+      enumerable.each do |value|
+        @scope.assign(stmt.var.token, value)
+        execute_block(stmt.block, scope)
+      end
+    elsif enumerable.is_a?(String)
+      enumerable.chars.each do |value|
+        @scope.assign(stmt.var.token, value)
+        execute_block(stmt.block, scope)
+      end
+    elsif enumerable.is_a?(Callable)
+      value = enumerable.call([] of ValueType)
+      @scope.assign(stmt.var.token, value)
+      execute_block(stmt.block, scope)
+    else
+      Logger.report_error("Invalid enumerable type:", TypeChecker.get_mapped(enumerable.class), stmt.token)
+    end
+
+    @scope = enclosing
+  end
+
   def visit_until_stmt(stmt : Statement::Until) : Nil
     until evaluate(stmt.condition)
       execute(stmt.block)

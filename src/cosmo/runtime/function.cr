@@ -29,7 +29,6 @@ class Cosmo::Function < Cosmo::Callable
       scope.declare(param.typedef, param.identifier, value)
     end
 
-    puts scope.variables
     result = nil
     begin
       result = @interpreter.execute_block(@definition.body, scope, is_fn: true)

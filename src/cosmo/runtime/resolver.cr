@@ -77,6 +77,12 @@ class Cosmo::Resolver
     end_scope
   end
 
+  def visit_every_stmt(stmt : Statement::Every) : Nil
+    resolve(stmt.var)
+    resolve(stmt.enumerable)
+    resolve(stmt.block)
+  end
+
   def visit_single_expr_stmt(stmt : Statement::SingleExpression) : Nil
     resolve(stmt.expression)
   end

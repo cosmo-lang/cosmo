@@ -2,11 +2,13 @@ string fn domino(string sequence) {
   string result = ""
   bool finished = false
 
-  for char ch in sequence {
-    if !finished & (ch == '/' | ch == ' ') {
-      finished = true
-      result += ch
+  every char ch in sequence {
+    if ch == '|' & !finished {
+      result += '/'
     } else {
+      if ch == ' ' | ch == '/' {
+        finished = true
+      }
       result += ch
     }
   }
@@ -15,3 +17,5 @@ string fn domino(string sequence) {
 }
 
 puts(domino("||//||")) ## ////||
+puts(domino("||| ||||//| |/")) ## /// ||||//| |/
+puts(domino("||||"))

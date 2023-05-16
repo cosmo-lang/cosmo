@@ -10,14 +10,14 @@ module Cosmo::Keywords
     "unless" => Syntax::Unless,
     "in" => Syntax::In,
     "of" => Syntax::Of,
+    "is" => Syntax::Is,
     "else" => Syntax::Else,
-    "for" => Syntax::For,
+    "every" => Syntax::Every,
     "while" => Syntax::While,
     "until" => Syntax::Until,
     "break" => Syntax::Break,
     "next" => Syntax::Next,
     "match" => Syntax::Match,
-    "global" => Syntax::Global,
     "const" => Syntax::Constant,
     "return" => Syntax::Return
   }

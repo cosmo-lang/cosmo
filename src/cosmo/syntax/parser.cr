@@ -26,7 +26,7 @@ class Cosmo::Parser
     callee = parse_var_declaration
 
     if match?(Syntax::LParen)
-      callee = parse_function_call(callee)
+      callee = parse_fn_call(callee)
     end
 
     callee
@@ -62,7 +62,7 @@ class Cosmo::Parser
   # Parse a function definition and return a node
   private def parse_regular_statement : Node
     if !finished? && token_exists?(1) && (current.type == Syntax::TypeDef || current.type == Syntax::Identifier) && peek.type == Syntax::Function
-      parse_function_def_statement
+      parse_fn_def_statement
     elsif match?(Syntax::If)
       parse_if_statement
     elsif match?(Syntax::Unless)
@@ -71,9 +71,27 @@ class Cosmo::Parser
       parse_while_statement
     elsif match?(Syntax::Until)
       parse_until_statement
+    elsif match?(Syntax::Every)
+      parse_every_statement
     else
       parse_expression
     end
+  end
+
+  private def parse_every_statement : Statement::Every
+    token = last_token
+    type_info = parse_type
+    typedef = type_info[:type_ref].not_nil!.name
+
+    consume(Syntax::Identifier)
+    ident = last_token
+    var = Expression::Var.new(ident)
+    var_declaration = Expression::VarDeclaration.new(typedef, var, Expression::NoneLiteral.new(nil, ident))
+
+    consume(Syntax::In)
+    enumerable = parse_expression
+    block = parse_block
+    Statement::Every.new(token, var_declaration, enumerable, block)
   end
 
   private def parse_while_statement : Statement::While
@@ -123,21 +141,21 @@ class Cosmo::Parser
     Statement::Return.new(value || Expression::NoneLiteral.new(nil, last_token), last_token)
   end
 
-  private def parse_function_def_statement
+  private def parse_fn_def_statement
     type_info = parse_type(required: true)
     return_typedef = type_info[:variable_type].not_nil!
     consume(Syntax::Function)
     consume(Syntax::Identifier)
     function_ident = last_token
     consume(Syntax::LParen)
-    params = parse_function_params
+    params = parse_fn_params
     consume(Syntax::RParen)
     body = parse_block
     Statement::FunctionDef.new(function_ident, params, body, return_typedef)
   end
 
   # Parse function parameters and return an array of nodes
-  private def parse_function_params : Array(Expression::Parameter)
+  private def parse_fn_params : Array(Expression::Parameter)
     params = [] of Expression::Parameter
 
     if match?(Syntax::TypeDef)
@@ -193,7 +211,7 @@ class Cosmo::Parser
   end
 
   # Parse a function call and return a node
-  private def parse_function_call(callee : Expression::Base) : Node
+  private def parse_fn_call(callee : Expression::Base) : Node
     arguments = [] of Expression::Base
 
     until match?(Syntax::RParen)
@@ -546,7 +564,7 @@ class Cosmo::Parser
       ident = last_token
       ref = Expression::Var.new(ident)
       if match?(Syntax::LParen) # it's a function call
-        parse_function_call(ref)
+        parse_fn_call(ref)
       elsif match?(Syntax::LBracket) # it's an index
         parse_index(ref)
       elsif !finished? && token_exists? && ACCESS_SYNTAXES.includes?(current.type) # it's a property access
