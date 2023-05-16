@@ -53,6 +53,8 @@ describe Interpreter do
     result.should eq 17.785714285714285
     result = interpreter.interpret("(14 - 3.253 / 14.5) * 27 ^ 4", "test")
     result.should eq 7320947.960482759
+    result = interpreter.interpret("true == false", "test")
+    result.should eq false
   end
   it "interprets variable declarations" do
     result = interpreter.interpret("int x = 0b11", "test")
@@ -63,6 +65,9 @@ describe Interpreter do
 
     result = interpreter.interpret("string z = \"hello world\"", "test")
     result.should eq "hello world"
+
+    result = interpreter.interpret("bool abc = false", "test")
+    result.should eq false
 
     result = interpreter.interpret("char[] word = ['h', 'e', 'l', 'l', 'o']", "test")
     result.should be_a Array(ValueType)
@@ -94,19 +99,22 @@ describe Interpreter do
     result.should eq 12
   end
   it "interprets compound assignment" do
-    interpreter.interpret("int a = 5", "test")
-    interpreter.interpret("a += 2", "test")
-    result = interpreter.interpret("a", "test")
+    result = interpreter.interpret("int a = 5", "test")
+    result.should eq 5
+    result = interpreter.interpret("a += 2", "test")
     result.should eq 7
-    interpreter.interpret("a -= 17", "test")
-    result = interpreter.interpret("a", "test")
+    result = interpreter.interpret("a -= 17", "test")
     result.should eq -10
+    result = interpreter.interpret("a *= 4", "test")
+    result.should eq -40
   end
   it "interprets function definitions & calls" do
-    interpreter.interpret("bool fn is_eq(int a, int b) { return a == b }", "test")
+    interpreter.interpret("bool fn is_eq(int a = 5, int b) { return a == b }", "test")
     result = interpreter.interpret("is_eq == none", "test")
     result.should be_false
     result = interpreter.interpret("is_eq(1, 1)", "test")
+    result.should be_true
+    result = interpreter.interpret("is_eq(none, 5)", "test")
     result.should be_true
     result = interpreter.interpret("is_eq(1, 2)", "test")
     result.should be_false
@@ -139,13 +147,15 @@ describe Interpreter do
       result.should eq 2
     end
     it "tables" do
-      interpreter.interpret("string->bool bad_people = {[\"billy bob\"] -> false, mj -> true}", "test")
+      interpreter.interpret("string->bool bad_people = {[\"billy bob\"] -> false, mj -> true, joemar -> false}", "test")
       result = interpreter.interpret("bad_people[\"billy bob\"]", "test")
       result.should eq false
       result = interpreter.interpret("bad_people.mj", "test")
       result.should eq true
       result = interpreter.interpret("bad_people::mj", "test")
       result.should eq true
+      result = interpreter.interpret("bad_people->joemar", "test")
+      result.should eq false
     end
   end
   it "interprets if/unless statements" do

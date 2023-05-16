@@ -152,7 +152,7 @@ class Cosmo::Interpreter
     object = evaluate(expr.object)
     key = expr.key.value.to_s
     if object.is_a?(Hash)
-      object[key]
+      object[key]?
     else
       Logger.report_error("Attempt to index", TypeChecker.get_mapped(object.class), expr.token)
     end
@@ -165,14 +165,14 @@ class Cosmo::Interpreter
       unless key.is_a?(Int)
         Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.token)
       end
-      ref[key]
+      ref[key]?
     elsif ref.is_a?(Array)
       unless key.is_a?(Int)
         Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.token)
       end
-      ref[key]
+      ref[key]?
     elsif ref.is_a?(Hash)
-      ref[key]
+      ref[key]?
     else
       Logger.report_error("Attempt to index", TypeChecker.get_mapped(ref.class), expr.ref.token)
     end

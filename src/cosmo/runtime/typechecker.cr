@@ -31,6 +31,7 @@ module Cosmo::TypeChecker
     Array(Char) => "char[]",
     Array(Bool) => "bool[]",
     Array(Function) => "fn[]",
+    Array(ValueType) => "any[]",
     Array => "any[]",
     Hash => "table"
   }
