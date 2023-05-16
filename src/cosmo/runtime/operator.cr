@@ -22,6 +22,11 @@ module Cosmo::Operator
         Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
       elsif left.is_a?(String)
         return left + right if right.is_a?(String)
+        return left + right.to_s if right.is_a?(Char)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(Char)
+        return left.to_s + right.to_s if right.is_a?(Char)
+        return left.to_s + right if right.is_a?(String)
         Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
       end
       Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)

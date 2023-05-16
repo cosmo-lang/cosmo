@@ -1,0 +1,7 @@
+string fn domino(string sequence) {
+  string result = ""
+  for ch in sequence {
+    result += ch
+  }
+  result
+}
