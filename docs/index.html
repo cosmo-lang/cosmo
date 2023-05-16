@@ -517,6 +517,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Things I Gotta Do</h2>
 <ul>
+<li>Performance boosts lol</li>
 <li>Index/access assignment(<code>a[0] =&quot; abc&quot;</code> <code>or a-&gt;b = &quot;c&quot;</code>)</li>
 <li>Ternary operator</li>
 <li>Somehow typecheck blocks before execution</li>
@@ -572,7 +573,9 @@ In the future (but not right now), this code should be valid:</p>
 puts(weird_table[{<span class="s">&quot;some&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;thing&quot;</span>}]) <span class="c">## hello world</span></code></pre>
 <p>Another issue is with arrays.</p>
 <pre><code class="language-go">string-&gt;string[]</code></pre>
-<p>Is this type an array of string-&gt;string tables? Or is it a table of strings to arrays of strings?</p>
+<p>Is this type an array of string-&gt;string tables? Or is it a table of strings to arrays of strings?<br>
+Then again, you can always just use the <code>any</code> type to bypass any of this and let hell run loose at runtime.<br>
+As stated before though, I would like to fix this.</p>
 <h2><a id="installation" class="anchor" href="#installation">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
