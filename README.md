@@ -24,6 +24,11 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * typeof keyword
   * unions/intersections
 
+## Things I Might Do
+
+- Make into a VM or compiler
+- C bindings
+
 ## Gotchas
 
 ### Table type definitions
