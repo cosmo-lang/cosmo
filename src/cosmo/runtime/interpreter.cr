@@ -296,7 +296,8 @@ class Cosmo::Interpreter
       Logger.report_error("Attempt to call", TypeChecker.get_mapped(fn.class), expr.token)
     end
     unless fn.arity.includes?(expr.arguments.size)
-      Logger.report_error("Expected #{fn.arity} arguments, got", expr.arguments.size.to_s, expr.token)
+      arg_size = fn.arity.begin == fn.arity.end ? fn.arity.begin : fn.arity.to_s
+      Logger.report_error("Expected #{arg_size} arguments, got", expr.arguments.size.to_s, expr.token)
     end
 
     @meta["block_return_type"] = fn.definition.return_typedef.value.to_s unless fn.is_a?(IntrinsicFunction)
