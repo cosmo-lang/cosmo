@@ -12,7 +12,7 @@ def shutup(&block : ->)
 end
 
 describe Interpreter do
-  interpreter = Interpreter.new(output_ast: false, run_benchmarks: false)
+  interpreter = Interpreter.new(output_ast: false, run_benchmarks: false, debug_mode: true)
   it "interprets intrinsics" do
     result = interpreter.interpret("__version", "test")
     result.should eq "Cosmo v#{`shards version`}".strip
@@ -271,7 +271,7 @@ describe Interpreter do
     example_files.each do |example_file|
       next if example_file.starts_with?(".")
       it example_file do
-        interpreter = Interpreter.new(output_ast: false, run_benchmarks: false)
+        interpreter = Interpreter.new(output_ast: false, run_benchmarks: false, debug_mode: true)
         path = File.join "examples", example_file
         source = File.read(path)
         shutup do
