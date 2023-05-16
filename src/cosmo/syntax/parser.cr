@@ -146,7 +146,7 @@ class Cosmo::Parser
   end
 
   private def parse_return_statement : Statement::Return
-    value : Expression::Base? = check?(Syntax::RBrace) ? nil : parse_expression
+    value = check?(Syntax::RBrace) ? nil : parse_expression
     Statement::Return.new(value || Expression::NoneLiteral.new(nil, last_token), last_token)
   end
 
@@ -591,7 +591,7 @@ class Cosmo::Parser
 
   private def check?(syntax : Syntax) : Bool
     return false if finished?
-    peek.type == syntax
+    current.type == syntax
   end
 
   # Return the current token at the current position
