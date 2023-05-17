@@ -221,6 +221,26 @@ describe Parser do
     right.should be_a AST::Expression::IntLiteral
     right.value.should eq 46
   end
+  it "parses the ternary operator" do
+    stmts = Parser.new("false ? \"no\" : \"yes\"", "test", false).parse
+    stmts.should_not be_empty
+    expr = stmts.first.as(AST::Statement::SingleExpression).expression
+    ternary = expr.as AST::Expression::TernaryOp
+    ternary.should be_a AST::Expression::TernaryOp
+    ternary.operator.type.should eq Syntax::Question
+
+    condition = ternary.condition.as AST::Expression::BooleanLiteral
+    condition.should be_a AST::Expression::BooleanLiteral
+    condition.value.should be_false
+
+    then_expr = ternary.then.as AST::Expression::StringLiteral
+    then_expr.should be_a AST::Expression::StringLiteral
+    then_expr.value.should eq "no"
+
+    else_expr = ternary.else.as AST::Expression::StringLiteral
+    else_expr.should be_a AST::Expression::StringLiteral
+    else_expr.value.should eq "yes"
+  end
   it "parses variable references" do
     stmts = Parser.new("abc", "test", false).parse
     stmts.should_not be_empty
