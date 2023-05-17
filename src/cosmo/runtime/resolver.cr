@@ -137,7 +137,7 @@ class Cosmo::Resolver
 
   def visit_property_assignment_expr(expr : Expression::PropertyAssignment) : Nil
     resolve(expr.object)
-    resolve(expr.value)
+    resolve(expr.value.as(Expression::Base)) if expr.value.is_a?(Expression::Base)
   end
 
   def visit_type_alias_expr(expr : Expression::TypeAlias) : Nil

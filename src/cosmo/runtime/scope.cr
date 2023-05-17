@@ -45,7 +45,7 @@ class Cosmo::Scope
         Logger.report_error("Attempt to assign to constant variable", identifier.value.to_s, identifier)
       end
       TypeChecker.assert(info[:type], value, identifier)
-      return create_variable(info[:type], identifier, value, false)
+      return create_variable(info[:type], identifier, value, constant: false)
     end
 
     return @parent.not_nil!.assign(identifier, value) unless @parent.nil?

@@ -21,7 +21,7 @@ module Cosmo::AST::Expression
 
   class PropertyAssignment < Base
     getter object : Access | Index
-    getter value : Expression::Base
+    getter value : Expression::Base | ValueType
 
     def initialize(@object, @value)
     end
@@ -35,7 +35,12 @@ module Cosmo::AST::Expression
     end
 
     def to_s(indent : Int = 0)
-      "PropertyAssignment<object: #{@object.to_s(indent + 1)}, value: #{@value.to_s(indent + 1)}>"
+      if value.is_a?(Expression::Base)
+        value_s = @value.as(Expression::Base).to_s(indent + 1)
+      else
+        value_s = @value.to_s
+      end
+      "PropertyAssignment<object: #{@object.to_s(indent + 1)}, value: #{value_s}>"
     end
   end
 

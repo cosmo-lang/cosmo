@@ -134,6 +134,7 @@ module Cosmo::TypeChecker
         types = typedef.split("->", 2)
         key_type = types.first
         value_type = types.last
+
         report_mismatch(typedef, value, token) unless value.is_a?(Hash)
 
         internal = value.as(Hash)

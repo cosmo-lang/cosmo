@@ -191,7 +191,7 @@ class Cosmo::Parser
   private def parse_expression : Expression::Base
     left = parse_var_declaration
 
-    if match?(Syntax::LParen) # it's a function call
+    if match?(Syntax::LParen)
       left = parse_fn_call(left)
     elsif match?(Syntax::LBracket)
       left = parse_index(left)
@@ -232,18 +232,6 @@ class Cosmo::Parser
       index = parse_index(index)
     end
     index
-  end
-
-  # Parse a function call and return a node
-  private def parse_fn_call(callee : Expression::Base) : Expression::Base
-    arguments = [] of Expression::Base
-
-    until match?(Syntax::RParen)
-      arguments << parse_expression
-      match?(Syntax::Comma)
-    end
-
-    Expression::FunctionCall.new(callee, arguments)
   end
 
   private alias TypeInfo = NamedTuple(
@@ -347,6 +335,18 @@ class Cosmo::Parser
     else
       Expression::TypeAlias.new(type_token, identifier, nil)
     end
+  end
+
+  # Parse a function call and return a node
+  private def parse_fn_call(callee : Expression::Base) : Expression::Base
+    arguments = [] of Expression::Base
+
+    until match?(Syntax::RParen)
+      arguments << parse_expression
+      match?(Syntax::Comma)
+    end
+
+    Expression::FunctionCall.new(callee, arguments)
   end
 
   # Parse a variable declaration and return a node
@@ -533,14 +533,21 @@ class Cosmo::Parser
     end
   end
 
-  # Parse a factor (e.g. number or parentheses) and return a node
-  private def parse_factor : Expression::Base
-    case current.type
-    when Syntax::LParen
-      consume_current
+  # Parse a primary expression and return a node
+  private def parse_primary : Expression::Base
+    if match?(Syntax::LParen)
       node = parse_expression
       consume(Syntax::RParen)
       node
+    elsif match?(Syntax::Identifier)
+      ident = last_token
+      callee = Expression::Var.new(ident)
+
+      if match?(Syntax::LParen)
+        callee = parse_fn_call(callee)
+      end
+
+      callee
     else
       parse_literal
     end
@@ -616,20 +623,6 @@ class Cosmo::Parser
       Expression::NoneLiteral.new(nil, last_token)
     else
       Logger.report_error("Invalid syntax", current.lexeme, current)
-    end
-  end
-
-  # Parse a primary expression and return a node
-  private def parse_primary : Expression::Base
-    if match?(Syntax::LParen)
-      node = parse_expression
-      consume(Syntax::RParen)
-      node
-    elsif match?(Syntax::Identifier)
-      ident = last_token
-      Expression::Var.new(ident)
-    else
-      parse_literal
     end
   end
 
