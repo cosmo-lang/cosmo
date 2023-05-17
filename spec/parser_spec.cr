@@ -323,6 +323,21 @@ describe Parser do
     literal.should be_a AST::Expression::IntLiteral
     literal.value.should eq 2
   end
+  it "parses property assignment" do
+    stmts = Parser.new("foo::bar = \"baz\"", "test", false).parse
+    stmts.should_not be_empty
+    expr = stmts.first.as(AST::Statement::SingleExpression).expression
+    expr.should be_a AST::Expression::PropertyAssignment
+    assignment = expr.as AST::Expression::PropertyAssignment
+    assignment.object.should be_a AST::Expression::Access
+    access = assignment.object.as AST::Expression::Access
+    access.object.should be_a AST::Expression::Var
+    access.key.should be_a AST::Expression::Var
+    access.object.as(AST::Expression::Var).token.lexeme.should eq "foo"
+    access.key.as(AST::Expression::Var).token.lexeme.should eq "bar"
+    assignment.value.should be_a AST::Expression::StringLiteral
+    assignment.value.as(AST::Expression::StringLiteral).value.should eq "baz"
+  end
   it "parses function definitions & calls" do
     lines = [
       "bool fn is_eq(int a, int b) {",
@@ -404,8 +419,8 @@ describe Parser do
     stmts.should_not be_empty
     expr = stmts.last.as(AST::Statement::SingleExpression).expression
     index = expr.as AST::Expression::Index
-    index.ref.token.type.should eq Syntax::Identifier
-    index.ref.token.value.should eq "x"
+    index.object.token.type.should eq Syntax::Identifier
+    index.object.token.value.should eq "x"
 
     index.key.should be_a AST::Expression::IntLiteral
     key = index.key.as AST::Expression::IntLiteral
