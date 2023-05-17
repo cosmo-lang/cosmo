@@ -54,13 +54,14 @@ class Cosmo::Parser
 
   # Parse a block of statements and return a node
   private def parse_block : Statement::Block
-    match?(Syntax::LBrace)
+    consume(Syntax::LBrace)
     statements = [] of Statement::Base
 
-    until finished? || match?(Syntax::RBrace)
+    until finished? || current.type == Syntax::RBrace
       statements << parse_statement
     end
 
+    consume(Syntax::RBrace)
     Statement::Block.new(statements)
   end
 
@@ -517,7 +518,7 @@ class Cosmo::Parser
   end
 
   # Parse a factor (e.g. number or parentheses) and return a node
-  private def parse_factor : Node
+  private def parse_factor : Expression::Base
     case current.type
     when Syntax::LParen
       consume_current
@@ -539,7 +540,7 @@ class Cosmo::Parser
     end
   end
 
-  private def parse_table_literal
+  private def parse_table_literal : Expression::TableLiteral
     hash = {} of Expression::Base => Expression::Base
 
     until match?(Syntax::RBrace)

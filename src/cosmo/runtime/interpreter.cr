@@ -353,6 +353,10 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_postfix_expr(expr : Expression::Postfix) : ValueType
+    execute(expr.statement)
+  end
+
   def visit_unary_op_expr(expr : Expression::UnaryOp) : ValueType
     operand = evaluate(expr.operand.as Expression::Base)
     case expr.operator.type

@@ -6,6 +6,7 @@ int[]? fn simple_pair(int[] vec, int n) {
     if y == none {
       next
     }
+
     if x * y == n {
       return [x, y]
     }

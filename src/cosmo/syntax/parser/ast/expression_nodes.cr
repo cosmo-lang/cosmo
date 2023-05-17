@@ -144,7 +144,7 @@ module Cosmo::AST::Expression
       "FunctionCall<\n" +
       "  #{TAB * indent}var: #{@callee.to_s(indent + 1)},\n" +
       "  #{TAB * indent}arguments: [\n" +
-      "    #{TAB * indent}#{@arguments.map(&.to_s(indent + 2)).join(", ")}\n" +
+      "    #{TAB * indent}#{@arguments.map(&.to_s(indent + 2)).join(",\n#{TAB * (indent + 2)}")}\n" +
       "  #{TAB * indent}]\n" +
       "#{TAB * indent}>"
     end
@@ -288,6 +288,25 @@ module Cosmo::AST::Expression
     end
   end
 
+  class Postfix < Base
+    getter statement : Statement::Base
+
+    def initialize(@statement)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_postfix_expr(self)
+    end
+
+    def token : Token
+      @statement.token
+    end
+
+    def to_s(indent : Int = 0)
+      "Postfix<statement: #{@statement.to_s(indent + 1)}>"
+    end
+  end
+
   class UnaryOp < Base
     getter operator : Token
     getter operand : Node
@@ -357,7 +376,7 @@ module Cosmo::AST::Expression
 
     def to_s(indent : Int = 0)
       "Literal<[\n" +
-      "  #{TAB * indent}#{@values.map(&.to_s(indent + 2)).join(",\n#{TAB * (indent + 2)}")}\n" +
+      "  #{TAB * indent}#{@values.map(&.to_s(indent + 2)).join(",\n#{TAB * (indent + 1)}")}\n" +
       "#{TAB * indent}]>"
     end
   end
