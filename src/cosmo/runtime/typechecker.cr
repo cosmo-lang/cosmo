@@ -104,7 +104,7 @@ module Cosmo::TypeChecker
     case typedef
     when "type"
       report_mismatch(typedef, value, token) unless value.is_a?(Type)
-    when "fn"
+    when "func"
       report_mismatch(typedef, value, token) unless value.is_a?(Function) || value.is_a?(IntrinsicFunction)
     when "int"
       report_mismatch(typedef, value, token) unless value.is_a?(Int)

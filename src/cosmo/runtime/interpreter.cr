@@ -32,7 +32,7 @@ class Cosmo::Interpreter
     TypeChecker.register_intrinsics
 
     @scope = @globals
-    declare_intrinsic("fn", "puts", PutsIntrinsic.new)
+    declare_intrinsic("func", "puts", PutsIntrinsic.new)
 
     version = "Cosmo v#{`shards version`}".strip
     declare_intrinsic("string", "__version", version)
@@ -308,7 +308,7 @@ class Cosmo::Interpreter
 
   def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
     fn = Function.new(self, @scope, stmt)
-    typedef = Token.new("fn", Syntax::TypeDef, "fn", Location.new(@file_path, 0, 0))
+    typedef = Token.new("func", Syntax::TypeDef, "func", Location.new(@file_path, 0, 0))
     @scope.declare(typedef, stmt.identifier, fn)
   end
 

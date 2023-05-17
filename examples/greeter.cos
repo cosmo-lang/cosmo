@@ -4,6 +4,6 @@ any fn greeter(const string greeting) {
   }
 }
 
-const any greet = greeter("hello")
+const func greet = greeter("hello")
 greet("world") ## hello world
 greet("bob") ## hello bob
