@@ -18,3 +18,5 @@ const string->string->string a = {
 }
 
 puts(a->b->c) ## even -> is valid
+a->b->foo = "bar"
+puts(a->b->foo) ## bar

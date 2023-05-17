@@ -1,3 +1,5 @@
 const string[] letters = ["a", "b", "c"]
 puts(letters[0], letters[1], letters[2]) ## a b c
-puts(letters[3] = "d") ## d
+
+letters[3] = "d"
+puts(letters[3]) ## d
