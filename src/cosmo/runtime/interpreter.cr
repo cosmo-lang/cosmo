@@ -312,12 +312,18 @@ class Cosmo::Interpreter
     @scope.assign(expr.var.token, value)
   end
 
-  def get_access_object(expr : Expression::Base) : Tuple(ValueType, ValueType)
-
-
-    return get_access_object(object) if object.is_a?(Expression::Index) || object.is_a?(Expression::Access)
-    return evaluate(object) if object.is_a?(Expression::Var)
-    {key, object}
+  def add_object_value(token : Token, object : V, key : ValueType, value : ValueType) : V forall V
+    if object.is_a?(Array)
+      unless key.is_a?(Int)
+        Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), token)
+      end
+      object.insert(key, value)
+    elsif object.is_a?(Hash)
+      object[key] = value
+    else
+      Logger.report_error("Attempt to assign to index of", TypeChecker.get_mapped(object.class), token)
+    end
+    object
   end
 
   def visit_property_assignment_expr(expr : Expression::PropertyAssignment) : ValueType
@@ -338,21 +344,12 @@ class Cosmo::Interpreter
       : expr.value.as ValueType
 
     if object_node.is_a?(Expression::Index) || object_node.is_a?(Expression::Access)
-      if object.is_a?(Array)
-        unless key.is_a?(Int)
-          Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.token)
-        end
-        object.insert(key, value)
-      elsif object.is_a?(Hash)
-        object[key] = value
-      else
-        Logger.report_error("Attempt to assign to index of", TypeChecker.get_mapped(object.class), expr.token)
-      end
-
+      object = add_object_value(expr.token, object, key, value)
       prop_assignment = Expression::PropertyAssignment.new(object_node, object)
       return visit_property_assignment_expr(prop_assignment)
     end
 
+    object = add_object_value(expr.token, object, key, value)
     @scope.assign(expr.token, object)
   end
 

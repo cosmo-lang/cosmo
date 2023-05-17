@@ -331,10 +331,10 @@ describe Parser do
     assignment = expr.as AST::Expression::PropertyAssignment
     assignment.object.should be_a AST::Expression::Access
     access = assignment.object.as AST::Expression::Access
+    access.key.should be_a Token
+    access.key.lexeme.should eq "bar"
     access.object.should be_a AST::Expression::Var
-    access.key.should be_a AST::Expression::Var
     access.object.as(AST::Expression::Var).token.lexeme.should eq "foo"
-    access.key.as(AST::Expression::Var).token.lexeme.should eq "bar"
     assignment.value.should be_a AST::Expression::StringLiteral
     assignment.value.as(AST::Expression::StringLiteral).value.should eq "baz"
   end

@@ -140,6 +140,24 @@ describe Interpreter do
     result = interpreter.interpret("a *= 4", "test")
     result.should eq -40
   end
+  it "interprets property assignments" do
+    interpreter.interpret("int[] nums = [1,2]", "test")
+    interpreter.interpret("nums[2] = 3", "test")
+    result = interpreter.interpret("nums[2]", "test")
+    result.should eq 3
+    expect_raises(Exception, "[1:5] Type mismatch: Expected 'int', got 'string'") do
+      interpreter.interpret("nums[3] = \"hi\"", "test")
+    end
+
+    interpreter.interpret("string->bool admins = {runic -> true}", "test")
+    interpreter.interpret("admins->shedletsky = true", "test")
+    result = interpreter.interpret("admins->runic", "test")
+    result.should eq true
+    result = interpreter.interpret("admins->shedletsky", "test")
+    result.should eq true
+    result = interpreter.interpret("admins->bobert", "test")
+    result.should eq nil
+  end
   it "interprets function definitions" do
     result = interpreter.interpret("bool fn is_eq(int a = 5, int b) { return a == b }", "test")
     result.should be_a Callable
