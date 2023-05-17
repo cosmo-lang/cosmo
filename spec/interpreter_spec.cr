@@ -79,7 +79,7 @@ describe Interpreter do
     result = interpreter.interpret("true == false == false != true", "test")
     result.should eq false
   end
-  it "interprets binary operators" do
+  it "interprets ternary operators" do
     result = interpreter.interpret("true ? (true ? \"yes\" : \"wtf\") : \"wtf x2\"", "test")
     result.should eq "yes"
     result = interpreter.interpret("false ? \"yes\" :\"no\"", "test")
