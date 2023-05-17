@@ -1,11 +1,11 @@
 require "../syntax/lexer/token"
 require "./typechecker"
 
-private alias Variable = NamedTuple(type: String, value: ValueType, constant: Bool)
 class Cosmo::Scope
+  private alias Variable = NamedTuple(type: String, value: ValueType, constant: Bool)
+
   property parent : Cosmo::Scope?
   property variables = {} of String => Variable
-
 
   def initialize(@parent = nil)
   end
