@@ -18,6 +18,6 @@ class Cosmo::PutsIntrinsic < Cosmo::IntrinsicFunction
   end
 
   def call(args : Array(ValueType)) : Nil
-    puts args.map(&.to_s).join('\t')
+    puts args.map { |arg| arg.nil? ? "none" : arg.to_s}.join('\t')
   end
 end

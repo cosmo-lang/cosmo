@@ -66,7 +66,7 @@ class Cosmo::Parser
 
   # Parse a function definition and return a node
   private def parse_regular_statement : Node
-    if !finished? && token_exists?(1) && (current.type == Syntax::TypeDef || current.type == Syntax::Identifier) && peek.type == Syntax::Function
+    if at_type?(current, for_fn: true)
       parse_fn_def_statement
     elsif match?(Syntax::Break)
       Statement::Break.new(last_token)
@@ -287,6 +287,25 @@ class Cosmo::Parser
       type_ref: type_ref,
       is_const: is_const
     }
+  end
+
+  private def at_type?(from : Token, for_fn : Bool = false) : Bool
+    return false if finished?
+    return false unless token_exists?(1)
+    if from.type == Syntax::Const && last_token.type != Syntax::Const
+      at_type?(peek)
+    else
+      got_type_ident = (from.type == Syntax::TypeDef || from.type == Syntax::Identifier) ||
+        (from.type == Syntax::RBracket && last_token.type == Syntax::LBracket && at_type?(peek -2))
+
+      if for_fn
+        return at_type?(peek, for_fn: true) if from.type == Syntax::LBracket && peek.type == Syntax::RBracket
+        return at_type?(peek, for_fn: true) if from.type == Syntax::HyphenArrow
+        return peek.type == Syntax::Function
+      else
+        got_type_ident
+      end
+    end
   end
 
   private def parse_type_alias(type_token : Token, identifier : Expression::Var) : Expression::TypeAlias
