@@ -183,6 +183,19 @@ class Cosmo::Interpreter
     @scope = enclosing
   end
 
+  def visit_next_stmt(stmt : Statement::Next) : Nil
+    raise HookedExceptions::Next.new(stmt.keyword)
+  end
+
+  def visit_break_stmt(stmt : Statement::Break) : Nil
+    raise HookedExceptions::Break.new(stmt.keyword)
+  end
+
+  def visit_return_stmt(stmt : Statement::Return) : Nil
+    value = evaluate(stmt.value)
+    raise HookedExceptions::Return.new(value, stmt.keyword)
+  end
+
   def visit_until_stmt(stmt : Statement::Until) : Nil
     until evaluate(stmt.condition)
       begin
@@ -225,18 +238,10 @@ class Cosmo::Interpreter
     end
   end
 
-  def visit_range_literal_expr(expr : Expression::RangeLiteral) : Range(Int64 | Int32 | Int16 | Int8, Int64 | Int32 | Int16 | Int8)
-    from = evaluate(expr.from)
-    to = evaluate(expr.to)
-
-    unless from.is_a?(Int)
-      Logger.report_error("Invalid left side of range literal", "Ranges can only be of integers, got '#{TypeChecker.get_mapped(from.class)}'", expr.token)
-    end
-    unless to.is_a?(Int)
-      Logger.report_error("Invalid right side of range literal", "Ranges can only be of integers, got '#{TypeChecker.get_mapped(to.class)}'", expr.token)
-    end
-
-    from..to
+  def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
+    fn = Function.new(self, @scope, stmt)
+    typedef = Token.new("func", Syntax::TypeDef, "func", Location.new(@file_path, 0, 0))
+    @scope.declare(typedef, stmt.identifier, fn)
   end
 
   def visit_access_expr(expr : Expression::Access) : ValueType
@@ -250,38 +255,19 @@ class Cosmo::Interpreter
   end
 
   def visit_index_expr(expr : Expression::Index) : ValueType
-    ref = evaluate(expr.ref)
+    object = evaluate(expr.object)
     key = evaluate(expr.key)
 
-    if ref.is_a?(String)
+    if object.is_a?(String) || object.is_a?(Array)
       unless key.is_a?(Int)
         Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.token)
       end
-      ref[key]?
-    elsif ref.is_a?(Array)
-      unless key.is_a?(Int)
-        Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.token)
-      end
-      ref[key]?
-    elsif ref.is_a?(Hash)
-      ref[key]?
+      object[key]?
+    elsif object.is_a?(Hash)
+      object[key]?
     else
-      Logger.report_error("Attempt to index", TypeChecker.get_mapped(ref.class), expr.ref.token)
+      Logger.report_error("Attempt to index", TypeChecker.get_mapped(object.class), expr.token)
     end
-  end
-
-  def visit_table_literal_expr(expr : Expression::TableLiteral) : Hash(ValueType, ValueType)
-    hash = {} of  ValueType => ValueType
-    expr.hashmap.each do |k, v|
-      key = evaluate(k)
-      value = evaluate(v)
-      hash[key] = value
-    end
-    hash
-  end
-
-  def visit_vector_literal_expr(expr : Expression::VectorLiteral) : Array(ValueType)
-    expr.values.map { |v| evaluate(v) }
   end
 
   def visit_type_ref_expr(expr : Expression::TypeRef) : Type
@@ -291,25 +277,6 @@ class Cosmo::Interpreter
   def visit_type_alias_expr(expr : Expression::TypeAlias) : Nil
     value = evaluate(expr.value.as Expression::Base)
     @scope.declare(expr.type_token, expr.token, value)
-  end
-
-  def visit_next_stmt(stmt : Statement::Next) : Nil
-    raise HookedExceptions::Next.new(stmt.keyword)
-  end
-
-  def visit_break_stmt(stmt : Statement::Break) : Nil
-    raise HookedExceptions::Break.new(stmt.keyword)
-  end
-
-  def visit_return_stmt(stmt : Statement::Return) : Nil
-    value = evaluate(stmt.value)
-    raise HookedExceptions::Return.new(value, stmt.keyword)
-  end
-
-  def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
-    fn = Function.new(self, @scope, stmt)
-    typedef = Token.new("func", Syntax::TypeDef, "func", Location.new(@file_path, 0, 0))
-    @scope.declare(typedef, stmt.identifier, fn)
   end
 
   def visit_fn_call_expr(expr : Expression::FunctionCall) : ValueType
@@ -332,7 +299,7 @@ class Cosmo::Interpreter
   end
 
   def visit_var_declaration_expr(expr : Expression::VarDeclaration) : ValueType
-    value = evaluate(expr.value.as Expression::Base)
+    value = evaluate(expr.value)
     if expr.constant?
       @scope.declare_const(expr.typedef, expr.var.token, value)
     else
@@ -341,8 +308,35 @@ class Cosmo::Interpreter
   end
 
   def visit_var_assignment_expr(expr : Expression::VarAssignment) : ValueType
-    value = evaluate(expr.value.as Expression::Base)
+    value = evaluate(expr.value)
     @scope.assign(expr.var.token, value)
+  end
+
+  def visit_property_assignment_expr(expr : Expression::PropertyAssignment) : ValueType
+    value = evaluate(expr.value)
+
+    if expr.object.is_a?(Expression::Index)
+      index = expr.object.as Expression::Index
+      key = evaluate(index.key)
+      object = evaluate(index.object)
+    else
+      access = expr.object.as Expression::Access
+      key = access.key.lexeme
+      object = evaluate(access.object)
+    end
+
+    if object.is_a?(Array)
+      unless key.is_a?(Int)
+        Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.token)
+      end
+      object.insert(key, value)
+    elsif object.is_a?(Hash)
+      object[key] = value
+    else
+      Logger.report_error("Attempt to assign to index of", TypeChecker.get_mapped(object.class), expr.token)
+    end
+
+    @scope.assign(expr.token, object)
   end
 
   def visit_compound_assignment_expr(expr : Expression::CompoundAssignment) : ValueType
@@ -435,6 +429,34 @@ class Cosmo::Interpreter
       op = Operator::GTE.new(self)
       op.apply(expr)
     end
+  end
+
+  def visit_range_literal_expr(expr : Expression::RangeLiteral) : Range(Int64 | Int32 | Int16 | Int8, Int64 | Int32 | Int16 | Int8)
+    from = evaluate(expr.from)
+    to = evaluate(expr.to)
+
+    unless from.is_a?(Int)
+      Logger.report_error("Invalid left side of range literal", "Ranges can only be of integers, got '#{TypeChecker.get_mapped(from.class)}'", expr.token)
+    end
+    unless to.is_a?(Int)
+      Logger.report_error("Invalid right side of range literal", "Ranges can only be of integers, got '#{TypeChecker.get_mapped(to.class)}'", expr.token)
+    end
+
+    from..to
+  end
+
+  def visit_table_literal_expr(expr : Expression::TableLiteral) : Hash(ValueType, ValueType)
+    hash = {} of  ValueType => ValueType
+    expr.hashmap.each do |k, v|
+      key = evaluate(k)
+      value = evaluate(v)
+      hash[key] = value
+    end
+    hash
+  end
+
+  def visit_vector_literal_expr(expr : Expression::VectorLiteral) : Array(ValueType)
+    expr.values.map { |v| evaluate(v) }
   end
 
   def visit_literal_expr(expr : Expression::Literal) : ValueType

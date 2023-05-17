@@ -135,6 +135,11 @@ class Cosmo::Resolver
     resolve_local(expr, expr.token)
   end
 
+  def visit_property_assignment_expr(expr : Expression::PropertyAssignment) : Nil
+    resolve(expr.object)
+    resolve(expr.value)
+  end
+
   def visit_type_alias_expr(expr : Expression::TypeAlias) : Nil
     declare(expr.token)
     resolve(expr.value.not_nil!) unless expr.value.nil?

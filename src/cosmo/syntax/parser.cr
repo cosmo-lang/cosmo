@@ -200,6 +200,11 @@ class Cosmo::Parser
       left = parse_access(left)
     end
 
+    if (left.is_a?(Expression::Index) || left.is_a?(Expression::Access)) && match?(Syntax::Equal)
+      value = parse_expression
+      left = Expression::PropertyAssignment.new(left, value)
+    end
+
     left
   end
 

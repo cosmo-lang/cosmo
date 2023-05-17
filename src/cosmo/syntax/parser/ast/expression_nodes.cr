@@ -19,25 +19,25 @@ module Cosmo::AST::Expression
     abstract def accept(visitor : Visitor(R)) forall R
   end
 
-  # class AccessAssign < Base
-  #   getter name : Access
-  #   getter value : Expression::Base
+  class PropertyAssignment < Base
+    getter object : Access | Index
+    getter value : Expression::Base
 
-  #   def initialize(@object, @key)
-  #   end
+    def initialize(@object, @value)
+    end
 
-  #   def accept(visitor : Visitor(R)) : R forall R
-  #     visitor.visit_access_expr(self)
-  #   end
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_property_assignment_expr(self)
+    end
 
-  #   def token : Token
-  #     @object.token
-  #   end
+    def token : Token
+      @object.token
+    end
 
-  #   def to_s
-  #     "Access<object: #{@object.to_s}, key: #{@key.to_s}>"
-  #   end
-  # end
+    def to_s(indent : Int = 0)
+      "PropertyAssignment<object: #{@object.to_s(indent + 1)}, value: #{@value.to_s(indent + 1)}>"
+    end
+  end
 
   class Access < Base
     getter object : Expression::Base
@@ -63,10 +63,10 @@ module Cosmo::AST::Expression
   end
 
   class Index < Base
-    getter ref : Expression::Base
+    getter object : Expression::Base
     getter key : Expression::Base
 
-    def initialize(@ref, @key)
+    def initialize(@object, @key)
     end
 
     def accept(visitor : Visitor(R)) : R forall R
@@ -74,12 +74,12 @@ module Cosmo::AST::Expression
     end
 
     def token : Token
-      @ref.token
+      @object.token
     end
 
     def to_s(indent : Int = 0)
       "Index<\n" +
-      "  #{TAB * indent}ref: #{@ref.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}object: #{@object.to_s(indent + 1)},\n" +
       "  #{TAB * indent}key: #{@key.to_s(indent + 1)}\n" +
       "#{TAB * indent}>"
     end
@@ -204,7 +204,7 @@ module Cosmo::AST::Expression
   class VarDeclaration < Base
     getter typedef : Token
     getter var : Var
-    getter value : Node
+    getter value : Expression::Base
     getter? constant : Bool
 
     def initialize(@typedef, @var, @value, @constant)
@@ -229,7 +229,7 @@ module Cosmo::AST::Expression
 
   class VarAssignment < Base
     getter var : Var
-    getter value : Node
+    getter value : Expression::Base
 
     def initialize(@var, @value)
     end
