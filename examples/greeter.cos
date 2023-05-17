@@ -1,4 +1,4 @@
-any fn greeter(const string greeting) {
+func fn greeter(const string greeting) {
   void fn greet(const string person) {
     puts(greeting + " " + person)
   }

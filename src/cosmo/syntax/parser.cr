@@ -231,6 +231,11 @@ class Cosmo::Parser
     while match?(Syntax::LBracket)
       index = parse_index(index)
     end
+
+    if match?(Syntax::LParen)
+      index = parse_fn_call(index)
+    end
+
     index
   end
 
