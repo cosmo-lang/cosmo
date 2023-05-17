@@ -8,7 +8,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 - Modules
 - Performance boosts lol
-- Index/access assignment(`a[0] =" abc"` `or a->b = "c"`)
 - Ternary operator
 - Somehow typecheck blocks before execution
 - Fix weird expression parsing (`[0].123` evaluates to 0.123??)
