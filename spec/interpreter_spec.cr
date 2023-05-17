@@ -79,6 +79,12 @@ describe Interpreter do
     result = interpreter.interpret("true == false == false != true", "test")
     result.should eq false
   end
+  it "interprets binary operators" do
+    result = interpreter.interpret("true ? (true ? \"yes\" : \"wtf\") : \"wtf x2\"", "test")
+    result.should eq "yes"
+    result = interpreter.interpret("false ? \"yes\" :\"no\"", "test")
+    result.should eq "no"
+  end
   it "interprets variable declarations" do
     result = interpreter.interpret("int x = 0b11 - 0b11011", "test")
     result.should eq -24
