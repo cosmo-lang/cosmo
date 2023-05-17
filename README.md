@@ -12,7 +12,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Ternary operator
 - Somehow typecheck blocks before execution
 - Fix weird expression parsing (`[0].123` evaluates to 0.123??)
-- Fix funky function return type parsing
 - Literal wrapper classes (vector, table)
 - Interfaces
 - Classes
@@ -20,9 +19,9 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * mixins
   * visibilities
   * methods
-  * $ (this)
+  * `$` (this)
 - Better type system
-  * typeof keyword
+  * `is` keyword
   * unions/intersections
 
 ## Things I Might Do
