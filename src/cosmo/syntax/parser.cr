@@ -26,17 +26,6 @@ class Cosmo::Parser
     statements
   end
 
-  # Parse an expression and return a node
-  private def parse_expression : Expression::Base
-    callee = parse_var_declaration
-
-    if match?(Syntax::LParen)
-      callee = parse_fn_call(callee)
-    end
-
-    callee
-  end
-
   private def parse_statement_expression : Node
     return parse_return_statement if match?(Syntax::Return)
     parse_regular_statement
@@ -151,7 +140,7 @@ class Cosmo::Parser
     Statement::Return.new(value || Expression::NoneLiteral.new(nil, last_token), last_token)
   end
 
-  private def parse_fn_def_statement
+  private def parse_fn_def_statement : Statement::FunctionDef
     type_info = parse_type(required: true)
     return_typedef = type_info[:type_ref].not_nil!.name
     consume(Syntax::Function)
@@ -198,27 +187,46 @@ class Cosmo::Parser
     params
   end
 
+  # Parse an expression and return a node
+  private def parse_expression : Expression::Base
+    left = parse_var_declaration
+
+    if match?(Syntax::LParen) # it's a function call
+      left = parse_fn_call(left)
+    elsif match?(Syntax::LBracket)
+      left = parse_index(left)
+    elsif token_exists? && ACCESS_SYNTAXES.includes?(current.type) # it's a property access
+      consume_current
+      left = parse_access(left)
+    end
+
+    left
+  end
+
   private ACCESS_SYNTAXES = [Syntax::ColonColon, Syntax::Dot, Syntax::HyphenArrow]
   # Parse property accessing
-  private def parse_access(object : Expression::Var) : Expression::Base
+  private def parse_access(object : Expression::Base) : Expression::Base
     consume(Syntax::Identifier)
     key = last_token
     access = Expression::Access.new(object, key)
 
-    while !finished? && token_exists? && ACCESS_SYNTAXES.includes?(current.type)
+    while token_exists? && ACCESS_SYNTAXES.includes?(current.type)
       consume_current
-      consume(Syntax::Identifier)
-      key = last_token
-      access = Expression::Access.new(access, key)
+      access = parse_access(access)
     end
     access
   end
 
   # Parse indexing
-  private def parse_index(ref : Expression::Var) : Expression::Base
+  private def parse_index(object : Expression::Base) : Expression::Base
     key = parse_expression
     consume(Syntax::RBracket)
-    Expression::Index.new(ref, key)
+    index = Expression::Index.new(object, key)
+
+    while match?(Syntax::LBracket)
+      index = parse_index(index)
+    end
+    index
   end
 
   # Parse a function call and return a node
@@ -308,7 +316,6 @@ class Cosmo::Parser
   end
 
   private def at_fn_type?(offset : Int = 0) : Bool
-    return false if finished?
     return false unless token_exists?(1)
 
     cur = peek(offset)
@@ -603,7 +610,7 @@ class Cosmo::Parser
       consume_current
       Expression::NoneLiteral.new(nil, last_token)
     else
-      raise "Unhandled syntax type: #{current.type}"
+      Logger.report_error("Invalid syntax", current.lexeme, current)
     end
   end
 
@@ -615,17 +622,7 @@ class Cosmo::Parser
       node
     elsif match?(Syntax::Identifier)
       ident = last_token
-      ref = Expression::Var.new(ident)
-      if match?(Syntax::LParen) # it's a function call
-        parse_fn_call(ref)
-      elsif match?(Syntax::LBracket) # it's an index
-        parse_index(ref)
-      elsif !finished? && token_exists? && ACCESS_SYNTAXES.includes?(current.type) # it's a property access
-        consume_current
-        parse_access(ref)
-      else # it's a regular var ref
-        ref
-      end
+      Expression::Var.new(ident)
     else
       parse_literal
     end
@@ -653,6 +650,7 @@ class Cosmo::Parser
 
   # Default offset is *ZERO* for this method.
   private def token_exists?(offset : Int = 0) : Bool
+    return false if finished?
     return false if @position + offset < 0
     !@tokens[@position + offset]?.nil?
   end

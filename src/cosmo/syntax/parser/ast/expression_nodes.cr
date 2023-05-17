@@ -40,7 +40,7 @@ module Cosmo::AST::Expression
   # end
 
   class Access < Base
-    getter object : Var | Access
+    getter object : Expression::Base
     getter key : Token
 
     def initialize(@object, @key)
@@ -63,7 +63,7 @@ module Cosmo::AST::Expression
   end
 
   class Index < Base
-    getter ref : Var
+    getter ref : Expression::Base
     getter key : Expression::Base
 
     def initialize(@ref, @key)
