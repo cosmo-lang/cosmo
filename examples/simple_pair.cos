@@ -1,4 +1,4 @@
-int[] fn simple_pair(int[] vec, int n) {
+int[]? fn simple_pair(int[] vec, int n) {
   int i = 0
   every int x in vec {
     int y = vec[i + 1]

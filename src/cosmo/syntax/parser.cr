@@ -66,7 +66,7 @@ class Cosmo::Parser
 
   # Parse a function definition and return a node
   private def parse_regular_statement : Node
-    if at_type?(for_fn: true)
+    if at_fn_type?
       parse_fn_def_statement
     elsif match?(Syntax::Break)
       Statement::Break.new(last_token)
@@ -232,9 +232,18 @@ class Cosmo::Parser
     Expression::FunctionCall.new(callee, arguments)
   end
 
-  private alias TypeInfo = NamedTuple(found_typedef: Bool, variable_type: Token?, type_ref: Expression::TypeRef?, is_const: Bool)
+  private alias TypeInfo = NamedTuple(
+    found_typedef: Bool,
+    variable_type: Token?,
+    type_ref: Expression::TypeRef?,
+    is_const: Bool,
+    is_nullable: Bool
+  )
+
   private def parse_type(required : Bool = true) : TypeInfo
+    is_nullable = false
     is_const = match?(Syntax::Const)
+
     if required
       consume(Syntax::Identifier) unless match?(Syntax::TypeDef)
       found_typedef = true
@@ -268,7 +277,7 @@ class Cosmo::Parser
         type_ref = Expression::TypeRef.new(variable_type)
       end
       if match?(Syntax::HyphenArrow)
-        # type_ref is the key, parse the value type
+        # type_ref is the key type, parse the value type
         type_info = parse_type(required: required)
         if type_info[:variable_type].nil?
           Logger.report_error("Expected table value type, got", current.type.to_s, current)
@@ -279,37 +288,40 @@ class Cosmo::Parser
         variable_type = table_type_token
         type_ref = Expression::TypeRef.new(variable_type)
       end
+      if match?(Syntax::Question)
+        is_nullable = true
+        nullable_type = variable_type.lexeme + "?"
+        nullable_type_token = Token.new(nullable_type, variable_type.type, nullable_type, variable_type.location)
+        variable_type = nullable_type_token
+        type_ref = Expression::TypeRef.new(variable_type)
+      end
     end
 
     {
       found_typedef: found_typedef,
       variable_type: variable_type,
       type_ref: type_ref,
-      is_const: is_const
+      is_const: is_const,
+      is_nullable: is_nullable
     }
   end
 
-  private def at_type?(for_fn : Bool = false, offset : Int = 0) : Bool
+  private def at_fn_type?(offset : Int = 0) : Bool
     return false if finished?
     return false unless token_exists?(1)
 
     cur = peek(offset)
     last = token_exists?(offset - 1) ? peek(offset - 1) : nil
     peeked = peek(offset + 1)
-    if cur.type == Syntax::Const && (last.nil? || last.type != Syntax::Const)
-      at_type?(offset: offset + 1)
-    else
-      got_type_ident = (cur.type == Syntax::TypeDef || cur.type == Syntax::Identifier) ||
-        (cur.type == Syntax::RBracket && !last.nil? && last.type == Syntax::LBracket && at_type?(offset: offset - 2))
+    next_peeked = token_exists?(offset + 2) ? peek(offset + 2) : nil
 
-      if for_fn
-        return at_type?(for_fn: true, offset: offset + 1) if cur.type == Syntax::LBracket && peeked.type == Syntax::RBracket
-        return at_type?(for_fn: true, offset: offset + 1) if cur.type == Syntax::HyphenArrow
-        return at_type?(for_fn: true, offset: offset + 1) if peeked.type == Syntax::Question
-        peeked.type == Syntax::Function
-      else
-        got_type_ident
-      end
+    if cur.type == Syntax::Const && (last.nil? || last.type != Syntax::Const)
+      at_fn_type?(offset: offset + 1)
+    else
+      return at_fn_type?(offset: offset + 2) if peeked.type == Syntax::LBracket && !next_peeked.nil? && next_peeked.type == Syntax::RBracket
+      return at_fn_type?(offset: offset + 1) if peeked.type == Syntax::HyphenArrow
+      return at_fn_type?(offset: offset + 1) if peeked.type == Syntax::Question
+      peeked.type == Syntax::Function
     end
   end
 

@@ -113,14 +113,17 @@ module Cosmo::TypeChecker
     when "none", "void"
       report_mismatch(typedef, value, token) unless value == nil
     when "any"
+      # skip type assertions lol
     else
-      # Return in every if statement otherwise you will get
-      # an unhandled type error.
-      if typedef.ends_with?("[]")
+      if typedef.ends_with?("?")
+        non_nullable_type = typedef[0..-2]
+        unless value.nil? # skip type assertion if value is nil
+          assert(non_nullable_type, value, token)
+        end
+      elsif typedef.ends_with?("[]")
         value_type = typedef[0..-3]
         report_mismatch(typedef, value, token) unless value.is_a?(Array)
         value.as(Array).each { |v| assert(value_type, v, token) }
-        return
       elsif typedef.includes?("->") && typedef.split("->", 2).size == 2
         types = typedef.split("->", 2)
         key_type = types.first
@@ -130,19 +133,19 @@ module Cosmo::TypeChecker
         internal = value.as(Hash)
         internal.keys.each { |k| assert(key_type, k, token) }
         internal.values.each { |v| assert(value_type, v, token) }
-        return
       else
         registered = get_registered_type?(typedef, token)
         unless registered.nil?
           if ALIASES.has_key?(registered.name)
             unaliased = ALIASES[registered.name]
-            return assert(unaliased, value, token) unless typedef == unaliased
+            assert(unaliased, value, token) unless typedef == unaliased
           else
             raise "Type is registered, but has no alias and is unhandled in TypeChecker."
           end
+        else
+          raise "Unhandled type '#{typedef}' in TypeChecker"
         end
       end
-      raise "Unhandled type '#{typedef}' in TypeChecker"
     end
   end
 end
