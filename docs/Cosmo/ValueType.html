@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::TypeChecker - Cosmo master</title>
+  <title>Cosmo::ValueType - Cosmo master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -481,12 +481,12 @@
       
     </li>
   
-  <li class=" current" data-id="Cosmo/Cosmo/TypeChecker" data-name="cosmo::typechecker">
+  <li class=" " data-id="Cosmo/Cosmo/TypeChecker" data-name="cosmo::typechecker">
       <a href="../Cosmo/TypeChecker.html">TypeChecker</a>
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/ValueType" data-name="cosmo::valuetype">
+  <li class=" current" data-id="Cosmo/Cosmo/ValueType" data-name="cosmo::valuetype">
       <a href="../Cosmo/ValueType.html">ValueType</a>
       
     </li>
@@ -515,7 +515,7 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">module</span> Cosmo::TypeChecker
+  <span class="kind">alias</span> Cosmo::ValueType
 
 </h1>
 
@@ -525,23 +525,19 @@
 
 
 
-
-
-
-
   <h2>
-    <a id="extended-modules" class="anchor" href="#extended-modules">
+    <a id="alias-definition" class="anchor" href="#alias-definition">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Extended Modules
+    Alias Definition
   </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="../Cosmo/TypeChecker.html">Cosmo::TypeChecker</a></li>
-    
-  </ul>
+  <code>Array(<a href="../Cosmo/ValueType.html">Cosmo::ValueType</a>) | Bool | Char | <a href="../Cosmo/Callable.html">Cosmo::Callable</a> | <a href="../Cosmo/Type.html">Cosmo::Type</a> | Float32 | Float64 | Hash(<a href="../Cosmo/ValueType.html">Cosmo::ValueType</a>, <a href="../Cosmo/ValueType.html">Cosmo::ValueType</a>) | Int16 | Int32 | Int64 | Int8 | Range(Int16 | Int32 | Int64 | Int8, Int16 | Int32 | Int64 | Int8) | String | Nil</code>
+
+
+
+
 
 
 
@@ -560,7 +556,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/9bb0c821d67150c4951969afa5f5193ec92d6c7e/src/cosmo/runtime/typechecker.cr#L10" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/9bb0c821d67150c4951969afa5f5193ec92d6c7e/src/cosmo/runtime/typechecker.cr#L7" target="_blank">
         cosmo/runtime/typechecker.cr
       </a>
     
@@ -569,92 +565,11 @@
 
 
 
-  
-    <h2>
-      <a id="constant-summary" class="anchor" href="#constant-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-      Constant Summary
-    </h2>
-  
-  <dl>
-    
-      <dt class="entry-const" id="ALIASES">
-        <strong>ALIASES</strong> = <code>{} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="REGISTERED">
-        <strong>REGISTERED</strong> = <code><span class="o">[]</span> <span class="k">of</span> <span class="t">Type</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="TYPE_MAP">
-        <strong>TYPE_MAP</strong> = <code>{<span class="t">Int64</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int32</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int16</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int8</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Float64</span> <span class="o">=&gt;</span> <span class="s">&quot;float&quot;</span>, <span class="t">Float32</span> <span class="o">=&gt;</span> <span class="s">&quot;float&quot;</span>, <span class="t">String</span> <span class="o">=&gt;</span> <span class="s">&quot;string&quot;</span>, <span class="t">Char</span> <span class="o">=&gt;</span> <span class="s">&quot;char&quot;</span>, <span class="t">Bool</span> <span class="o">=&gt;</span> <span class="s">&quot;bool&quot;</span>, <span class="t">Nil</span> <span class="o">=&gt;</span> <span class="s">&quot;none&quot;</span>, <span class="t">Function</span> <span class="o">=&gt;</span> <span class="s">&quot;fn&quot;</span>, <span class="t">PutsIntrinsic</span> <span class="o">=&gt;</span> <span class="s">&quot;fn&quot;</span>, <span class="t">Array</span>(<span class="t">Int64</span>) <span class="o">=&gt;</span> <span class="s">&quot;int[]&quot;</span>, <span class="t">Array</span>(<span class="t">Int32</span>) <span class="o">=&gt;</span> <span class="s">&quot;int[]&quot;</span>, <span class="t">Array</span>(<span class="t">Int16</span>) <span class="o">=&gt;</span> <span class="s">&quot;int[]&quot;</span>, <span class="t">Array</span>(<span class="t">Int8</span>) <span class="o">=&gt;</span> <span class="s">&quot;int[]&quot;</span>, <span class="t">Array</span>(<span class="t">Float64</span>) <span class="o">=&gt;</span> <span class="s">&quot;float[]&quot;</span>, <span class="t">Array</span>(<span class="t">Float32</span>) <span class="o">=&gt;</span> <span class="s">&quot;float[]&quot;</span>, <span class="t">Array</span>(<span class="t">String</span>) <span class="o">=&gt;</span> <span class="s">&quot;string[]&quot;</span>, <span class="t">Array</span>(<span class="t">Char</span>) <span class="o">=&gt;</span> <span class="s">&quot;char[]&quot;</span>, <span class="t">Array</span>(<span class="t">Bool</span>) <span class="o">=&gt;</span> <span class="s">&quot;bool[]&quot;</span>, <span class="t">Array</span>(<span class="t">Function</span>) <span class="o">=&gt;</span> <span class="s">&quot;fn[]&quot;</span>, <span class="t">Array</span>(<span class="t">ValueType</span>) <span class="o">=&gt;</span> <span class="s">&quot;any[]&quot;</span>, <span class="t">Array</span> <span class="o">=&gt;</span> <span class="s">&quot;any[]&quot;</span>, <span class="t">Hash</span> <span class="o">=&gt;</span> <span class="s">&quot;Table&quot;</span>, <span class="t">Range</span>(<span class="t">Int16</span> <span class="o">|</span> <span class="t">Int32</span> <span class="o">|</span> <span class="t">Int64</span> <span class="o">|</span> <span class="t">Int8</span>, <span class="t">Int16</span> <span class="o">|</span> <span class="t">Int32</span> <span class="o">|</span> <span class="t">Int64</span> <span class="o">|</span> <span class="t">Int8</span>) <span class="o">=&gt;</span> <span class="s">&quot;Range&quot;</span>}</code>
-      </dt>
-      
-    
-  </dl>
 
 
 
 
 
-
-
-  <h2>
-    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#alias_type%28alias_name%3AString%2Coriginal%3AString%29%3AType-instance-method" class="signature"><strong>#alias_type</strong>(alias_name : String, original : String) : Type</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#assert%28typedef%3AString%2Cvalue%3AValueType%2Ctoken%3AToken%29%3ANil-instance-method" class="signature"><strong>#assert</strong>(typedef : String, value : ValueType, token : Token) : Nil</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#get_mapped%28t%3AClass%29%3AString-instance-method" class="signature"><strong>#get_mapped</strong>(t : Class) : String</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#get_registered_type%28name%3AString%2Ctoken%3AToken%29%3AType%7CNil-instance-method" class="signature"><strong>#get_registered_type</strong>(name : String, token : Token) : Type | Nil</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#get_registered_type%3F%28typedef%3AString%2Ctoken%3AToken%29%3AType%7CNil-instance-method" class="signature"><strong>#get_registered_type?</strong>(typedef : String, token : Token) : Type | Nil</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#register_intrinsics-instance-method" class="signature"><strong>#register_intrinsics</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#register_type%28name%3AString%29%3AType-instance-method" class="signature"><strong>#register_type</strong>(name : String) : Type</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#reset-instance-method" class="signature"><strong>#reset</strong></a>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -668,144 +583,6 @@
 
 
 
-
-  <h2>
-    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="alias_type(alias_name:String,original:String):Type-instance-method">
-      <div class="signature">
-        
-        def <strong>alias_type</strong>(alias_name : String, original : String) : <a href="../Cosmo/Type.html">Type</a>
-
-        <a class="method-permalink" href="#alias_type%28alias_name%3AString%2Coriginal%3AString%29%3AType-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/9bb0c821d67150c4951969afa5f5193ec92d6c7e/src/cosmo/runtime/typechecker.cr#L78" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="assert(typedef:String,value:ValueType,token:Token):Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>assert</strong>(typedef : String, value : <a href="../Cosmo/ValueType.html">ValueType</a>, token : <a href="../Cosmo/Token.html">Token</a>) : Nil
-
-        <a class="method-permalink" href="#assert%28typedef%3AString%2Cvalue%3AValueType%2Ctoken%3AToken%29%3ANil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/9bb0c821d67150c4951969afa5f5193ec92d6c7e/src/cosmo/runtime/typechecker.cr#L103" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="get_mapped(t:Class):String-instance-method">
-      <div class="signature">
-        
-        def <strong>get_mapped</strong>(t : Class) : String
-
-        <a class="method-permalink" href="#get_mapped%28t%3AClass%29%3AString-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/9bb0c821d67150c4951969afa5f5193ec92d6c7e/src/cosmo/runtime/typechecker.cr#L50" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="get_registered_type(name:String,token:Token):Type|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>get_registered_type</strong>(name : String, token : <a href="../Cosmo/Token.html">Token</a>) : <a href="../Cosmo/Type.html">Type</a> | Nil
-
-        <a class="method-permalink" href="#get_registered_type%28name%3AString%2Ctoken%3AToken%29%3AType%7CNil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/9bb0c821d67150c4951969afa5f5193ec92d6c7e/src/cosmo/runtime/typechecker.cr#L97" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="get_registered_type?(typedef:String,token:Token):Type|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>get_registered_type?</strong>(typedef : String, token : <a href="../Cosmo/Token.html">Token</a>) : <a href="../Cosmo/Type.html">Type</a> | Nil
-
-        <a class="method-permalink" href="#get_registered_type%3F%28typedef%3AString%2Ctoken%3AToken%29%3AType%7CNil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/9bb0c821d67150c4951969afa5f5193ec92d6c7e/src/cosmo/runtime/typechecker.cr#L83" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="register_intrinsics-instance-method">
-      <div class="signature">
-        
-        def <strong>register_intrinsics</strong>
-
-        <a class="method-permalink" href="#register_intrinsics-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/9bb0c821d67150c4951969afa5f5193ec92d6c7e/src/cosmo/runtime/typechecker.cr#L57" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="register_type(name:String):Type-instance-method">
-      <div class="signature">
-        
-        def <strong>register_type</strong>(name : String) : <a href="../Cosmo/Type.html">Type</a>
-
-        <a class="method-permalink" href="#register_type%28name%3AString%29%3AType-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/9bb0c821d67150c4951969afa5f5193ec92d6c7e/src/cosmo/runtime/typechecker.cr#L72" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="reset-instance-method">
-      <div class="signature">
-        
-        def <strong>reset</strong>
-
-        <a class="method-permalink" href="#reset-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/9bb0c821d67150c4951969afa5f5193ec92d6c7e/src/cosmo/runtime/typechecker.cr#L66" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
 
 
 
