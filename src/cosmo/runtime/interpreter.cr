@@ -400,9 +400,19 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_ternary_op_expr(expr : Expression::TernaryOp) : ValueType
+    condition = evaluate(expr.condition)
+    then_value = evaluate(expr.then)
+    else_value = evaluate(expr.else)
+
+    return then_value if condition
+    else_value
+  end
+
   def visit_binary_op_expr(expr : Expression::BinaryOp) : ValueType
-    left = evaluate(expr.left.as Expression::Base)
-    right = evaluate(expr.right.as Expression::Base)
+    left = evaluate(expr.left)
+    right = evaluate(expr.right)
+
     case expr.operator.type
     when Syntax::Plus
       op = Operator::Plus.new(self)

@@ -205,7 +205,19 @@ class Cosmo::Parser
       left = Expression::PropertyAssignment.new(left, value)
     end
 
+    if match?(Syntax::Question)
+      left = parse_ternary_op(left)
+    end
+
     left
+  end
+
+  private def parse_ternary_op(condition : Expression::Base) : Expression::Base
+    op = last_token
+    then_expression = parse_expression
+    consume(Syntax::Colon)
+    else_expression = parse_expression
+    Expression::TernaryOp.new(condition, op, then_expression, else_expression)
   end
 
   private ACCESS_SYNTAXES = [Syntax::ColonColon, Syntax::Dot, Syntax::HyphenArrow]

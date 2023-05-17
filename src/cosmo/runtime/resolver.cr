@@ -166,6 +166,12 @@ class Cosmo::Resolver
     resolve_local(expr, expr.name)
   end
 
+  def visit_ternary_op_expr(expr : Expression::TernaryOp) : Nil
+    resolve(expr.condition)
+    resolve(expr.then)
+    resolve(expr.else)
+  end
+
   def visit_binary_op_expr(expr : Expression::BinaryOp) : Nil
     resolve(expr.left)
     resolve(expr.right)
