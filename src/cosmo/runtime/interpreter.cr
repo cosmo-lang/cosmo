@@ -135,7 +135,7 @@ class Cosmo::Interpreter
     enumerable = evaluate(stmt.enumerable)
 
     @scope.declare(stmt.var.typedef, stmt.var.token, nil)
-    if enumerable.is_a?(Array)
+    if enumerable.is_a?(Array) || enumerable.is_a?(Range)
       enumerable.each do |value|
         @scope.assign(stmt.var.token, value)
         begin
@@ -225,6 +225,20 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_range_literal_expr(expr : Expression::RangeLiteral) : Range(Int64 | Int32 | Int16 | Int8, Int64 | Int32 | Int16 | Int8)
+    from = evaluate(expr.from)
+    to = evaluate(expr.to)
+
+    unless from.is_a?(Int)
+      Logger.report_error("Invalid left side of range literal", "Ranges can only be of integers, got '#{TypeChecker.get_mapped(from.class)}'", expr.token)
+    end
+    unless to.is_a?(Int)
+      Logger.report_error("Invalid right side of range literal", "Ranges can only be of integers, got '#{TypeChecker.get_mapped(to.class)}'", expr.token)
+    end
+
+    from..to
+  end
+
   def visit_access_expr(expr : Expression::Access) : ValueType
     object = evaluate(expr.object)
     key = expr.key.value.to_s
@@ -238,6 +252,7 @@ class Cosmo::Interpreter
   def visit_index_expr(expr : Expression::Index) : ValueType
     ref = evaluate(expr.ref)
     key = evaluate(expr.key)
+
     if ref.is_a?(String)
       unless key.is_a?(Int)
         Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.token)
@@ -351,10 +366,6 @@ class Cosmo::Interpreter
       op = Operator::PowAssign.new(self)
       op.apply(expr)
     end
-  end
-
-  def visit_postfix_expr(expr : Expression::Postfix) : ValueType
-    execute(expr.statement)
   end
 
   def visit_unary_op_expr(expr : Expression::UnaryOp) : ValueType

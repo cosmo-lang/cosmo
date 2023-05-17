@@ -170,10 +170,6 @@ class Cosmo::Resolver
     resolve(expr.operand)
   end
 
-  def visit_postfix_expr(expr : Expression::Postfix) : Nil
-    resolve(expr.statement)
-  end
-
   def visit_var_expr(expr : Expression::Var) : Nil
     if !@scopes.empty? && !@scopes.last.nil? && @scopes.last[expr.token.lexeme]? == false
       Logger.report_error("Failed to assign '#{expr.token.lexeme}'", "Cannot read variable in it's own initializer", expr.token)
@@ -186,6 +182,11 @@ class Cosmo::Resolver
       Logger.report_error("Failed to assign '#{expr.token.lexeme}'", "Cannot read variable in it's own initializer", expr.token)
     end
     resolve_local(expr, expr.token)
+  end
+
+  def visit_range_literal_expr(expr : Expression::RangeLiteral) : Nil
+    resolve(expr.from)
+    resolve(expr.to)
   end
 
   def visit_table_literal_expr(expr : Expression::TableLiteral) : Nil

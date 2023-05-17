@@ -263,8 +263,8 @@ class Cosmo::Lexer
     until finished?
       char = current_char.downcase
       is_valid = char.to_i64?(radix).nil? ? false : char.to_i64(radix).to_s(radix) == char
-      break unless is_valid || char == "."
-      decimal_used = true if char == "."
+      break unless is_valid || (char == "." && peek != ".")
+      decimal_used = true if char == "." && peek != "."
       num_str += advance.to_s
     end
 

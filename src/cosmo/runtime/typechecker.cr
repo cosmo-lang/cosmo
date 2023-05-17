@@ -2,8 +2,8 @@ require "../logger"
 require "./intrinsics"
 require "./type"
 
-private alias NonNestableValueType = LiteralType | Cosmo::Callable | Cosmo::Type
-alias ValueType = NonNestableValueType | Array(ValueType) | Hash(ValueType, ValueType)
+private alias Cosmo::NonNestableValueType = LiteralType | Range(Int64 | Int32 | Int16 | Int8, Int64 | Int32 | Int16 | Int8) | Cosmo::Callable | Cosmo::Type
+alias Cosmo::ValueType = Cosmo::NonNestableValueType | Array(ValueType) | Hash(ValueType, ValueType)
 
 module Cosmo::TypeChecker
   extend self
@@ -33,18 +33,22 @@ module Cosmo::TypeChecker
     Array(Function) => "fn[]",
     Array(ValueType) => "any[]",
     Array => "any[]",
-    Hash => "table"
+    Hash => "Table",
+    Range(Int16 | Int32 | Int64 | Int8, Int16 | Int32 | Int64 | Int8) => "Range"
   }
 
   REGISTERED = [] of Type
   ALIASES = {} of String => String
 
   private def report_mismatch(typedef : String, value : ValueType, token : Token)
-    got_type = TYPE_MAP[value.class]
+    got_type = get_mapped(value.class)
     Logger.report_error("Type mismatch", "Expected '#{typedef}', got '#{got_type}'", token)
   end
 
   def get_mapped(t : Class) : String
+    unless TYPE_MAP.has_key?(t)
+      raise "Unhandled type to map: #{t}"
+    end
     TYPE_MAP[t]
   end
 

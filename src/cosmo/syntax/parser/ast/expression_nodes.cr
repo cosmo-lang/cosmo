@@ -2,7 +2,6 @@ module Cosmo::AST::Expression
   include Cosmo::AST
 
   module Visitor(R)
-    abstract def visit_vector_literal_expr(expr : VectorLiteral) : R
     abstract def visit_type_alias_expr(expr : TypeAlias) : R
     abstract def visit_fn_call_expr(expr : FunctionCall) : R
     abstract def visit_var_declaration_expr(expr : VarDeclaration) : R
@@ -11,6 +10,9 @@ module Cosmo::AST::Expression
     abstract def visit_binary_op_expr(expr : BinaryOp) : R
     abstract def visit_unary_op_expr(expr : UnaryOp) : R
     abstract def visit_literal_expr(expr : Literal) : R
+    abstract def visit_range_literal_expr(expr : RangeLiteral) : R
+    abstract def visit_table_literal_expr(expr : TableLiteral) : R
+    abstract def visit_vector_literal_expr(expr : VectorLiteral) : R
   end
 
   abstract class Base < Node
@@ -264,9 +266,9 @@ module Cosmo::AST::Expression
   end
 
   class BinaryOp < Base
-    getter left : Node
+    getter left : Expression::Base
     getter operator : Token
-    getter right : Node
+    getter right : Expression::Base
 
     def initialize(@left, @operator, @right)
     end
@@ -288,28 +290,9 @@ module Cosmo::AST::Expression
     end
   end
 
-  class Postfix < Base
-    getter statement : Statement::Base
-
-    def initialize(@statement)
-    end
-
-    def accept(visitor : Visitor(R)) : R forall R
-      visitor.visit_postfix_expr(self)
-    end
-
-    def token : Token
-      @statement.token
-    end
-
-    def to_s(indent : Int = 0)
-      "Postfix<statement: #{@statement.to_s(indent + 1)}>"
-    end
-  end
-
   class UnaryOp < Base
     getter operator : Token
-    getter operand : Node
+    getter operand : Expression::Base
 
     def initialize(@operator, @operand)
     end
@@ -338,6 +321,29 @@ module Cosmo::AST::Expression
 
     def accept(visitor : Visitor(R)) : R forall R
       visitor.visit_literal_expr(self)
+    end
+  end
+
+  class RangeLiteral < Base
+    getter from : Expression::Base
+    getter to : Expression::Base
+
+    def initialize(@from, @to)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_range_literal_expr(self)
+    end
+
+    def token : Token
+      @from.token
+    end
+
+    def to_s(indent : Int = 0)
+      "RangeLiteral<\n" +
+      "  #{TAB * indent}from: #{@from.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}to: #{@to.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
     end
   end
 

@@ -198,9 +198,9 @@ class Cosmo::Parser
     params
   end
 
-  ACCESS_SYNTAXES = [Syntax::ColonColon, Syntax::Dot, Syntax::HyphenArrow]
+  private ACCESS_SYNTAXES = [Syntax::ColonColon, Syntax::Dot, Syntax::HyphenArrow]
   # Parse property accessing
-  private def parse_access(object : Expression::Var) : Node
+  private def parse_access(object : Expression::Var) : Expression::Base
     consume(Syntax::Identifier)
     key = last_token
     access = Expression::Access.new(object, key)
@@ -215,14 +215,14 @@ class Cosmo::Parser
   end
 
   # Parse indexing
-  private def parse_index(ref : Expression::Var) : Node
+  private def parse_index(ref : Expression::Var) : Expression::Base
     key = parse_expression
     consume(Syntax::RBracket)
     Expression::Index.new(ref, key)
   end
 
   # Parse a function call and return a node
-  private def parse_fn_call(callee : Expression::Base) : Node
+  private def parse_fn_call(callee : Expression::Base) : Expression::Base
     arguments = [] of Expression::Base
 
     until match?(Syntax::RParen)
@@ -338,7 +338,7 @@ class Cosmo::Parser
   end
 
   # Parse a variable declaration and return a node
-  private def parse_var_declaration : Node
+  private def parse_var_declaration : Expression::Base
     type_info = parse_type(required: false)
     unless type_info[:variable_type].nil? || type_info[:type_ref].nil?
       typedef = type_info[:type_ref].nil? ? type_info[:variable_type].not_nil! : type_info[:type_ref].not_nil!.name
@@ -365,7 +365,7 @@ class Cosmo::Parser
   end
 
   # Parse a variable assignment expression and return a node
-  private def parse_assignment : Node
+  private def parse_assignment : Expression::Base
     left = parse_compound_assignment
 
     while match?(Syntax::Equal)
@@ -379,7 +379,7 @@ class Cosmo::Parser
     left
   end
 
-  private def parse_compound_assignment
+  private def parse_compound_assignment : Expression::Base
     left = parse_compound_assignment_factor
 
     while match?(Syntax::PlusEqual) || match?(Syntax::MinusEqual)
@@ -391,7 +391,7 @@ class Cosmo::Parser
     left
   end
 
-  private def parse_compound_assignment_factor
+  private def parse_compound_assignment_factor : Expression::Base
     left = parse_compound_assignment_coeff
 
     while match?(Syntax::StarEqual) || match?(Syntax::SlashEqual) || match?(Syntax::PercentEqual)
@@ -403,7 +403,7 @@ class Cosmo::Parser
     left
   end
 
-  private def parse_compound_assignment_coeff
+  private def parse_compound_assignment_coeff : Expression::Base
     left = parse_logical_or
 
     while match?(Syntax::CaratEqual)
@@ -416,7 +416,7 @@ class Cosmo::Parser
   end
 
   # Parse a logical OR expression and return a node
-  private def parse_logical_or : Node
+  private def parse_logical_or : Expression::Base
     left = parse_logical_and
 
     while match?(Syntax::Pipe)
@@ -429,7 +429,7 @@ class Cosmo::Parser
   end
 
   # Parse a logical AND expression and return a node
-  private def parse_logical_and : Node
+  private def parse_logical_and : Expression::Base
     left = parse_equality
 
     while match?(Syntax::Ampersand)
@@ -442,7 +442,7 @@ class Cosmo::Parser
   end
 
   # Parse an equality expression and return a node
-  private def parse_equality : Node
+  private def parse_equality : Expression::Base
     left = parse_comparison
 
     while match?(Syntax::EqualEqual) || match?(Syntax::BangEqual)
@@ -455,7 +455,7 @@ class Cosmo::Parser
   end
 
   # Parse a comparison expression and return a node
-  private def parse_comparison : Node
+  private def parse_comparison : Expression::Base
     left = parse_addition
 
     while match?(Syntax::Less) || match?(Syntax::LessEqual) || match?(Syntax::Greater) || match?(Syntax::GreaterEqual)
@@ -468,7 +468,7 @@ class Cosmo::Parser
   end
 
   # Parse an addition expression and return a node
-  private def parse_addition : Node
+  private def parse_addition : Expression::Base
     left = parse_multiplication
 
     while match?(Syntax::Plus) || match?(Syntax::Minus)
@@ -481,7 +481,7 @@ class Cosmo::Parser
   end
 
   # Parse a multiplication expression and return a node
-  private def parse_multiplication : Node
+  private def parse_multiplication : Expression::Base
     left = parse_exponentiation
 
     while match?(Syntax::Star) || match?(Syntax::Slash) || match?(Syntax::Percent)
@@ -494,20 +494,24 @@ class Cosmo::Parser
   end
 
   # Parse an exponentiation expression and return a node
-  private def parse_exponentiation : Node
+  private def parse_exponentiation : Expression::Base
     left = parse_unary
 
-    while match?(Syntax::Carat)
+    while match?(Syntax::Carat) || match?(Syntax::DotDot)
       op = last_token
       right = parse_unary
-      left = Expression::BinaryOp.new(left, op, right)
+      unless op.type == Syntax::DotDot
+        left = Expression::BinaryOp.new(left, op, right)
+      else
+        left = Expression::RangeLiteral.new(left, right)
+      end
     end
 
     left
   end
 
   # Parse a unary expression and return a node
-  private def parse_unary : Node
+  private def parse_unary : Expression::Base
     if match?(Syntax::Plus) || match?(Syntax::Minus) || match?(Syntax::Bang) || match?(Syntax::Star) || match?(Syntax::Hashtag)
       op = last_token
       operand = parse_unary
@@ -604,7 +608,7 @@ class Cosmo::Parser
   end
 
   # Parse a primary expression and return a node
-  private def parse_primary : Node
+  private def parse_primary : Expression::Base
     if match?(Syntax::LParen)
       node = parse_expression
       consume(Syntax::RParen)
