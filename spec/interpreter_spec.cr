@@ -34,9 +34,9 @@ describe Interpreter do
     result.should eq 7
     result = interpreter.interpret("0xabc", "test")
     result.should eq 2748
-    result = interpreter.interpret("0o2004", "test")
-    result.should eq 1028
-    result = interpreter.interpret("10.24335", "test")
+    result = interpreter.interpret("-0o2004", "test")
+    result.should eq -1028
+    result = interpreter.interpret("+---10.24335", "test")
     result.should eq 10.24335
     result = interpreter.interpret("\"hello\"", "test")
     result.should eq "hello"
@@ -48,6 +48,10 @@ describe Interpreter do
     result.should eq [[1,2,3], [4,5,6], ['a', 'b', 'c']]
     result = interpreter.interpret("{yes -> true, [123] -> false}", "test")
     result.should eq ({"yes" => true, 123 => false})
+    result = interpreter.interpret("any my_range = 5..20", "test")
+    result.should eq 5..20
+    result = interpreter.interpret("any my_neg_range = -20..-5", "test")
+    result.should eq -20..-5
   end
   it "interprets unary operators" do
     result = interpreter.interpret("!false", "test")
@@ -110,6 +114,10 @@ describe Interpreter do
 
     result = interpreter.interpret("any->bool valids = {yes -> true, [123] -> false}", "test")
     result.should eq ({"yes" => true, 123 => false})
+
+    # no 'Range' typedef yet
+    result = interpreter.interpret("any my_range = 1..16", "test")
+    result.should eq 1..16
   end
   it "interprets type aliases" do
     result = interpreter.interpret("type MyInt = int; MyInt my_int = 123", "test")

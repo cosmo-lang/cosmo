@@ -2,8 +2,10 @@ require "../logger"
 require "./intrinsics"
 require "./type"
 
-private alias Cosmo::NonNestableValueType = LiteralType | Range(Int64 | Int32 | Int16 | Int8, Int64 | Int32 | Int16 | Int8) | Cosmo::Callable | Cosmo::Type
-alias Cosmo::ValueType = Cosmo::NonNestableValueType | Array(ValueType) | Hash(ValueType, ValueType)
+module Cosmo
+  private alias NonNestableValueType = LiteralType | Range(Int64 | Int32 | Int16 | Int8, Int64 | Int32 | Int16 | Int8) | Callable | Type
+  alias ValueType = NonNestableValueType | Array(ValueType) | Hash(ValueType, ValueType)
+end
 
 module Cosmo::TypeChecker
   extend self

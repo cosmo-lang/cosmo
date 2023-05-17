@@ -111,6 +111,19 @@ describe Parser do
       table.should be_a AST::Expression::TableLiteral
       table.hashmap.should_not be_empty
     end
+    it "ranges" do
+      stmts = Parser.new("1..7", "test", false).parse
+      stmts.should_not be_empty
+      expr = stmts.first.as(AST::Statement::SingleExpression).expression
+      literal = expr.as AST::Expression::RangeLiteral
+      literal.should be_a AST::Expression::RangeLiteral
+      literal.from.should be_a AST::Expression::IntLiteral
+      literal.to.should be_a AST::Expression::IntLiteral
+      from = literal.from.as AST::Expression::IntLiteral
+      to = literal.to.as AST::Expression::IntLiteral
+      from.value.should eq 1
+      to.value.should eq 7
+    end
   end
   it "parses unary operators" do
     stmts = Parser.new("+-12", "test", false).parse
