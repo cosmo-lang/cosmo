@@ -2,8 +2,8 @@ require "./lexer"
 require "./parser/ast"; include Cosmo::AST
 
 class Cosmo::Parser
-  getter position : UInt32 = 0
-  getter tokens : Array(Token)
+  @position : Int32 = 0
+  @tokens : Array(Token)
 
   def initialize(source : String, file_path : String, @run_benchmarks : Bool)
     TypeChecker.reset if file_path == "test"
@@ -66,7 +66,7 @@ class Cosmo::Parser
 
   # Parse a function definition and return a node
   private def parse_regular_statement : Node
-    if at_type?(current, for_fn: true)
+    if at_type?(for_fn: true)
       parse_fn_def_statement
     elsif match?(Syntax::Break)
       Statement::Break.new(last_token)
@@ -289,19 +289,24 @@ class Cosmo::Parser
     }
   end
 
-  private def at_type?(from : Token, for_fn : Bool = false) : Bool
+  private def at_type?(for_fn : Bool = false, offset : Int = 0) : Bool
     return false if finished?
     return false unless token_exists?(1)
-    if from.type == Syntax::Const && last_token.type != Syntax::Const
-      at_type?(peek)
+
+    cur = peek(offset)
+    last = token_exists?(offset - 1) ? peek(offset - 1) : nil
+    peeked = peek(offset + 1)
+    if cur.type == Syntax::Const && (last.nil? || last.type != Syntax::Const)
+      at_type?(offset: offset + 1)
     else
-      got_type_ident = (from.type == Syntax::TypeDef || from.type == Syntax::Identifier) ||
-        (from.type == Syntax::RBracket && last_token.type == Syntax::LBracket && at_type?(peek -2))
+      got_type_ident = (cur.type == Syntax::TypeDef || cur.type == Syntax::Identifier) ||
+        (cur.type == Syntax::RBracket && !last.nil? && last.type == Syntax::LBracket && at_type?(offset: offset - 2))
 
       if for_fn
-        return at_type?(peek, for_fn: true) if from.type == Syntax::LBracket && peek.type == Syntax::RBracket
-        return at_type?(peek, for_fn: true) if from.type == Syntax::HyphenArrow
-        return peek.type == Syntax::Function
+        return at_type?(for_fn: true, offset: offset + 1) if cur.type == Syntax::LBracket && peeked.type == Syntax::RBracket
+        return at_type?(for_fn: true, offset: offset + 1) if cur.type == Syntax::HyphenArrow
+        return at_type?(for_fn: true, offset: offset + 1) if peeked.type == Syntax::Question
+        peeked.type == Syntax::Function
       else
         got_type_ident
       end
@@ -629,8 +634,9 @@ class Cosmo::Parser
     peek -1
   end
 
-  # Default offset *IS ZERO* for this method.
-  private def token_exists?(offset : UInt32 = 0) : Bool
+  # Default offset is *ZERO* for this method.
+  private def token_exists?(offset : Int = 0) : Bool
+    return false if @position + offset < 0
     !@tokens[@position + offset]?.nil?
   end
 
