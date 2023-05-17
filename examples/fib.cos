@@ -1,8 +1,5 @@
 int fn fib(const int n) {
-  unless n <= 1 {
-    return fib(n - 1) + fib(n - 2)
-  }
-  n
+  n < 2 ? n : fib(n - 1) + fib(n - 2)
 }
 
 puts(fib(10)) ## 55

@@ -7,6 +7,7 @@ module Cosmo::AST::Expression
     abstract def visit_var_declaration_expr(expr : VarDeclaration) : R
     abstract def visit_var_assignment_expr(expr : VarAssignment) : R
     abstract def visit_var_expr(expr : Var) : R
+    abstract def visit_ternary_op_expr(expr : TernaryOp) : R
     abstract def visit_binary_op_expr(expr : BinaryOp) : R
     abstract def visit_unary_op_expr(expr : UnaryOp) : R
     abstract def visit_literal_expr(expr : Literal) : R

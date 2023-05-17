@@ -376,6 +376,13 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_ternary_op_expr(expr : Expression::TernaryOp) : ValueType
+    condition = evaluate(expr.condition)
+
+    return evaluate(expr.then) if condition
+    evaluate(expr.else)
+  end
+
   def visit_unary_op_expr(expr : Expression::UnaryOp) : ValueType
     operand = evaluate(expr.operand.as Expression::Base)
     case expr.operator.type
@@ -398,15 +405,6 @@ class Cosmo::Interpreter
     when Syntax::Hashtag
       raise "'#' unary operator has not yet implemented."
     end
-  end
-
-  def visit_ternary_op_expr(expr : Expression::TernaryOp) : ValueType
-    condition = evaluate(expr.condition)
-    then_value = evaluate(expr.then)
-    else_value = evaluate(expr.else)
-
-    return then_value if condition
-    else_value
   end
 
   def visit_binary_op_expr(expr : Expression::BinaryOp) : ValueType
