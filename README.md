@@ -8,6 +8,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 - Modules
 - Performance boosts lol
+- Multiple assignment
 - Somehow typecheck blocks before execution
 - Fix weird expression parsing (`[0].123` evaluates to 0.123??)
 - Literal wrapper classes (vector, table)

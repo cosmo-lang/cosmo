@@ -308,7 +308,10 @@ class Cosmo::Lexer
   private def read_identifier
     ident_str = ""
     until finished?
-      if char_exists?(1) && !peek.match(/[a-zA-Z0-9_$]/)
+      if char_exists?(1) && !peek.match(/[a-zA-Z0-9_$?]/)
+        if ident_str.ends_with?("?")
+          Logger.report_error("Invalid identifier", "'?' may only be used as the last character of an identifier", @position, @line)
+        end
         ident_str += current_char.to_s
         skip_whitespace
         break

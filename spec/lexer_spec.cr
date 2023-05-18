@@ -107,13 +107,20 @@ describe Lexer do
     tokens.first.value.should eq '$'
   end
   it "lexes identifiers" do
-    tokens = Lexer.new("abcdef", "test", false).tokenize
+    tokens = Lexer.new("abcdef1234", "test", false).tokenize
     tokens.first.type.should eq Syntax::Identifier
-    tokens.first.value.should eq "abcdef"
+    tokens.first.value.should eq "abcdef1234"
+    tokens.first.lexeme.should eq "abcdef1234"
 
     tokens = Lexer.new("_this_isValid$", "test", false).tokenize
     tokens.first.type.should eq Syntax::Identifier
     tokens.first.value.should eq "_this_isValid$"
+    tokens.first.lexeme.should eq "_this_isValid$"
+
+    tokens = Lexer.new("is_thi$_valid?", "test", false).tokenize
+    tokens.first.type.should eq Syntax::Identifier
+    tokens.first.value.should eq "is_thi$_valid?"
+    tokens.first.lexeme.should eq "is_thi$_valid?"
   end
   it "lexes keywords" do
     tokens = Lexer.new("every if unless in of else fn", "test", false).tokenize
