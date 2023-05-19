@@ -7,7 +7,7 @@ int[]? fn simple_pair(int[] vec, int n) {
 
     if x * y == n return [x, y]
     if x * z == n return [x, z]
-    i += 1
+    ++i
   }
 }
 

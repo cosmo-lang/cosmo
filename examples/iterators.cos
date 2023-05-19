@@ -2,7 +2,7 @@ func fn doubled(const int[] nums) {
   int idx = 0
   int? fn generator() {
     const int value = nums[idx]
-    idx += 1
+    ++idx
     unless value == none
       value * 2
   }
