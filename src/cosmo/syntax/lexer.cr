@@ -179,7 +179,7 @@ class Cosmo::Lexer
       elsif is_ident
         read_identifier
       else
-        Logger.report_error("Unexpected character", default_char.to_s, @position, @line)
+        report_error("Unexpected character", default_char.to_s)
       end
     end
     @position += 1
@@ -282,7 +282,7 @@ class Cosmo::Lexer
 
     @current_lexeme = num_str
     if decimal_used
-      Logger.report_error("Unexpected float", "Hex/octal/binary literals must be integers", @line, @position) unless radix == 10
+      report_error("Unexpected float", "Hex/octal/binary literals must be integers") unless radix == 10
       add_token(Syntax::Float, num_str.to_f64)
     else
       add_token(Syntax::Integer, num_str.to_i64(radix))
@@ -308,7 +308,7 @@ class Cosmo::Lexer
     until finished? || current_char == delim
       res_str += advance.to_s
       if res_str.size > 1
-        Logger.report_error("Character overflow", "Character literal has more than one character", @position, @line)
+        report_error("Character overflow", "Character literal has more than one character")
         break
       end
     end
@@ -322,7 +322,7 @@ class Cosmo::Lexer
     until finished?
       if char_exists?(1) && !peek.match(/[a-zA-Z0-9_$?]/)
         if ident_str.ends_with?("?")
-          Logger.report_error("Invalid identifier", "'?' may only be used as the last character of an identifier", @position, @line)
+          report_error("Invalid identifier", "'?' may only be used as the last character of an identifier")
         end
         ident_str += current_char.to_s
         skip_whitespace
@@ -353,5 +353,9 @@ class Cosmo::Lexer
         add_token(Syntax::Identifier, ident_str)
       end
     end
+  end
+
+  private def report_error(type : String, message : String) : Nil
+    Logger.report_error(type, message, @line, @position, @file_path)
   end
 end

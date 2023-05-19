@@ -779,7 +779,7 @@ class Cosmo::Parser
   # Consume the current token and advance position if token syntax
   # matches the expected syntax, else log an error
   private def consume(syntax : Syntax) : Nil
-    Logger.report_error("Expected #{syntax}, got", current.type.to_s, current.location.line, current.location.position + 1) unless current.type == syntax
+    Logger.report_error("Expected #{syntax}, got", current.type.to_s, current) unless current.type == syntax
     @position += 1
   end
 

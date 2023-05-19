@@ -11,6 +11,19 @@ def shutup(&block : ->)
   end
 end
 
+def shutup_run(interpreter : Interpreter, path : String) : Nil
+  source = File.read(path)
+  shutup do
+    interpreter.interpret(source, "test")
+  end
+end
+
+def run_dir(interpreter : Interpreter, path : String) : Nil
+  if File.basename(path).downcase.starts_with?("main.")
+    shutup_run(interpreter, path)
+  end
+end
+
 describe Interpreter do
   interpreter = Interpreter.new(output_ast: false, run_benchmarks: false, debug_mode: true)
   describe "interprets intrinsics:" do
@@ -384,9 +397,10 @@ describe Interpreter do
       it example_file do
         interpreter = Interpreter.new(output_ast: false, run_benchmarks: false, debug_mode: true)
         path = File.join "examples", example_file
-        source = File.read(path)
-        shutup do
-          interpreter.interpret(source, "test")
+        if File.directory?(path)
+          run_dir(interpreter, path)
+        else
+          shutup_run(interpreter, path)
         end
       end
     end

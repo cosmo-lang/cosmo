@@ -14,11 +14,11 @@ module Cosmo::Logger
   end
 
   def report_error(error_type : String, message : String, token : Token) : Exception
-    report_error(error_type, message, token.location.line, token.location.position)
+    report_error(error_type, message, token.location.line, token.location.position, token.location.file_name)
   end
 
-  def report_error(error_type : String, message : String, line : UInt32, pos : UInt32) : Exception
-    full_message = "[#{line}:#{pos + 1}] #{error_type}: #{message}"
+  def report_error(error_type : String, message : String, line : UInt32, pos : UInt32, file_path : String) : Exception
+    full_message = "@#{file_path} [#{line}:#{pos + 1}] #{error_type}: #{message}"
     unless @@debug
       abort full_message, 1
     else

@@ -1,7 +1,7 @@
 class Cosmo::Location
   getter line : UInt32
   getter position : UInt32
-  getter file_name : String?
+  getter file_name : String
 
   def initialize(@file_name, @line, @position)
   end

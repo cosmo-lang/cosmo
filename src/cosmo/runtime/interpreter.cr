@@ -197,23 +197,28 @@ class Cosmo::Interpreter
   end
 
   def visit_use_stmt(stmt : Statement::Use) : Nil
-    module_path = stmt.module_path.lexeme
-    unless module_path.includes?("/")
+    relative_module_path = stmt.module_path.lexeme
+    unless relative_module_path.includes?("/")
       Logger.report_error("Invalid import", "No package management system implemented yet. If you are trying to import a file path, prepend './' to the path.", stmt.module_path)
     else
-      file_path = File.exists?(module_path + ".cos") ? module_path + ".cos" : module_path + ".⭐"
-      unless File.exists?(file_path)
-        Logger.report_error("Invalid import", "No such file '#{module_path}.cos' or '#{module_path}.⭐'", stmt.module_path)
+      if @file_path == "repl"
+        Logger.report_error("Cannot import", "Non-package modules are not supported in the REPL", stmt.module_path)
       end
 
-      source = File.read(file_path)
+      module_path = File.join File.dirname(@file_path), relative_module_path
+      ext_file_path = File.exists?(module_path + ".cos") ? module_path + ".cos" : module_path + ".⭐"
+      unless File.exists?(ext_file_path)
+        Logger.report_error("Invalid import", "No such file '#{module_path}.cos/⭐' exists", stmt.module_path)
+      end
+
+      source = File.read(ext_file_path)
       module_interpreter = Interpreter.new(
         output_ast: false,
         run_benchmarks: false,
         debug_mode: @debug_mode
       )
 
-      module_interpreter.interpret(source, file_path)
+      module_interpreter.interpret(source, ext_file_path)
     end
   end
 
