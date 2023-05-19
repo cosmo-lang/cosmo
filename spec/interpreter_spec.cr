@@ -13,13 +13,37 @@ end
 
 describe Interpreter do
   interpreter = Interpreter.new(output_ast: false, run_benchmarks: false, debug_mode: true)
-  it "interprets intrinsics" do
-    result = interpreter.interpret("__version", "test")
-    result.should eq "Cosmo v#{`shards version`}".strip
+  describe "interprets intrinsics" do
+    it "global" do
+      result = interpreter.interpret("__version", "test")
+      result.should eq "Cosmo v#{`shards version`}".strip
 
-    result = interpreter.interpret("puts", "test")
-    result.should be_a Callable
-    result.should be_a IntrinsicFunction
+      result = interpreter.interpret("puts", "test")
+      result.should be_a Callable
+      result.should be_a IntrinsicFunction
+    end
+    it "math library" do
+      result = interpreter.interpret("Math->pi", "test")
+      result.as(Float64).should be_close 3.141, 0.001
+      result = interpreter.interpret("Math->e", "test")
+      result.as(Float64).should be_close 2.718, 0.001
+      result = interpreter.interpret("Math->round(1.2345, 2)", "test")
+      result.should eq 1.23
+      result = interpreter.interpret("Math::floor(1.75)", "test")
+      result.should eq 1
+      result = interpreter.interpret("Math::ceil(1.1)", "test")
+      result.should eq 2
+      result = interpreter.interpret("Math::max(3, 6, 4, 3, 9, 12, 2)", "test")
+      result.should eq 12
+      result = interpreter.interpret("Math::min(7, 6, 4, 1, 9, 14, 5)", "test")
+      result.should eq 1
+      result = interpreter.interpret("Math::log(5)", "test")
+      result.as(Float64).should be_close 1.6094, 0.0001
+      result = interpreter.interpret("Math::log10(16)", "test")
+      result.as(Float64).should be_close 1.2041, 0.0001
+      result = interpreter.interpret("Math::log2(40)", "test")
+      result.as(Float64).should be_close 5.3219, 0.0001
+    end
   end
   it "interprets literals" do
     result = interpreter.interpret("false", "test")
