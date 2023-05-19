@@ -429,7 +429,10 @@ class Cosmo::Interpreter
     when Syntax::Star
       raise "'*' unary operator has not yet implemented."
     when Syntax::Hashtag
-      raise "'#' unary operator has not yet implemented."
+      unless operand.is_a?(Array) || operand.is_a?(Hash)
+        Logger.report_error("Invalid '#' operand type", TypeChecker.get_mapped(operand.class), expr.operator)
+      end
+      operand.size
     end
   end
 
