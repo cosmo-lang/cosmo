@@ -261,16 +261,21 @@ class Cosmo::Parser
     is_nullable: Bool
   )
 
-  private def parse_type(required : Bool = true, check_const : Bool = false, in_paren : Bool = false) : TypeInfo
-    consume(Syntax::LParen) if in_paren
-
+  private def parse_type(required : Bool = true, check_const : Bool = false, paren_depth : Int = 0) : TypeInfo
     is_nullable = false
     is_const = match?(Syntax::Const) if check_const
     if token_exists? && current.type == Syntax::LParen &&
       token_exists?(1) && (peek.type == Syntax::TypeDef || peek.type == Syntax::Identifier) &&
-      token_exists?(2) && peek(2).type == Syntax::Identifier
+      token_exists?(2) && (peek(2).type == Syntax::Identifier ||
+      peek(2).type == Syntax::Pipe ||
+      peek(2).type == Syntax::HyphenArrow ||
+      peek(2).type == Syntax::LBracket ||
+      peek(2).type == Syntax::RParen)
 
-      return parse_type(required: required, check_const: false, in_paren: true)
+      consume(Syntax::LParen)
+      info = parse_type(required: required, check_const: false, paren_depth: paren_depth + 1)
+      consume(Syntax::RParen)
+      return info
     end
 
     if required
@@ -307,7 +312,7 @@ class Cosmo::Parser
       end
       if match?(Syntax::HyphenArrow)
         # type_ref is the key type, parse the value type
-        type_info = parse_type(required: required)
+        type_info = parse_type(required: required, paren_depth: paren_depth)
         if type_info[:variable_type].nil?
           Logger.report_error("Expected table value type, got", current.type.to_s, current)
         end
@@ -326,7 +331,7 @@ class Cosmo::Parser
       end
       if match?(Syntax::Pipe)
         # type_ref is type a, parse type b
-        type_info = parse_type(required: required)
+        type_info = parse_type(required: required, paren_depth: paren_depth)
         if type_info[:variable_type].nil?
           Logger.report_error("Expected right operand to union type, got", current.type.to_s, current)
         end
@@ -338,7 +343,6 @@ class Cosmo::Parser
       end
     end
 
-    consume(Syntax::RParen) if in_paren
     {
       found_typedef: found_typedef,
       variable_type: variable_type,

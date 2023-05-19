@@ -98,7 +98,7 @@ describe Interpreter do
     result = interpreter.interpret("bool abc = false", "test")
     result.should eq false
 
-    result = interpreter.interpret("const string|int g = 123", "test")
+    result = interpreter.interpret("const (string|int) g = 123", "test")
     result.should eq 123
 
     interpreter.interpret("const int foo = 10", "test")
