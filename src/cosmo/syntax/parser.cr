@@ -420,14 +420,17 @@ class Cosmo::Parser
   end
 
   private def parse_type_alias(type_token : Token, identifier : Expression::Var) : Expression::TypeAlias
-    if match?(Syntax::Equal)
-      type_info = parse_type(required: false)
-      type_ref = type_info[:type_ref].not_nil!
-      TypeChecker.alias_type(identifier.token.value.to_s, type_ref.name.value.to_s)
-      Expression::TypeAlias.new(type_token, identifier, type_ref)
-    else
-      Expression::TypeAlias.new(type_token, identifier, nil)
-    end
+    consume(Syntax::Equal)
+    type_info = parse_type(required: true, check_visibility: true, check_const: true)
+    type_ref = type_info[:type_ref].not_nil!
+    TypeChecker.alias_type(identifier.token.value.to_s, type_ref.name.value.to_s)
+    Expression::TypeAlias.new(
+      type_token,
+      identifier,
+      type_ref,
+      type_info[:is_const],
+      type_info[:visibility]
+    )
   end
 
   # Parse a variable declaration and return a node

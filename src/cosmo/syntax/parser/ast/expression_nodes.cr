@@ -164,9 +164,11 @@ module Cosmo::AST::Expression
   class TypeAlias < Base
     getter type_token : Token
     getter var : Var
-    getter value : Node?
+    getter value : Expression::Base
+    getter? constant : Bool
+    getter visibility : Visibility
 
-    def initialize(@type_token, @var, @value)
+    def initialize(@type_token, @var, @value, @constant, @visibility)
     end
 
     def accept(visitor : Visitor(R)) : R forall R

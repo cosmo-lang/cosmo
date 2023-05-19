@@ -328,8 +328,8 @@ class Cosmo::Interpreter
   end
 
   def visit_type_alias_expr(expr : Expression::TypeAlias) : Nil
-    value = evaluate(expr.value.as Expression::Base)
-    @scope.declare(expr.type_token, expr.token, value)
+    value = evaluate(expr.value)
+    @scope.declare(expr.type_token, expr.token, value, expr.constant?, expr.visibility)
   end
 
   def visit_fn_call_expr(expr : Expression::FunctionCall) : ValueType
@@ -441,7 +441,7 @@ class Cosmo::Interpreter
   end
 
   def visit_unary_op_expr(expr : Expression::UnaryOp) : ValueType
-    operand = evaluate(expr.operand.as Expression::Base)
+    operand = evaluate(expr.operand)
     case expr.operator.type
     when Syntax::Plus
       if operand.is_a?(Float) || operand.is_a?(Int)
