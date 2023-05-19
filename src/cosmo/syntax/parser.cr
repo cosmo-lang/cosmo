@@ -187,6 +187,11 @@ class Cosmo::Parser
     elsif token_exists? && ACCESS_SYNTAXES.includes?(current.type) # it's a property access
       consume_current
       left = parse_access(left)
+      if match?(Syntax::LParen)
+        left = parse_fn_call(left)
+      elsif match?(Syntax::LBracket)
+        left = parse_index(left)
+      end
     end
 
     if (left.is_a?(Expression::Index) || left.is_a?(Expression::Access)) && match?(Syntax::Equal)
