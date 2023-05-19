@@ -37,7 +37,7 @@ class Cosmo::Interpreter
     # math_lib["e"] = Math::E
     # math_lib["pi"] = Math::PI
     # math_lib["sqrt"] = SqrtIntrinsic.new(self)
-    # declare_intrinsic("string->func", "math", math_lib)
+    # declare_intrinsic("string->(func|float)", "math", math_lib)
     declare_intrinsic("func", "puts", PutsIntrinsic.new(self))
 
     version = "Cosmo v#{`shards version`}".strip

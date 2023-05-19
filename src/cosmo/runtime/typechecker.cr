@@ -158,7 +158,10 @@ module Cosmo::TypeChecker
   def assert(typedef : String, value : ValueType, token : Token) : Nil
     matches = is?(typedef, value, token)
     unless matches
-      if typedef.ends_with?("?")
+      if typedef.starts_with?("(")
+        ungrouped_type = typedef[1..-2]
+        assert(ungrouped_type, value, token)
+      elsif typedef.ends_with?("?")
         non_nullable_type = typedef[0..-2]
         unless value.nil? # skip type assertion if value is nil
           assert(non_nullable_type, value, token)
