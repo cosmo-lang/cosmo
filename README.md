@@ -9,7 +9,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Modules
 - Performance boosts lol
 - Multiple assignment
-- Unary `++` and `--` operators
 - Somehow typecheck blocks before execution
 - Fix weird expression parsing (`[0].123` evaluates to 0.123??)
 - Literal wrapper classes (vector, table)
@@ -41,10 +40,10 @@ Using a type alias here is broken currently, but is clearly what makes sense to 
 In the future (but not right now), this code should be valid:
 ```crystal
 type MyTable = string->string
-MyTable->string weird_table = {
-  [{"some" -> "thing"}] -> "hello world"
-}
-puts(weird_table[{"some" -> "thing"}]) ## hello world
+MyTable->string weird_table = {{
+  [{{"some" -> "thing"}}] -> "hello world"
+}}
+puts(weird_table[{{"some" -> "thing"}}]) ## hello world
 ```
 Another issue is with arrays.
 ```go

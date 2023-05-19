@@ -2,6 +2,7 @@ enum Cosmo::Syntax
   Identifier
   Integer; Float; String; Char; Boolean; None
   TypeDef
+  PlusPlus; MinusMinus;
   Plus; PlusEqual; Minus; MinusEqual
   Star; StarEqual; Slash; SlashEqual
   Carat; CaratEqual; Percent; PercentEqual

@@ -96,12 +96,16 @@ class Cosmo::Lexer
     when "+"
       if match_char?("=")
         add_token(Syntax::PlusEqual, nil)
+      elsif match_char?("+")
+        add_token(Syntax::PlusPlus, nil)
       else
         add_token(Syntax::Plus, nil)
       end
     when "-"
       if match_char?("=")
         add_token(Syntax::MinusEqual, nil)
+      elsif match_char?("-")
+        add_token(Syntax::MinusMinus, nil)
       elsif match_char?(">")
         add_token(Syntax::HyphenArrow, nil)
       else

@@ -237,7 +237,7 @@ module Cosmo::AST::Expression
   class CompoundAssignment < Base
     getter name : Token
     getter operator : Token
-    getter value : Node
+    getter value : Base
 
     def initialize(@name, @operator, @value)
     end

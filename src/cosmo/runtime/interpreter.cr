@@ -418,6 +418,12 @@ class Cosmo::Interpreter
       else
         Logger.report_error("Invalid '-' operand type", operand.class.to_s, expr.operator)
       end
+    when Syntax::PlusPlus
+      op = Operator::PlusAssign.new(self)
+      op.apply(expr, "++")
+    when Syntax::MinusMinus
+      op = Operator::MinusAssign.new(self)
+      op.apply(expr, "--")
     when Syntax::Bang
       !operand
     when Syntax::Star
