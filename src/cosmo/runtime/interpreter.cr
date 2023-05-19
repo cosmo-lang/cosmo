@@ -219,6 +219,7 @@ class Cosmo::Interpreter
       )
 
       module_interpreter.interpret(source, ext_file_path)
+      globals.extend(module_interpreter.scope)
     end
   end
 

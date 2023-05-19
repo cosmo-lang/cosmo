@@ -7,7 +7,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 ## Things I Gotta Do
 
 - Package manager
-- Modules
 - Performance boosts lol
 - Multiple assignment
 - Somehow typecheck blocks before execution

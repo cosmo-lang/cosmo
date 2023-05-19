@@ -15,6 +15,13 @@ class Cosmo::Scope
   def initialize(@parent = nil)
   end
 
+  def extend(other : Cosmo::Scope) : Cosmo::Scope
+    other.variables.each do |name, data|
+      @variables[name] = data if data[:visibility] == Visibility::Public
+    end
+    self
+  end
+
   private def create_variable(
     typedef : Token | String,
     identifier : Token,
