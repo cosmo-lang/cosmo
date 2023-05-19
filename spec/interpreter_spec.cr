@@ -159,18 +159,11 @@ describe Interpreter do
     matrix[1].as(Array(ValueType)).each { |v| sum += v.as Int64 }
     sum.should eq 21
 
-    result = interpreter.interpret("any->bool valids = {{yes -> true, [123] -> false}}", "test")
+    result = interpreter.interpret("(string|int)->bool valids = {{yes -> true, [123] -> false}}", "test")
     result.should eq ({"yes" => true, 123 => false})
 
-    # no 'Range' typedef yet
-    result = interpreter.interpret("any my_range = 1..16", "test")
+    result = interpreter.interpret("Range my_range = 1..16", "test")
     result.should eq 1..16
-  end
-  it "interprets type aliases" do
-    result = interpreter.interpret("type MyInt = int; MyInt my_int = 123", "test")
-    result.should eq 123
-    result = interpreter.interpret("type Number = int | float; Number n = 1.23", "test")
-    result.should eq 1.23
   end
   it "interprets variable assignments" do
     interpreter.interpret("int x = 0b11", "test")
@@ -348,16 +341,40 @@ describe Interpreter do
     result = interpreter.interpret(lines.join('\n'), "test")
     result.should eq 6
   end
-  it "throws when types mismatch" do
-    interpreter.interpret("int x = 1", "test")
-    expect_raises(Exception, "[1:2] Type mismatch: Expected 'int', got 'float'") do
-      interpreter.interpret("x = 2.0", "test")
+  describe "types:" do
+    it "'is' matching" do
+      result = interpreter.interpret("1 is int", "test")
+      result.should eq true
+      result = interpreter.interpret("1 is (int|float)?", "test")
+      result.should eq true
+      result = interpreter.interpret("'h' is char", "test")
+      result.should eq true
+      result = interpreter.interpret("'h' is void", "test")
+      result.should eq false
+      result = interpreter.interpret("none is void", "test")
+      result.should eq true
+      result = interpreter.interpret("[1,2,3] is int[]", "test")
+      result.should eq true
+      result = interpreter.interpret("{{yes->true}} is string->bool", "test")
+      result.should eq true
     end
-    expect_raises(Exception, "[1:3] Invalid '+' operand type: Char") do
-      interpreter.interpret("x + 'h'", "test")
+    it "aliases" do
+      result = interpreter.interpret("type MyInt = int; MyInt my_int = 123", "test")
+      result.should eq 123
+      result = interpreter.interpret("type Number = int | float; 1.23 is Number", "test")
+      result.should eq true
     end
-    expect_raises(Exception, "[1:6] Type mismatch: Expected 'float', got 'int'") do
-      interpreter.interpret("float[] aba = [x, 2.0]", "test")
+    it "throws when a mismatch occurs" do
+      interpreter.interpret("int x = 1", "test")
+      expect_raises(Exception, "[1:2] Type mismatch: Expected 'int', got 'float'") do
+        interpreter.interpret("x = 2.0", "test")
+      end
+      expect_raises(Exception, "[1:3] Invalid '+' operand type: Char") do
+        interpreter.interpret("x + 'h'", "test")
+      end
+      expect_raises(Exception, "[1:6] Type mismatch: Expected 'float', got 'int'") do
+        interpreter.interpret("float[] aba = [x, 2.0]", "test")
+      end
     end
   end
   describe "interprets examples:" do

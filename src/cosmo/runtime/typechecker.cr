@@ -153,14 +153,49 @@ module Cosmo::TypeChecker
     else
       matches = false
 
-      if typedef.includes?("|")
+      if typedef.starts_with?("(")
+        ungrouped_type = typedef[1..-2]
+        matches = is?(ungrouped_type, value, token)
+      elsif typedef.ends_with?("[]")
+        value_type = typedef[0..-3]
+        matches = value.is_a?(Array)
+        if value.is_a?(Array)
+          value.as(Array).each { |v| matches &= is?(value_type, v, token) }
+        end
+      elsif typedef.includes?("|")
         types = typedef.split("|")
         types.each do |type|
           matches = true if is?(type.strip, value, token)
         end
+      elsif typedef.includes?("->") && typedef.split("->", 2).size == 2
+        types = typedef.split("->", 2)
+        key_type = types.first.strip
+        value_type = types.last.strip
+
+        matches = value.is_a?(Hash)
+        if value.is_a?(Hash)
+          value.as(Hash).each do |k, v|
+            matches &= is?(key_type, k, token)
+            matches &= is?(value_type, v, token)
+          end
+        end
       elsif typedef.ends_with?("?")
         non_nullable_type = typedef[0..-2]
         matches = is?(non_nullable_type + "|void", value, token)
+      else
+        unless matches
+          registered = get_registered_type?(typedef, token)
+          unless registered.nil?
+            if ALIASES.has_key?(registered.name)
+              unaliased = ALIASES[registered.name]
+              matches = is?(unaliased, value, token)
+            else
+              matches = false
+            end
+          else
+            matches = false
+          end
+        end
       end
 
       matches
@@ -169,39 +204,29 @@ module Cosmo::TypeChecker
 
   def assert(typedef : String, value : ValueType, token : Token) : Nil
     matches = is?(typedef, value, token)
-    unless matches
-      if typedef.starts_with?("(")
-        ungrouped_type = typedef[1..-2]
-        assert(ungrouped_type, value, token)
-      elsif typedef.ends_with?("[]")
-        value_type = typedef[0..-3]
-        report_mismatch(typedef, value, token) unless value.is_a?(Array)
-        value.as(Array).each { |v| assert(value_type, v, token) }
-      elsif typedef.includes?("->") && typedef.split("->", 2).size == 2
-        types = typedef.split("->", 2)
-        key_type = types.first.strip
-        value_type = types.last.strip
 
-        report_mismatch(typedef, value, token) unless value.is_a?(Hash)
+    ## assert key & value types
+    if typedef.ends_with?("[]")
+      value_type = typedef[0..-3]
+      report_mismatch(typedef, value, token) unless value.is_a?(Array)
+      value.as(Array).each { |v| assert(value_type, v, token) }
+    elsif typedef.includes?("->") && typedef.split("->", 2).size == 2
+      types = typedef.split("->", 2)
+      key_type = types.first.strip
+      value_type = types.last.strip
 
-        internal = cast_hash(value)
-        internal.each do |k, v|
-          assert(key_type, k, token)
-          assert(value_type, v, token)
-        end
-      else
-        registered = get_registered_type?(typedef, token)
-        unless registered.nil?
-          if ALIASES.has_key?(registered.name)
-            unaliased = ALIASES[registered.name]
-            assert(unaliased, value, token) unless typedef == unaliased
-          else
-            report_mismatch(typedef, value, token)
-          end
-        else
-          raise "Type '#{typedef}' is unregistered and is unhandled in TypeChecker."
-        end
+      report_mismatch(typedef, value, token) unless value.is_a?(Hash)
+
+      internal = cast_hash(value)
+      internal.each do |k, v|
+        assert(key_type, k, token)
+        assert(value_type, v, token)
       end
+    elsif typedef.starts_with?("(")
+      ungrouped_type = typedef[1..-2]
+      assert(ungrouped_type, value, token)
+    else
+      report_mismatch(typedef, value, token) unless matches
     end
   end
 end

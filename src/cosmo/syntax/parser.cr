@@ -329,9 +329,11 @@ class Cosmo::Parser
     if match?(Syntax::Pipe)
       # type_ref is type a, parse type b
       type_info = parse_type(required: required, paren_depth: paren_depth)
-      if type_info[:variable_type].nil?
-        Logger.report_error("Expected right operand to union type, got", current.type.to_s, current)
-      end
+      Logger.report_error(
+        "Expected right operand to union type, got",
+        token_exists? ? current.type.to_s : "EOF",
+        token_exists? ? current : last_token
+      ) if type_info[:variable_type].nil?
 
       union_type = "#{variable_type.lexeme}|#{type_info[:variable_type].not_nil!.lexeme}"
       union_type_token = Token.new(union_type, variable_type.type, union_type, variable_type.location)
