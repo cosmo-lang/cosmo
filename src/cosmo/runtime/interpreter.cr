@@ -42,7 +42,8 @@ class Cosmo::Interpreter
     @globals.declare(typedef_token, ident_token, value, const: true)
   end
 
-  def set_meta(key : String, value : String) : Nil
+  def set_meta(key : String, value : String?) : Nil
+    return if value.nil?
     @meta[key] = value
   end
 
@@ -298,7 +299,10 @@ class Cosmo::Interpreter
     end
 
     arg_values = expr.arguments.map { |arg| evaluate(arg) }
-    fn.call(arg_values)
+    enclosing_return_type = @meta["block_return_type"]?
+    result = fn.call(arg_values)
+    set_meta("block_return_type", enclosing_return_type)
+    result
   end
 
   def visit_var_expr(expr : Expression::Var) : ValueType

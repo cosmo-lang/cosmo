@@ -168,10 +168,10 @@ module Cosmo::MathLib
       1.to_u..1.to_u
     end
 
-    def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
+    def call(args : Array(ValueType)) : Int64
+      @interpreter.set_meta("block_return_type", "int")
       TypeChecker.assert("int", args.first, token("isqrt"))
-      Math.isqrt(args.first.as Int64).to_f64
+      Math.isqrt(args.first.as Int64)
     end
   end
 
