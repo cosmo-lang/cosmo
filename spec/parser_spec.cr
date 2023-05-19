@@ -142,6 +142,17 @@ describe Parser do
     literal.should be_a Expression::IntLiteral
     literal.value.should eq 12
 
+    stmts = Parser.new("++15", "test", false).parse
+    stmts.should_not be_empty
+    expr = stmts.first.as(Statement::SingleExpression).expression
+    unary = expr.as Expression::UnaryOp
+    unary.should be_a Expression::UnaryOp
+    unary.operator.type.should eq Syntax::PlusPlus
+
+    literal = unary.operand.as Expression::IntLiteral
+    literal.should be_a Expression::IntLiteral
+    literal.value.should eq 15
+
     stmts = Parser.new("!true", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(Statement::SingleExpression).expression

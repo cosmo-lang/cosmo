@@ -63,10 +63,8 @@ describe Interpreter do
       result.should eq 7
       result = interpreter.interpret("0xabc", "test")
       result.should eq 2748
-      result = interpreter.interpret("-0o2004", "test")
-      result.should eq -1028
-      result = interpreter.interpret("+---10.24335", "test")
-      result.should eq 10.24335
+      result = interpreter.interpret("0o321", "test")
+      result.should eq 209
     end
     it "strings/chars" do
       result = interpreter.interpret("\"hello\"", "test")
@@ -98,12 +96,14 @@ describe Interpreter do
     result.should be_false
     result = interpreter.interpret("!!123", "test")
     result.should be_true
-    result = interpreter.interpret("0b111", "test")
-    result.should eq 7
     result = interpreter.interpret("-0xabc", "test")
     result.should eq -2748
     result = interpreter.interpret("+-10.24335", "test")
     result.should eq 10.24335
+    result = interpreter.interpret("#[1,2,3]", "test")
+    result.should eq 3
+    result = interpreter.interpret("\#{{yes->true, no->false}}", "test")
+    result.should eq 2
   end
   it "interprets binary operators" do
     result = interpreter.interpret("3 * 6 / 2 - 9", "test")
@@ -177,6 +177,14 @@ describe Interpreter do
     result = interpreter.interpret("x = 5", "test")
     result.should eq 5
     result = interpreter.interpret("x = 12", "test")
+    result.should eq 12
+    result = interpreter.interpret("++x", "test")
+    result.should eq 13
+    result = interpreter.interpret("++x", "test")
+    result.should eq 14
+    result = interpreter.interpret("--x", "test")
+    result.should eq 13
+    result = interpreter.interpret("--x", "test")
     result.should eq 12
   end
   it "interprets compound assignment" do
