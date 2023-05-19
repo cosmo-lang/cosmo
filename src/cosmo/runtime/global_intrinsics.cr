@@ -31,18 +31,4 @@ module Cosmo
       puts args.map { |arg| arg.nil? ? "none" : arg.to_s}.join('\t')
     end
   end
-
-  class SqrtIntrinsic < IntrinsicFunction
-    def arity : Range(UInt32, UInt32)
-      1.to_u..1.to_u
-    end
-
-    def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
-      TypeChecker.assert("float | int", args.first, token("sqrt"))
-      x = args.first.as Float64
-      return Float64::NAN if x < 0
-      Math.sqrt(x)
-    end
-  end
 end

@@ -65,7 +65,7 @@ module Cosmo
     loop do
       line = read_line
       break if line.nil?
-      puts read_source(line, file_path: "repl")
+      puts read_source(line, file_path: "repl").to_s
     end
   end
 end

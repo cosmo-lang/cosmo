@@ -5,6 +5,7 @@ require "./scope"
 require "./operator"
 require "./type"
 require "./resolver"
+require "./lib/math"
 
 class Cosmo::Interpreter
   include Expression::Visitor(ValueType)
@@ -16,13 +17,6 @@ class Cosmo::Interpreter
   @meta = {} of String => String
   @file_path : String = ""
 
-  private def declare_intrinsic(type : String, ident : String, value : ValueType)
-    location = Location.new("intrinsic", 0, 0)
-    ident_token = Token.new(ident, Syntax::Identifier, ident, location)
-    typedef_token = Token.new(type, Syntax::TypeDef, type, location)
-    @globals.declare(typedef_token, ident_token, value, const: true)
-  end
-
   def initialize(
     @output_ast : Bool,
     @run_benchmarks : Bool,
@@ -33,15 +27,19 @@ class Cosmo::Interpreter
 
     @scope = @globals
 
-    math_lib = {} of String => IntrinsicFunction | Float64
-    math_lib["e"] = Math::E
-    math_lib["pi"] = Math::PI
-    math_lib["sqrt"] = SqrtIntrinsic.new(self)
-    declare_intrinsic("string->(func|float)", "math", math_lib)
+
+    MathLib.inject(self)
     declare_intrinsic("func", "puts", PutsIntrinsic.new(self))
 
     version = "Cosmo v#{`shards version`}".strip
     declare_intrinsic("string", "__version", version)
+  end
+
+  def declare_intrinsic(type : String, ident : String, value : ValueType)
+    location = Location.new("intrinsic", 0, 0)
+    ident_token = Token.new(ident, Syntax::Identifier, ident, location)
+    typedef_token = Token.new(type, Syntax::TypeDef, type, location)
+    @globals.declare(typedef_token, ident_token, value, const: true)
   end
 
   def set_meta(key : String, value : String) : Nil
