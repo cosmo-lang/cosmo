@@ -27,38 +27,12 @@ class Cosmo::Parser
     statements
   end
 
-  private def parse_statement_expression : Node
-    return parse_return_statement if match?(Syntax::Return)
-    parse_regular_statement
-  end
-
   # Parse a statement and return a node
   private def parse_statement : Statement::Base
-    stmt = parse_statement_expression
-    if stmt.is_a?(Expression::Base)
-      Statement::SingleExpression.new(stmt)
-    else
-      stmt.as Statement::Base
-    end
-  end
-
-  # Parse a block of statements and return a node
-  private def parse_block : Statement::Block
-    consume(Syntax::LBrace)
-    statements = [] of Statement::Base
-
-    until finished? || current.type == Syntax::RBrace
-      statements << parse_statement
-    end
-
-    consume(Syntax::RBrace)
-    Statement::Block.new(statements)
-  end
-
-  # Parse a function definition and return a node
-  private def parse_regular_statement : Node
     if at_fn_type?
       parse_fn_def_statement
+    elsif match?(Syntax::Return)
+      parse_return_statement
     elsif match?(Syntax::Break)
       Statement::Break.new(last_token)
     elsif match?(Syntax::Next)
@@ -74,8 +48,21 @@ class Cosmo::Parser
     elsif match?(Syntax::Every)
       parse_every_statement
     else
-      parse_expression
+      Statement::SingleExpression.new(parse_expression)
     end
+  end
+
+  # Parse a block of statements and return a node
+  private def parse_block : Statement::Block
+    consume(Syntax::LBrace)
+    statements = [] of Statement::Base
+
+    until finished? || current.type == Syntax::RBrace
+      statements << parse_statement
+    end
+
+    consume(Syntax::RBrace)
+    Statement::Block.new(statements)
   end
 
   private def parse_every_statement : Statement::Every
@@ -353,19 +340,22 @@ class Cosmo::Parser
   end
 
   private def at_fn_type?(offset : Int = 0) : Bool
-    return false unless token_exists?(1)
+    return false unless token_exists?(offset + 1)
 
     cur = peek(offset)
     last = token_exists?(offset - 1) ? peek(offset - 1) : nil
     peeked = peek(offset + 1)
     next_peeked = token_exists?(offset + 2) ? peek(offset + 2) : nil
 
-    if cur.type == Syntax::Const && (last.nil? || last.type != Syntax::Const)
-      at_fn_type?(offset: offset + 1)
+    if (cur.type == Syntax::Const && !last.nil? && last.type != Syntax::Const) || cur.type == Syntax::LParen
+      at_fn_type?(offset: offset + 1) ## skip the token
     else
       return at_fn_type?(offset: offset + 2) if peeked.type == Syntax::LBracket && !next_peeked.nil? && next_peeked.type == Syntax::RBracket
-      return at_fn_type?(offset: offset + 1) if peeked.type == Syntax::HyphenArrow
-      return at_fn_type?(offset: offset + 1) if peeked.type == Syntax::Question
+      return at_fn_type?(offset: offset + 1) if peeked.type == Syntax::HyphenArrow || peeked.type == Syntax::Question || peeked.type == Syntax::RParen
+      if peeked.type == Syntax::Pipe && !next_peeked.nil? && (next_peeked.type == Syntax::TypeDef || next_peeked.type == Syntax::Identifier)
+        return at_fn_type?(offset: offset + 2)
+      end
+
       peeked.type == Syntax::Function
     end
   end

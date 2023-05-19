@@ -174,7 +174,11 @@ describe Interpreter do
     result.should be_a Callable
     result.should be_a Function
 
-    result = interpreter.interpret("float fn half_sum(const int a, const int b) { (a + b) / 2 }", "test")
+    result = interpreter.interpret("(float|int) fn half_sum(const int a, const int b) { (a + b) / 2 }", "test")
+    result.should be_a Callable
+    result.should be_a Function
+
+    result = interpreter.interpret("(bool|void) fn balls?() { none }", "test")
     result.should be_a Callable
     result.should be_a Function
   end
