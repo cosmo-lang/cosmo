@@ -250,7 +250,15 @@ class Cosmo::Parser
       consume(Syntax::LParen)
       info = parse_type(required: required, check_const: false, paren_depth: paren_depth + 1)
       consume(Syntax::RParen)
-      return info
+
+      variable_type, type_ref = parse_type_suffix(info[:variable_type].not_nil!, required, paren_depth)
+      return {
+        found_typedef: info[:found_typedef],
+        variable_type: variable_type,
+        type_ref: type_ref,
+        is_const: info[:is_const],
+        is_nullable: info[:is_nullable]
+      }
     end
 
     if required
@@ -270,53 +278,7 @@ class Cosmo::Parser
       consume_current
     end
     unless variable_type.nil?
-      if match?(Syntax::LBracket)
-        consume(Syntax::RBracket)
-        vector_type = variable_type.lexeme + "[]"
-        vector_type_token = Token.new(vector_type, variable_type.type, vector_type, variable_type.location)
-        variable_type = vector_type_token
-        type_ref = Expression::TypeRef.new(variable_type)
-        while match?(Syntax::LBracket)
-          consume(Syntax::RBracket)
-          vector_type = variable_type.lexeme + "[]"
-          vector_type_token = Token.new(vector_type, variable_type.type, vector_type, variable_type.location)
-          variable_type = vector_type_token
-          type_ref = Expression::TypeRef.new(variable_type)
-        end
-      else
-        type_ref = Expression::TypeRef.new(variable_type)
-      end
-      if match?(Syntax::HyphenArrow)
-        # type_ref is the key type, parse the value type
-        type_info = parse_type(required: required, paren_depth: paren_depth)
-        if type_info[:variable_type].nil?
-          Logger.report_error("Expected table value type, got", current.type.to_s, current)
-        end
-
-        table_type = "#{variable_type.lexeme}->#{type_info[:variable_type].not_nil!.lexeme}"
-        table_type_token = Token.new(table_type, variable_type.type, table_type, variable_type.location)
-        variable_type = table_type_token
-        type_ref = Expression::TypeRef.new(variable_type)
-      end
-      if match?(Syntax::Question)
-        is_nullable = true
-        nullable_type = variable_type.lexeme + "?"
-        nullable_type_token = Token.new(nullable_type, variable_type.type, nullable_type, variable_type.location)
-        variable_type = nullable_type_token
-        type_ref = Expression::TypeRef.new(variable_type)
-      end
-      if match?(Syntax::Pipe)
-        # type_ref is type a, parse type b
-        type_info = parse_type(required: required, paren_depth: paren_depth)
-        if type_info[:variable_type].nil?
-          Logger.report_error("Expected right operand to union type, got", current.type.to_s, current)
-        end
-
-        union_type = "#{variable_type.lexeme}|#{type_info[:variable_type].not_nil!.lexeme}"
-        union_type_token = Token.new(union_type, variable_type.type, union_type, variable_type.location)
-        variable_type = union_type_token
-        type_ref = Expression::TypeRef.new(variable_type)
-      end
+      variable_type, type_ref = parse_type_suffix(variable_type, required, paren_depth)
     end
 
     {
@@ -326,6 +288,58 @@ class Cosmo::Parser
       is_const: is_const || false,
       is_nullable: is_nullable
     }
+  end
+
+  private def parse_type_suffix(variable_type : Token, required : Bool = true, paren_depth : Int = 0) : Tuple(Token, Expression::TypeRef)
+    if match?(Syntax::LBracket)
+      consume(Syntax::RBracket)
+      vector_type = variable_type.lexeme + "[]"
+      vector_type_token = Token.new(vector_type, variable_type.type, vector_type, variable_type.location)
+      variable_type = vector_type_token
+      type_ref = Expression::TypeRef.new(variable_type)
+      while match?(Syntax::LBracket)
+        consume(Syntax::RBracket)
+        vector_type = variable_type.lexeme + "[]"
+        vector_type_token = Token.new(vector_type, variable_type.type, vector_type, variable_type.location)
+        variable_type = vector_type_token
+        type_ref = Expression::TypeRef.new(variable_type)
+      end
+    else
+      type_ref = Expression::TypeRef.new(variable_type)
+    end
+    if match?(Syntax::HyphenArrow)
+      # type_ref is the key type, parse the value type
+      type_info = parse_type(required: required, paren_depth: paren_depth)
+      if type_info[:variable_type].nil?
+        Logger.report_error("Expected table value type, got", current.type.to_s, current)
+      end
+
+      table_type = "#{variable_type.lexeme}->#{type_info[:variable_type].not_nil!.lexeme}"
+      table_type_token = Token.new(table_type, variable_type.type, table_type, variable_type.location)
+      variable_type = table_type_token
+      type_ref = Expression::TypeRef.new(variable_type)
+    end
+    if match?(Syntax::Question)
+      is_nullable = true
+      nullable_type = variable_type.lexeme + "?"
+      nullable_type_token = Token.new(nullable_type, variable_type.type, nullable_type, variable_type.location)
+      variable_type = nullable_type_token
+      type_ref = Expression::TypeRef.new(variable_type)
+    end
+    if match?(Syntax::Pipe)
+      # type_ref is type a, parse type b
+      type_info = parse_type(required: required, paren_depth: paren_depth)
+      if type_info[:variable_type].nil?
+        Logger.report_error("Expected right operand to union type, got", current.type.to_s, current)
+      end
+
+      union_type = "#{variable_type.lexeme}|#{type_info[:variable_type].not_nil!.lexeme}"
+      union_type_token = Token.new(union_type, variable_type.type, union_type, variable_type.location)
+      variable_type = union_type_token
+      type_ref = Expression::TypeRef.new(variable_type)
+    end
+
+    {variable_type, type_ref}
   end
 
   private def at_fn_type?(offset : Int = 0) : Bool
