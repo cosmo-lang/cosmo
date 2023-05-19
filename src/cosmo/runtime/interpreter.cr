@@ -283,6 +283,11 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_is_expr(expr : Expression::Is) : Bool
+    value = evaluate(expr.value)
+    TypeChecker.is?(expr.type.name.lexeme, value, expr.token)
+  end
+
   def visit_type_ref_expr(expr : Expression::TypeRef) : Type
     TypeChecker.get_registered_type(expr.name.value.to_s, expr.name)
   end

@@ -128,7 +128,7 @@ module Cosmo::TypeChecker
     type
   end
 
-  def is?(typedef : String, value : ValueType, token : Token) : Bool
+  def is?(typedef : String, value, token : Token) : Bool
     case typedef
     when "Range"
       value.is_a?(Range)
@@ -151,7 +151,19 @@ module Cosmo::TypeChecker
     when "any"
       true
     else
-      false
+      matches = false
+
+      if typedef.includes?("|")
+        types = typedef.split("|")
+        types.each do |type|
+          matches = true if is?(type.strip, value, token)
+        end
+      elsif typedef.ends_with?("?")
+        non_nullable_type = typedef[0..-2]
+        matches = is?(non_nullable_type + "|void", value, token)
+      end
+
+      matches
     end
   end
 
@@ -161,11 +173,6 @@ module Cosmo::TypeChecker
       if typedef.starts_with?("(")
         ungrouped_type = typedef[1..-2]
         assert(ungrouped_type, value, token)
-      elsif typedef.ends_with?("?")
-        non_nullable_type = typedef[0..-2]
-        unless value.nil? # skip type assertion if value is nil
-          assert(non_nullable_type, value, token)
-        end
       elsif typedef.ends_with?("[]")
         value_type = typedef[0..-3]
         report_mismatch(typedef, value, token) unless value.is_a?(Array)
@@ -182,18 +189,6 @@ module Cosmo::TypeChecker
           assert(key_type, k, token)
           assert(value_type, v, token)
         end
-      elsif typedef.includes?("|")
-        types = typedef.split("|")
-
-        matches = false
-        types.each do |type|
-          if is?(type.strip, value, token)
-            matches = true
-            break
-          end
-        end
-
-        report_mismatch(typedef, value, token) unless matches
       else
         registered = get_registered_type?(typedef, token)
         unless registered.nil?

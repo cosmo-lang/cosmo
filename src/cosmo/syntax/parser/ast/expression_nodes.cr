@@ -2,7 +2,9 @@ module Cosmo::AST::Expression
   include Cosmo::AST
 
   module Visitor(R)
+    abstract def visit_is_expr(expr : Is) : R
     abstract def visit_type_alias_expr(expr : TypeAlias) : R
+    abstract def visit_type_ref_expr(expr : TypeRef) : R
     abstract def visit_fn_call_expr(expr : FunctionCall) : R
     abstract def visit_var_declaration_expr(expr : VarDeclaration) : R
     abstract def visit_var_assignment_expr(expr : VarAssignment) : R
@@ -21,10 +23,10 @@ module Cosmo::AST::Expression
   end
 
   class TernaryOp < Base
-    getter condition : Expression::Base
+    getter condition : Base
     getter operator : Token
-    getter then : Expression::Base
-    getter else : Expression::Base
+    getter then : Base
+    getter else : Base
 
     def initialize(@condition, @operator, @then, @else)
     end
@@ -48,7 +50,7 @@ module Cosmo::AST::Expression
 
   class PropertyAssignment < Base
     getter object : Access | Index
-    getter value : Expression::Base | ValueType
+    getter value : Base | ValueType
 
     def initialize(@object, @value)
     end
@@ -62,8 +64,8 @@ module Cosmo::AST::Expression
     end
 
     def to_s(indent : Int = 0)
-      if value.is_a?(Expression::Base)
-        value_s = @value.as(Expression::Base).to_s(indent + 1)
+      if value.is_a?(Base)
+        value_s = @value.as(Base).to_s(indent + 1)
       else
         value_s = @value.to_s
       end
@@ -72,7 +74,7 @@ module Cosmo::AST::Expression
   end
 
   class Access < Base
-    getter object : Expression::Base
+    getter object : Base
     getter key : Token
 
     def initialize(@object, @key)
@@ -95,8 +97,8 @@ module Cosmo::AST::Expression
   end
 
   class Index < Base
-    getter object : Expression::Base
-    getter key : Expression::Base
+    getter object : Base
+    getter key : Base
 
     def initialize(@object, @key)
     end
@@ -113,6 +115,29 @@ module Cosmo::AST::Expression
       "Index<\n" +
       "  #{TAB * indent}object: #{@object.to_s(indent + 1)},\n" +
       "  #{TAB * indent}key: #{@key.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
+    end
+  end
+
+  class Is < Base
+    getter value : Base
+    getter type : TypeRef
+
+    def initialize(@value, @type)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_is_expr(self)
+    end
+
+    def token : Token
+      @value.token
+    end
+
+    def to_s(indent : Int = 0)
+      "Is<\n" +
+      "  #{TAB * indent}value: #{@value.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}type: #{@type.to_s(indent + 1)}\n" +
       "#{TAB * indent}>"
     end
   end
@@ -160,8 +185,8 @@ module Cosmo::AST::Expression
   end
 
   class FunctionCall < Base
-    getter callee : Expression::Base
-    getter arguments : Array(Expression::Base)
+    getter callee : Base
+    getter arguments : Array(Base)
 
     def initialize(@callee, @arguments)
     end
@@ -188,7 +213,7 @@ module Cosmo::AST::Expression
     getter typedef : Token
     getter identifier : Token
     getter? const : Bool
-    getter default_value : Expression::Base?
+    getter default_value : Base?
 
     def initialize(@typedef, @identifier, @const, @default_value = NoneLiteral.new(nil, identifier))
     end
@@ -237,7 +262,7 @@ module Cosmo::AST::Expression
   class VarDeclaration < Base
     getter typedef : Token
     getter var : Var
-    getter value : Expression::Base
+    getter value : Base
     getter? constant : Bool
 
     def initialize(@typedef, @var, @value, @constant)
@@ -262,7 +287,7 @@ module Cosmo::AST::Expression
 
   class VarAssignment < Base
     getter var : Var
-    getter value : Expression::Base
+    getter value : Base
 
     def initialize(@var, @value)
     end
@@ -299,9 +324,9 @@ module Cosmo::AST::Expression
   end
 
   class BinaryOp < Base
-    getter left : Expression::Base
+    getter left : Base
     getter operator : Token
-    getter right : Expression::Base
+    getter right : Base
 
     def initialize(@left, @operator, @right)
     end
@@ -325,7 +350,7 @@ module Cosmo::AST::Expression
 
   class UnaryOp < Base
     getter operator : Token
-    getter operand : Expression::Base
+    getter operand : Base
 
     def initialize(@operator, @operand)
     end
@@ -358,8 +383,8 @@ module Cosmo::AST::Expression
   end
 
   class RangeLiteral < Base
-    getter from : Expression::Base
-    getter to : Expression::Base
+    getter from : Base
+    getter to : Base
 
     def initialize(@from, @to)
     end

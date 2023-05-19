@@ -472,10 +472,15 @@ class Cosmo::Parser
   private def parse_equality : Expression::Base
     left = parse_comparison
 
-    while match?(Syntax::EqualEqual) || match?(Syntax::BangEqual)
+    while match?(Syntax::EqualEqual) || match?(Syntax::BangEqual) || match?(Syntax::Is)
       op = last_token
-      right = parse_comparison
-      left = Expression::BinaryOp.new(left, op, right)
+      if op.lexeme == "is"
+        type_info = parse_type
+        left = Expression::Is.new(left, type_info[:type_ref].not_nil!)
+      else
+        right = parse_comparison
+        left = Expression::BinaryOp.new(left, op, right)
+      end
     end
 
     left

@@ -57,7 +57,7 @@ module Cosmo::AST::Statement
     getter keyword : Token
     getter var : Expression::VarDeclaration
     getter enumerable : Expression::Base
-    getter block : Statement::Base
+    getter block : Base
 
     def initialize(@keyword, @var, @enumerable, @block)
     end
@@ -82,7 +82,7 @@ module Cosmo::AST::Statement
   class While < Base
     getter keyword : Token
     getter condition : Expression::Base
-    getter block : Statement::Base
+    getter block : Base
 
     def initialize(@keyword, @condition, @block)
     end
@@ -106,7 +106,7 @@ module Cosmo::AST::Statement
   class Until < Base
     getter keyword : Token
     getter condition : Expression::Base
-    getter block : Statement::Base
+    getter block : Base
 
     def initialize(@keyword, @condition, @block)
     end
@@ -130,8 +130,8 @@ module Cosmo::AST::Statement
   class If < Base
     getter keyword : Token
     getter condition : Expression::Base
-    getter then : Statement::Base
-    getter else : Statement::Base?
+    getter then : Base
+    getter else : Base?
 
     def initialize(@keyword, @condition, @then, @else)
     end
@@ -156,8 +156,8 @@ module Cosmo::AST::Statement
   class Unless < Base
     getter keyword : Token
     getter condition : Expression::Base
-    getter then : Statement::Base
-    getter else : Statement::Base?
+    getter then : Base
+    getter else : Base?
 
     def initialize(@keyword, @condition, @then, @else)
     end

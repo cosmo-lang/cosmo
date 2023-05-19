@@ -140,6 +140,11 @@ class Cosmo::Resolver
     resolve(expr.value.as(Expression::Base)) if expr.value.is_a?(Expression::Base)
   end
 
+  def visit_is_expr(expr : Expression::Is) : Nil
+    resolve(expr.value)
+    resolve(expr.type)
+  end
+
   def visit_type_alias_expr(expr : Expression::TypeAlias) : Nil
     declare(expr.token)
     resolve(expr.value.not_nil!) unless expr.value.nil?
