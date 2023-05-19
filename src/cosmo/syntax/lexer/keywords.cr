@@ -17,9 +17,11 @@ module Cosmo::Keywords
     "until" => Syntax::Until,
     "break" => Syntax::Break,
     "next" => Syntax::Next,
-    "match" => Syntax::Match,
+    "case" => Syntax::Case,
+    "when" => Syntax::Case,
     "const" => Syntax::Const,
-    "return" => Syntax::Return
+    "return" => Syntax::Return,
+    "throw" => Syntax::Throw
   }
 
   # These cannot be any of the keywords above

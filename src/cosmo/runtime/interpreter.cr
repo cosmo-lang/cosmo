@@ -196,6 +196,14 @@ class Cosmo::Interpreter
     @scope = enclosing
   end
 
+  def visit_throw_stmt(stmt : Statement::Throw)
+    err = evaluate(stmt.err)
+    unless TypeChecker.is?("string", err, stmt.token)
+      Logger.report_error("Throw statement can only be invoked with a string currently, got", TypeChecker.get_mapped(err.class), stmt.token)
+    end
+    raise err.to_s
+  end
+
   def visit_next_stmt(stmt : Statement::Next) : Nil
     raise HookedExceptions::Next.new(stmt.keyword)
   end

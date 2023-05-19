@@ -31,6 +31,8 @@ class Cosmo::Parser
   private def parse_statement : Statement::Base
     if at_fn_type?
       parse_fn_def_statement
+    elsif match?(Syntax::Throw)
+      parse_throw_statement
     elsif match?(Syntax::Return)
       parse_return_statement
     elsif match?(Syntax::Break)
@@ -123,6 +125,11 @@ class Cosmo::Parser
       end
     end
     Statement::Unless.new(token, condition, then_block, else_block)
+  end
+
+  private def parse_throw_statement : Statement::Throw
+    value = token_exists? ? parse_expression : nil
+    Statement::Throw.new(value || Expression::NoneLiteral.new(nil, last_token), last_token)
   end
 
   private def parse_return_statement : Statement::Return

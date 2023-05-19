@@ -22,9 +22,11 @@ enum Cosmo::Syntax
   Every
   While; Until
   Const
+  Throw
   Break
   Next
-  Match
+  Case
+  When
   Return
   EOF
 end

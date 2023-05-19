@@ -101,6 +101,10 @@ class Cosmo::Resolver
     resolve(stmt.else.not_nil!) unless stmt.else.nil?
   end
 
+  def visit_throw_stmt(stmt : Statement::Throw) : Nil
+    resolve(stmt.err) unless stmt.err.nil?
+  end
+
   def visit_return_stmt(stmt : Statement::Return) : Nil
     if @current_fn == FnType::None
       Logger.report_error("Invalid return", "A 'return' statement can only be used within a method body.", stmt.keyword)
