@@ -1,0 +1,15 @@
+bool fn alternating_negatives?(int[] nums) {
+  bool negative?
+  every const int n in nums {
+    if negative? != none & (n < 0 & negative? | n >= 0 & !negative?) {
+      return false
+    }
+    negative? = n < 0
+  }
+
+  true
+}
+
+puts(alternating_negatives?([3, -2, 5, -5, 2, -8])) ## true
+puts(alternating_negatives?([-6, 1, -1, 4, -3])) ## true
+puts(alternating_negatives?([4, 4, -2, 3, -6, 10])) ## false

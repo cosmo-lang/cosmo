@@ -1,5 +1,0 @@
-bool alternating_pos_neg?
-
-alternating_pos_neg?([3, -2, 5, -5, 2, -8]) ## true
-alternating_pos_neg?([-6, 1, -1, 4, -3]) ## true
-alternating_pos_neg?([4, 4, -2, 3, -6, 10]) ## false
