@@ -703,32 +703,6 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 <li>Make into a VM or compiler</li>
 <li>C bindings</li>
 </ul>
-<h2><a id="gotchas" class="anchor" href="#gotchas">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>Gotchas</h2>
-<h3><a id="table-type-definitions" class="anchor" href="#table-type-definitions">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>Table type definitions</h3>
-<p>Type definitions for tables can be amibigous.<br>
-I plan to fix this in the future. For example:</p>
-<pre><code class="language-go">string-&gt;string-&gt;string my_table</code></pre>
-<p>Currently, this type resolves to a table with <code>string</code> keys, and <code>string-&gt;string</code> values.<br>
-Using a type alias here is broken currently, but is clearly what makes sense to use.<br>
-In the future (but not right now), this code should be valid:</p>
-<pre><code class="language-crystal"><span class="k">type</span> <span class="t">MyTable</span> <span class="o">=</span> string<span class="o">-&gt;</span>string
-<span class="t">MyTable</span><span class="o">-&gt;</span>string weird_table <span class="o">=</span> <span class="o">{{</span>
-  [<span class="o">{{</span><span class="s">&quot;some&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;thing&quot;</span>}}] <span class="o">-&gt;</span> <span class="s">&quot;hello world&quot;</span>
-}}
-puts(weird_table[<span class="o">{{</span><span class="s">&quot;some&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;thing&quot;</span>}}]) <span class="c">## hello world</span></code></pre>
-<p>Another issue is with arrays.</p>
-<pre><code class="language-go">string-&gt;string[]</code></pre>
-<p>Is this type an array of <code>string-&gt;string</code> tables? Or is it a table of strings to <code>string[]</code>s?<br>
-Then again, you can always just use the <code>any</code> type to bypass any of this and let hell run loose at runtime.<br>
-As stated before though, I would like to fix this.</p>
 <h2><a id="installation" class="anchor" href="#installation">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
