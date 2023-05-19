@@ -10,16 +10,8 @@ class Cosmo::Scope
   def initialize(@parent = nil)
   end
 
-  private def cast_array(arr : Array(T)) : Array(ValueType) forall T
-    arr.map { |e| cast(e) }
-  end
-
-  private def cast(value : T) : ValueType forall T
-    value.is_a?(Array) ? cast_array(value) : value.as ValueType
-  end
-
   private def create_variable(typedef : Token | String, identifier : Token, value : V, constant : Bool) : ValueType forall V
-    casted_value = cast(value)
+    casted_value = TypeChecker.cast(value)
     @variables[identifier.value.to_s] = {
       type: typedef.is_a?(Token) ? typedef.value.to_s : typedef,
       value: casted_value,
@@ -28,14 +20,9 @@ class Cosmo::Scope
     casted_value
   end
 
-  def declare_const(typedef : Token, identifier : Token, value : ValueType) : ValueType
+  def declare(typedef : Token, identifier : Token, value : ValueType, const : Bool = false) : ValueType
     TypeChecker.assert(typedef.value.to_s, value, typedef) unless value.nil?
-    create_variable(typedef, identifier, value, constant: true)
-  end
-
-  def declare(typedef : Token, identifier : Token, value : ValueType) : ValueType
-    TypeChecker.assert(typedef.value.to_s, value, typedef) unless value.nil?
-    create_variable(typedef, identifier, value, constant: false)
+    create_variable(typedef, identifier, value, const)
   end
 
   def assign(identifier : Token, value : ValueType) : ValueType

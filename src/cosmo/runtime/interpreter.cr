@@ -20,7 +20,7 @@ class Cosmo::Interpreter
     location = Location.new("intrinsic", 0, 0)
     ident_token = Token.new(ident, Syntax::Identifier, ident, location)
     typedef_token = Token.new(type, Syntax::TypeDef, type, location)
-    @globals.declare(typedef_token, ident_token, value)
+    @globals.declare(typedef_token, ident_token, value, const: true)
   end
 
   def initialize(
@@ -32,10 +32,20 @@ class Cosmo::Interpreter
     TypeChecker.register_intrinsics
 
     @scope = @globals
-    declare_intrinsic("func", "puts", PutsIntrinsic.new)
+
+    # math_lib = {} of String => IntrinsicFunction | Float64
+    # math_lib["e"] = Math::E
+    # math_lib["pi"] = Math::PI
+    # math_lib["sqrt"] = SqrtIntrinsic.new(self)
+    # declare_intrinsic("string->func", "math", math_lib)
+    declare_intrinsic("func", "puts", PutsIntrinsic.new(self))
 
     version = "Cosmo v#{`shards version`}".strip
     declare_intrinsic("string", "__version", version)
+  end
+
+  def set_meta(key : String, value : String) : Nil
+    @meta[key] = value
   end
 
   def interpret(source : String, @file_path : String) : ValueType
@@ -289,7 +299,6 @@ class Cosmo::Interpreter
       Logger.report_error("Expected #{arg_size} arguments, got", expr.arguments.size.to_s, expr.token)
     end
 
-    @meta["block_return_type"] = fn.definition.return_typedef.value.to_s unless fn.is_a?(IntrinsicFunction)
     arg_values = expr.arguments.map { |arg| evaluate(arg) }
     fn.call(arg_values)
   end
@@ -301,7 +310,7 @@ class Cosmo::Interpreter
   def visit_var_declaration_expr(expr : Expression::VarDeclaration) : ValueType
     value = evaluate(expr.value)
     if expr.constant?
-      @scope.declare_const(expr.typedef, expr.var.token, value)
+      @scope.declare(expr.typedef, expr.var.token, value, const: true)
     else
       @scope.declare(expr.typedef, expr.var.token, value)
     end

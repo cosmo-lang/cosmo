@@ -2,7 +2,7 @@ string fn domino(const string sequence) {
   string result = ""
   bool finished = false
 
-  every const char ch in sequence {
+  every char ch in sequence {
     if ch == '|' & !finished {
       result += '/'
     } else {

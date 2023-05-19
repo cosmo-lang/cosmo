@@ -1,5 +1,5 @@
 require "../logger"
-require "./intrinsics"
+require "./global_intrinsics"
 require "./type"
 
 module Cosmo
@@ -55,12 +55,30 @@ module Cosmo::TypeChecker
   end
 
   def register_intrinsics
+    register_type("Range")
+    register_type("type")
+    register_type("func")
     register_type("int")
     register_type("float")
     register_type("bool")
     register_type("string")
     register_type("char")
     register_type("void")
+  end
+
+  def cast_array(arr : Array(T)) : Array(ValueType) forall T
+    arr.map { |e| cast(e) }
+  end
+
+  def cast_hash(hash : Hash(K, V)) : Hash(ValueType, ValueType) forall K, V
+    res = {} of ValueType => ValueType
+    hash.each { |k, v| res[cast(k)] = cast(v) }
+    res
+  end
+
+  def cast(value : T) : ValueType forall T
+    value.is_a?(Array) ? cast_array(value)
+      : value.is_a?(Hash) ? cast_hash(value) : value.as ValueType
   end
 
   def reset
@@ -100,27 +118,36 @@ module Cosmo::TypeChecker
     type
   end
 
-  def assert(typedef : String, value : ValueType, token : Token) : Nil
+  def is?(typedef : String, value : ValueType, token : Token) : Bool
     case typedef
+    when "Range"
+      value.is_a?(Range)
     when "type"
-      report_mismatch(typedef, value, token) unless value.is_a?(Type)
+      value.is_a?(Type)
     when "func"
-      report_mismatch(typedef, value, token) unless value.is_a?(Function) || value.is_a?(IntrinsicFunction)
+      value.is_a?(Function) || value.is_a?(IntrinsicFunction)
     when "int"
-      report_mismatch(typedef, value, token) unless value.is_a?(Int)
+      value.is_a?(Int)
     when "float"
-      report_mismatch(typedef, value, token) unless value.is_a?(Float)
+      value.is_a?(Float)
     when "bool"
-      report_mismatch(typedef, value, token) unless value.is_a?(Bool)
+      value.is_a?(Bool)
     when "string"
-      report_mismatch(typedef, value, token) unless value.is_a?(String)
+      value.is_a?(String)
     when "char"
-      report_mismatch(typedef, value, token) unless value.is_a?(Char)
+      value.is_a?(Char)
     when "none", "void"
-      report_mismatch(typedef, value, token) unless value == nil
+      value == nil
     when "any"
-      # skip type assertions lol
+      true
     else
+      false
+    end
+  end
+
+  def assert(typedef : String, value : ValueType, token : Token) : Nil
+    matches = is?(typedef, value, token)
+    unless matches
       if typedef.ends_with?("?")
         non_nullable_type = typedef[0..-2]
         unless value.nil? # skip type assertion if value is nil
@@ -132,14 +159,28 @@ module Cosmo::TypeChecker
         value.as(Array).each { |v| assert(value_type, v, token) }
       elsif typedef.includes?("->") && typedef.split("->", 2).size == 2
         types = typedef.split("->", 2)
-        key_type = types.first
-        value_type = types.last
+        key_type = types.first.strip
+        value_type = types.last.strip
 
         report_mismatch(typedef, value, token) unless value.is_a?(Hash)
 
-        internal = value.as(Hash)
-        internal.keys.each { |k| assert(key_type, k, token) }
-        internal.values.each { |v| assert(value_type, v, token) }
+        internal = cast_hash(value)
+        internal.each do |k, v|
+          assert(key_type, k, token)
+          assert(value_type, v, token)
+        end
+      elsif typedef.includes?("|")
+        types = typedef.split("|")
+
+        matches = false
+        types.each do |type|
+          if is?(type.strip, value, token)
+            matches = true
+            break
+          end
+        end
+
+        report_mismatch(typedef, value, token) unless matches
       else
         registered = get_registered_type?(typedef, token)
         unless registered.nil?
@@ -147,10 +188,10 @@ module Cosmo::TypeChecker
             unaliased = ALIASES[registered.name]
             assert(unaliased, value, token) unless typedef == unaliased
           else
-            raise "Type is registered, but has no alias and is unhandled in TypeChecker."
+            report_mismatch(typedef, value, token)
           end
         else
-          raise "Unhandled type '#{typedef}' in TypeChecker"
+          raise "Type '#{typedef}' is unregistered and is unhandled in TypeChecker."
         end
       end
     end

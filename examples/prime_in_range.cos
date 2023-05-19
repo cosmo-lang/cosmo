@@ -1,0 +1,14 @@
+## bool is_prime?(const int n) {
+##   if n < 2 { return false }
+##   every int i in 2..
+## }
+
+## bool prime_in_range?(const Range range) {
+##   every int x in range {
+
+##   }
+## }
+
+## prime_in_range?(10..15) ## true
+## prime_in_range?(62..66) ## false
+## prime_in_range?(3..5) ## true

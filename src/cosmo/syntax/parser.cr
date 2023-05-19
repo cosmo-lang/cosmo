@@ -158,29 +158,30 @@ class Cosmo::Parser
   private def parse_fn_params : Array(Expression::Parameter)
     params = [] of Expression::Parameter
 
-    type_info = parse_type(required: false)
+    type_info = parse_type(required: false, check_const: true)
     if type_info[:found_typedef]
       param_type = type_info[:type_ref].not_nil!.name
+      is_const = type_info[:is_const]
       consume(Syntax::Identifier)
       param_ident = last_token
 
       if match?(Syntax::Equal)
         value = parse_expression
-        params << Expression::Parameter.new(param_type, param_ident, value)
+        params << Expression::Parameter.new(param_type, param_ident, is_const, value)
       else
-        params << Expression::Parameter.new(param_type, param_ident)
+        params << Expression::Parameter.new(param_type, param_ident, is_const)
       end
 
       while match?(Syntax::Comma)
-        type_info = parse_type(required: true)
+        type_info = parse_type(required: true, check_const: true)
         param_type = type_info[:type_ref].not_nil!.name
         consume(Syntax::Identifier)
         param_ident = last_token
         if match?(Syntax::Equal)
           value = parse_expression
-          params << Expression::Parameter.new(param_type, param_ident, value)
+          params << Expression::Parameter.new(param_type, param_ident, is_const, value)
         else
-          params << Expression::Parameter.new(param_type, param_ident)
+          params << Expression::Parameter.new(param_type, param_ident, is_const)
         end
       end
     end
@@ -260,9 +261,17 @@ class Cosmo::Parser
     is_nullable: Bool
   )
 
-  private def parse_type(required : Bool = true) : TypeInfo
+  private def parse_type(required : Bool = true, check_const : Bool = false, in_paren : Bool = false) : TypeInfo
+    consume(Syntax::LParen) if in_paren
+
     is_nullable = false
-    is_const = match?(Syntax::Const)
+    is_const = match?(Syntax::Const) if check_const
+    if token_exists? && current.type == Syntax::LParen &&
+      token_exists?(1) && (peek.type == Syntax::TypeDef || peek.type == Syntax::Identifier) &&
+      token_exists?(2) && peek(2).type == Syntax::Identifier
+
+      return parse_type(required: required, check_const: false, in_paren: true)
+    end
 
     if required
       consume(Syntax::Identifier) unless match?(Syntax::TypeDef)
@@ -315,13 +324,26 @@ class Cosmo::Parser
         variable_type = nullable_type_token
         type_ref = Expression::TypeRef.new(variable_type)
       end
+      if match?(Syntax::Pipe)
+        # type_ref is type a, parse type b
+        type_info = parse_type(required: required)
+        if type_info[:variable_type].nil?
+          Logger.report_error("Expected right operand to union type, got", current.type.to_s, current)
+        end
+
+        union_type = "#{variable_type.lexeme}|#{type_info[:variable_type].not_nil!.lexeme}"
+        union_type_token = Token.new(union_type, variable_type.type, union_type, variable_type.location)
+        variable_type = union_type_token
+        type_ref = Expression::TypeRef.new(variable_type)
+      end
     end
 
+    consume(Syntax::RParen) if in_paren
     {
       found_typedef: found_typedef,
       variable_type: variable_type,
       type_ref: type_ref,
-      is_const: is_const,
+      is_const: is_const || false,
       is_nullable: is_nullable
     }
   end
@@ -369,7 +391,7 @@ class Cosmo::Parser
 
   # Parse a variable declaration and return a node
   private def parse_var_declaration : Expression::Base
-    type_info = parse_type(required: false)
+    type_info = parse_type(required: false, check_const: true)
     unless type_info[:variable_type].nil? || type_info[:type_ref].nil?
       typedef = type_info[:type_ref].nil? ? type_info[:variable_type].not_nil! : type_info[:type_ref].not_nil!.name
 

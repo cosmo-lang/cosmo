@@ -21,12 +21,13 @@ class Cosmo::Function < Cosmo::Callable
   end
 
   def call(args : Array(ValueType)) : ValueType
+    @interpreter.set_meta("block_return_type", @definition.return_typedef.value.to_s)
     scope = Scope.new(@closure)
 
     # assign params
     @definition.parameters.each_with_index do |param, i|
       value = (args[i] || (param.default_value.nil? ? nil : @interpreter.evaluate(param.default_value.not_nil!))).as ValueType
-      scope.declare(param.typedef, param.identifier, value)
+      scope.declare(param.typedef, param.identifier, value, const: param.const?)
     end
 
     result = nil

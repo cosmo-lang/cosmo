@@ -12,7 +12,7 @@ def shutup(&block : ->)
 end
 
 describe Interpreter do
-  interpreter = Interpreter.new(output_ast: false, run_benchmarks: false, debug_mode: true)
+  interpreter = Interpreter.new(output_ast: true, run_benchmarks: false, debug_mode: true)
   it "interprets intrinsics" do
     result = interpreter.interpret("__version", "test")
     result.should eq "Cosmo v#{`shards version`}".strip
@@ -165,11 +165,11 @@ describe Interpreter do
     result.should eq nil
   end
   it "interprets function definitions" do
-    result = interpreter.interpret("bool fn is_eq(int a = 5, int b) { return a == b }", "test")
+    result = interpreter.interpret("bool fn is_eq(const int a = 5, const int b) { return a == b }", "test")
     result.should be_a Callable
     result.should be_a Function
 
-    result = interpreter.interpret("float fn half_sum(int a, int b) { (a + b) / 2 }", "test")
+    result = interpreter.interpret("float fn half_sum(const int a, const int b) { (a + b) / 2 }", "test")
     result.should be_a Callable
     result.should be_a Function
   end

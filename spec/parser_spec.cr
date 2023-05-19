@@ -526,7 +526,7 @@ describe Parser do
     lines = [
       "const int[] nums = [1,2,3]",
       "int sum = 0",
-      "every const int n in nums {",
+      "every int n in nums {",
       " sum += n",
       "}"
     ]
