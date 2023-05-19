@@ -12,7 +12,7 @@ def shutup(&block : ->)
 end
 
 describe Interpreter do
-  interpreter = Interpreter.new(output_ast: true, run_benchmarks: false, debug_mode: true)
+  interpreter = Interpreter.new(output_ast: false, run_benchmarks: false, debug_mode: true)
   it "interprets intrinsics" do
     result = interpreter.interpret("__version", "test")
     result.should eq "Cosmo v#{`shards version`}".strip
@@ -98,6 +98,9 @@ describe Interpreter do
     result = interpreter.interpret("bool abc = false", "test")
     result.should eq false
 
+    result = interpreter.interpret("const string|int g = 123", "test")
+    result.should eq 123
+
     interpreter.interpret("const int foo = 10", "test")
     expect_raises(Exception, "[1:4] Attempt to assign to constant variable: foo") do
       interpreter.interpret("foo = 15", "test")
@@ -128,6 +131,8 @@ describe Interpreter do
   it "interprets type aliases" do
     result = interpreter.interpret("type MyInt = int; MyInt my_int = 123", "test")
     result.should eq 123
+    result = interpreter.interpret("type Number = int | float; Number n = 1.23", "test")
+    result.should eq 1.23
   end
   it "interprets variable assignments" do
     interpreter.interpret("int x = 0b11", "test")
@@ -298,7 +303,7 @@ describe Interpreter do
       interpreter.interpret("float[] aba = [x, 2.0]", "test")
     end
   end
-  describe "interprets examples: " do
+  describe "interprets examples:" do
     example_files = Dir.entries "examples/"
     example_files.each do |example_file|
       next if example_file.starts_with?(".")

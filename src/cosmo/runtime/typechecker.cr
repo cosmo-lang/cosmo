@@ -107,6 +107,16 @@ module Cosmo::TypeChecker
       key_type = types.first
       value_type = types.last
       Type.new(typedef) unless get_registered_type?(key_type, token).nil? && get_registered_type?(value_type, token).nil?
+    elsif typedef.includes?("|")
+      types = typedef.split("|")
+      resolved = true
+      types.each do |t|
+        if get_registered_type?(t, token).nil?
+          resolved = false
+          break
+        end
+      end
+      Type.new(typedef) if resolved
     else
       REGISTERED.find { |t| t.name == typedef }
     end
