@@ -27,32 +27,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Make into a VM or compiler
 - C bindings
 
-## Gotchas
-
-### Table type definitions
-Type definitions for tables can be amibigous.<br>
-I plan to fix this in the future. For example:
-```go
-string->string->string my_table
-```
-Currently, this type resolves to a table with `string` keys, and `string->string` values.<br>
-Using a type alias here is broken currently, but is clearly what makes sense to use.<br>
-In the future (but not right now), this code should be valid:
-```crystal
-type MyTable = string->string
-MyTable->string weird_table = {{
-  [{{"some" -> "thing"}}] -> "hello world"
-}}
-puts(weird_table[{{"some" -> "thing"}}]) ## hello world
-```
-Another issue is with arrays.
-```go
-string->string[]
-```
-Is this type an array of `string->string` tables? Or is it a table of strings to `string[]`s?<br>
-Then again, you can always just use the `any` type to bypass any of this and let hell run loose at runtime.<br>
-As stated before though, I would like to fix this.
-
 ## Installation
 
 1. Install [Crystal](https://crystal-lang.org/install/).
