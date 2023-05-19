@@ -114,20 +114,24 @@ class Cosmo::Interpreter
     stmt.accept(self)
   end
 
-  def execute_block(block : Statement::Block, block_scope : Scope, is_fn : Bool = false) : ValueType
+  def execute_block(block : Statement::Base, block_scope : Scope, is_fn : Bool = false) : ValueType
     prev_scope = @scope
     begin
       @scope = block_scope
-      unless block.nodes.empty?
-        return_node = block.nodes.find { |node| node.is_a?(Statement::Return) } || block.nodes.last
-        body_nodes = block.nodes[0..-2]
-        body_nodes.each { |expr| execute(expr.as Statement::Base) }
-        return_value = execute(return_node.as Statement::Base) unless return_node.nil?
-      end
-      if is_fn
-        return_type = @meta["block_return_type"]? || "void"
-        token = return_node.nil? ? Token.new("none", Syntax::None, nil, Location.new("", 0, 0)) : return_node.token
-        TypeChecker.assert(return_type, return_value, token)
+      if block.is_a?(Statement::Block)
+        unless block.nodes.empty?
+          return_node = block.nodes.find { |node| node.is_a?(Statement::Return) } || block.nodes.last
+          body_nodes = block.nodes[0..-2]
+          body_nodes.each { |expr| execute(expr.as Statement::Base) }
+          return_value = execute(return_node.as Statement::Base) unless return_node.nil?
+        end
+        if is_fn
+          return_type = @meta["block_return_type"]? || "void"
+          token = return_node.nil? ? Token.new("none", Syntax::None, nil, Location.new("", 0, 0)) : return_node.token
+          TypeChecker.assert(return_type, return_value, token)
+        end
+      else
+        return_value = execute(block)
       end
       return_value
     rescue ex : Exception

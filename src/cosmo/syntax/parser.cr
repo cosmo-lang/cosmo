@@ -47,6 +47,8 @@ class Cosmo::Parser
       parse_until_statement
     elsif match?(Syntax::Every)
       parse_every_statement
+    elsif check?(Syntax::LBrace)
+      parse_block
     else
       Statement::SingleExpression.new(parse_expression)
     end
@@ -77,33 +79,33 @@ class Cosmo::Parser
 
     consume(Syntax::In)
     enumerable = parse_expression
-    block = parse_block
+    block = parse_statement
     Statement::Every.new(token, var_declaration, enumerable, block)
   end
 
   private def parse_while_statement : Statement::While
     token = last_token
     condition = parse_expression
-    block = parse_block
+    block = parse_statement
     Statement::While.new(token, condition, block)
   end
 
   private def parse_until_statement : Statement::Until
     token = last_token
     condition = parse_expression
-    block = parse_block
+    block = parse_statement
     Statement::Until.new(token, condition, block)
   end
 
   private def parse_if_statement : Statement::If
     token = last_token
     condition = parse_expression
-    then_block = parse_block
+    then_block = parse_statement
     if match?(Syntax::Else)
       if match?(Syntax::If)
         else_block = parse_if_statement
       else
-        else_block = parse_block
+        else_block = parse_statement
       end
     end
     Statement::If.new(token, condition, then_block, else_block)
@@ -112,12 +114,12 @@ class Cosmo::Parser
   private def parse_unless_statement : Statement::Unless
     token = last_token
     condition = parse_expression
-    then_block = parse_block
+    then_block = parse_statement
     if match?(Syntax::Else)
       if match?(Syntax::Unless)
         else_block = parse_unless_statement
       else
-        else_block = parse_block
+        else_block = parse_statement
       end
     end
     Statement::Unless.new(token, condition, then_block, else_block)
@@ -237,7 +239,7 @@ class Cosmo::Parser
   private def parse_type(required : Bool = true, check_const : Bool = false, paren_depth : Int = 0) : TypeInfo
     is_nullable = false
     is_const = match?(Syntax::Const) if check_const
-    if token_exists? && current.type == Syntax::LParen &&
+    if check?(Syntax::LParen) &&
       token_exists?(1) && (peek.type == Syntax::TypeDef || peek.type == Syntax::Identifier) &&
       token_exists?(2) && (peek(2).type == Syntax::Identifier ||
       peek(2).type == Syntax::Pipe ||
@@ -661,15 +663,20 @@ class Cosmo::Parser
     !@tokens[@position + offset]?.nil?
   end
 
+  # Whether or not we're at the end of the token stream
   private def finished? : Bool
     @position >= @tokens.size
+  end
+
+  private def check?(syntax : Syntax) : Bool
+    return false if finished?
+    current.type == syntax
   end
 
   # Consumes the token if the syntax matches, returns whether or not it was consumed
   # Basically a safe way to consume and see if it was consumed
   private def match?(syntax : Syntax) : Bool
-    return false if finished?
-    if current.type == syntax
+    if check?(syntax)
       consume(syntax)
       true
     else

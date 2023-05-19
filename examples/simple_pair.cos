@@ -3,16 +3,10 @@ int[]? fn simple_pair(int[] vec, int n) {
   every int x in vec {
     int y = vec[i + 1]
     int z = vec[i - 1]
-    if y == none {
-      next
-    }
+    if y == none next
 
-    if x * y == n {
-      return [x, y]
-    }
-    if x * z == n {
-      return [x, z]
-    }
+    if x * y == n return [x, y]
+    if x * z == n return [x, z]
     i += 1
   }
 }
