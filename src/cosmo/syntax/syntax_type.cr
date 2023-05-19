@@ -1,7 +1,7 @@
 enum Cosmo::Syntax
   Identifier
   Integer; Float; String; Char; Boolean; None
-  TypeDef
+  TypeDef; Public; ClassVisibility
   PlusPlus; MinusMinus;
   Plus; PlusEqual; Minus; MinusEqual
   Star; StarEqual; Slash; SlashEqual
@@ -28,5 +28,6 @@ enum Cosmo::Syntax
   Case
   When
   Return
+  Use
   EOF
 end

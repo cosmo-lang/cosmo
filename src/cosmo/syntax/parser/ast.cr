@@ -5,6 +5,7 @@ module Cosmo::AST
     Public
     Protected
     Private
+    Static
   end
 
   abstract class Node

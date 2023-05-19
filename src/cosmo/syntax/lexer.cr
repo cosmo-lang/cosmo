@@ -341,6 +341,10 @@ class Cosmo::Lexer
       add_token(syntax_type, value)
     elsif Keywords.type?(ident_str)
       add_token(Syntax::TypeDef, ident_str)
+    elsif Keywords.class_visibility?(ident_str)
+      add_token(Syntax::ClassVisibility, ident_str)
+    elsif ident_str == "public"
+      add_token(Syntax::Public, ident_str)
     else
       split = ident_str.split("?")
       unless split.empty? || !Keywords.type?(split.first)

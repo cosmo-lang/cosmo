@@ -264,8 +264,9 @@ module Cosmo::AST::Expression
     getter var : Var
     getter value : Base
     getter? constant : Bool
+    getter visibility : Visibility
 
-    def initialize(@typedef, @var, @value, @constant)
+    def initialize(@typedef, @var, @value, @constant, @visibility)
     end
 
     def accept(visitor : Visitor(R)) : R forall R
@@ -281,6 +282,8 @@ module Cosmo::AST::Expression
       "  #{TAB * indent}typedef: #{@typedef.value},\n" +
       "  #{TAB * indent}var: #{@var.token.value.to_s},\n" +
       "  #{TAB * indent}value: #{@value.to_s(indent + 1)}\n" +
+      "  #{TAB * indent}constant?: #{@constant}\n" +
+      "  #{TAB * indent}visibility: #{@visibility.to_s}\n" +
       "#{TAB * indent}>"
     end
   end

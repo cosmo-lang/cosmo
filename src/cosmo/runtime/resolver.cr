@@ -101,6 +101,10 @@ class Cosmo::Resolver
     resolve(stmt.else.not_nil!) unless stmt.else.nil?
   end
 
+  def visit_use_stmt(stmt : Statement::Use) : Nil
+    ## do nothing
+  end
+
   def visit_throw_stmt(stmt : Statement::Throw) : Nil
     resolve(stmt.err) unless stmt.err.nil?
   end

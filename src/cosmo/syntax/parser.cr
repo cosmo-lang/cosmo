@@ -31,6 +31,8 @@ class Cosmo::Parser
   private def parse_statement : Statement::Base
     if at_fn_type?
       parse_fn_def_statement
+    elsif match?(Syntax::Use)
+      parse_use_statement
     elsif match?(Syntax::Throw)
       parse_throw_statement
     elsif match?(Syntax::Return)
@@ -77,7 +79,12 @@ class Cosmo::Parser
     consume(Syntax::Identifier)
     ident = last_token
     var = Expression::Var.new(ident)
-    var_declaration = Expression::VarDeclaration.new(typedef, var, Expression::NoneLiteral.new(nil, ident), type_info[:is_const])
+    var_declaration = Expression::VarDeclaration.new(
+      typedef, var,
+      Expression::NoneLiteral.new(nil, ident),
+      false,
+      Visibility::Private
+    )
 
     consume(Syntax::In)
     enumerable = parse_expression
@@ -127,6 +134,11 @@ class Cosmo::Parser
     Statement::Unless.new(token, condition, then_block, else_block)
   end
 
+  private def parse_use_statement : Statement::Use
+    consume(Syntax::String)
+    Statement::Use.new(last_token, peek(-2))
+  end
+
   private def parse_throw_statement : Statement::Throw
     value = token_exists? ? parse_expression : nil
     Statement::Throw.new(value || Expression::NoneLiteral.new(nil, last_token), last_token)
@@ -138,7 +150,7 @@ class Cosmo::Parser
   end
 
   private def parse_fn_def_statement : Statement::FunctionDef
-    type_info = parse_type(required: true)
+    type_info = parse_type(required: true, check_visibility: true)
     return_typedef = type_info[:type_ref].not_nil!.name
     consume(Syntax::Function)
     consume(Syntax::Identifier)
@@ -147,7 +159,12 @@ class Cosmo::Parser
     params = parse_fn_params
     consume(Syntax::RParen)
     body = parse_block
-    Statement::FunctionDef.new(function_ident, params, body, return_typedef)
+    Statement::FunctionDef.new(
+      function_ident,
+      params, body,
+      return_typedef,
+      type_info[:visibility]
+    )
   end
 
   # Parse function parameters and return an array of nodes
@@ -239,12 +256,37 @@ class Cosmo::Parser
     variable_type: Token?,
     type_ref: Expression::TypeRef?,
     is_const: Bool,
-    is_nullable: Bool
+    is_nullable: Bool,
+    visibility: Visibility
   )
 
   # i dont wanna talk about this method
-  private def parse_type(required : Bool = true, check_const : Bool = false, paren_depth : Int = 0) : TypeInfo
+  private def parse_type(
+    required : Bool = true,
+    check_const : Bool = false,
+    check_visibility : Bool = false,
+    paren_depth : Int = 0
+  ) : TypeInfo
+
     is_nullable = false
+    if check_visibility
+      has_visibility = match?(Syntax::Public) || match?(Syntax::ClassVisibility)
+      visibility_lexeme = last_token.lexeme
+    end
+
+    case visibility_lexeme
+    when "public"
+      visibility = Visibility::Public
+    when "private"
+      visibility = Visibility::Private
+    when "protected"
+      visibility = Visibility::Protected
+    when "static"
+      visibility = Visibility::Static
+    else
+      visibility = Visibility::Private
+    end
+
     is_const = match?(Syntax::Const) if check_const
     if check?(Syntax::LParen) &&
       token_exists?(1) && (peek.type == Syntax::TypeDef || peek.type == Syntax::Identifier) &&
@@ -255,7 +297,7 @@ class Cosmo::Parser
       peek(2).type == Syntax::RParen)
 
       consume(Syntax::LParen)
-      info = parse_type(required: required, check_const: false, paren_depth: paren_depth + 1)
+      info = parse_type(required: required, paren_depth: paren_depth + 1)
       consume(Syntax::RParen)
 
       variable_type, type_ref = parse_type_suffix(info[:variable_type].not_nil!, required, paren_depth)
@@ -263,8 +305,9 @@ class Cosmo::Parser
         found_typedef: info[:found_typedef],
         variable_type: variable_type,
         type_ref: type_ref,
-        is_const: info[:is_const],
-        is_nullable: info[:is_nullable]
+        is_const: is_const || false,
+        is_nullable: info[:is_nullable],
+        visibility: visibility.not_nil!
       }
     end
 
@@ -293,7 +336,8 @@ class Cosmo::Parser
       variable_type: variable_type,
       type_ref: type_ref,
       is_const: is_const || false,
-      is_nullable: is_nullable
+      is_nullable: is_nullable,
+      visibility: visibility.not_nil!
     }
   end
 
@@ -388,7 +432,12 @@ class Cosmo::Parser
 
   # Parse a variable declaration and return a node
   private def parse_var_declaration : Expression::Base
-    type_info = parse_type(required: false, check_const: true)
+    type_info = parse_type(
+      required: false,
+      check_const: true,
+      check_visibility: true
+    )
+
     unless type_info[:variable_type].nil? || type_info[:type_ref].nil?
       typedef = type_info[:type_ref].nil? ? type_info[:variable_type].not_nil! : type_info[:type_ref].not_nil!.name
 
@@ -400,9 +449,18 @@ class Cosmo::Parser
         else
           if match?(Syntax::Equal)
             value = parse_expression
-            Expression::VarDeclaration.new(typedef, identifier, value, type_info[:is_const])
+            Expression::VarDeclaration.new(
+              typedef, identifier, value,
+              type_info[:is_const],
+              type_info[:visibility]
+            )
           else
-            Expression::VarDeclaration.new(typedef, identifier, Expression::NoneLiteral.new(nil, variable_name), type_info[:is_const])
+            Expression::VarDeclaration.new(
+              typedef, identifier,
+              Expression::NoneLiteral.new(nil, variable_name),
+              type_info[:is_const],
+              type_info[:visibility]
+            )
           end
         end
       else

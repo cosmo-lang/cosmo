@@ -196,7 +196,16 @@ class Cosmo::Interpreter
     @scope = enclosing
   end
 
-  def visit_throw_stmt(stmt : Statement::Throw)
+  def visit_use_stmt(stmt : Statement::Use) : Nil
+    module_path = stmt.module_path.lexeme
+    unless module_path.includes?("/")
+      Logger.report_error("Invalid import", "No package management system implemented yet. If you are trying to import a file path, prepend './' to the path.", stmt.module_path)
+    else
+      source = File.read(module_path + ".cos") || File.read(module_path + ".⭐")
+    end
+  end
+
+  def visit_throw_stmt(stmt : Statement::Throw) : Nil
     err = evaluate(stmt.err)
     unless TypeChecker.is?("string", err, stmt.token)
       Logger.report_error("Throw statement can only be invoked with a string currently, got", TypeChecker.get_mapped(err.class), stmt.token)

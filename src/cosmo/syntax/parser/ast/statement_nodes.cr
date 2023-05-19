@@ -6,6 +6,10 @@ module Cosmo::AST::Statement
     abstract def visit_if_stmt(stmt : If) : R
     abstract def visit_unless_stmt(stmt : Unless) : R
     abstract def visit_return_stmt(stmt : Return) : R
+    abstract def visit_break_stmt(stmt : Break) : R
+    abstract def visit_next_stmt(stmt : Next) : R
+    abstract def visit_throw_stmt(stmt : Throw) : R
+    abstract def visit_use_stmt(stmt : Use) : R
     abstract def visit_fn_def_stmt(stmt : FunctionDef) : R
     abstract def visit_single_expr_stmt(stmt : SingleExpression) : R
     abstract def visit_block_stmt(stmt : Block) : R
@@ -13,6 +17,28 @@ module Cosmo::AST::Statement
 
   abstract class Base < Node
     abstract def accept(visitor : Visitor(R)) forall R
+  end
+
+  class Use < Base
+    getter module_path : Token
+    getter keyword : Token
+
+    def initialize(@module_path, @keyword)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_use_stmt(self)
+    end
+
+    def token : Token
+      @keyword
+    end
+
+    def to_s(indent : Int = 0)
+      "Use<\n" +
+      "  #{TAB * indent}module_path: #{@module_path.to_s}\n" +
+      "#{TAB * indent}>"
+    end
   end
 
   class Throw < Base
@@ -228,8 +254,9 @@ module Cosmo::AST::Statement
     getter parameters : Array(Expression::Parameter)
     getter body : Block
     getter return_typedef : Token
+    getter visibility : Visibility
 
-    def initialize(@identifier, @parameters, @body, @return_typedef)
+    def initialize(@identifier, @parameters, @body, @return_typedef, @visibility)
     end
 
     def accept(visitor : Visitor(R)) : R forall R
@@ -248,6 +275,7 @@ module Cosmo::AST::Statement
       "  #{TAB * indent}],\n" +
       "  #{TAB * indent}return_typedef: #{@return_typedef.value},\n" +
       "  #{TAB * indent}body: #{@body.to_s(indent + 1)}\n" +
+      "  #{TAB * indent}visibility: #{@visibility.to_s}\n" +
       "#{TAB * indent}>"
     end
   end

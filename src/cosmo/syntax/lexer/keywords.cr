@@ -17,8 +17,9 @@ module Cosmo::Keywords
     "until" => Syntax::Until,
     "break" => Syntax::Break,
     "next" => Syntax::Next,
+    "use" => Syntax::Use,
     "case" => Syntax::Case,
-    "when" => Syntax::Case,
+    "when" => Syntax::When,
     "const" => Syntax::Const,
     "return" => Syntax::Return,
     "throw" => Syntax::Throw
@@ -26,6 +27,12 @@ module Cosmo::Keywords
 
   # These cannot be any of the keywords above
   TYPE_KEYWORDS = ["type", "any", "bool", "string", "char", "int", "float", "void", "func"]
+  CLASS_VISIBILITY_KEYWORDS = ["protected", "static"]
+
+  # Returns whether or not `s` is a class vibility keyword
+  def self.class_visibility?(s : String)
+    CLASS_VISIBILITY_KEYWORDS.includes?(s)
+  end
 
   # Returns whether or not `s` is a type keyword
   def self.type?(s : String)
