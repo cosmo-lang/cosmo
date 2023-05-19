@@ -272,7 +272,7 @@ class Cosmo::Interpreter
     key = evaluate(expr.key)
 
     if object.is_a?(String) || object.is_a?(Array)
-      unless key.is_a?(Int)
+      unless key.is_a?(Int) || key.is_a?(Range)
         Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.token)
       end
       object[key]?
