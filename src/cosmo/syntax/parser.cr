@@ -265,7 +265,7 @@ class Cosmo::Parser
       consume(Syntax::Identifier) unless match?(Syntax::TypeDef)
       found_typedef = true
     else
-      found_registered_type = !finished? &&
+      found_registered_type = token_exists? &&
         current.type == Syntax::Identifier &&
         !TypeChecker.get_registered_type?(current.value.to_s, current).nil?
 
@@ -291,6 +291,8 @@ class Cosmo::Parser
   end
 
   private def parse_type_suffix(variable_type : Token, required : Bool = true, paren_depth : Int = 0) : Tuple(Token, Expression::TypeRef)
+    type_ref = Expression::TypeRef.new(variable_type)
+
     if match?(Syntax::LBracket)
       consume(Syntax::RBracket)
       vector_type = variable_type.lexeme + "[]"
@@ -304,8 +306,6 @@ class Cosmo::Parser
         variable_type = vector_type_token
         type_ref = Expression::TypeRef.new(variable_type)
       end
-    else
-      type_ref = Expression::TypeRef.new(variable_type)
     end
     if match?(Syntax::HyphenArrow)
       # type_ref is the key type, parse the value type
@@ -320,6 +320,9 @@ class Cosmo::Parser
       type_ref = Expression::TypeRef.new(variable_type)
     end
     if match?(Syntax::Question)
+      if token_exists? && current.type == Syntax::Question
+        Logger.report_error("Invalid type", "Type can only be made nullable once", current)
+      end
       is_nullable = true
       nullable_type = variable_type.lexeme + "?"
       nullable_type_token = Token.new(nullable_type, variable_type.type, nullable_type, variable_type.location)

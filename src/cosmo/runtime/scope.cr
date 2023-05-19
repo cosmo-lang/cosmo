@@ -26,17 +26,17 @@ class Cosmo::Scope
   end
 
   def assign(identifier : Token, value : ValueType) : ValueType
-    if @variables.has_key?(identifier.value.to_s)
-      info = @variables[identifier.value.to_s]
+    if @variables.has_key?(identifier.lexeme)
+      info = @variables[identifier.lexeme]
       if info[:constant]
-        Logger.report_error("Attempt to assign to constant variable", identifier.value.to_s, identifier)
+        Logger.report_error("Attempt to assign to constant variable", identifier.lexeme, identifier)
       end
       TypeChecker.assert(info[:type], value, identifier)
       return create_variable(info[:type], identifier, value, constant: false)
     end
 
     return @parent.not_nil!.assign(identifier, value) unless @parent.nil?
-    Logger.report_error("Attempt to assign to undefined variable", identifier.value.to_s, identifier)
+    Logger.report_error("Attempt to assign to undefined variable", identifier.lexeme, identifier)
   end
 
   def lookup?(token : Token) : ValueType

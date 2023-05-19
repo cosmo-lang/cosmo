@@ -340,14 +340,14 @@ class Cosmo::Lexer
       value = nil if ident_str == "none"
       add_token(syntax_type, value)
     elsif Keywords.type?(ident_str)
-      # if match_char?("[") && match_char?("]")
-      #   ident_str += "[]"
-      # elsif match_char?("-") && match_char?(">")
-      #   ident_str += ""
-      # end
       add_token(Syntax::TypeDef, ident_str)
     else
-      add_token(Syntax::Identifier, ident_str)
+      split = ident_str.split("?")
+      unless split.empty? || !Keywords.type?(split.first)
+        add_token(Syntax::TypeDef, ident_str)
+      else
+        add_token(Syntax::Identifier, ident_str)
+      end
     end
   end
 end
