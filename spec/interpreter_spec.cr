@@ -13,7 +13,7 @@ end
 
 describe Interpreter do
   interpreter = Interpreter.new(output_ast: false, run_benchmarks: false, debug_mode: true)
-  describe "interprets intrinsics" do
+  describe "interprets intrinsics:" do
     it "global" do
       result = interpreter.interpret("__version", "test")
       result.should eq "Cosmo v#{`shards version`}".strip
@@ -45,37 +45,51 @@ describe Interpreter do
       result.as(Float64).should be_close 5.3219, 0.0001
     end
   end
-  it "interprets literals" do
-    result = interpreter.interpret("false", "test")
-    result.should be_false
-    result = interpreter.interpret("true", "test")
-    result.should be_true
-    result = interpreter.interpret("none", "test")
-    result.should be_nil
-    result = interpreter.interpret("123", "test")
-    result.should eq 123
-    result = interpreter.interpret("0b111", "test")
-    result.should eq 7
-    result = interpreter.interpret("0xabc", "test")
-    result.should eq 2748
-    result = interpreter.interpret("-0o2004", "test")
-    result.should eq -1028
-    result = interpreter.interpret("+---10.24335", "test")
-    result.should eq 10.24335
-    result = interpreter.interpret("\"hello\"", "test")
-    result.should eq "hello"
-    result = interpreter.interpret("'e'", "test")
-    result.should eq 'e'
-    result = interpreter.interpret("[1, 2, 3]", "test")
-    result.should eq [1, 2, 3]
-    result = interpreter.interpret("[[1,2,3], [4,5,6], ['a', 'b', 'c']]", "test")
-    result.should eq [[1,2,3], [4,5,6], ['a', 'b', 'c']]
-    result = interpreter.interpret("{yes -> true, [123] -> false}", "test")
-    result.should eq ({"yes" => true, 123 => false})
-    result = interpreter.interpret("any my_range = 5..20", "test")
-    result.should eq 5..20
-    result = interpreter.interpret("any my_neg_range = -20..-5", "test")
-    result.should eq -20..-5
+  describe "interprets literals:" do
+    it "booleans" do
+      result = interpreter.interpret("false", "test")
+      result.should be_false
+      result = interpreter.interpret("true", "test")
+      result.should be_true
+    end
+    it "none" do
+      result = interpreter.interpret("none", "test")
+      result.should be_nil
+    end
+    it "numerics" do
+      result = interpreter.interpret("123", "test")
+      result.should eq 123
+      result = interpreter.interpret("0b111", "test")
+      result.should eq 7
+      result = interpreter.interpret("0xabc", "test")
+      result.should eq 2748
+      result = interpreter.interpret("-0o2004", "test")
+      result.should eq -1028
+      result = interpreter.interpret("+---10.24335", "test")
+      result.should eq 10.24335
+    end
+    it "strings/chars" do
+      result = interpreter.interpret("\"hello\"", "test")
+      result.should eq "hello"
+      result = interpreter.interpret("'e'", "test")
+      result.should eq 'e'
+    end
+    it "vectors" do
+      result = interpreter.interpret("[1, 2, 3]", "test")
+      result.should eq [1, 2, 3]
+      result = interpreter.interpret("[[1,2,3], [4,5,6], ['a', 'b', 'c']]", "test")
+      result.should eq [[1,2,3], [4,5,6], ['a', 'b', 'c']]
+    end
+    it "tables" do
+      result = interpreter.interpret("{{yes -> true, [123] -> false}}", "test")
+      result.should eq ({"yes" => true, 123 => false})
+    end
+    it "ranges" do
+      result = interpreter.interpret("Range my_range = 5..20", "test")
+      result.should eq 5..20
+      result = interpreter.interpret("Range my_neg_range = -20..-5", "test")
+      result.should eq -20..-5
+    end
   end
   it "interprets unary operators" do
     result = interpreter.interpret("!false", "test")
@@ -145,7 +159,7 @@ describe Interpreter do
     matrix[1].as(Array(ValueType)).each { |v| sum += v.as Int64 }
     sum.should eq 21
 
-    result = interpreter.interpret("any->bool valids = {yes -> true, [123] -> false}", "test")
+    result = interpreter.interpret("any->bool valids = {{yes -> true, [123] -> false}}", "test")
     result.should eq ({"yes" => true, 123 => false})
 
     # no 'Range' typedef yet
@@ -184,7 +198,7 @@ describe Interpreter do
       interpreter.interpret("nums[3] = \"hi\"", "test")
     end
 
-    interpreter.interpret("string->bool admins = {runic -> true}", "test")
+    interpreter.interpret("string->bool admins = {{runic -> true}}", "test")
     interpreter.interpret("admins->shedletsky = true", "test")
     result = interpreter.interpret("admins->runic", "test")
     result.should eq true
@@ -242,15 +256,15 @@ describe Interpreter do
       result = interpreter.interpret("x[1]", "test")
       result.should eq 2
       interpreter.interpret("int[][] m = [[1, 2], [3, 4]]", "test")
-      result = interpreter.interpret("x[0]", "test")
+      result = interpreter.interpret("m[0]", "test")
       result.should eq [1, 2]
-      result = interpreter.interpret("x[0][1]", "test")
+      result = interpreter.interpret("m[0][1]", "test")
       result.should eq 2
-      result = interpreter.interpret("x[1][0]", "test")
+      result = interpreter.interpret("m[1][0]", "test")
       result.should eq 3
     end
     it "tables" do
-      interpreter.interpret("string->bool bad_people = {[\"billy bob\"] -> false, mj -> true, joemar -> false}", "test")
+      interpreter.interpret("string->bool bad_people = {{[\"billy bob\"] -> false, mj -> true, joemar -> false}}", "test")
       result = interpreter.interpret("bad_people[\"billy bob\"]", "test")
       result.should eq false
       result = interpreter.interpret("bad_people.mj", "test")
@@ -265,11 +279,11 @@ describe Interpreter do
     lines = [
       "int x = 5",
       "int doubled",
-      "if x == 5 {",
+      "if x == 5",
       " doubled = x * 2",
-      "} else {",
+      "else",
       " doubled = x",
-      "}",
+      "",
       "doubled"
     ]
 
@@ -279,11 +293,11 @@ describe Interpreter do
     lines = [
       "int x = 5",
       "int doubled",
-      "unless x == 5 {",
+      "unless x == 5",
       " doubled = x * 2",
-      "} else {",
+      "else",
       " doubled = x",
-      "}",
+      "",
       "doubled"
     ]
 
@@ -293,9 +307,9 @@ describe Interpreter do
   it "interprets while/until statements" do
     lines = [
       "int x = 0",
-      "while x < 10 {",
+      "while x < 10",
       " x += 1",
-      "}",
+      "",
       "x"
     ]
 
@@ -304,9 +318,9 @@ describe Interpreter do
 
     lines = [
       "int x = 0",
-      "until x == 15 {",
+      "until x == 15",
       " x += 1",
-      "}",
+      "",
       "x"
     ]
 
@@ -317,9 +331,9 @@ describe Interpreter do
     lines = [
       "int[] nums = [1,2,3]",
       "int sum = 0",
-      "every int n in nums {",
+      "every int n in nums",
       " sum += n",
-      "}",
+      "",
       "sum"
     ]
 

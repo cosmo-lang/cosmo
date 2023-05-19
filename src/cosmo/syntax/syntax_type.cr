@@ -9,7 +9,8 @@ enum Cosmo::Syntax
   Equal; EqualEqual; Bang; BangEqual
   Ampersand; Pipe; Question
   ColonColon; Colon; Dot; DotDot; HyphenArrow; This
-  LBrace; RBrace; LBracket; RBracket; LParen; RParen
+  LBrace; RBrace; DoubleLBrace; DoubleRBrace;
+  LBracket; RBracket; LParen; RParen
   Comma
   Hashtag
   Function

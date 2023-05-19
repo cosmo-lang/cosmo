@@ -47,9 +47,17 @@ class Cosmo::Lexer
         end
       end
     when "{"
-      add_token(Syntax::LBrace, nil)
+      if match_char?("{")
+        add_token(Syntax::DoubleLBrace, nil)
+      else
+        add_token(Syntax::LBrace, nil)
+      end
     when "}"
-      add_token(Syntax::RBrace, nil)
+      if match_char?("}")
+        add_token(Syntax::DoubleRBrace, nil)
+      else
+        add_token(Syntax::RBrace, nil)
+      end
     when "["
       add_token(Syntax::LBracket, nil)
     when "]"

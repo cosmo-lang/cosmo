@@ -6,9 +6,9 @@ if true {
     puts("hello " + msg)
   }
 
-  my_obj = {
+  my_obj = {{
     my_method -> my_method
-  }
+  }}
 }
 
 my_obj->my_method("world") ## valid

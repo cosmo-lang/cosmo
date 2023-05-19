@@ -595,7 +595,7 @@ class Cosmo::Parser
   private def parse_table_literal : Expression::TableLiteral
     hash = {} of Expression::Base => Expression::Base
 
-    until match?(Syntax::RBrace)
+    until match?(Syntax::DoubleRBrace)
       if match?(Syntax::LBracket)
         key = parse_expression
         consume(Syntax::RBracket)
@@ -629,7 +629,7 @@ class Cosmo::Parser
     when Syntax::LBracket
       consume_current
       parse_vector_literal
-    when Syntax::LBrace
+    when Syntax::DoubleLBrace
       consume_current
       parse_table_literal
     when Syntax::Integer
