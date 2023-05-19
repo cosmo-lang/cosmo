@@ -55,13 +55,28 @@ module Cosmo
     end
   end
 
-  def read_line : String?
+  private def rainbow(text : String) : String
+    colors = [31, 33, 32, 36, 35]  # red, yellow, green, cyan, and purple
+    text_chars = text.chars
+    color_index = 0
+    rainbow_str = ""
+
+    text_chars.each do |char|
+      color_code = colors[color_index]
+      rainbow_str += "\e[#{color_code}m#{char}\e[0m"  # Apply color and reset back to default
+      color_index = (color_index + 1) % colors.size
+    end
+
+    rainbow_str
+  end
+
+  private def read_line : String?
     Readline.readline "➤ ", add_history: true
   end
 
   # Starts the REPL
   def run_repl
-    puts "Welcome to the Cosmo REPL"
+    puts "Welcome to the #{rainbow "Cosmo"} REPL"
     loop do
       line = read_line
       break if line.nil?
