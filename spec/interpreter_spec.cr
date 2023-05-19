@@ -241,6 +241,13 @@ describe Interpreter do
       result.should eq 1
       result = interpreter.interpret("x[1]", "test")
       result.should eq 2
+      interpreter.interpret("int[][] m = [[1, 2], [3, 4]]", "test")
+      result = interpreter.interpret("x[0]", "test")
+      result.should eq [1, 2]
+      result = interpreter.interpret("x[0][1]", "test")
+      result.should eq 2
+      result = interpreter.interpret("x[1][0]", "test")
+      result.should eq 3
     end
     it "tables" do
       interpreter.interpret("string->bool bad_people = {[\"billy bob\"] -> false, mj -> true, joemar -> false}", "test")
