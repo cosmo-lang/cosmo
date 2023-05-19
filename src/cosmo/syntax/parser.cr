@@ -162,6 +162,7 @@ class Cosmo::Parser
       while match?(Syntax::Comma)
         type_info = parse_type(required: true, check_const: true)
         param_type = type_info[:type_ref].not_nil!.name
+        is_const = type_info[:is_const]
         consume(Syntax::Identifier)
         param_ident = last_token
         if match?(Syntax::Equal)
@@ -254,10 +255,11 @@ class Cosmo::Parser
       consume(Syntax::Identifier) unless match?(Syntax::TypeDef)
       found_typedef = true
     else
-      found_typedef = match?(Syntax::TypeDef)
       found_registered_type = !finished? &&
         current.type == Syntax::Identifier &&
         !TypeChecker.get_registered_type?(current.value.to_s, current).nil?
+
+      found_typedef = match?(Syntax::TypeDef) || found_registered_type
     end
 
     variable_type = last_token if found_typedef
