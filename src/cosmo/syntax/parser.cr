@@ -178,26 +178,7 @@ class Cosmo::Parser
 
   # Parse an expression and return a node
   private def parse_expression : Expression::Base
-    left = parse_var_declaration
-
-    if match?(Syntax::LParen)
-      left = parse_fn_call(left)
-    elsif match?(Syntax::LBracket)
-      left = parse_index(left)
-    elsif token_exists? && ACCESS_SYNTAXES.includes?(current.type) # it's a property access
-      consume_current
-      left = parse_access(left)
-      if match?(Syntax::LParen)
-        left = parse_fn_call(left)
-      elsif match?(Syntax::LBracket)
-        left = parse_index(left)
-      end
-    end
-
-    if (left.is_a?(Expression::Index) || left.is_a?(Expression::Access)) && match?(Syntax::Equal)
-      value = parse_expression
-      left = Expression::PropertyAssignment.new(left, value)
-    end
+    left = parse_after(parse_var_declaration)
 
     if match?(Syntax::Question)
       left = parse_ternary_op(left)
@@ -215,34 +196,32 @@ class Cosmo::Parser
   end
 
   private ACCESS_SYNTAXES = [Syntax::ColonColon, Syntax::Dot, Syntax::HyphenArrow]
-  # Parse property accessing
-  private def parse_access(object : Expression::Base) : Expression::Base
-    consume(Syntax::Identifier)
-    key = last_token
-    access = Expression::Access.new(object, key)
-
-    while token_exists? && ACCESS_SYNTAXES.includes?(current.type)
-      consume_current
-      access = parse_access(access)
-    end
-    access
-  end
-
-  # Parse indexing
-  private def parse_index(object : Expression::Base) : Expression::Base
-    key = parse_expression
-    consume(Syntax::RBracket)
-    index = Expression::Index.new(object, key)
-
-    while match?(Syntax::LBracket)
-      index = parse_index(index)
-    end
+  private def parse_after(expr : Expression::Base) : Expression::Base
+    callee = expr
 
     if match?(Syntax::LParen)
-      index = parse_fn_call(index)
+      arguments = [] of Expression::Base
+      until match?(Syntax::RParen)
+        arguments << parse_expression
+        match?(Syntax::Comma)
+      end
+      callee = Expression::FunctionCall.new(callee, arguments)
+    elsif match?(Syntax::LBracket)
+      key = parse_expression
+      consume(Syntax::RBracket)
+      callee = Expression::Index.new(callee, key)
+    elsif token_exists? && ACCESS_SYNTAXES.includes?(current.type) # it's a property access
+      consume_current
+      consume(Syntax::Identifier)
+      key = last_token
+      callee = Expression::Access.new(callee, key)
     end
 
-    index
+    if token_exists? && (current.type == Syntax::LBracket || current.type == Syntax::LParen || ACCESS_SYNTAXES.includes?(current.type))
+      callee = parse_after(callee)
+    end
+
+    callee
   end
 
   private alias TypeInfo = NamedTuple(
@@ -253,6 +232,7 @@ class Cosmo::Parser
     is_nullable: Bool
   )
 
+  # i dont wanna talk about this method
   private def parse_type(required : Bool = true, check_const : Bool = false, paren_depth : Int = 0) : TypeInfo
     is_nullable = false
     is_const = match?(Syntax::Const) if check_const
@@ -376,18 +356,6 @@ class Cosmo::Parser
     end
   end
 
-  # Parse a function call and return a node
-  private def parse_fn_call(callee : Expression::Base) : Expression::Base
-    arguments = [] of Expression::Base
-
-    until match?(Syntax::RParen)
-      arguments << parse_expression
-      match?(Syntax::Comma)
-    end
-
-    Expression::FunctionCall.new(callee, arguments)
-  end
-
   # Parse a variable declaration and return a node
   private def parse_var_declaration : Expression::Base
     type_info = parse_type(required: false, check_const: true)
@@ -420,11 +388,15 @@ class Cosmo::Parser
     left = parse_compound_assignment
 
     while match?(Syntax::Equal)
-      unless left.is_a?(Expression::Var)
-        Logger.report_error("Expected identifier, got", peek(-2).type.to_s, peek(-2))
-      end
       value = parse_assignment
-      left = Expression::VarAssignment.new(left, value)
+      if left.is_a?(Expression::Var)
+        left = Expression::VarAssignment.new(left, value)
+      elsif left.is_a?(Expression::Index) || left.is_a?(Expression::Access)
+        left = Expression::PropertyAssignment.new(left, value)
+      else
+        Logger.report_error("Expected identifier or property, got", peek(-2).type.to_s, peek(-2))
+      end
+
     end
 
     left
@@ -581,12 +553,7 @@ class Cosmo::Parser
     elsif match?(Syntax::Identifier)
       ident = last_token
       callee = Expression::Var.new(ident)
-
-      if match?(Syntax::LParen)
-        callee = parse_fn_call(callee)
-      end
-
-      callee
+      parse_after(callee)
     else
       parse_literal
     end

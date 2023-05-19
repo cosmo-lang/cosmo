@@ -222,7 +222,7 @@ module Cosmo::AST::Statement
       "FunctionDef<\n" +
       "  #{TAB * indent}identifier: #{@identifier.value.to_s},\n" +
       "  #{TAB * indent}parameters: [\n" +
-      "    #{TAB * indent}#{@parameters.map(&.to_s(indent + 2)).join(",\n#{TAB * (indent + 2)}")}\n" +
+      "    #{TAB * indent}#{@parameters.map(&.to_s(indent + 2).as String).join(",\n#{TAB * (indent + 2)}")}\n" +
       "  #{TAB * indent}],\n" +
       "  #{TAB * indent}return_typedef: #{@return_typedef.value},\n" +
       "  #{TAB * indent}body: #{@body.to_s(indent + 1)}\n" +
