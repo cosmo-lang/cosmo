@@ -20,7 +20,7 @@ class Cosmo::Interpreter
   def initialize(
     @output_ast : Bool,
     @run_benchmarks : Bool,
-    debug_mode : Bool
+    @debug_mode : Bool
   )
     Logger.debug = debug_mode
     TypeChecker.register_intrinsics
@@ -201,7 +201,19 @@ class Cosmo::Interpreter
     unless module_path.includes?("/")
       Logger.report_error("Invalid import", "No package management system implemented yet. If you are trying to import a file path, prepend './' to the path.", stmt.module_path)
     else
-      source = File.read(module_path + ".cos") || File.read(module_path + ".⭐")
+      file_path = File.exists?(module_path + ".cos") ? module_path + ".cos" : module_path + ".⭐"
+      unless File.exists?(file_path)
+        Logger.report_error("Invalid import", "No such file '#{module_path}.cos' or '#{module_path}.⭐'", stmt.module_path)
+      end
+
+      source = File.read(file_path)
+      module_interpreter = Interpreter.new(
+        output_ast: false,
+        run_benchmarks: false,
+        debug_mode: @debug_mode
+      )
+
+      module_interpreter.interpret(source, file_path)
     end
   end
 
@@ -271,7 +283,13 @@ class Cosmo::Interpreter
   def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
     fn = Function.new(self, @scope, stmt)
     typedef = Token.new("func", Syntax::TypeDef, "func", Location.new(@file_path, 0, 0))
-    @scope.declare(typedef, stmt.identifier, fn)
+    @scope.declare(
+      typedef,
+      stmt.identifier,
+      fn,
+      const: true,
+      visibility: stmt.visibility
+    )
   end
 
   def visit_access_expr(expr : Expression::Access) : ValueType
@@ -337,11 +355,13 @@ class Cosmo::Interpreter
 
   def visit_var_declaration_expr(expr : Expression::VarDeclaration) : ValueType
     value = evaluate(expr.value)
-    if expr.constant?
-      @scope.declare(expr.typedef, expr.var.token, value, const: true)
-    else
-      @scope.declare(expr.typedef, expr.var.token, value)
-    end
+    @scope.declare(
+      expr.typedef,
+      expr.var.token,
+      value,
+      const: expr.constant?,
+      visibility: expr.visibility
+    )
   end
 
   def visit_var_assignment_expr(expr : Expression::VarAssignment) : ValueType

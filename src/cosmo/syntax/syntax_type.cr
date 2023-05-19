@@ -8,7 +8,8 @@ enum Cosmo::Syntax
   Carat; CaratEqual; Percent; PercentEqual
   Less; LessEqual; Greater; GreaterEqual
   Equal; EqualEqual; Bang; BangEqual
-  Ampersand; Pipe; Question
+  Ampersand; Pipe; Tilde; RArrowArrow; LArrowArrow
+  ColonAmpersand; ColonPipe; Question
   ColonColon; Colon; Dot; DotDot; HyphenArrow; This
   LBrace; RBrace; DoubleLBrace; DoubleRBrace;
   LBracket; RBracket; LParen; RParen

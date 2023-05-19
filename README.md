@@ -21,6 +21,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * methods
   * `$` (this)
 - Better type system
+  * casting
   * intersections
 
 ## Things I Might Do

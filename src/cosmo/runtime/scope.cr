@@ -2,7 +2,12 @@ require "../syntax/lexer/token"
 require "./typechecker"
 
 class Cosmo::Scope
-  private alias Variable = NamedTuple(type: String, value: ValueType, constant: Bool)
+  private alias Variable = NamedTuple(
+    type: String,
+    value: ValueType,
+    constant: Bool,
+    visibility: Visibility
+  )
 
   property parent : Cosmo::Scope?
   property variables = {} of String => Variable
@@ -10,29 +15,45 @@ class Cosmo::Scope
   def initialize(@parent = nil)
   end
 
-  private def create_variable(typedef : Token | String, identifier : Token, value : V, constant : Bool) : ValueType forall V
+  private def create_variable(
+    typedef : Token | String,
+    identifier : Token,
+    value : V,
+    constant : Bool,
+    visibility : Visibility
+  ) : ValueType forall V
+
     casted_value = TypeChecker.cast(value)
     @variables[identifier.value.to_s] = {
       type: typedef.is_a?(Token) ? typedef.value.to_s : typedef,
       value: casted_value,
-      constant: constant
+      constant: constant,
+      visibility: visibility
     }
+
     casted_value
   end
 
-  def declare(typedef : Token, identifier : Token, value : ValueType, const : Bool = false) : ValueType
+  def declare(
+    typedef : Token,
+    identifier : Token,
+    value : ValueType,
+    const : Bool = false,
+    visibility : Visibility = Visibility::Private
+  ) : ValueType
+
     TypeChecker.assert(typedef.value.to_s, value, typedef) unless value.nil?
-    create_variable(typedef, identifier, value, const)
+    create_variable(typedef, identifier, value, const, visibility)
   end
 
   def assign(identifier : Token, value : ValueType) : ValueType
     if @variables.has_key?(identifier.lexeme)
-      info = @variables[identifier.lexeme]
-      if info[:constant]
+      var : Variable = @variables[identifier.lexeme]
+      if var[:constant]
         Logger.report_error("Attempt to assign to constant variable", identifier.lexeme, identifier)
       end
-      TypeChecker.assert(info[:type], value, identifier)
-      return create_variable(info[:type], identifier, value, constant: false)
+      TypeChecker.assert(var[:type], value, identifier)
+      return create_variable(var[:type], identifier, value, constant: false, visibility: var[:visibility])
     end
 
     return @parent.not_nil!.assign(identifier, value) unless @parent.nil?
