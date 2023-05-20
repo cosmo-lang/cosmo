@@ -18,7 +18,7 @@ module Cosmo::Logger
   end
 
   def report_error(error_type : String, message : String, line : UInt32, pos : UInt32, file_path : String) : Exception
-    full_message = "@#{file_path} [#{line}:#{pos + 1}] #{error_type}: #{message}"
+    full_message = "@#{file_path.gsub("./", "")} [#{line}:#{pos + 1}] #{error_type}: #{message}"
     unless @@debug
       abort full_message, 1
     else

@@ -1,1 +1,3 @@
+use "./main"
+
 public string my_msg = "hello world"

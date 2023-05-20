@@ -61,7 +61,7 @@ class Cosmo::Interpreter
     resolver = Resolver.new(self)
     resolver.resolve(statements)
     end_time = Time.monotonic
-    puts "Resolver took #{get_elapsed(resolver.start_time, end_time)}." if @run_benchmarks
+    puts "Resolver @#{@file_path} took #{get_elapsed(resolver.start_time, end_time)}." if @run_benchmarks
 
     start_time = Time.monotonic
 
@@ -82,7 +82,7 @@ class Cosmo::Interpreter
     end
 
     end_time = Time.monotonic
-    puts "Interpreter took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
+    puts "Interpreter @#{file_path} took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
 
     if found_main && @file_path != "test" && @file_path != "repl"
       code = main_result.not_nil!.as(Int64)
@@ -205,21 +205,25 @@ class Cosmo::Interpreter
         Logger.report_error("Cannot import", "Non-package modules are not supported in the REPL", stmt.module_path)
       end
 
-      module_path = File.join File.dirname(@file_path), relative_module_path
-      ext_file_path = File.exists?(module_path + ".cos") ? module_path + ".cos" : module_path + ".⭐"
+      full_module_path = File.join File.dirname(@file_path), relative_module_path
+      ext_file_path = File.exists?(full_module_path + ".cos") ? full_module_path + ".cos" : full_module_path + ".⭐"
+      if full_module_path.includes?("././")
+        Logger.report_error("Recursive import detected", ext_file_path.gsub("./", ""), stmt.module_path)
+      end
+
+      module_path = ext_file_path.gsub("./", "")
       unless File.exists?(ext_file_path)
         Logger.report_error("Invalid import", "No such file '#{module_path}.cos/⭐' exists", stmt.module_path)
       end
 
       source = File.read(ext_file_path)
-      module_interpreter = Interpreter.new(
-        output_ast: false,
-        run_benchmarks: false,
-        debug_mode: @debug_mode
-      )
+      enclosing = @scope
+      module_scope = Scope.new(@scope)
 
-      module_interpreter.interpret(source, ext_file_path)
-      globals.extend(module_interpreter.scope)
+      interpret(source, ext_file_path)
+      globals.extend(module_scope)
+
+      @scope = enclosing
     end
   end
 

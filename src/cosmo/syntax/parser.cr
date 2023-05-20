@@ -5,9 +5,9 @@ class Cosmo::Parser
   @position : Int32 = 0
   @tokens : Array(Token)
 
-  def initialize(source : String, file_path : String, @run_benchmarks : Bool)
-    TypeChecker.reset if file_path == "test"
-    lexer = Lexer.new(source, file_path, @run_benchmarks)
+  def initialize(source : String, @file_path : String, @run_benchmarks : Bool)
+    TypeChecker.reset if @file_path == "test"
+    lexer = Lexer.new(source, @file_path, @run_benchmarks)
     @tokens = lexer.tokenize
     @tokens.pop
   end
@@ -23,7 +23,7 @@ class Cosmo::Parser
     end
 
     end_time = Time.monotonic
-    puts "Parser took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
+    puts "Parser @#{@file_path} took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
     statements
   end
 
