@@ -1,0 +1,11 @@
+const bool life_sucks = true
+case life_sucks { ## life sucks
+  when true => puts("life sucks")
+  else => puts("life does not suck")
+}
+
+int|float my_num = 5
+case my_num { ## integer
+  when float => puts("fraction")
+  when int, bigint => puts("integer")
+}

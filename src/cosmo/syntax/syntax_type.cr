@@ -10,7 +10,8 @@ enum Cosmo::Syntax
   Equal; EqualEqual; Bang; BangEqual
   Ampersand; Pipe; Tilde; RDoubleArrow; LDoubleArrow
   ColonAmpersand; ColonPipe; Question
-  ColonColon; Colon; Dot; DotDot; HyphenArrow; This
+  ColonColon; Colon; Dot; DotDot; HyphenArrow;
+  FatArrow; This
   LBrace; RBrace; DoubleLBrace; DoubleRBrace;
   LBracket; RBracket; LParen; RParen
   Comma

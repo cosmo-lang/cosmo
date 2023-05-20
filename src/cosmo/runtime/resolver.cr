@@ -89,6 +89,17 @@ class Cosmo::Resolver
     resolve(stmt.expression)
   end
 
+  def visit_case_stmt(stmt : Statement::Case) : Nil
+    resolve(stmt.value)
+    stmt.comparisons.each do |comparison|
+      comparison.conditions.each do |condition_expr|
+        resolve(condition_expr)
+      end
+      resolve(comparison.block)
+    end
+    resolve(stmt.else.not_nil!) unless stmt.else.nil?
+  end
+
   def visit_if_stmt(stmt : Statement::If) : Nil
     resolve(stmt.condition)
     resolve(stmt.then)

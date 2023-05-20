@@ -156,6 +156,8 @@ class Cosmo::Lexer
     when "="
       if match_char?("=")
         add_token(Syntax::EqualEqual, nil)
+      elsif match_char?(">")
+        add_token(Syntax::FatArrow, nil)
       else
         add_token(Syntax::Equal, nil)
       end
@@ -366,6 +368,6 @@ class Cosmo::Lexer
   end
 
   private def report_error(type : String, message : String) : Nil
-    Logger.report_error(type, message, @line, @position, @file_path)
+    Logger.report_error(type, message, @line, @char_pos, @file_path)
   end
 end

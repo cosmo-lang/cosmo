@@ -247,6 +247,30 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_case_stmt(stmt : Statement::Case) : ValueType
+    value = evaluate(stmt.value)
+    go_to_else = false
+
+    stmt.comparisons.each do |when_stmt|
+      condition = true
+      when_stmt.conditions.each do |condition_expr|
+        if condition_expr.is_a?(Expression::TypeRef)
+          condition &= TypeChecker.is?(condition_expr.name.lexeme, value, when_stmt.token)
+        else
+          condition &= evaluate(condition_expr) == value
+        end
+      end
+
+      if condition
+        execute(when_stmt.block)
+      else
+        go_to_else = true
+      end
+    end
+
+    execute(stmt.else.not_nil!) if !stmt.else.nil? && go_to_else
+  end
+
   def visit_throw_stmt(stmt : Statement::Throw) : Nil
     err = evaluate(stmt.err)
     unless TypeChecker.is?("string", err, stmt.token)

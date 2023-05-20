@@ -41,6 +41,8 @@ class Cosmo::Parser
       Statement::Break.new(last_token)
     elsif match?(Syntax::Next)
       Statement::Next.new(last_token)
+    elsif match?(Syntax::Case)
+      parse_case_statement
     elsif match?(Syntax::If)
       parse_if_statement
     elsif match?(Syntax::Unless)
@@ -71,9 +73,50 @@ class Cosmo::Parser
     Statement::Block.new(statements)
   end
 
+  private def parse_when_statement : Statement::When
+    token = last_token
+    conditions = comma_separated do
+      type_info = parse_type(required: false)
+
+      # we're comparing a value
+      if type_info[:type_ref].nil?
+        parse_expression
+      else # we're comparing a type
+        type_info[:type_ref].not_nil!
+      end
+    end
+
+    consume(Syntax::FatArrow)
+    block = parse_statement
+    Statement::When.new(token, conditions, block)
+  end
+
+  private def parse_case_statement : Statement::Case
+    token = last_token
+    value = parse_expression
+    consume(Syntax::LBrace)
+
+    comparisons = [] of Statement::When
+    while match?(Syntax::When)
+      comparisons << parse_when_statement
+    end
+
+    if match?(Syntax::Else)
+      consume(Syntax::FatArrow)
+      else_block = parse_statement
+    end
+
+    consume(Syntax::RBrace)
+    Statement::Case.new(token, value, comparisons, else_block)
+  end
+
   private def parse_every_statement : Statement::Every
     token = last_token
     type_info = parse_type
+
+    if type_info[:type_ref].nil?
+      Logger.report_error("Expected typedef, got", last_token.lexeme, last_token)
+    end
     typedef = type_info[:type_ref].not_nil!.name
 
     consume(Syntax::Identifier)
@@ -776,6 +819,16 @@ class Cosmo::Parser
     end
   end
 
+  # Returns a list of comma separated expressions
+  private def comma_separated(&) : Array(Expression::Base)
+    expressions = [] of Expression::Base
+    expressions << yield
+    while match?(Syntax::Comma)
+      expressions << yield
+    end
+    expressions
+  end
+
   private def check?(syntax : Syntax) : Bool
     return false if finished?
     current.type == syntax
@@ -827,7 +880,7 @@ class Cosmo::Parser
   # Consume the current token and advance position if token syntax
   # matches the expected syntax, else log an error
   private def consume(syntax : Syntax) : Nil
-    Logger.report_error("Expected #{syntax}, got", current.type.to_s, current) unless current.type == syntax
+    Logger.report_error("Expected #{syntax}, got", current.lexeme, current) unless current.type == syntax
     @position += 1
   end
 
