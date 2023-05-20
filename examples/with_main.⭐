@@ -1,4 +1,4 @@
-int fn main(const int argc, const string[] argv) {
-  puts("hello, world!", argc, argv)
+int fn main(const string[] argv) {
+  puts("hello, world!", #argv, argv)
   return 0
 }

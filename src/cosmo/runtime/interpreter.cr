@@ -33,7 +33,6 @@ class Cosmo::Interpreter
     declare_intrinsic("string", "__version", version)
 
     declare_importable("math", MathLib.new(self))
-    declare_importable("http", HttpLib.new(self))
   end
 
   private def declare_importable(name : String, library : IntrinsicLib)
@@ -82,7 +81,7 @@ class Cosmo::Interpreter
       main_fn = main_fn.as(Function)
       return_typedef = main_fn.definition.return_typedef
       @meta["block_return_type"] = return_typedef.value.to_s
-      main_result = main_fn.call([ARGV.size, ARGV.map(&.as ValueType)])
+      main_result = main_fn.call([ARGV.map(&.as ValueType)])
       TypeChecker.assert("int", main_result, return_typedef)
     end
 
