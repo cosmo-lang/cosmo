@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::MathLib - Cosmo master</title>
+  <title>Cosmo::IntrinsicLib - Cosmo master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -361,7 +361,7 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/IntrinsicLib" data-name="cosmo::intrinsiclib">
+  <li class=" current" data-id="Cosmo/Cosmo/IntrinsicLib" data-name="cosmo::intrinsiclib">
       <a href="../Cosmo/IntrinsicLib.html">IntrinsicLib</a>
       
     </li>
@@ -386,7 +386,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="Cosmo/Cosmo/MathLib" data-name="cosmo::mathlib">
+  <li class="parent " data-id="Cosmo/Cosmo/MathLib" data-name="cosmo::mathlib">
       <a href="../Cosmo/MathLib.html">MathLib</a>
       
         <ul>
@@ -710,12 +710,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Cosmo::MathLib
+  <span class="kind">abstract class</span> Cosmo::IntrinsicLib
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Cosmo/MathLib.html">Cosmo::MathLib</a></li><li class="superclass"><a href="../Cosmo/IntrinsicLib.html">Cosmo::IntrinsicLib</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Cosmo/IntrinsicLib.html">Cosmo::IntrinsicLib</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -727,6 +727,20 @@
 
 
 
+
+  <h2>
+    <a id="direct-known-subclasses" class="anchor" href="#direct-known-subclasses">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Direct Known Subclasses
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../Cosmo/MathLib.html">Cosmo::MathLib</a></li>
+    
+  </ul>
 
 
 
@@ -743,8 +757,8 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/intrinsic/lib/math.cr#L1" target="_blank">
-        cosmo/runtime/intrinsic/lib/math.cr
+      <a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/intrinsic/global.cr#L24" target="_blank">
+        cosmo/runtime/intrinsic/global.cr
       </a>
     
     <br/>
@@ -753,6 +767,23 @@
 
 
 
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28i%3AInterpreter%29-class-method" class="signature"><strong>.new</strong>(i : Interpreter)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -783,34 +814,6 @@
   
     
 
-  <h3>Instance methods inherited from class <code><a href="../Cosmo/IntrinsicLib.html">Cosmo::IntrinsicLib</a></code></h3>
-  
-  
-    <a href="../Cosmo/IntrinsicLib.html#inject%3ANil-instance-method" class="tooltip">
-      <span>inject : Nil</span>
-    inject</a>
-    
-  
-
-
-    
-
-  <h3>Constructor methods inherited from class <code><a href="../Cosmo/IntrinsicLib.html">Cosmo::IntrinsicLib</a></code></h3>
-  
-  
-    <a href="../Cosmo/IntrinsicLib.html#new%28i%3AInterpreter%29-class-method" class="tooltip">
-      <span>new(i : Interpreter)</span>
-    new</a>
-    
-  
-
-
-    
-
-
-  
-    
-
 
     
 
@@ -832,6 +835,32 @@
 </div>
 
 
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(i:Interpreter)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(i : <a href="../Cosmo/Interpreter.html">Interpreter</a>)
+
+        <a class="method-permalink" href="#new%28i%3AInterpreter%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/intrinsic/global.cr#L25" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
 
 
 
@@ -847,7 +876,7 @@
   
     <div class="entry-detail" id="inject:Nil-instance-method">
       <div class="signature">
-        
+        abstract 
         def <strong>inject</strong> : Nil
 
         <a class="method-permalink" href="#inject%3ANil-instance-method">#</a>
@@ -856,7 +885,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/intrinsic/lib/math.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/intrinsic/global.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>

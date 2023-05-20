@@ -81,6 +81,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/BigIntLiteral" data-name="cosmo::ast::expression::bigintliteral">
+      <a href="../Cosmo/AST/Expression/BigIntLiteral.html">BigIntLiteral</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/BinaryOp" data-name="cosmo::ast::expression::binaryop">
       <a href="../Cosmo/AST/Expression/BinaryOp.html">BinaryOp</a>
       
@@ -353,6 +358,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/IntrinsicFunction" data-name="cosmo::intrinsicfunction">
       <a href="../Cosmo/IntrinsicFunction.html">IntrinsicFunction</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/IntrinsicLib" data-name="cosmo::intrinsiclib">
+      <a href="../Cosmo/IntrinsicLib.html">IntrinsicLib</a>
       
     </li>
   
@@ -745,7 +755,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/runtime/typechecker.cr#L10" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/typechecker.cr#L10" target="_blank">
         cosmo/runtime/typechecker.cr
       </a>
     
@@ -777,7 +787,7 @@
       
     
       <dt class="entry-const" id="TYPE_MAP">
-        <strong>TYPE_MAP</strong> = <code>{<span class="t">Int64</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int32</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int16</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int8</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Float64</span> <span class="o">=&gt;</span> <span class="s">&quot;float&quot;</span>, <span class="t">Float32</span> <span class="o">=&gt;</span> <span class="s">&quot;float&quot;</span>, <span class="t">String</span> <span class="o">=&gt;</span> <span class="s">&quot;string&quot;</span>, <span class="t">Char</span> <span class="o">=&gt;</span> <span class="s">&quot;char&quot;</span>, <span class="t">Bool</span> <span class="o">=&gt;</span> <span class="s">&quot;bool&quot;</span>, <span class="t">Nil</span> <span class="o">=&gt;</span> <span class="s">&quot;none&quot;</span>, <span class="t">Function</span> <span class="o">=&gt;</span> <span class="s">&quot;fn&quot;</span>, <span class="t">PutsIntrinsic</span> <span class="o">=&gt;</span> <span class="s">&quot;fn&quot;</span>, <span class="t">Array</span>(<span class="t">Int64</span>) <span class="o">=&gt;</span> <span class="s">&quot;int[]&quot;</span>, <span class="t">Array</span>(<span class="t">Int32</span>) <span class="o">=&gt;</span> <span class="s">&quot;int[]&quot;</span>, <span class="t">Array</span>(<span class="t">Int16</span>) <span class="o">=&gt;</span> <span class="s">&quot;int[]&quot;</span>, <span class="t">Array</span>(<span class="t">Int8</span>) <span class="o">=&gt;</span> <span class="s">&quot;int[]&quot;</span>, <span class="t">Array</span>(<span class="t">Float64</span>) <span class="o">=&gt;</span> <span class="s">&quot;float[]&quot;</span>, <span class="t">Array</span>(<span class="t">Float32</span>) <span class="o">=&gt;</span> <span class="s">&quot;float[]&quot;</span>, <span class="t">Array</span>(<span class="t">String</span>) <span class="o">=&gt;</span> <span class="s">&quot;string[]&quot;</span>, <span class="t">Array</span>(<span class="t">Char</span>) <span class="o">=&gt;</span> <span class="s">&quot;char[]&quot;</span>, <span class="t">Array</span>(<span class="t">Bool</span>) <span class="o">=&gt;</span> <span class="s">&quot;bool[]&quot;</span>, <span class="t">Array</span>(<span class="t">Function</span>) <span class="o">=&gt;</span> <span class="s">&quot;fn[]&quot;</span>, <span class="t">Array</span>(<span class="t">ValueType</span>) <span class="o">=&gt;</span> <span class="s">&quot;any[]&quot;</span>, <span class="t">Array</span> <span class="o">=&gt;</span> <span class="s">&quot;any[]&quot;</span>, <span class="t">Hash</span> <span class="o">=&gt;</span> <span class="s">&quot;Table&quot;</span>, <span class="t">Range</span>(<span class="t">Int16</span> <span class="o">|</span> <span class="t">Int32</span> <span class="o">|</span> <span class="t">Int64</span> <span class="o">|</span> <span class="t">Int8</span>, <span class="t">Int16</span> <span class="o">|</span> <span class="t">Int32</span> <span class="o">|</span> <span class="t">Int64</span> <span class="o">|</span> <span class="t">Int8</span>) <span class="o">=&gt;</span> <span class="s">&quot;Range&quot;</span>}</code>
+        <strong>TYPE_MAP</strong> = <code>{<span class="t">Int128</span> <span class="o">=&gt;</span> <span class="s">&quot;bigint&quot;</span>, <span class="t">Int64</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int32</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int16</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Int8</span> <span class="o">=&gt;</span> <span class="s">&quot;int&quot;</span>, <span class="t">Float64</span> <span class="o">=&gt;</span> <span class="s">&quot;float&quot;</span>, <span class="t">Float32</span> <span class="o">=&gt;</span> <span class="s">&quot;float&quot;</span>, <span class="t">String</span> <span class="o">=&gt;</span> <span class="s">&quot;string&quot;</span>, <span class="t">Char</span> <span class="o">=&gt;</span> <span class="s">&quot;char&quot;</span>, <span class="t">Bool</span> <span class="o">=&gt;</span> <span class="s">&quot;bool&quot;</span>, <span class="t">Nil</span> <span class="o">=&gt;</span> <span class="s">&quot;none&quot;</span>, <span class="t">Function</span> <span class="o">=&gt;</span> <span class="s">&quot;func&quot;</span>, <span class="t">PutsIntrinsic</span> <span class="o">=&gt;</span> <span class="s">&quot;func&quot;</span>, <span class="t">Array</span>(<span class="t">Int64</span>) <span class="o">=&gt;</span> <span class="s">&quot;int[]&quot;</span>, <span class="t">Array</span>(<span class="t">Int32</span>) <span class="o">=&gt;</span> <span class="s">&quot;int[]&quot;</span>, <span class="t">Array</span>(<span class="t">Int16</span>) <span class="o">=&gt;</span> <span class="s">&quot;int[]&quot;</span>, <span class="t">Array</span>(<span class="t">Int8</span>) <span class="o">=&gt;</span> <span class="s">&quot;int[]&quot;</span>, <span class="t">Array</span>(<span class="t">Float64</span>) <span class="o">=&gt;</span> <span class="s">&quot;float[]&quot;</span>, <span class="t">Array</span>(<span class="t">Float32</span>) <span class="o">=&gt;</span> <span class="s">&quot;float[]&quot;</span>, <span class="t">Array</span>(<span class="t">String</span>) <span class="o">=&gt;</span> <span class="s">&quot;string[]&quot;</span>, <span class="t">Array</span>(<span class="t">Char</span>) <span class="o">=&gt;</span> <span class="s">&quot;char[]&quot;</span>, <span class="t">Array</span>(<span class="t">Bool</span>) <span class="o">=&gt;</span> <span class="s">&quot;bool[]&quot;</span>, <span class="t">Array</span>(<span class="t">Function</span>) <span class="o">=&gt;</span> <span class="s">&quot;fn[]&quot;</span>, <span class="t">Array</span>(<span class="t">ValueType</span>) <span class="o">=&gt;</span> <span class="s">&quot;any[]&quot;</span>, <span class="t">Array</span> <span class="o">=&gt;</span> <span class="s">&quot;any[]&quot;</span>, <span class="t">Hash</span> <span class="o">=&gt;</span> <span class="s">&quot;Table&quot;</span>, <span class="t">Range</span>(<span class="t">Int128</span> <span class="o">|</span> <span class="t">Int16</span> <span class="o">|</span> <span class="t">Int32</span> <span class="o">|</span> <span class="t">Int64</span> <span class="o">|</span> <span class="t">Int8</span>, <span class="t">Int128</span> <span class="o">|</span> <span class="t">Int16</span> <span class="o">|</span> <span class="t">Int32</span> <span class="o">|</span> <span class="t">Int64</span> <span class="o">|</span> <span class="t">Int8</span>) <span class="o">=&gt;</span> <span class="s">&quot;Range&quot;</span>}</code>
       </dt>
       
     
@@ -894,7 +904,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/runtime/typechecker.cr#L96" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/typechecker.cr#L99" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -910,7 +920,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/runtime/typechecker.cr#L205" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/typechecker.cr#L210" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -926,7 +936,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/runtime/typechecker.cr#L79" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/typechecker.cr#L81" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -942,7 +952,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/runtime/typechecker.cr#L69" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/typechecker.cr#L71" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -958,7 +968,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/runtime/typechecker.cr#L73" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/typechecker.cr#L75" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -974,7 +984,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/runtime/typechecker.cr#L50" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/typechecker.cr#L51" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -990,7 +1000,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/runtime/typechecker.cr#L125" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/typechecker.cr#L128" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1006,7 +1016,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/runtime/typechecker.cr#L101" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/typechecker.cr#L104" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1022,7 +1032,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/runtime/typechecker.cr#L131" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/typechecker.cr#L134" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1038,7 +1048,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/runtime/typechecker.cr#L57" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/typechecker.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1054,7 +1064,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/runtime/typechecker.cr#L90" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/typechecker.cr#L93" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1070,7 +1080,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/runtime/typechecker.cr#L84" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/18913c7e48ba9693e0d5ca8399d50a67f95915ee/src/cosmo/runtime/typechecker.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>
