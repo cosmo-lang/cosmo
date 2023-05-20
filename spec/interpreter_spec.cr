@@ -117,6 +117,8 @@ describe Interpreter do
     result.should eq 3
     result = interpreter.interpret("\#{{yes->true, no->false}}", "test")
     result.should eq 2
+    result = interpreter.interpret("~15", "test")
+    result.should eq -16
   end
   it "interprets binary operators" do
     result = interpreter.interpret("3 * 6 / 2 - 9", "test")
@@ -129,6 +131,10 @@ describe Interpreter do
     result.should eq false
     result = interpreter.interpret("true == false == false != true", "test")
     result.should eq false
+    result = interpreter.interpret("0xff & 24 | 15", "test")
+    result.should eq 31
+    result = interpreter.interpret("~15 >> 12 << 14", "test")
+    result.should eq -16384
   end
   it "interprets ternary operators" do
     result = interpreter.interpret("true ? (true ? \"yes\" : \"wtf\") : \"wtf x2\"", "test")
@@ -208,6 +214,9 @@ describe Interpreter do
     interpreter.interpret("nums[2] = 3", "test")
     result = interpreter.interpret("nums[2]", "test")
     result.should eq 3
+    interpreter.interpret("nums << 4", "test")
+    result = interpreter.interpret("nums", "test")
+    result.should eq [1,2,3,4]
     expect_raises(Exception, "[1:5] Type mismatch: Expected 'int', got 'string'") do
       interpreter.interpret("nums[3] = \"hi\"", "test")
     end
