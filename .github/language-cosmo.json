@@ -1,0 +1,311 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Cosmo",
+	"fileTypes": ["cos", "⭐"],
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#characters"
+		},
+		{
+			"include": "#numerics"
+		},
+		{
+			"include": "#functions"
+		},
+		{
+			"include": "#identifiers"
+		},
+    {
+			"include": "#object-types"
+		}
+	],
+	"repository": {
+    "generics": {
+			"begin": "<",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.bracket.angle.cosmo"
+				}
+			},
+			"end": ">",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.bracket.angle.cosmo"
+				}
+			},
+			"patterns": [
+				{
+					"match": "\\b(extends|super)\\b",
+					"name": "storage.modifier.$1.cosmo"
+				},
+				{
+					"match": "(?<!\\.)([a-zA-Z$_][a-zA-Z0-9$_]*)(?=\\s*<)",
+					"captures": {
+						"1": {
+							"name": "storage.type.cosmo"
+						}
+					}
+				},
+				{
+					"match": "[a-zA-Z$_][a-zA-Z0-9$_]*",
+					"name": "storage.type.generic.cosmo"
+				},
+				{
+					"match": "\\?",
+					"name": "storage.type.generic.wildcard.cosmo"
+				},
+				{
+					"match": "&",
+					"name": "punctuation.separator.types.cosmo"
+				},
+				{
+					"match": ",",
+					"name": "punctuation.separator.delimiter.cosmo"
+				},
+				{
+					"match": "\\.",
+					"name": "punctuation.separator.period.cosmo"
+				},
+				{
+					"include": "#generics"
+				}
+			]
+		},
+    "object-types": {
+			"patterns": [
+				{
+					"include": "#generics"
+				},
+				{
+					"begin": "\\b((?:[A-Za-z_]\\w*\\s*\\.\\s*)*)([A-Z_]\\w*)\\s*(?=\\[)",
+					"beginCaptures": {
+						"1": {
+							"patterns": [
+								{
+									"match": "[A-Za-z_]\\w*",
+									"name": "storage.type.cosmo"
+								},
+								{
+									"match": "\\.",
+									"name": "punctuation.separator.period.cosmo"
+								}
+							]
+						},
+						"2": {
+							"name": "storage.type.object.array.cosmo"
+						}
+					},
+					"end": "(?!\\s*\\[)",
+					"patterns": [
+						{
+							"include": "#comments"
+						}
+					]
+				},
+				{
+					"match": "\\b((?:[A-Za-z_]\\w*\\s*\\.\\s*)*[A-Z_]\\w*)\\s*(?=<)",
+					"captures": {
+						"1": {
+							"patterns": [
+								{
+									"match": "[A-Za-z_]\\w*",
+									"name": "storage.type.cosmo"
+								},
+								{
+									"match": "\\.",
+									"name": "punctuation.separator.period.cosmo"
+								}
+							]
+						}
+					}
+				},
+				{
+					"match": "\\b((?:[A-Za-z_]\\w*\\s*\\.\\s*)*[A-Z_]\\w*)\\b((?=\\s*[A-Za-z$_\\n])|(?=\\s*\\.\\.\\.))",
+					"captures": {
+						"1": {
+							"patterns": [
+								{
+									"match": "[A-Za-z_]\\w*",
+									"name": "storage.type.cosmo"
+								},
+								{
+									"match": "\\.",
+									"name": "punctuation.separator.period.cosmo"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-hash.cosmo",
+          "match": "##.*$"
+        },
+        {
+          "name": "comment.block",
+          "begin": "#:",
+          "end": ":#"
+        }
+      ]
+    },
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.cosmo",
+					"match": "\\b(new|if|unless|else|while|until|every|break|next|in|is|of|const|return|fn|case|when|use|throw)\\b"
+				},
+				{
+          "name": "keyword.operator.cosmo",
+          "match": "\\b(class|interface|mixin|public|protected|static)\\b"
+        },
+				{
+          "name": "keyword.type.cosmo",
+          "match": "\\b(func|type|bool|bigint|int|float|string|char|any|void)\\b"
+        },
+        {
+          "name": "keyword.other.cosmo",
+          "match": "\\b(true|false)\\b"
+        },
+        {
+          "name": "entity.name.tag",
+          "match": "\\b(none)\\b"
+        }
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.cosmo",
+			"begin": "\"",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.cosmo"
+				}
+			},
+			"end": "(\")|((?:[^\\\\\\n])$)",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.string.end.cosmo"
+				},
+				"2": {
+					"name": "invalid.illegal.newline.cosmo"
+				}
+			},
+			"patterns": [
+				{
+					"name": "constant.character.escape.cosmo",
+					"match": "\\\\."
+				}
+			]
+		},
+		"characters": {
+      "name": "string.quoted.single.cosmo",
+      "begin": "'",
+      "beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.cosmo"
+				}
+			},
+			"end": "(\\')|((?:[^\\\\\\n])$)",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.string.end.cosmo"
+				},
+				"2": {
+					"name": "invalid.illegal.newline.cosmo"
+				}
+			},
+      "patterns": [
+        {
+          "name": "constant.character.character-literal.cosmo",
+          "match": "\\\\."
+        }
+      ]
+    },
+		"numerics": {
+			"name": "constant.numeric.cosmo",
+			"patterns": [
+				{
+					"name": "constant.numeric.cosmo",
+					"match": "\\b(0[b][01]+|0[x][0-9a-fA-F]+|0[oO][0-7]+|\\d+(\\.\\d+)?)\\b"
+				}
+			]
+		},
+		"functions": {
+      "patterns": [
+        {
+          "name": "meta.function-call.cosmo",
+          "match": "\\b[a-z]+\\??\\s*\\(",
+          "captures": {
+            "0": {
+              "name": "entity.name.function.cosmo"
+            }
+          }
+        },
+        {
+          "name": "meta.function.cosmo",
+          "match": "\\b(\\w+)fn\\s+\\w+\\??\\(?",
+          "captures": {
+            "1": {
+              "name": "storage.type.cosmo"
+            },
+            "2": {
+              "name": "entity.name.function.cosmo"
+            }
+          }
+        },
+				{
+					"name": "support.function",
+					"match": "\\b(puts)\\b"
+				}
+      ]
+    },
+		"identifiers": {
+      "patterns": [
+				{
+          "name": "entity.name.class",
+          "match": "\\b([A-Z][a-z]*)+\\(?\\b"
+        },
+				{
+          "name": "entity.name.class",
+          "match": "\\$"
+        },
+        {
+          "name": "variable.other.cosmo",
+          "match": "\\b\\w+\\b\\??"
+        },
+        {
+					"match": "(\\->|.|::)",
+					"name": "keyword.operator.access.cosmo"
+				},
+        {
+					"match": "(\\-|\\+|\\*|\\/|\\^|\\%)",
+					"name": "keyword.operator.arithmetic.cosmo"
+				},
+				{
+					"match": "(=|\\-=|\\+=|\\*=|\\/=|\\^=|\\%=)",
+					"name": "keyword.operator.assignment.cosmo"
+				},
+				{
+					"match": "(==|<=|>=|!=|<|>)",
+					"name": "keyword.operator.comparison.cosmo"
+				},
+				{
+					"match": "(!|&|[|])",
+					"name": "keyword.operator.logical.cosmo"
+				}
+      ]
+    }
+	},
+	"scopeName": "source.cosmo"
+}

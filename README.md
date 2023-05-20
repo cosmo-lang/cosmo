@@ -6,6 +6,8 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ## Things I Gotta Do
 
+- Garbage collection
+- `case..when` blocks
 - `uint` type
 - Stack trace
 - Package manager
