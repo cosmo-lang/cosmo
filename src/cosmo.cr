@@ -1,11 +1,13 @@
 require "./cosmo/logger"
-require "./time"
+require "./util"
 require "./cosmo/runtime/interpreter"
 require "option_parser"
 require "readline"
 
 module Cosmo
   extend self
+
+  Version = "v" + get_shard["version"].to_s
 
   # Parse options
   @@options = {} of Symbol => Bool

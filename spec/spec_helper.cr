@@ -1,4 +1,4 @@
-require "../src/time"
+require "../src/util"
 require "../src/cosmo/logger"
 require "../src/cosmo/runtime/interpreter"
 

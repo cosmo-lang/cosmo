@@ -11,7 +11,7 @@ install_action:
 	echo "Successfully installed Cosmo!"
 
 install:
-	ifeq ($(OS),Windows_NT)
+	ifeq '$(findstring ;,$(PATH))' ';'
 		make install_action
 	else
 		@if [ $$(id -u) -eq 0 ]; then \

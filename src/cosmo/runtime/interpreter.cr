@@ -30,7 +30,7 @@ class Cosmo::Interpreter
     @scope = @globals
     declare_intrinsic("func", "puts", PutsIntrinsic.new(self))
 
-    version = "Cosmo v#{`shards version`}".strip
+    version = "Cosmo #{Version}".strip
     declare_intrinsic("string", "__version", version)
 
     declare_importable("math", MathLib.new(self))
