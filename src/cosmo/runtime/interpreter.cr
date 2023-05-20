@@ -5,7 +5,7 @@ require "./scope"
 require "./operator"
 require "./type"
 require "./resolver"
-require "./lib/math"
+require "./intrinsic/lib/math"
 
 class Cosmo::Interpreter
   include Expression::Visitor(ValueType)

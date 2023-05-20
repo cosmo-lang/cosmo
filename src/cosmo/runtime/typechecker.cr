@@ -1,5 +1,5 @@
 require "../logger"
-require "./global_intrinsics"
+require "./intrinsic/global"
 require "./type"
 
 module Cosmo
