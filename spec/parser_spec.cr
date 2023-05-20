@@ -188,12 +188,12 @@ describe Parser do
     literal.token.value.should eq "my_vec"
   end
   it "parses binary operators" do
-    stmts = Parser.new("false & true", "test", false).parse
+    stmts = Parser.new("false :& true", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(Statement::SingleExpression).expression
     binary = expr.as Expression::BinaryOp
     binary.should be_a Expression::BinaryOp
-    binary.operator.type.should eq Syntax::Ampersand
+    binary.operator.type.should eq Syntax::ColonAmpersand
 
     left = binary.left.as Expression::BooleanLiteral
     left.should be_a Expression::BooleanLiteral

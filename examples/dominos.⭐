@@ -3,10 +3,10 @@ string fn domino(const string sequence) {
   bool finished = false
 
   every char ch in sequence {
-    if ch == '|' & !finished
+    if ch == '|' :& !finished
       result += '/'
     else {
-      if ch == ' ' | ch == '/'
+      if ch == ' ' :| ch == '/'
         finished = true
       result += ch
     }

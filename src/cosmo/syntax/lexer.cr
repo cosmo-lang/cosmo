@@ -90,6 +90,10 @@ class Cosmo::Lexer
     when ":"
       if match_char?(":")
         add_token(Syntax::ColonColon, nil)
+      elsif match_char?("&")
+        add_token(Syntax::ColonAmpersand, nil)
+      elsif match_char?("|")
+        add_token(Syntax::ColonPipe, nil)
       else
         add_token(Syntax::Colon, nil)
       end
