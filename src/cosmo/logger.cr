@@ -1,5 +1,3 @@
-
-
 module Cosmo::Logger
   extend self
 

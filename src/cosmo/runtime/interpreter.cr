@@ -1,4 +1,4 @@
-require "../syntax/parser"; include Cosmo::AST
+require "../syntax/parser"
 require "./hooked_exceptions"
 require "./function"
 require "./scope"
@@ -200,11 +200,30 @@ class Cosmo::Interpreter
     @scope = enclosing
   end
 
+  private def import_file(path : String) : Nil
+    # TODO: import main file if directory
+
+    source = File.read(path)
+    enclosing = @scope
+    module_scope = Scope.new(@scope)
+
+    interpret(source, path)
+    globals.extend(module_scope)
+
+    @scope = enclosing
+  end
+
   def visit_use_stmt(stmt : Statement::Use) : Nil
     relative_module_path = stmt.module_path.lexeme
     unless relative_module_path.includes?("/")
       unless @importable_intrinsics.has_key?(relative_module_path)
-        Logger.report_error("Invalid import", "No package management system implemented yet. If you are trying to import a file path, prepend './' to the path.", stmt.module_path)
+        file_path = File.join File.dirname(__FILE__), "../../../libraries", relative_module_path
+        full_path = File.exists?(file_path + ".cos") ? file_path + ".cos" : file_path + ".⭐"
+        if File.exists?(full_path)
+          import_file(full_path)
+        else
+          Logger.report_error("Invalid import", "No package management system implemented yet. If you are trying to import a file path, prepend './' to the path.", stmt.module_path)
+        end
       else
         @importable_intrinsics[relative_module_path].inject
       end
@@ -224,14 +243,7 @@ class Cosmo::Interpreter
         Logger.report_error("Invalid import", "No such file '#{module_path}.cos/⭐' exists", stmt.module_path)
       end
 
-      source = File.read(ext_file_path)
-      enclosing = @scope
-      module_scope = Scope.new(@scope)
-
-      interpret(source, ext_file_path)
-      globals.extend(module_scope)
-
-      @scope = enclosing
+      import_file(ext_file_path)
     end
   end
 
