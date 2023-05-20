@@ -473,6 +473,9 @@ class Cosmo::Interpreter
       op.apply(expr, "--")
     when Syntax::Bang
       !operand
+    when Syntax::Tilde
+      op = Operator::Bnot.new(self)
+      op.apply(expr)
     when Syntax::Star
       raise "'*' unary operator has not yet implemented."
     when Syntax::Hashtag
@@ -506,9 +509,9 @@ class Cosmo::Interpreter
     when Syntax::Percent
       op = Operator::Mod.new(self)
       op.apply(expr)
-    when Syntax::Ampersand
+    when Syntax::ColonAmpersand
       left && right
-    when Syntax::Pipe
+    when Syntax::ColonPipe
       left || right
     when Syntax::EqualEqual
       left == right
@@ -525,6 +528,21 @@ class Cosmo::Interpreter
       op.apply(expr)
     when Syntax::GreaterEqual
       op = Operator::GTE.new(self)
+      op.apply(expr)
+    when Syntax::Tilde
+      op = Operator::Bxor.new(self)
+      op.apply(expr)
+    when Syntax::Pipe
+      op = Operator::Bor.new(self)
+      op.apply(expr)
+    when Syntax::Ampersand
+      op = Operator::Band.new(self)
+      op.apply(expr)
+    when Syntax::RDoubleArrow
+      op = Operator::Bshr.new(self)
+      op.apply(expr)
+    when Syntax::LDoubleArrow
+      op = Operator::Bshl.new(self)
       op.apply(expr)
     end
   end

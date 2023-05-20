@@ -79,6 +79,8 @@ class Cosmo::Lexer
       read_string(char)
     when "'"
       read_char(char)
+    when "~"
+      add_token(Syntax::Tilde, nil)
     when "#"
       if match_char?("#")
         skip_comments(multiline: false)
@@ -160,12 +162,16 @@ class Cosmo::Lexer
     when "<"
       if match_char?("=")
         add_token(Syntax::LessEqual, nil)
+      elsif match_char?("<")
+        add_token(Syntax::LDoubleArrow, nil)
       else
         add_token(Syntax::Less, nil)
       end
     when ">"
       if match_char?("=")
         add_token(Syntax::GreaterEqual, nil)
+      elsif match_char?(">")
+        add_token(Syntax::RDoubleArrow, nil)
       else
         add_token(Syntax::Greater, nil)
       end

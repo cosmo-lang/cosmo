@@ -544,9 +544,22 @@ class Cosmo::Parser
 
   # Parse a logical AND expression and return a node
   private def parse_logical_and : Expression::Base
-    left = parse_equality
+    left = parse_comparison
 
     while match?(Syntax::ColonAmpersand)
+      op = last_token
+      right = parse_comparison
+      left = Expression::BinaryOp.new(left, op, right)
+    end
+
+    left
+  end
+
+  # Parse a comparison expression and return a node
+  private def parse_comparison : Expression::Base
+    left = parse_equality
+
+    while match?(Syntax::Less) || match?(Syntax::LessEqual) || match?(Syntax::Greater) || match?(Syntax::GreaterEqual)
       op = last_token
       right = parse_equality
       left = Expression::BinaryOp.new(left, op, right)
@@ -557,7 +570,7 @@ class Cosmo::Parser
 
   # Parse an equality expression and return a node
   private def parse_equality : Expression::Base
-    left = parse_comparison
+    left = parse_bitwise_or
 
     while match?(Syntax::EqualEqual) || match?(Syntax::BangEqual) || match?(Syntax::Is)
       op = last_token
@@ -565,7 +578,7 @@ class Cosmo::Parser
         type_info = parse_type
         left = Expression::Is.new(left, type_info[:type_ref].not_nil!)
       else
-        right = parse_comparison
+        right = parse_bitwise_or
         left = Expression::BinaryOp.new(left, op, right)
       end
     end
@@ -573,47 +586,73 @@ class Cosmo::Parser
     left
   end
 
-  # Parse a comparison expression and return a node
-  private def parse_comparison : Expression::Base
-    left = parse_addition
+  # Parse a bitwise or expression and return a node
+  private def parse_bitwise_or : Expression::Base
+    left = parse_bitwise_and
 
-    while match?(Syntax::Less) || match?(Syntax::LessEqual) || match?(Syntax::Greater) || match?(Syntax::GreaterEqual)
+    while match?(Syntax::Pipe)
       op = last_token
-      right = parse_addition
+      right = parse_bitwise_and
       left = Expression::BinaryOp.new(left, op, right)
     end
 
     left
   end
 
-  # Parse an addition expression and return a node
-  private def parse_addition : Expression::Base
-    left = parse_multiplication
+  # Parse a bitwise and expression and return a node
+  private def parse_bitwise_and : Expression::Base
+    left = parse_shift
+
+    while match?(Syntax::Ampersand)
+      op = last_token
+      right = parse_shift
+      left = Expression::BinaryOp.new(left, op, right)
+    end
+
+    left
+  end
+
+  # Parse a bitwise shift expression and return a node
+  private def parse_shift : Expression::Base
+    left = parse_additive
+
+    while match?(Syntax::RDoubleArrow) || match?(Syntax::LDoubleArrow)
+      op = last_token
+      right = parse_additive
+      left = Expression::BinaryOp.new(left, op, right)
+    end
+
+    left
+  end
+
+  # Parse an additive expression and return a node
+  private def parse_additive : Expression::Base
+    left = parse_multiplicative
 
     while match?(Syntax::Plus) || match?(Syntax::Minus)
       op = last_token
-      right = parse_multiplication
+      right = parse_multiplicative
       left = Expression::BinaryOp.new(left, op, right)
     end
 
     left
   end
 
-  # Parse a multiplication expression and return a node
-  private def parse_multiplication : Expression::Base
-    left = parse_exponentiation
+  # Parse a multiplicative expression and return a node
+  private def parse_multiplicative : Expression::Base
+    left = parse_exponential
 
     while match?(Syntax::Star) || match?(Syntax::Slash) || match?(Syntax::Percent)
       op = last_token
-      right = parse_exponentiation
+      right = parse_exponential
       left = Expression::BinaryOp.new(left, op, right)
     end
 
     left
   end
 
-  # Parse an exponentiation expression and return a node
-  private def parse_exponentiation : Expression::Base
+  # Parse an exponential expression and return a node
+  private def parse_exponential : Expression::Base
     left = parse_unary
 
     while match?(Syntax::Carat) || match?(Syntax::DotDot)
@@ -631,7 +670,11 @@ class Cosmo::Parser
 
   # Parse a unary expression and return a node
   private def parse_unary : Expression::Base
-    if match?(Syntax::Plus) || match?(Syntax::Minus) || match?(Syntax::PlusPlus) || match?(Syntax::MinusMinus) || match?(Syntax::Bang) || match?(Syntax::Star) || match?(Syntax::Hashtag)
+    if match?(Syntax::Plus) || match?(Syntax::Minus) ||
+      match?(Syntax::PlusPlus) || match?(Syntax::MinusMinus) ||
+      match?(Syntax::Bang) || match?(Syntax::Star) ||
+      match?(Syntax::Hashtag) || match?(Syntax::Tilde)
+
       op = last_token
       operand = parse_unary
       Expression::UnaryOp.new(op, operand)

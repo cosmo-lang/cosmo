@@ -160,7 +160,7 @@ module Cosmo::TypeChecker
         value_type = typedef[0..-3]
         matches = value.is_a?(Array)
         if value.is_a?(Array)
-          value.as(Array).each { |v| matches &= is?(value_type, v, token) }
+          value.as(Array).each { |v| matches &&= is?(value_type, v, token) }
         end
       elsif typedef.includes?("|")
         types = typedef.split("|")
@@ -175,8 +175,8 @@ module Cosmo::TypeChecker
         matches = value.is_a?(Hash)
         if value.is_a?(Hash)
           value.as(Hash).each do |k, v|
-            matches &= is?(key_type, k, token)
-            matches &= is?(value_type, v, token)
+            matches &&= is?(key_type, k, token)
+            matches &&= is?(value_type, v, token)
           end
         end
       elsif typedef.ends_with?("?")

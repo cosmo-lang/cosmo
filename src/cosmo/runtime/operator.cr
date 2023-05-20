@@ -195,6 +195,85 @@ module Cosmo::Operator
     end
   end
 
+  class Bnot < Base
+    def apply(expr : Expression::UnaryOp) : ValueType
+      operand = @interpreter.evaluate(expr.operand)
+      op = "~"
+      return ~operand if operand.is_a?(Int)
+      Logger.report_error("Invalid '#{op}' operand type", operand.class.to_s, expr.operator)
+    end
+  end
+
+  class Bxor < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left)
+      right = @interpreter.evaluate(expr.right)
+      op = "~"
+      if left.is_a?(Int)
+        return left ^ right if right.is_a?(Int)
+      else
+        Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+    end
+  end
+
+  class Bor < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left)
+      right = @interpreter.evaluate(expr.right)
+      op = "|"
+      if left.is_a?(Int)
+        return left | right if right.is_a?(Int)
+      else
+        Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+    end
+  end
+
+  class Band < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left)
+      right = @interpreter.evaluate(expr.right)
+      op = "&"
+      if left.is_a?(Int)
+        return left & right if right.is_a?(Int)
+      else
+        Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+    end
+  end
+
+  class Bshr < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left)
+      right = @interpreter.evaluate(expr.right)
+      op = ">>"
+      if left.is_a?(Int)
+        return left >> right if right.is_a?(Int)
+      else
+        Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+    end
+  end
+
+  class Bshl < Base
+    def apply(expr : Expression::BinaryOp) : ValueType
+      left = @interpreter.evaluate(expr.left)
+      right = @interpreter.evaluate(expr.right)
+      op = "<<"
+      if left.is_a?(Int)
+        return left << right if right.is_a?(Int)
+      else
+        Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+    end
+  end
+
   class PlusAssign < Base
     def apply(expr : Expression::CompoundAssignment | Expression::UnaryOp, op : String = "+=") : ValueType
       name_token = expr.is_a?(Expression::CompoundAssignment) ? expr.name : expr.operand.token
