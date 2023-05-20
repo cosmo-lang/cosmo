@@ -3,7 +3,7 @@ require "./intrinsic/global"
 require "./type"
 
 module Cosmo
-  private alias NonNestableValueType = LiteralType | Range(Int128 | Int64 | Int32 | Int16 | Int8, Int128 | Int64 | Int32 | Int16 | Int8) | Callable | Type
+  private alias NonNestableValueType = LiteralType | Range(Int128 | Int64 | Int32 | Int16 | Int8, Int128 | Int64 | Int32 | Int16 | Int8) | Callable | Class | Type
   alias ValueType = NonNestableValueType | Array(ValueType) | Hash(ValueType, ValueType)
 end
 
@@ -22,6 +22,7 @@ module Cosmo::TypeChecker
     Char => "char",
     Bool => "bool",
     Nil => "none",
+    Class => "class",
     Function => "func",
     PutsIntrinsic => "func",
     Array(Int64) => "int[]",
@@ -48,7 +49,7 @@ module Cosmo::TypeChecker
     Logger.report_error("Type mismatch", "Expected '#{typedef}', got '#{got_type}'", token)
   end
 
-  def get_mapped(t : Class) : String
+  def get_mapped(t : CrystalClass) : String
     unless TYPE_MAP.has_key?(t)
       raise "Unhandled type to map: #{t}"
     end
@@ -58,6 +59,7 @@ module Cosmo::TypeChecker
   def register_intrinsics
     register_type("Range")
     register_type("type")
+    register_type("class")
     register_type("func")
     register_type("bigint")
     register_type("int")
@@ -135,6 +137,8 @@ module Cosmo::TypeChecker
     case typedef
     when "Range"
       value.is_a?(Range)
+    when "class"
+      value.is_a?(Class)
     when "type"
       value.is_a?(Type)
     when "func"

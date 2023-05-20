@@ -127,6 +127,14 @@ class Cosmo::Resolver
     resolve(stmt.value) unless stmt.value.nil?
   end
 
+  def visit_class_def_stmt(stmt : Statement::ClassDef) : Nil
+    declare(stmt.identifier)
+    define(stmt.identifier)
+    resolve(stmt.superclass.not_nil!) unless stmt.superclass.nil?
+    stmt.mixins.each { |mixin| resolve(mixin) }
+    resolve(stmt.body)
+  end
+
   def visit_fn_def_stmt(stmt : Statement::FunctionDef) : Nil
     declare(stmt.identifier)
     define(stmt.identifier)

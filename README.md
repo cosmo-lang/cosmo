@@ -7,7 +7,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 ## Things I Gotta Do
 
 - Enums
-- `case..when` blocks
 - `uint` type
 - Stack trace
 - Package manager
@@ -25,6 +24,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * `$` (this)
 - Better type system
   * casting
+  * `typeof`
   * intersections
 
 ## Things I Might Do

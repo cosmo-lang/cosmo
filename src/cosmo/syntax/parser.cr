@@ -31,6 +31,8 @@ class Cosmo::Parser
   private def parse_statement : Statement::Base
     if at_fn_type?
       parse_fn_def_statement
+    elsif check?(Syntax::Class) || check?(Syntax::Class, 1)
+      parse_class_def_statement
     elsif match?(Syntax::Use)
       parse_use_statement
     elsif match?(Syntax::Throw)
@@ -71,6 +73,35 @@ class Cosmo::Parser
 
     consume(Syntax::RBrace)
     Statement::Block.new(statements)
+  end
+
+  private def parse_class_def_statement : Statement::ClassDef
+    has_visibility = match?(Syntax::Public) || match?(Syntax::ClassVisibility)
+    visibility = get_visibility(last_token.lexeme)
+
+    consume(Syntax::Class)
+    token = last_token
+    consume(Syntax::Identifier)
+    identifier = last_token
+    TypeChecker.register_type(identifier.lexeme)
+
+    # superclass
+    if match?(Syntax::Colon)
+      superclass = parse_primary
+    end
+
+    if check?(Syntax::Comma)
+      Logger.report_error("Invalid class definition", "A class may only have one superclass", current)
+    end
+
+    # mixin
+    if match?(Syntax::Mixin)
+      mixins = comma_separated { parse_primary }
+    end
+
+    body = parse_block
+    mixins ||= [] of Expression::Base
+    Statement::ClassDef.new(identifier, body, visibility, superclass, mixins)
   end
 
   private def parse_when_statement : Statement::When
@@ -294,6 +325,23 @@ class Cosmo::Parser
     callee
   end
 
+  private def get_visibility(lexeme : String?) : Visibility
+    case lexeme
+    when "public"
+      visibility = Visibility::Public
+    when "private"
+      visibility = Visibility::Private
+    when "protected"
+      visibility = Visibility::Protected
+    when "static"
+      visibility = Visibility::Static
+    else
+      visibility = Visibility::Private
+    end
+
+    visibility
+  end
+
   private alias TypeInfo = NamedTuple(
     found_typedef: Bool,
     variable_type: Token?,
@@ -317,19 +365,7 @@ class Cosmo::Parser
       visibility_lexeme = last_token.lexeme
     end
 
-    case visibility_lexeme
-    when "public"
-      visibility = Visibility::Public
-    when "private"
-      visibility = Visibility::Private
-    when "protected"
-      visibility = Visibility::Protected
-    when "static"
-      visibility = Visibility::Static
-    else
-      visibility = Visibility::Private
-    end
-
+    visibility = get_visibility(visibility_lexeme)
     is_const = match?(Syntax::Const) if check_const
     if check?(Syntax::LParen) &&
       token_exists?(1) && (peek.type == Syntax::TypeDef || peek.type == Syntax::Identifier) &&
@@ -449,7 +485,11 @@ class Cosmo::Parser
     peeked = peek(offset + 1)
     next_peeked = token_exists?(offset + 2) ? peek(offset + 2) : nil
 
-    if (cur.type == Syntax::Const && !last.nil? && last.type != Syntax::Const) || cur.type == Syntax::LParen
+    if (cur.type == Syntax::Const && !last.nil? && last.type != Syntax::Const) ||
+      (cur.type == Syntax::Public && !last.nil? && last.type != Syntax::Public) ||
+      (cur.type == Syntax::ClassVisibility && !last.nil? && last.type != Syntax::ClassVisibility) ||
+      cur.type == Syntax::LParen
+
       at_fn_type?(offset: offset + 1) ## skip the token
     else
       return at_fn_type?(offset: offset + 2) if peeked.type == Syntax::LBracket && !next_peeked.nil? && next_peeked.type == Syntax::RBracket
@@ -510,7 +550,7 @@ class Cosmo::Parser
           end
         end
       else
-        Logger.report_error("Expected identifier, got", current.type.to_s, current)
+        Logger.report_error("Expected identifier, got", current.lexeme, current)
       end
     else
       parse_assignment
@@ -829,11 +869,6 @@ class Cosmo::Parser
     expressions
   end
 
-  private def check?(syntax : Syntax) : Bool
-    return false if finished?
-    current.type == syntax
-  end
-
   # Return the current token at the current position
   private def current : Token
     peek 0
@@ -861,9 +896,10 @@ class Cosmo::Parser
     @position >= @tokens.size
   end
 
-  private def check?(syntax : Syntax) : Bool
-    return false if finished?
-    current.type == syntax
+  # Returns whether or not the token at `offset`'s (default current) syntax is `syntax`
+  private def check?(syntax : Syntax, offset : Int32 = 0) : Bool
+    return false unless token_exists?(offset)
+    peek(offset).type == syntax
   end
 
   # Consumes the token if the syntax matches, returns whether or not it was consumed

@@ -49,7 +49,7 @@ class Cosmo::Scope
     visibility : Visibility = Visibility::Private
   ) : ValueType
 
-    TypeChecker.assert(typedef.value.to_s, value, typedef) unless value.nil?
+    TypeChecker.assert(typedef.lexeme, value, typedef) unless value.nil?
     create_variable(typedef, identifier, value, const, visibility)
   end
 

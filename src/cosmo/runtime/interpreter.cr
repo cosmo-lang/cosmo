@@ -1,6 +1,7 @@
 require "../syntax/parser"
 require "./hooked_exceptions"
 require "./function"
+require "./class"
 require "./scope"
 require "./operator"
 require "./type"
@@ -329,6 +330,18 @@ class Cosmo::Interpreter
     else
       execute(stmt.else.not_nil!) unless stmt.else.nil?
     end
+  end
+
+  def visit_class_def_stmt(stmt : Statement::ClassDef) : ValueType
+    _class = Class.new(self, @scope, stmt)
+    typedef = Token.new("class", Syntax::TypeDef, "class", Location.new(@file_path, 0, 0))
+    @scope.declare(
+      typedef,
+      stmt.identifier,
+      _class,
+      const: true,
+      visibility: stmt.visibility
+    )
   end
 
   def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType

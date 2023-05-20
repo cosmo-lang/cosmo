@@ -22,7 +22,10 @@ module Cosmo::Keywords
     "when" => Syntax::When,
     "const" => Syntax::Const,
     "return" => Syntax::Return,
-    "throw" => Syntax::Throw
+    "throw" => Syntax::Throw,
+    "class" => Syntax::Class,
+    "mixin" => Syntax::Mixin,
+    "new" => Syntax::New,
   }
 
   # These cannot be any of the keywords above

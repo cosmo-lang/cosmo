@@ -13,10 +13,10 @@ enum Cosmo::Syntax
   ColonColon; Colon; Dot; DotDot; HyphenArrow;
   FatArrow; This
   LBrace; RBrace; DoubleLBrace; DoubleRBrace;
-  LBracket; RBracket; LParen; RParen
+  LBracket; RBracket; LParen; RParen;
   Comma
   Hashtag
-  New
+  Class; Mixin; New
   Function
   If; Unless
   In; Of
