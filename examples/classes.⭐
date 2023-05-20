@@ -1,0 +1,14 @@
+public class Dog {
+  public string name
+
+  public Dog fn ctor(string name) {
+    $->name = name
+  }
+
+  public void fn woof() {
+    puts($->name + " says woof!")
+  }
+}
+
+Dog fido = new Dog("Fido")
+fido->woof() ## Fido says woof!

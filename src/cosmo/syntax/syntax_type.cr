@@ -15,6 +15,7 @@ enum Cosmo::Syntax
   LBracket; RBracket; LParen; RParen
   Comma
   Hashtag
+  New
   Function
   If; Unless
   In; Of
