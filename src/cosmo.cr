@@ -7,11 +7,8 @@ require "readline"
 module Cosmo
   extend self
 
-  Version = "v" + get_shard["version"].to_s
-
   # Parse options
   @@options = {} of Symbol => Bool
-
   begin
     OptionParser.new do |opts|
       opts.banner = "Thank you for using Cosmo!\nUsage: cosmo [OPTIONS] [FILE]"
