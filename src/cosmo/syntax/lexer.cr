@@ -2,7 +2,7 @@ require "./lexer/token"
 require "./lexer/keywords"
 
 alias LiteralType =
-  Int64 | Int32 | Int16 | Int8 |
+  Int128 | Int64 | Int32 | Int16 | Int8 |
   Float64 | Float32 |
   Bool | String | Char | Nil
 
@@ -295,7 +295,7 @@ class Cosmo::Lexer
       report_error("Unexpected float", "Hex/octal/binary literals must be integers") unless radix == 10
       add_token(Syntax::Float, num_str.to_f64)
     else
-      add_token(Syntax::Integer, num_str.to_i64(radix))
+      add_token(Syntax::Integer, num_str.to_i128(radix))
     end
 
     @position -= 1

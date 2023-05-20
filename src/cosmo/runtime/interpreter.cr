@@ -555,7 +555,7 @@ class Cosmo::Interpreter
     end
   end
 
-  def visit_range_literal_expr(expr : Expression::RangeLiteral) : Range(Int64 | Int32 | Int16 | Int8, Int64 | Int32 | Int16 | Int8)
+  def visit_range_literal_expr(expr : Expression::RangeLiteral) : Range(Int128 | Int64 | Int32 | Int16 | Int8, Int128 | Int64 | Int32 | Int16 | Int8)
     from = evaluate(expr.from)
     to = evaluate(expr.to)
 
@@ -566,7 +566,7 @@ class Cosmo::Interpreter
       Logger.report_error("Invalid right side of range literal", "Ranges can only be of integers, got '#{TypeChecker.get_mapped(to.class)}'", expr.token)
     end
 
-    from..to
+    from .. to
   end
 
   def visit_table_literal_expr(expr : Expression::TableLiteral) : Hash(ValueType, ValueType)

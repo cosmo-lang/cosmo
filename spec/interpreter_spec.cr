@@ -175,8 +175,8 @@ describe Interpreter do
     matrix[1].should be_a Array(ValueType)
 
     sum = 0
-    matrix[0].as(Array(ValueType)).each { |v| sum += v.as Int64 }
-    matrix[1].as(Array(ValueType)).each { |v| sum += v.as Int64 }
+    matrix[0].as(Array(ValueType)).each { |v| sum += v.as Int }
+    matrix[1].as(Array(ValueType)).each { |v| sum += v.as Int }
     sum.should eq 21
 
     result = interpreter.interpret("(string|int)->bool valids = {{yes -> true, [123] -> false}}", "test")

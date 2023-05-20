@@ -750,7 +750,12 @@ class Cosmo::Parser
       parse_table_literal
     when Syntax::Integer
       consume_current
-      Expression::IntLiteral.new(value.as(Int), last_token)
+      value = value.as(Int)
+      if value > Int64::MAX
+        Expression::BigIntLiteral.new(value.to_i128, last_token)
+      else
+        Expression::IntLiteral.new(value.to_i64, last_token)
+      end
     when Syntax::Float
       consume_current
       Expression::FloatLiteral.new(value.as(Float), last_token)

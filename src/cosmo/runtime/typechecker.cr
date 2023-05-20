@@ -3,7 +3,7 @@ require "./intrinsic/global"
 require "./type"
 
 module Cosmo
-  private alias NonNestableValueType = LiteralType | Range(Int64 | Int32 | Int16 | Int8, Int64 | Int32 | Int16 | Int8) | Callable | Type
+  private alias NonNestableValueType = LiteralType | Range(Int128 | Int64 | Int32 | Int16 | Int8, Int128 | Int64 | Int32 | Int16 | Int8) | Callable | Type
   alias ValueType = NonNestableValueType | Array(ValueType) | Hash(ValueType, ValueType)
 end
 
@@ -11,6 +11,7 @@ module Cosmo::TypeChecker
   extend self
 
   TYPE_MAP = {
+    Int128 => "bigint",
     Int64 => "int",
     Int32 => "int",
     Int16 => "int",
@@ -21,8 +22,8 @@ module Cosmo::TypeChecker
     Char => "char",
     Bool => "bool",
     Nil => "none",
-    Function => "fn",
-    PutsIntrinsic => "fn",
+    Function => "func",
+    PutsIntrinsic => "func",
     Array(Int64) => "int[]",
     Array(Int32) => "int[]",
     Array(Int16) => "int[]",
@@ -36,7 +37,7 @@ module Cosmo::TypeChecker
     Array(ValueType) => "any[]",
     Array => "any[]",
     Hash => "Table",
-    Range(Int16 | Int32 | Int64 | Int8, Int16 | Int32 | Int64 | Int8) => "Range"
+    Range(Int128 | Int16 | Int32 | Int64 | Int8, Int128 | Int16 | Int32 | Int64 | Int8) => "Range"
   }
 
   REGISTERED = [] of Type
@@ -58,6 +59,7 @@ module Cosmo::TypeChecker
     register_type("Range")
     register_type("type")
     register_type("func")
+    register_type("bigint")
     register_type("int")
     register_type("float")
     register_type("bool")
@@ -78,7 +80,8 @@ module Cosmo::TypeChecker
 
   def cast(value : T) : ValueType forall T
     value.is_a?(Array) ? cast_array(value)
-      : value.is_a?(Hash) ? cast_hash(value) : value.as ValueType
+      : value.is_a?(Hash) ? cast_hash(value)
+        : value.is_a?(Int128) && value <= Int64::MAX ? value.to_i64 : value.as ValueType
   end
 
   def reset
@@ -136,8 +139,10 @@ module Cosmo::TypeChecker
       value.is_a?(Type)
     when "func"
       value.is_a?(Function) || value.is_a?(IntrinsicFunction)
-    when "int"
+    when "bigint"
       value.is_a?(Int)
+    when "int"
+      value.is_a?(Int64 | Int32 | Int16 | Int8)
     when "float"
       value.is_a?(Float)
     when "bool"

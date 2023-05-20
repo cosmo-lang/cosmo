@@ -464,6 +464,13 @@ module Cosmo::AST::Expression
     end
   end
 
+  class BigIntLiteral < Literal
+    def initialize(@value : Int128, @token); end
+    def to_s(indent : Int = 0)
+      "Literal<#{@value}>"
+    end
+  end
+
   class IntLiteral < Literal
     def initialize(@value : Int64 | Int32 | Int16 | Int8, @token); end
     def to_s(indent : Int = 0)
