@@ -1,6 +1,4 @@
-require "../src/util"
-require "../src/cosmo/logger"
-require "../src/cosmo/runtime/interpreter"
+require "../src/cosmo"
 
 require "stdio"
 require "spec"

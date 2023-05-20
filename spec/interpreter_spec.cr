@@ -29,7 +29,7 @@ describe Interpreter do
   describe "interprets intrinsics:" do
     it "global" do
       result = interpreter.interpret("__version", "test")
-      result.should eq "Cosmo v#{`shards version`}".strip
+      result.should eq "Cosmo #{Version}".strip
 
       result = interpreter.interpret("puts", "test")
       result.should be_a Callable
@@ -80,7 +80,7 @@ describe Interpreter do
       result = interpreter.interpret("0o321", "test")
       result.should eq 209
       result = interpreter.interpret("13582385623792389735", "test")
-      result.should eq 13582385623792389735
+      result.should eq 13582385623792389735_i128
     end
     it "strings/chars" do
       result = interpreter.interpret("\"hello\"", "test")
@@ -150,7 +150,7 @@ describe Interpreter do
     result.should eq -24
 
     result = interpreter.interpret("bigint boba = 13582385623792389735", "test")
-    result.should eq 13582385623792389735
+    result.should eq 13582385623792389735_i128
 
     result = interpreter.interpret("char y = 'h'", "test")
     result.should eq 'h'
