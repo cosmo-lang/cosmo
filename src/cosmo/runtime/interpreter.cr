@@ -16,6 +16,7 @@ class Cosmo::Interpreter
   @locals = {} of Expression::Base => UInt32
   @meta = {} of String => String
   @file_path : String = ""
+  @importable_intrinsics = {} of String => IntrinsicLib
 
   def initialize(
     @output_ast : Bool,
@@ -26,13 +27,12 @@ class Cosmo::Interpreter
     TypeChecker.register_intrinsics
 
     @scope = @globals
-
-
-    MathLib.inject(self)
     declare_intrinsic("func", "puts", PutsIntrinsic.new(self))
 
     version = "Cosmo v#{`shards version`}".strip
     declare_intrinsic("string", "__version", version)
+
+    @importable_intrinsics["math"] = MathLib.new(self)
   end
 
   def declare_intrinsic(type : String, ident : String, value : ValueType)
@@ -199,7 +199,11 @@ class Cosmo::Interpreter
   def visit_use_stmt(stmt : Statement::Use) : Nil
     relative_module_path = stmt.module_path.lexeme
     unless relative_module_path.includes?("/")
-      Logger.report_error("Invalid import", "No package management system implemented yet. If you are trying to import a file path, prepend './' to the path.", stmt.module_path)
+      unless @importable_intrinsics.has_key?(relative_module_path)
+        Logger.report_error("Invalid import", "No package management system implemented yet. If you are trying to import a file path, prepend './' to the path.", stmt.module_path)
+      else
+        @importable_intrinsics[relative_module_path].inject
+      end
     else
       if @file_path == "repl"
         Logger.report_error("Cannot import", "Non-package modules are not supported in the REPL", stmt.module_path)

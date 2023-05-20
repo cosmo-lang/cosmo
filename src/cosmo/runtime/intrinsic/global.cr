@@ -21,6 +21,13 @@ module Cosmo
     end
   end
 
+  abstract class IntrinsicLib
+    def initialize(@i : Interpreter)
+    end
+
+    abstract def inject : Nil
+  end
+
   class PutsIntrinsic < IntrinsicFunction
     def arity : Range(UInt32, UInt32)
       1.to_u..MAX_INTRINSIC_PARAMS.to_u
