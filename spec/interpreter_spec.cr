@@ -79,6 +79,8 @@ describe Interpreter do
       result.should eq 2748
       result = interpreter.interpret("0o321", "test")
       result.should eq 209
+      result = interpreter.interpret("13582385623792389735", "test")
+      result.should eq 13582385623792389735
     end
     it "strings/chars" do
       result = interpreter.interpret("\"hello\"", "test")
@@ -146,6 +148,9 @@ describe Interpreter do
   it "interprets variable declarations" do
     result = interpreter.interpret("int x = 0b11 - 0b11011", "test")
     result.should eq -24
+
+    result = interpreter.interpret("bigint boba = 13582385623792389735", "test")
+    result.should eq 13582385623792389735
 
     result = interpreter.interpret("char y = 'h'", "test")
     result.should eq 'h'
@@ -368,6 +373,8 @@ describe Interpreter do
     it "'is' matching" do
       result = interpreter.interpret("1 is int", "test")
       result.should eq true
+      result = interpreter.interpret("873584728475872334 is bigint", "test")
+      result.should eq true
       result = interpreter.interpret("1 is (int|float)?", "test")
       result.should eq true
       result = interpreter.interpret("'h' is char", "test")
@@ -384,7 +391,7 @@ describe Interpreter do
     it "aliases" do
       result = interpreter.interpret("type MyInt = int; MyInt my_int = 123", "test")
       result.should eq 123
-      result = interpreter.interpret("type Number = int | float; 1.23 is Number", "test")
+      result = interpreter.interpret("type Number = bigint | int | float; 1.23 is Number :& 15 is Number", "test")
       result.should eq true
     end
     it "throws when a mismatch occurs" do
