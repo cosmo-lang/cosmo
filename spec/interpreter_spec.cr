@@ -309,9 +309,9 @@ describe Interpreter do
       "int x = 5",
       "int doubled",
       "if x == 5",
-      " doubled = x * 2",
+      "  doubled = x * 2",
       "else",
-      " doubled = x",
+      "  doubled = x",
       "",
       "doubled"
     ]
@@ -323,9 +323,9 @@ describe Interpreter do
       "int x = 5",
       "int doubled",
       "unless x == 5",
-      " doubled = x * 2",
+      "  doubled = x * 2",
       "else",
-      " doubled = x",
+      "  doubled = x",
       "",
       "doubled"
     ]
@@ -337,7 +337,7 @@ describe Interpreter do
     lines = [
       "int x = 0",
       "while x < 10",
-      " x += 1",
+      "  x += 1",
       "",
       "x"
     ]
@@ -348,8 +348,7 @@ describe Interpreter do
     lines = [
       "int x = 0",
       "until x == 15",
-      " x += 1",
-      "",
+      "  ++x",
       "x"
     ]
 
@@ -361,13 +360,32 @@ describe Interpreter do
       "int[] nums = [1,2,3]",
       "int sum = 0",
       "every int n in nums",
-      " sum += n",
+      "  sum += n",
       "",
       "sum"
     ]
 
     result = interpreter.interpret(lines.join('\n'), "test")
     result.should eq 6
+  end
+  it "interprets case..when statements" do
+    lines = [
+      "string fn does_their_life_suck?(string name) {",
+      "  case name {",
+      "    when \"billy\" => \"oh yeah\"",
+      "    when \"jimbob\" => \"most definitely\"",
+      "    else => \"maybe\"",
+      "  }",
+      "}",
+    ]
+
+    interpreter.interpret(lines.join('\n'), "test")
+    result = interpreter.interpret("does_their_life_suck?(\"billy\")", "test")
+    result.should eq "oh yeah"
+    result = interpreter.interpret("does_their_life_suck?(\"jimbob\")", "test")
+    result.should eq "most definitely"
+    result = interpreter.interpret("does_their_life_suck?(\"beezelbub\")", "test")
+    result.should eq "maybe"
   end
   describe "types:" do
     it "'is' matching" do
