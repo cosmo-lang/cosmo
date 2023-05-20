@@ -2,6 +2,7 @@ require "../logger"
 require "./intrinsic/global"
 require "./type"
 
+private alias CrystalClass = Class
 module Cosmo
   private alias NonNestableValueType = LiteralType | Range(Int128 | Int64 | Int32 | Int16 | Int8, Int128 | Int64 | Int32 | Int16 | Int8) | Callable | Class | Type
   alias ValueType = NonNestableValueType | Array(ValueType) | Hash(ValueType, ValueType)

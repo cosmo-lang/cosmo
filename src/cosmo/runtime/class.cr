@@ -1,4 +1,3 @@
-alias CrystalClass = Class
 class Cosmo::Class
   @interpreter : Interpreter
   @closure : Scope
