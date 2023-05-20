@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::AST::Statement::Every - Cosmo master-dev</title>
+  <title>Cosmo::AST::Statement::ClassDef - Cosmo master-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../../";
   </script>
@@ -246,12 +246,12 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/ClassDef" data-name="cosmo::ast::statement::classdef">
+  <li class=" current" data-id="Cosmo/Cosmo/AST/Statement/ClassDef" data-name="cosmo::ast::statement::classdef">
       <a href="../../../Cosmo/AST/Statement/ClassDef.html">ClassDef</a>
       
     </li>
   
-  <li class=" current" data-id="Cosmo/Cosmo/AST/Statement/Every" data-name="cosmo::ast::statement::every">
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Every" data-name="cosmo::ast::statement::every">
       <a href="../../../Cosmo/AST/Statement/Every.html">Every</a>
       
     </li>
@@ -735,12 +735,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Cosmo::AST::Statement::Every
+  <span class="kind">class</span> Cosmo::AST::Statement::ClassDef
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../Cosmo/AST/Statement/Every.html">Cosmo::AST::Statement::Every</a></li><li class="superclass"><a href="../../../Cosmo/AST/Statement/Base.html">Cosmo::AST::Statement::Base</a></li><li class="superclass"><a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../Cosmo/AST/Statement/ClassDef.html">Cosmo::AST::Statement::ClassDef</a></li><li class="superclass"><a href="../../../Cosmo/AST/Statement/Base.html">Cosmo::AST::Statement::Base</a></li><li class="superclass"><a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -788,7 +788,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28keyword%3ACosmo%3A%3AToken%2Cvar%3ACosmo%3A%3AAST%3A%3AExpression%3A%3AVarDeclaration%2Cenumerable%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%2Cblock%3ACosmo%3A%3AAST%3A%3AStatement%3A%3ABase%29-class-method" class="signature"><strong>.new</strong>(keyword : Cosmo::Token, var : Cosmo::AST::Expression::VarDeclaration, enumerable : Cosmo::AST::Expression::Base, block : Cosmo::AST::Statement::Base)</a>
+        <a href="#new%28identifier%3ACosmo%3A%3AToken%2Cbody%3ACosmo%3A%3AAST%3A%3AStatement%3A%3ABlock%2Cvisibility%2Csuperclass%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%7CNil%2Cmixins%3AArray%28Cosmo%3A%3AAST%3A%3AExpression%3A%3ABase%29%29-class-method" class="signature"><strong>.new</strong>(identifier : Cosmo::Token, body : Cosmo::AST::Statement::Block, visibility, superclass : Cosmo::AST::Expression::Base | Nil, mixins : Array(Cosmo::AST::Expression::Base))</a>
         
       </li>
     
@@ -814,17 +814,24 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#block%3ABase-instance-method" class="signature"><strong>#block</strong> : Base</a>
+        <a href="#body%3ABlock-instance-method" class="signature"><strong>#body</strong> : Block</a>
+        
+          <div class="summary"><p>getter parameters : Array(Expression::Parameter) # generics?</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#enumerable%3AExpression%3A%3ABase-instance-method" class="signature"><strong>#enumerable</strong> : Expression::Base</a>
+        <a href="#identifier%3AToken-instance-method" class="signature"><strong>#identifier</strong> : Token</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#keyword%3AToken-instance-method" class="signature"><strong>#keyword</strong> : Token</a>
+        <a href="#mixins%3AArray%28Expression%3A%3ABase%29-instance-method" class="signature"><strong>#mixins</strong> : Array(Expression::Base)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#superclass%3AExpression%3A%3ABase%7CNil-instance-method" class="signature"><strong>#superclass</strong> : Expression::Base | Nil</a>
         
       </li>
     
@@ -841,7 +848,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#var%3AExpression%3A%3AVarDeclaration-instance-method" class="signature"><strong>#var</strong> : Expression::VarDeclaration</a>
+        <a href="#visibility%3AVisibility-instance-method" class="signature"><strong>#visibility</strong> : Visibility</a>
         
       </li>
     
@@ -963,12 +970,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(keyword:Cosmo::Token,var:Cosmo::AST::Expression::VarDeclaration,enumerable:Cosmo::AST::Expression::Base,block:Cosmo::AST::Statement::Base)-class-method">
+    <div class="entry-detail" id="new(identifier:Cosmo::Token,body:Cosmo::AST::Statement::Block,visibility,superclass:Cosmo::AST::Expression::Base|Nil,mixins:Array(Cosmo::AST::Expression::Base))-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(keyword : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, var : <a href="../../../Cosmo/AST/Expression/VarDeclaration.html">Cosmo::AST::Expression::VarDeclaration</a>, enumerable : <a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a>, block : <a href="../../../Cosmo/AST/Statement/Base.html">Cosmo::AST::Statement::Base</a>)
+        def self.<strong>new</strong>(identifier : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, body : <a href="../../../Cosmo/AST/Statement/Block.html">Cosmo::AST::Statement::Block</a>, visibility, superclass : <a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a> | Nil, mixins : Array(<a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a>))
 
-        <a class="method-permalink" href="#new%28keyword%3ACosmo%3A%3AToken%2Cvar%3ACosmo%3A%3AAST%3A%3AExpression%3A%3AVarDeclaration%2Cenumerable%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%2Cblock%3ACosmo%3A%3AAST%3A%3AStatement%3A%3ABase%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28identifier%3ACosmo%3A%3AToken%2Cbody%3ACosmo%3A%3AAST%3A%3AStatement%3A%3ABlock%2Cvisibility%2Csuperclass%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%7CNil%2Cmixins%3AArray%28Cosmo%3A%3AAST%3A%3AExpression%3A%3ABase%29%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1005,12 +1012,31 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="block:Base-instance-method">
+    <div class="entry-detail" id="body:Block-instance-method">
       <div class="signature">
         
-        def <strong>block</strong> : <a href="../../../Cosmo/AST/Statement/Base.html">Base</a>
+        def <strong>body</strong> : <a href="../../../Cosmo/AST/Statement/Block.html">Block</a>
 
-        <a class="method-permalink" href="#block%3ABase-instance-method">#</a>
+        <a class="method-permalink" href="#body%3ABlock-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>getter parameters : Array(Expression::Parameter) # generics?</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="identifier:Token-instance-method">
+      <div class="signature">
+        
+        def <strong>identifier</strong> : <a href="../../../Cosmo/Token.html">Token</a>
+
+        <a class="method-permalink" href="#identifier%3AToken-instance-method">#</a>
       </div>
       
       <br/>
@@ -1019,12 +1045,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="enumerable:Expression::Base-instance-method">
+    <div class="entry-detail" id="mixins:Array(Expression::Base)-instance-method">
       <div class="signature">
         
-        def <strong>enumerable</strong> : <a href="../../../Cosmo/AST/Expression/Base.html">Expression::Base</a>
+        def <strong>mixins</strong> : Array(<a href="../../../Cosmo/AST/Expression/Base.html">Expression::Base</a>)
 
-        <a class="method-permalink" href="#enumerable%3AExpression%3A%3ABase-instance-method">#</a>
+        <a class="method-permalink" href="#mixins%3AArray%28Expression%3A%3ABase%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1033,12 +1059,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="keyword:Token-instance-method">
+    <div class="entry-detail" id="superclass:Expression::Base|Nil-instance-method">
       <div class="signature">
         
-        def <strong>keyword</strong> : <a href="../../../Cosmo/Token.html">Token</a>
+        def <strong>superclass</strong> : <a href="../../../Cosmo/AST/Expression/Base.html">Expression::Base</a> | Nil
 
-        <a class="method-permalink" href="#keyword%3AToken-instance-method">#</a>
+        <a class="method-permalink" href="#superclass%3AExpression%3A%3ABase%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1064,7 +1090,7 @@
           <p>Returns a nicely readable and concise string representation of this object,
 typically intended for users.</p>
 <p>This method should usually <strong>not</strong> be overridden. It delegates to
-<code><a href="../../../Cosmo/AST/Statement/Every.html#to_s%28indent%3AInt%3D0%29-instance-method">#to_s(IO)</a></code> which can be overridden for custom implementations.</p>
+<code><a href="../../../Cosmo/AST/Statement/ClassDef.html#to_s%28indent%3AInt%3D0%29-instance-method">#to_s(IO)</a></code> which can be overridden for custom implementations.</p>
 <p>Also see <code>#inspect</code>.</p>
         </div>
       
@@ -1088,12 +1114,12 @@ typically intended for users.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="var:Expression::VarDeclaration-instance-method">
+    <div class="entry-detail" id="visibility:Visibility-instance-method">
       <div class="signature">
         
-        def <strong>var</strong> : <a href="../../../Cosmo/AST/Expression/VarDeclaration.html">Expression::VarDeclaration</a>
+        def <strong>visibility</strong> : <a href="../../../Cosmo/AST/Visibility.html">Visibility</a>
 
-        <a class="method-permalink" href="#var%3AExpression%3A%3AVarDeclaration-instance-method">#</a>
+        <a class="method-permalink" href="#visibility%3AVisibility-instance-method">#</a>
       </div>
       
       <br/>
