@@ -48,6 +48,6 @@ class Cosmo::Function < Cosmo::Callable
   end
 
   def to_s : String
-    "<fn ##{@definition.hash}>"
+    "<fn #0x#{@definition.object_id.to_s(16)}>"
   end
 end

@@ -550,7 +550,7 @@ class Cosmo::Parser
           end
         end
       else
-        Logger.report_error("Expected identifier, got", current.lexeme, current)
+        Logger.report_error("Expected identifier, got", token_exists? ? current.lexeme : "EOF", token_exists? ? current : last_token)
       end
     else
       parse_assignment

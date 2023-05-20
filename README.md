@@ -7,6 +7,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 ## Things I Gotta Do
 
 - Enums
+- Throw when defining an already-defined class
 - `uint` type
 - Stack trace
 - Package manager
@@ -19,7 +20,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Classes
   * single inheritance
   * mixins
-  * visibilities
   * methods
   * `$` (this)
 - Better type system

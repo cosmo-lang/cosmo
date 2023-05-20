@@ -9,6 +9,6 @@ class Cosmo::Class
   end
 
   def to_s : String
-    "<class ##{@definition.hash}>"
+    "<class #0x#{@definition.object_id.to_s(16)}>"
   end
 end
