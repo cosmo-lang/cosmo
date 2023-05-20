@@ -266,6 +266,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Throw" data-name="cosmo::ast::statement::throw">
+      <a href="../Cosmo/AST/Statement/Throw.html">Throw</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Unless" data-name="cosmo::ast::statement::unless">
       <a href="../Cosmo/AST/Statement/Unless.html">Unless</a>
       
@@ -273,6 +278,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Until" data-name="cosmo::ast::statement::until">
       <a href="../Cosmo/AST/Statement/Until.html">Until</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Use" data-name="cosmo::ast::statement::use">
+      <a href="../Cosmo/AST/Statement/Use.html">Use</a>
       
     </li>
   
@@ -506,6 +516,36 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Band" data-name="cosmo::operator::band">
+      <a href="../Cosmo/Operator/Band.html">Band</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bnot" data-name="cosmo::operator::bnot">
+      <a href="../Cosmo/Operator/Bnot.html">Bnot</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bor" data-name="cosmo::operator::bor">
+      <a href="../Cosmo/Operator/Bor.html">Bor</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bshl" data-name="cosmo::operator::bshl">
+      <a href="../Cosmo/Operator/Bshl.html">Bshl</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bshr" data-name="cosmo::operator::bshr">
+      <a href="../Cosmo/Operator/Bshr.html">Bshr</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bxor" data-name="cosmo::operator::bxor">
+      <a href="../Cosmo/Operator/Bxor.html">Bxor</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Operator/Div" data-name="cosmo::operator::div">
       <a href="../Cosmo/Operator/Div.html">Div</a>
       
@@ -693,7 +733,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/lexer/location.cr#L1" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/lexer/location.cr#L1" target="_blank">
         cosmo/syntax/lexer/location.cr
       </a>
     
@@ -715,7 +755,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28file_name%3ANil%7CString%2Cline%3AUInt32%2Cposition%3AUInt32%29-class-method" class="signature"><strong>.new</strong>(file_name : Nil | String, line : UInt32, position : UInt32)</a>
+        <a href="#new%28file_name%3AString%2Cline%3AUInt32%2Cposition%3AUInt32%29-class-method" class="signature"><strong>.new</strong>(file_name : String, line : UInt32, position : UInt32)</a>
         
       </li>
     
@@ -746,7 +786,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#file_name%3AString%7CNil-instance-method" class="signature"><strong>#file_name</strong> : String | Nil</a>
+        <a href="#file_name%3AString-instance-method" class="signature"><strong>#file_name</strong> : String</a>
         
       </li>
     
@@ -807,18 +847,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(file_name:Nil|String,line:UInt32,position:UInt32)-class-method">
+    <div class="entry-detail" id="new(file_name:String,line:UInt32,position:UInt32)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(file_name : Nil | String, line : UInt32, position : UInt32)
+        def self.<strong>new</strong>(file_name : String, line : UInt32, position : UInt32)
 
-        <a class="method-permalink" href="#new%28file_name%3ANil%7CString%2Cline%3AUInt32%2Cposition%3AUInt32%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28file_name%3AString%2Cline%3AUInt32%2Cposition%3AUInt32%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/lexer/location.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/lexer/location.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -848,7 +888,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/lexer/location.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/lexer/location.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -864,23 +904,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/lexer/location.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/lexer/location.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="file_name:String|Nil-instance-method">
+    <div class="entry-detail" id="file_name:String-instance-method">
       <div class="signature">
         
-        def <strong>file_name</strong> : String | Nil
+        def <strong>file_name</strong> : String
 
-        <a class="method-permalink" href="#file_name%3AString%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#file_name%3AString-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/lexer/location.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/lexer/location.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -896,7 +936,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/lexer/location.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/lexer/location.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -912,7 +952,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/lexer/location.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/lexer/location.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -941,7 +981,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/lexer/location.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/lexer/location.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>

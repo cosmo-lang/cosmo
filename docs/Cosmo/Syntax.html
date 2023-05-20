@@ -266,6 +266,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Throw" data-name="cosmo::ast::statement::throw">
+      <a href="../Cosmo/AST/Statement/Throw.html">Throw</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Unless" data-name="cosmo::ast::statement::unless">
       <a href="../Cosmo/AST/Statement/Unless.html">Unless</a>
       
@@ -273,6 +278,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Until" data-name="cosmo::ast::statement::until">
       <a href="../Cosmo/AST/Statement/Until.html">Until</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Use" data-name="cosmo::ast::statement::use">
+      <a href="../Cosmo/AST/Statement/Use.html">Use</a>
       
     </li>
   
@@ -506,6 +516,36 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Band" data-name="cosmo::operator::band">
+      <a href="../Cosmo/Operator/Band.html">Band</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bnot" data-name="cosmo::operator::bnot">
+      <a href="../Cosmo/Operator/Bnot.html">Bnot</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bor" data-name="cosmo::operator::bor">
+      <a href="../Cosmo/Operator/Bor.html">Bor</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bshl" data-name="cosmo::operator::bshl">
+      <a href="../Cosmo/Operator/Bshl.html">Bshl</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bshr" data-name="cosmo::operator::bshr">
+      <a href="../Cosmo/Operator/Bshr.html">Bshr</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bxor" data-name="cosmo::operator::bxor">
+      <a href="../Cosmo/Operator/Bxor.html">Bxor</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Operator/Div" data-name="cosmo::operator::div">
       <a href="../Cosmo/Operator/Div.html">Div</a>
       
@@ -691,7 +731,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L1" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L1" target="_blank">
         cosmo/syntax/syntax_type.cr
       </a>
     
@@ -752,288 +792,338 @@
       </dt>
       
     
+      <dt class="entry-const" id="Public">
+        <strong>Public</strong> = <code><span class="n">8</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="ClassVisibility">
+        <strong>ClassVisibility</strong> = <code><span class="n">9</span></code>
+      </dt>
+      
+    
       <dt class="entry-const" id="PlusPlus">
-        <strong>PlusPlus</strong> = <code><span class="n">8</span></code>
+        <strong>PlusPlus</strong> = <code><span class="n">10</span></code>
       </dt>
       
     
       <dt class="entry-const" id="MinusMinus">
-        <strong>MinusMinus</strong> = <code><span class="n">9</span></code>
+        <strong>MinusMinus</strong> = <code><span class="n">11</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Plus">
-        <strong>Plus</strong> = <code><span class="n">10</span></code>
+        <strong>Plus</strong> = <code><span class="n">12</span></code>
       </dt>
       
     
       <dt class="entry-const" id="PlusEqual">
-        <strong>PlusEqual</strong> = <code><span class="n">11</span></code>
+        <strong>PlusEqual</strong> = <code><span class="n">13</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Minus">
-        <strong>Minus</strong> = <code><span class="n">12</span></code>
+        <strong>Minus</strong> = <code><span class="n">14</span></code>
       </dt>
       
     
       <dt class="entry-const" id="MinusEqual">
-        <strong>MinusEqual</strong> = <code><span class="n">13</span></code>
+        <strong>MinusEqual</strong> = <code><span class="n">15</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Star">
-        <strong>Star</strong> = <code><span class="n">14</span></code>
+        <strong>Star</strong> = <code><span class="n">16</span></code>
       </dt>
       
     
       <dt class="entry-const" id="StarEqual">
-        <strong>StarEqual</strong> = <code><span class="n">15</span></code>
+        <strong>StarEqual</strong> = <code><span class="n">17</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Slash">
-        <strong>Slash</strong> = <code><span class="n">16</span></code>
+        <strong>Slash</strong> = <code><span class="n">18</span></code>
       </dt>
       
     
       <dt class="entry-const" id="SlashEqual">
-        <strong>SlashEqual</strong> = <code><span class="n">17</span></code>
+        <strong>SlashEqual</strong> = <code><span class="n">19</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Carat">
-        <strong>Carat</strong> = <code><span class="n">18</span></code>
+        <strong>Carat</strong> = <code><span class="n">20</span></code>
       </dt>
       
     
       <dt class="entry-const" id="CaratEqual">
-        <strong>CaratEqual</strong> = <code><span class="n">19</span></code>
+        <strong>CaratEqual</strong> = <code><span class="n">21</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Percent">
-        <strong>Percent</strong> = <code><span class="n">20</span></code>
+        <strong>Percent</strong> = <code><span class="n">22</span></code>
       </dt>
       
     
       <dt class="entry-const" id="PercentEqual">
-        <strong>PercentEqual</strong> = <code><span class="n">21</span></code>
+        <strong>PercentEqual</strong> = <code><span class="n">23</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Less">
-        <strong>Less</strong> = <code><span class="n">22</span></code>
+        <strong>Less</strong> = <code><span class="n">24</span></code>
       </dt>
       
     
       <dt class="entry-const" id="LessEqual">
-        <strong>LessEqual</strong> = <code><span class="n">23</span></code>
+        <strong>LessEqual</strong> = <code><span class="n">25</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Greater">
-        <strong>Greater</strong> = <code><span class="n">24</span></code>
+        <strong>Greater</strong> = <code><span class="n">26</span></code>
       </dt>
       
     
       <dt class="entry-const" id="GreaterEqual">
-        <strong>GreaterEqual</strong> = <code><span class="n">25</span></code>
+        <strong>GreaterEqual</strong> = <code><span class="n">27</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Equal">
-        <strong>Equal</strong> = <code><span class="n">26</span></code>
+        <strong>Equal</strong> = <code><span class="n">28</span></code>
       </dt>
       
     
       <dt class="entry-const" id="EqualEqual">
-        <strong>EqualEqual</strong> = <code><span class="n">27</span></code>
+        <strong>EqualEqual</strong> = <code><span class="n">29</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Bang">
-        <strong>Bang</strong> = <code><span class="n">28</span></code>
+        <strong>Bang</strong> = <code><span class="n">30</span></code>
       </dt>
       
     
       <dt class="entry-const" id="BangEqual">
-        <strong>BangEqual</strong> = <code><span class="n">29</span></code>
+        <strong>BangEqual</strong> = <code><span class="n">31</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Ampersand">
-        <strong>Ampersand</strong> = <code><span class="n">30</span></code>
+        <strong>Ampersand</strong> = <code><span class="n">32</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Pipe">
-        <strong>Pipe</strong> = <code><span class="n">31</span></code>
+        <strong>Pipe</strong> = <code><span class="n">33</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Tilde">
+        <strong>Tilde</strong> = <code><span class="n">34</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="RDoubleArrow">
+        <strong>RDoubleArrow</strong> = <code><span class="n">35</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="LDoubleArrow">
+        <strong>LDoubleArrow</strong> = <code><span class="n">36</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="ColonAmpersand">
+        <strong>ColonAmpersand</strong> = <code><span class="n">37</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="ColonPipe">
+        <strong>ColonPipe</strong> = <code><span class="n">38</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Question">
-        <strong>Question</strong> = <code><span class="n">32</span></code>
+        <strong>Question</strong> = <code><span class="n">39</span></code>
       </dt>
       
     
       <dt class="entry-const" id="ColonColon">
-        <strong>ColonColon</strong> = <code><span class="n">33</span></code>
+        <strong>ColonColon</strong> = <code><span class="n">40</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Colon">
-        <strong>Colon</strong> = <code><span class="n">34</span></code>
+        <strong>Colon</strong> = <code><span class="n">41</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Dot">
-        <strong>Dot</strong> = <code><span class="n">35</span></code>
+        <strong>Dot</strong> = <code><span class="n">42</span></code>
       </dt>
       
     
       <dt class="entry-const" id="DotDot">
-        <strong>DotDot</strong> = <code><span class="n">36</span></code>
+        <strong>DotDot</strong> = <code><span class="n">43</span></code>
       </dt>
       
     
       <dt class="entry-const" id="HyphenArrow">
-        <strong>HyphenArrow</strong> = <code><span class="n">37</span></code>
+        <strong>HyphenArrow</strong> = <code><span class="n">44</span></code>
       </dt>
       
     
       <dt class="entry-const" id="This">
-        <strong>This</strong> = <code><span class="n">38</span></code>
+        <strong>This</strong> = <code><span class="n">45</span></code>
       </dt>
       
     
       <dt class="entry-const" id="LBrace">
-        <strong>LBrace</strong> = <code><span class="n">39</span></code>
+        <strong>LBrace</strong> = <code><span class="n">46</span></code>
       </dt>
       
     
       <dt class="entry-const" id="RBrace">
-        <strong>RBrace</strong> = <code><span class="n">40</span></code>
+        <strong>RBrace</strong> = <code><span class="n">47</span></code>
       </dt>
       
     
       <dt class="entry-const" id="DoubleLBrace">
-        <strong>DoubleLBrace</strong> = <code><span class="n">41</span></code>
+        <strong>DoubleLBrace</strong> = <code><span class="n">48</span></code>
       </dt>
       
     
       <dt class="entry-const" id="DoubleRBrace">
-        <strong>DoubleRBrace</strong> = <code><span class="n">42</span></code>
+        <strong>DoubleRBrace</strong> = <code><span class="n">49</span></code>
       </dt>
       
     
       <dt class="entry-const" id="LBracket">
-        <strong>LBracket</strong> = <code><span class="n">43</span></code>
+        <strong>LBracket</strong> = <code><span class="n">50</span></code>
       </dt>
       
     
       <dt class="entry-const" id="RBracket">
-        <strong>RBracket</strong> = <code><span class="n">44</span></code>
+        <strong>RBracket</strong> = <code><span class="n">51</span></code>
       </dt>
       
     
       <dt class="entry-const" id="LParen">
-        <strong>LParen</strong> = <code><span class="n">45</span></code>
+        <strong>LParen</strong> = <code><span class="n">52</span></code>
       </dt>
       
     
       <dt class="entry-const" id="RParen">
-        <strong>RParen</strong> = <code><span class="n">46</span></code>
+        <strong>RParen</strong> = <code><span class="n">53</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Comma">
-        <strong>Comma</strong> = <code><span class="n">47</span></code>
+        <strong>Comma</strong> = <code><span class="n">54</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Hashtag">
-        <strong>Hashtag</strong> = <code><span class="n">48</span></code>
+        <strong>Hashtag</strong> = <code><span class="n">55</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Function">
-        <strong>Function</strong> = <code><span class="n">49</span></code>
+        <strong>Function</strong> = <code><span class="n">56</span></code>
       </dt>
       
     
       <dt class="entry-const" id="If">
-        <strong>If</strong> = <code><span class="n">50</span></code>
+        <strong>If</strong> = <code><span class="n">57</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Unless">
-        <strong>Unless</strong> = <code><span class="n">51</span></code>
+        <strong>Unless</strong> = <code><span class="n">58</span></code>
       </dt>
       
     
       <dt class="entry-const" id="In">
-        <strong>In</strong> = <code><span class="n">52</span></code>
+        <strong>In</strong> = <code><span class="n">59</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Of">
-        <strong>Of</strong> = <code><span class="n">53</span></code>
+        <strong>Of</strong> = <code><span class="n">60</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Is">
-        <strong>Is</strong> = <code><span class="n">54</span></code>
+        <strong>Is</strong> = <code><span class="n">61</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Else">
-        <strong>Else</strong> = <code><span class="n">55</span></code>
+        <strong>Else</strong> = <code><span class="n">62</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Every">
-        <strong>Every</strong> = <code><span class="n">56</span></code>
+        <strong>Every</strong> = <code><span class="n">63</span></code>
       </dt>
       
     
       <dt class="entry-const" id="While">
-        <strong>While</strong> = <code><span class="n">57</span></code>
+        <strong>While</strong> = <code><span class="n">64</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Until">
-        <strong>Until</strong> = <code><span class="n">58</span></code>
+        <strong>Until</strong> = <code><span class="n">65</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Const">
-        <strong>Const</strong> = <code><span class="n">59</span></code>
+        <strong>Const</strong> = <code><span class="n">66</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Throw">
+        <strong>Throw</strong> = <code><span class="n">67</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Break">
-        <strong>Break</strong> = <code><span class="n">60</span></code>
+        <strong>Break</strong> = <code><span class="n">68</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Next">
-        <strong>Next</strong> = <code><span class="n">61</span></code>
+        <strong>Next</strong> = <code><span class="n">69</span></code>
       </dt>
       
     
-      <dt class="entry-const" id="Match">
-        <strong>Match</strong> = <code><span class="n">62</span></code>
+      <dt class="entry-const" id="Case">
+        <strong>Case</strong> = <code><span class="n">70</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="When">
+        <strong>When</strong> = <code><span class="n">71</span></code>
       </dt>
       
     
       <dt class="entry-const" id="Return">
-        <strong>Return</strong> = <code><span class="n">63</span></code>
+        <strong>Return</strong> = <code><span class="n">72</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Use">
+        <strong>Use</strong> = <code><span class="n">73</span></code>
       </dt>
       
     
       <dt class="entry-const" id="EOF">
-        <strong>EOF</strong> = <code><span class="n">64</span></code>
+        <strong>EOF</strong> = <code><span class="n">74</span></code>
       </dt>
       
     
@@ -1091,7 +1181,17 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#case%3F-instance-method" class="signature"><strong>#case?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#char%3F-instance-method" class="signature"><strong>#char?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#class_visibility%3F-instance-method" class="signature"><strong>#class_visibility?</strong></a>
         
       </li>
     
@@ -1101,7 +1201,17 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#colon_ampersand%3F-instance-method" class="signature"><strong>#colon_ampersand?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#colon_colon%3F-instance-method" class="signature"><strong>#colon_colon?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#colon_pipe%3F-instance-method" class="signature"><strong>#colon_pipe?</strong></a>
         
       </li>
     
@@ -1226,6 +1336,11 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#l_double_arrow%3F-instance-method" class="signature"><strong>#l_double_arrow?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#l_paren%3F-instance-method" class="signature"><strong>#l_paren?</strong></a>
         
       </li>
@@ -1237,11 +1352,6 @@
     
       <li class="entry-summary">
         <a href="#less_equal%3F-instance-method" class="signature"><strong>#less_equal?</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#match%3F-instance-method" class="signature"><strong>#match?</strong></a>
         
       </li>
     
@@ -1306,6 +1416,11 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#public%3F-instance-method" class="signature"><strong>#public?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#question%3F-instance-method" class="signature"><strong>#question?</strong></a>
         
       </li>
@@ -1317,6 +1432,11 @@
     
       <li class="entry-summary">
         <a href="#r_bracket%3F-instance-method" class="signature"><strong>#r_bracket?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#r_double_arrow%3F-instance-method" class="signature"><strong>#r_double_arrow?</strong></a>
         
       </li>
     
@@ -1361,6 +1481,16 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#throw%3F-instance-method" class="signature"><strong>#throw?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tilde%3F-instance-method" class="signature"><strong>#tilde?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#type_def%3F-instance-method" class="signature"><strong>#type_def?</strong></a>
         
       </li>
@@ -1372,6 +1502,16 @@
     
       <li class="entry-summary">
         <a href="#until%3F-instance-method" class="signature"><strong>#until?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#use%3F-instance-method" class="signature"><strong>#use?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#when%3F-instance-method" class="signature"><strong>#when?</strong></a>
         
       </li>
     
@@ -1455,7 +1595,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1471,7 +1611,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1487,7 +1627,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1503,7 +1643,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1519,7 +1659,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1535,7 +1675,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1551,7 +1691,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="case?-instance-method">
+      <div class="signature">
+        
+        def <strong>case?</strong>
+
+        <a class="method-permalink" href="#case%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L29" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1567,7 +1723,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="class_visibility?-instance-method">
+      <div class="signature">
+        
+        def <strong>class_visibility?</strong>
+
+        <a class="method-permalink" href="#class_visibility%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1583,7 +1755,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="colon_ampersand?-instance-method">
+      <div class="signature">
+        
+        def <strong>colon_ampersand?</strong>
+
+        <a class="method-permalink" href="#colon_ampersand%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1599,7 +1787,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="colon_pipe?-instance-method">
+      <div class="signature">
+        
+        def <strong>colon_pipe?</strong>
+
+        <a class="method-permalink" href="#colon_pipe%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1615,7 +1819,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1631,7 +1835,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1647,7 +1851,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1663,7 +1867,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1679,7 +1883,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1695,7 +1899,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1711,7 +1915,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1727,7 +1931,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1743,7 +1947,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1759,7 +1963,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1775,7 +1979,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1791,7 +1995,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1807,7 +2011,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1823,7 +2027,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1839,7 +2043,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1855,7 +2059,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1871,7 +2075,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1887,7 +2091,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1903,7 +2107,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1919,7 +2123,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1935,7 +2139,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1951,7 +2155,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1967,7 +2171,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1983,7 +2187,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="l_double_arrow?-instance-method">
+      <div class="signature">
+        
+        def <strong>l_double_arrow?</strong>
+
+        <a class="method-permalink" href="#l_double_arrow%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1999,7 +2219,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2015,7 +2235,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2031,23 +2251,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L9" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="match?-instance-method">
-      <div class="signature">
-        
-        def <strong>match?</strong>
-
-        <a class="method-permalink" href="#match%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2063,7 +2267,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2079,7 +2283,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2095,7 +2299,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2111,7 +2315,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2127,7 +2331,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2143,7 +2347,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2159,7 +2363,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2175,7 +2379,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2191,7 +2395,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2207,7 +2411,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2223,7 +2427,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2239,7 +2443,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="public?-instance-method">
+      <div class="signature">
+        
+        def <strong>public?</strong>
+
+        <a class="method-permalink" href="#public%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2255,7 +2475,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2271,7 +2491,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2287,7 +2507,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="r_double_arrow?-instance-method">
+      <div class="signature">
+        
+        def <strong>r_double_arrow?</strong>
+
+        <a class="method-permalink" href="#r_double_arrow%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2303,7 +2539,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2319,7 +2555,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L28" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2335,7 +2571,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2351,7 +2587,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2367,7 +2603,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2383,7 +2619,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2399,7 +2635,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2415,7 +2651,39 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="throw?-instance-method">
+      <div class="signature">
+        
+        def <strong>throw?</strong>
+
+        <a class="method-permalink" href="#throw%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tilde?-instance-method">
+      <div class="signature">
+        
+        def <strong>tilde?</strong>
+
+        <a class="method-permalink" href="#tilde%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2431,7 +2699,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2447,7 +2715,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2463,7 +2731,39 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="use?-instance-method">
+      <div class="signature">
+        
+        def <strong>use?</strong>
+
+        <a class="method-permalink" href="#use%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L32" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="when?-instance-method">
+      <div class="signature">
+        
+        def <strong>when?</strong>
+
+        <a class="method-permalink" href="#when%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L30" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2479,7 +2779,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/syntax_type.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/syntax_type.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>

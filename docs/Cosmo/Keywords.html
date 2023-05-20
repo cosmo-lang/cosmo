@@ -266,6 +266,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Throw" data-name="cosmo::ast::statement::throw">
+      <a href="../Cosmo/AST/Statement/Throw.html">Throw</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Unless" data-name="cosmo::ast::statement::unless">
       <a href="../Cosmo/AST/Statement/Unless.html">Unless</a>
       
@@ -273,6 +278,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Until" data-name="cosmo::ast::statement::until">
       <a href="../Cosmo/AST/Statement/Until.html">Until</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Use" data-name="cosmo::ast::statement::use">
+      <a href="../Cosmo/AST/Statement/Use.html">Use</a>
       
     </li>
   
@@ -506,6 +516,36 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Band" data-name="cosmo::operator::band">
+      <a href="../Cosmo/Operator/Band.html">Band</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bnot" data-name="cosmo::operator::bnot">
+      <a href="../Cosmo/Operator/Bnot.html">Bnot</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bor" data-name="cosmo::operator::bor">
+      <a href="../Cosmo/Operator/Bor.html">Bor</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bshl" data-name="cosmo::operator::bshl">
+      <a href="../Cosmo/Operator/Bshl.html">Bshl</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bshr" data-name="cosmo::operator::bshr">
+      <a href="../Cosmo/Operator/Bshr.html">Bshr</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bxor" data-name="cosmo::operator::bxor">
+      <a href="../Cosmo/Operator/Bxor.html">Bxor</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Operator/Div" data-name="cosmo::operator::div">
       <a href="../Cosmo/Operator/Div.html">Div</a>
       
@@ -691,7 +731,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/lexer/keywords.cr#L3" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/lexer/keywords.cr#L3" target="_blank">
         cosmo/syntax/lexer/keywords.cr
       </a>
     
@@ -712,8 +752,13 @@
   
   <dl>
     
+      <dt class="entry-const" id="CLASS_VISIBILITY_KEYWORDS">
+        <strong>CLASS_VISIBILITY_KEYWORDS</strong> = <code>[<span class="s">&quot;protected&quot;</span>, <span class="s">&quot;static&quot;</span>]</code>
+      </dt>
+      
+    
       <dt class="entry-const" id="KEYWORDS">
-        <strong>KEYWORDS</strong> = <code>{<span class="s">&quot;true&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Boolean</span>, <span class="s">&quot;false&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Boolean</span>, <span class="s">&quot;none&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">None</span>, <span class="s">&quot;fn&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Function</span>, <span class="s">&quot;if&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">If</span>, <span class="s">&quot;unless&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Unless</span>, <span class="s">&quot;in&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">In</span>, <span class="s">&quot;of&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Of</span>, <span class="s">&quot;is&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Is</span>, <span class="s">&quot;else&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Else</span>, <span class="s">&quot;every&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Every</span>, <span class="s">&quot;while&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">While</span>, <span class="s">&quot;until&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Until</span>, <span class="s">&quot;break&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Break</span>, <span class="s">&quot;next&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Next</span>, <span class="s">&quot;match&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Match</span>, <span class="s">&quot;const&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Const</span>, <span class="s">&quot;return&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Return</span>}</code>
+        <strong>KEYWORDS</strong> = <code>{<span class="s">&quot;true&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Boolean</span>, <span class="s">&quot;false&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Boolean</span>, <span class="s">&quot;none&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">None</span>, <span class="s">&quot;fn&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Function</span>, <span class="s">&quot;if&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">If</span>, <span class="s">&quot;unless&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Unless</span>, <span class="s">&quot;in&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">In</span>, <span class="s">&quot;of&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Of</span>, <span class="s">&quot;is&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Is</span>, <span class="s">&quot;else&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Else</span>, <span class="s">&quot;every&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Every</span>, <span class="s">&quot;while&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">While</span>, <span class="s">&quot;until&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Until</span>, <span class="s">&quot;break&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Break</span>, <span class="s">&quot;next&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Next</span>, <span class="s">&quot;use&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Use</span>, <span class="s">&quot;case&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Case</span>, <span class="s">&quot;when&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">When</span>, <span class="s">&quot;const&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Const</span>, <span class="s">&quot;return&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Return</span>, <span class="s">&quot;throw&quot;</span> <span class="o">=&gt;</span> <span class="t">Syntax</span><span class="t">::</span><span class="t">Throw</span>}</code>
       </dt>
       
     
@@ -741,6 +786,13 @@
     Class Method Summary
   </h2>
   <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#class_visibility%3F%28s%3AString%29-class-method" class="signature"><strong>.class_visibility?</strong>(s : String)</a>
+        
+          <div class="summary"><p>Returns whether or not <code>s</code> is a class vibility keyword</p></div>
+        
+      </li>
     
       <li class="entry-summary">
         <a href="#get_syntax%28s%3AString%29%3ASyntax-class-method" class="signature"><strong>.get_syntax</strong>(s : String) : Syntax</a>
@@ -787,6 +839,27 @@
     Class Method Detail
   </h2>
   
+    <div class="entry-detail" id="class_visibility?(s:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>class_visibility?</strong>(s : String)
+
+        <a class="method-permalink" href="#class_visibility%3F%28s%3AString%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns whether or not <code>s</code> is a class vibility keyword</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/lexer/keywords.cr#L33" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="get_syntax(s:String):Syntax-class-method">
       <div class="signature">
         
@@ -803,7 +876,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/lexer/keywords.cr#L39" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/lexer/keywords.cr#L48" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -824,7 +897,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/lexer/keywords.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/lexer/keywords.cr#L43" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -845,7 +918,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/syntax/lexer/keywords.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/syntax/lexer/keywords.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -266,6 +266,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Throw" data-name="cosmo::ast::statement::throw">
+      <a href="../Cosmo/AST/Statement/Throw.html">Throw</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Unless" data-name="cosmo::ast::statement::unless">
       <a href="../Cosmo/AST/Statement/Unless.html">Unless</a>
       
@@ -273,6 +278,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Until" data-name="cosmo::ast::statement::until">
       <a href="../Cosmo/AST/Statement/Until.html">Until</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Use" data-name="cosmo::ast::statement::use">
+      <a href="../Cosmo/AST/Statement/Use.html">Use</a>
       
     </li>
   
@@ -506,6 +516,36 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Band" data-name="cosmo::operator::band">
+      <a href="../Cosmo/Operator/Band.html">Band</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bnot" data-name="cosmo::operator::bnot">
+      <a href="../Cosmo/Operator/Bnot.html">Bnot</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bor" data-name="cosmo::operator::bor">
+      <a href="../Cosmo/Operator/Bor.html">Bor</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bshl" data-name="cosmo::operator::bshl">
+      <a href="../Cosmo/Operator/Bshl.html">Bshl</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bshr" data-name="cosmo::operator::bshr">
+      <a href="../Cosmo/Operator/Bshr.html">Bshr</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bxor" data-name="cosmo::operator::bxor">
+      <a href="../Cosmo/Operator/Bxor.html">Bxor</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Operator/Div" data-name="cosmo::operator::div">
       <a href="../Cosmo/Operator/Div.html">Div</a>
       
@@ -705,7 +745,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/logger.cr#L3" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/logger.cr#L3" target="_blank">
         cosmo/logger.cr
       </a>
     
@@ -736,7 +776,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#report_error%28error_type%3AString%2Cmessage%3AString%2Cline%3AUInt32%2Cpos%3AUInt32%29%3AException-instance-method" class="signature"><strong>#report_error</strong>(error_type : String, message : String, line : UInt32, pos : UInt32) : Exception</a>
+        <a href="#report_error%28error_type%3AString%2Cmessage%3AString%2Cline%3AUInt32%2Cpos%3AUInt32%2Cfile_path%3AString%29%3AException-instance-method" class="signature"><strong>#report_error</strong>(error_type : String, message : String, line : UInt32, pos : UInt32, file_path : String) : Exception</a>
         
       </li>
     
@@ -785,23 +825,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/logger.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/logger.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="report_error(error_type:String,message:String,line:UInt32,pos:UInt32):Exception-instance-method">
+    <div class="entry-detail" id="report_error(error_type:String,message:String,line:UInt32,pos:UInt32,file_path:String):Exception-instance-method">
       <div class="signature">
         
-        def <strong>report_error</strong>(error_type : String, message : String, line : UInt32, pos : UInt32) : Exception
+        def <strong>report_error</strong>(error_type : String, message : String, line : UInt32, pos : UInt32, file_path : String) : Exception
 
-        <a class="method-permalink" href="#report_error%28error_type%3AString%2Cmessage%3AString%2Cline%3AUInt32%2Cpos%3AUInt32%29%3AException-instance-method">#</a>
+        <a class="method-permalink" href="#report_error%28error_type%3AString%2Cmessage%3AString%2Cline%3AUInt32%2Cpos%3AUInt32%2Cfile_path%3AString%29%3AException-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/logger.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/logger.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -817,7 +857,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/logger.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/logger.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -833,7 +873,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/6d3bf2cefbc06dbe0f24abb18d0d28249ec34a5c/src/cosmo/logger.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/2c5b4a9149c55958475fa625f0109b0af76ff77c/src/cosmo/logger.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
