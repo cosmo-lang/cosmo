@@ -261,14 +261,11 @@ class Cosmo::Interpreter
         end
       end
 
-      if condition
-        execute(when_stmt.block)
-      else
-        go_to_else = true
-      end
+      return execute(when_stmt.block) if condition
+      go_to_else = true
     end
 
-    execute(stmt.else.not_nil!) if !stmt.else.nil? && go_to_else
+    return execute(stmt.else.not_nil!) if !stmt.else.nil? && go_to_else
   end
 
   def visit_throw_stmt(stmt : Statement::Throw) : Nil

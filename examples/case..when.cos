@@ -9,3 +9,15 @@ case my_num { ## integer
   when float => puts("fraction")
   when int, bigint => puts("integer")
 }
+
+string fn does_their_life_suck?(string name) {
+  case name {
+    when "billy" => "oh yeah"
+    when "jimbob" => "most definitely"
+    else => "maybe"
+  }
+}
+
+puts(does_their_life_suck?("billy")) ## oh yeah
+puts(does_their_life_suck?("jimbob")) ## most definitely
+puts(does_their_life_suck?("beezelbub")) ## maybe
