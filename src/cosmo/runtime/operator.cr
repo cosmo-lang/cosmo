@@ -267,6 +267,9 @@ module Cosmo::Operator
       op = "<<"
       if left.is_a?(Int)
         return left << right if right.is_a?(Int)
+      elsif left.is_a?(Array)
+        left = @interpreter.add_object_value(expr.operator, left, left.size, right)
+        return @interpreter.scope.assign(expr.token, left)
       else
         Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
       end
