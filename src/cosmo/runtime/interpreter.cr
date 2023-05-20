@@ -32,7 +32,12 @@ class Cosmo::Interpreter
     version = "Cosmo v#{`shards version`}".strip
     declare_intrinsic("string", "__version", version)
 
-    @importable_intrinsics["math"] = MathLib.new(self)
+    declare_importable("math", MathLib.new(self))
+    declare_importable("http", HttpLib.new(self))
+  end
+
+  private def declare_importable(name : String, library : IntrinsicLib)
+    @importable_intrinsics[name] = library
   end
 
   def declare_intrinsic(type : String, ident : String, value : ValueType)
