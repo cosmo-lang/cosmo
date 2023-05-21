@@ -9,13 +9,14 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Enums
 - Throw when defining an already-defined class
 - `uint` type
+- Allow "!" character identifiers for macros
 - Stack trace
 - Package manager
 - Performance boosts lol
 - Multiple assignment
 - Somehow typecheck blocks before execution
 - Fix weird expression parsing (`[0].123` evaluates to 0.123??)
-- Literal wrapper classes (vector, table)
+- Literal wrapper classes (vector, table) for utility methods (filter, map, etc)
 - Interfaces
 - Classes
   * single inheritance
@@ -23,12 +24,14 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * methods
   * `$` (this)
 - Better type system
+  * generics
   * casting
   * `typeof`
   * intersections
 
 ## Things I Might Do
 
+- Make declarations immutable by default and replace `const` with `mut`
 - Make into a VM or compiler
 - C bindings
 
