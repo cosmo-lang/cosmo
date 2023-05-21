@@ -1,0 +1,30 @@
+bool fn diagonally_dominant?(int[][] matrix) {
+  bool dominant = true
+  int i = 0
+
+  every int[] row in matrix {
+    if matrix[i][i] == none
+      throw "Matrix must be square."
+
+    int main_diagonal = +matrix[i][i]
+    int other_sum = 0
+    every int j in 0..(#row - 1) {
+      const int n = +row[j]
+      if n == main_diagonal
+        next
+
+      other_sum += n
+    }
+
+    dominant :&= main_diagonal > other_sum
+    ++i
+  }
+
+  dominant
+}
+
+puts(diagonally_dominant?([
+  [10, 3, 6],
+  [2, -9, -6],
+  [1, -1, 4]
+])) ## true
