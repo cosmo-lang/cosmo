@@ -7,7 +7,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 ## Things I Gotta Do
 
 - Enums
-- Make "?" character exclusive to function identifiers
 - Throw when defining an already-defined class
 - `uint` type
 - Stack trace

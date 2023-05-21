@@ -529,6 +529,10 @@ class Cosmo::Parser
 
       if match?(Syntax::Identifier)
         variable_name = last_token
+        if variable_name.lexeme.ends_with?("?")
+          Logger.report_error("Invalid identifier '#{variable_name.lexeme}'", "Only function identifiers may include a '?' character", variable_name)
+        end
+
         identifier = Expression::Var.new(variable_name)
         if typedef.value == "type"
           parse_type_alias(typedef, identifier)
