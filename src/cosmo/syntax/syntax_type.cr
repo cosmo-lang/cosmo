@@ -9,8 +9,8 @@ enum Cosmo::Syntax
   Less; LessEqual; Greater; GreaterEqual
   Equal; EqualEqual; Bang; BangEqual
   Ampersand; Pipe; Tilde; RDoubleArrow; LDoubleArrow
-  ColonAmpersand; ColonPipe;
-  ColonAmpersandEqual; ColonPipeEqual;
+  AmpersandColon; PipeColon;
+  AmpersandColonEqual; PipeColonEqual;
   Question
   ColonColon; Colon; Dot; DotDot; HyphenArrow;
   FatArrow; This

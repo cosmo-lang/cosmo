@@ -92,17 +92,11 @@ class Cosmo::Lexer
     when ":"
       if match_char?(":")
         add_token(Syntax::ColonColon, nil)
-      elsif match_char?("&")
-        if match_char?("=")
-          add_token(Syntax::ColonAmpersandEqual, nil)
-        else
-          add_token(Syntax::ColonAmpersand, nil)
-        end
       elsif match_char?("|")
         if match_char?("=")
-          add_token(Syntax::ColonPipeEqual, nil)
+          add_token(Syntax::PipeColonEqual, nil)
         else
-          add_token(Syntax::ColonPipe, nil)
+          add_token(Syntax::PipeColon, nil)
         end
       else
         add_token(Syntax::Colon, nil)
@@ -150,9 +144,25 @@ class Cosmo::Lexer
         add_token(Syntax::Percent, nil)
       end
     when "&"
-      add_token(Syntax::Ampersand, nil)
+      if match_char?(":")
+        if match_char?("=")
+          add_token(Syntax::AmpersandColonEqual, nil)
+        else
+          add_token(Syntax::AmpersandColon, nil)
+        end
+      else
+        add_token(Syntax::Ampersand, nil)
+      end
     when "|"
-      add_token(Syntax::Pipe, nil)
+      if match_char?(":")
+        if match_char?("=")
+          add_token(Syntax::PipeColonEqual, nil)
+        else
+          add_token(Syntax::PipeColon, nil)
+        end
+      else
+        add_token(Syntax::Pipe, nil)
+      end
     when "?"
       add_token(Syntax::Question, nil)
     when "!"

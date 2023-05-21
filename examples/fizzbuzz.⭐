@@ -1,5 +1,5 @@
 every int n in 1..100
-  if n % 3 == 0 :& n % 5 == 0
+  if n % 3 == 0 &: n % 5 == 0
     puts("FizzBuzz")
   else if n % 3 == 0
     puts("Fizz")

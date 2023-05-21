@@ -409,7 +409,7 @@ describe Interpreter do
     it "aliases" do
       result = interpreter.interpret("type MyInt = int; MyInt my_int = 123", "test")
       result.should eq 123
-      result = interpreter.interpret("type Number = bigint | int | float; 1.23 is Number :& 15 is Number", "test")
+      result = interpreter.interpret("type Number = bigint | int | float; 1.23 is Number &: 15 is Number", "test")
       result.should eq true
     end
     it "throws when a mismatch occurs" do

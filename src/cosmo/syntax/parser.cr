@@ -583,7 +583,7 @@ class Cosmo::Parser
   private def parse_compound_assignment : Expression::Base
     left = parse_logical_or
 
-    if match?(Syntax::ColonAmpersandEqual) || match?(Syntax::ColonPipeEqual) ||
+    if match?(Syntax::AmpersandColonEqual) || match?(Syntax::PipeColonEqual) ||
       match?(Syntax::CaratEqual) ||
       match?(Syntax::StarEqual) || match?(Syntax::SlashEqual) || match?(Syntax::PercentEqual) ||
       match?(Syntax::PlusEqual) || match?(Syntax::MinusEqual)
@@ -607,7 +607,7 @@ class Cosmo::Parser
   private def parse_logical_or : Expression::Base
     left = parse_logical_and
 
-    while match?(Syntax::ColonPipe)
+    while match?(Syntax::PipeColon)
       op = last_token
       right = parse_logical_and
       left = Expression::BinaryOp.new(left, op, right)
@@ -620,7 +620,7 @@ class Cosmo::Parser
   private def parse_logical_and : Expression::Base
     left = parse_comparison
 
-    while match?(Syntax::ColonAmpersand)
+    while match?(Syntax::AmpersandColon)
       op = last_token
       right = parse_comparison
       left = Expression::BinaryOp.new(left, op, right)
