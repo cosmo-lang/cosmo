@@ -747,7 +747,8 @@ class Cosmo::Parser
     if match?(Syntax::Plus) || match?(Syntax::Minus) ||
       match?(Syntax::PlusPlus) || match?(Syntax::MinusMinus) ||
       match?(Syntax::Bang) || match?(Syntax::Star) ||
-      match?(Syntax::Hashtag) || match?(Syntax::Tilde)
+      match?(Syntax::Hashtag) || match?(Syntax::Tilde) ||
+      match?(Syntax::New)
 
       op = last_token
       operand = parse_unary
@@ -767,6 +768,14 @@ class Cosmo::Parser
       ident = last_token
       callee = Expression::Var.new(ident)
       parse_after(callee)
+    elsif match?(Syntax::New)
+      token = last_token
+      callee = parse_primary
+      unless callee.is_a?(Expression::Var) || callee.is_a?(Expression::FunctionCall)
+        Logger.report_error("Expected class name, got", callee.token.lexeme, callee.token)
+      end
+
+      Expression::New.new(token, callee)
     else
       parse_literal
     end

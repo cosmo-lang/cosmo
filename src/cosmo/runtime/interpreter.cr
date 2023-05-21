@@ -390,6 +390,10 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_new_expr(expr : Expression::New) : Hash
+    ## TODO: this
+  end
+
   def visit_is_expr(expr : Expression::Is) : Bool
     value = evaluate(expr.value)
     TypeChecker.is?(expr.type.name.lexeme, value, expr.token)

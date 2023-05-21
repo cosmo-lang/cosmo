@@ -4,7 +4,11 @@ class Cosmo::Class
   getter definition : AST::Statement::ClassDef
 
   def initialize(@interpreter, @closure, @definition)
-    # TODO: create() method -> assign public members to a hash
+    # TODO: construct() method -> assign public members to a hash
+  end
+
+  def construct()
+
   end
 
   def to_s : String

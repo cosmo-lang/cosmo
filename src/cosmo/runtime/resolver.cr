@@ -178,6 +178,10 @@ class Cosmo::Resolver
     define(expr.token)
   end
 
+  def visit_new_expr(expr : Expression::New) : Nil
+    resolve(expr.operand)
+  end
+
   def visit_fn_call_expr(expr : Expression::FunctionCall) : Nil
     resolve(expr.callee)
     expr.arguments.each { |arg| resolve(arg) }
