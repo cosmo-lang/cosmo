@@ -332,7 +332,7 @@ module Cosmo::Operator
 
   class AndAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
-      expr.token.type = Syntax::ColonAmpersand
+      expr.token.type = Syntax::AmpersandColon
       expr.token.lexeme = ":&"
 
       binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
@@ -345,7 +345,7 @@ module Cosmo::Operator
 
   class OrAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
-      expr.token.type = Syntax::ColonPipe
+      expr.token.type = Syntax::PipeColon
       expr.token.lexeme = ":|"
 
       binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
