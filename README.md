@@ -14,6 +14,9 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Stack trace
 - Package manager
 - Performance boosts lol
+  * Lexer
+  * Parser
+  * Interpreter (!!)
 - Multiple assignment
 - Somehow typecheck blocks before execution
 - Fix weird expression parsing (`[0].123` evaluates to 0.123??)

@@ -390,7 +390,7 @@ class Cosmo::Interpreter
     end
   end
 
-  def visit_new_expr(expr : Expression::New) : Hash
+  def visit_new_expr(expr : Expression::New) #: Hash
     ## TODO: this
   end
 

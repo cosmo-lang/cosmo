@@ -12,7 +12,7 @@ class Cosmo::Lexer
   @position : UInt32 = 0
   @char_pos : UInt32 = 0
   @tokens = [] of Token
-  @current_lexeme : String = ""
+  @current_lexeme = String::Builder.new
 
   def initialize(@source : String, @file_path : String, @run_benchmarks : Bool)
   end
@@ -33,7 +33,8 @@ class Cosmo::Lexer
 
   private def lex
     char = current_char
-    @current_lexeme += char
+    @current_lexeme.write(char.to_slice)
+    return skip_whitespace if char.blank?
 
     case char
     when "."
@@ -230,7 +231,7 @@ class Cosmo::Lexer
     return false unless char_exists?(1)
     return false unless peek == expected
     advance
-    @current_lexeme += current_char
+    @current_lexeme.write(current_char.to_slice)
     true
   end
 
@@ -251,8 +252,8 @@ class Cosmo::Lexer
 
   private def add_token(syntax : Syntax, value : LiteralType)
     location = Location.new(@file_path, @line, @char_pos + 1)
-    @tokens << Token.new(@current_lexeme, syntax, value, location)
-    @current_lexeme = ""
+    @tokens << Token.new(@current_lexeme.to_s, syntax, value, location)
+    @current_lexeme = String::Builder.new
   end
 
   private def is_base?(char : String, radix : Int) : Bool
@@ -264,7 +265,7 @@ class Cosmo::Lexer
   end
 
   private def skip_comments(multiline : Bool)
-    @current_lexeme = ""
+    @current_lexeme = String::Builder.new
     advance
     until end_of_comment(multiline, @line)
       advance
@@ -278,7 +279,7 @@ class Cosmo::Lexer
   end
 
   private def skip_whitespace
-    @current_lexeme = ""
+    @current_lexeme = String::Builder.new
     until finished? || !current_char.blank?
       advance
     end
@@ -310,7 +311,7 @@ class Cosmo::Lexer
       num_str += advance.to_s
     end
 
-    @current_lexeme = num_str
+    @current_lexeme = String::Builder.new(num_str)
     if decimal_used
       report_error("Unexpected float", "Hex/octal/binary literals must be integers") unless radix == 10
       add_token(Syntax::Float, num_str.to_f64)
@@ -328,7 +329,7 @@ class Cosmo::Lexer
       res_str += advance.to_s
     end
 
-    @current_lexeme = res_str
+    @current_lexeme = String::Builder.new(res_str)
     add_token(Syntax::String, res_str)
   end
 
@@ -343,7 +344,7 @@ class Cosmo::Lexer
       end
     end
 
-    @current_lexeme = res_str
+    @current_lexeme = String::Builder.new(res_str)
     add_token(Syntax::Char, res_str.chars.first)
   end
 
@@ -362,7 +363,7 @@ class Cosmo::Lexer
     end
     ident_str = ident_str.strip
 
-    @current_lexeme = ident_str
+    @current_lexeme = String::Builder.new(ident_str)
     if Keywords.keyword?(ident_str)
       syntax_type = Keywords.get_syntax(ident_str)
       value = true if ident_str == "true"
