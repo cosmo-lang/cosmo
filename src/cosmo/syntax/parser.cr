@@ -485,9 +485,9 @@ class Cosmo::Parser
     peeked = peek(offset + 1)
     next_peeked = token_exists?(offset + 2) ? peek(offset + 2) : nil
 
-    if (cur.type == Syntax::Const && !last.nil? && last.type != Syntax::Const) ||
-      (cur.type == Syntax::Public && !last.nil? && last.type != Syntax::Public) ||
-      (cur.type == Syntax::ClassVisibility && !last.nil? && last.type != Syntax::ClassVisibility) ||
+    if cur.type == Syntax::Const ||
+      cur.type == Syntax::Public ||
+      cur.type == Syntax::ClassVisibility ||
       cur.type == Syntax::LParen
 
       at_fn_type?(offset: offset + 1) ## skip the token

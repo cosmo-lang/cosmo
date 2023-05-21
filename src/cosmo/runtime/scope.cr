@@ -67,10 +67,17 @@ class Cosmo::Scope
     Logger.report_error("Attempt to assign to undefined variable", identifier.lexeme, identifier)
   end
 
+  # Returns true if the variable exists and is public, otherwise false
+  def public?(token : Token) : Bool
+    ident = token.lexeme
+    return false unless @variables.has_key?(ident)
+    @variables[ident][:visibility] == Visibility::Public
+  end
+
   def lookup?(token : Token) : ValueType
-    identifier = token.value
-    if @variables.has_key?(identifier)
-      var = @variables[identifier]
+    ident = token.lexeme
+    if @variables.has_key?(ident)
+      var = @variables[ident]
       typedef = var[:type]
       return var[:value]
     else

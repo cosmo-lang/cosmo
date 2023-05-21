@@ -78,8 +78,10 @@ class Cosmo::Interpreter
     end
 
     # Check if "main" fn exists and call it
-    main_fn = @globals.lookup?(Token.new("main", Syntax::Identifier, "main", Location.new("", 0, 0)))
-    found_main = !main_fn.nil? && main_fn.is_a?(Function)
+    lookup_token = Token.new("main", Syntax::Identifier, "main", Location.new("", 0, 0))
+    main_fn = @globals.lookup?(lookup_token)
+    is_public = @globals.public?(lookup_token)
+    found_main = !main_fn.nil? && main_fn.is_a?(Function) && is_public
     if found_main
       main_fn = main_fn.as(Function)
       return_typedef = main_fn.definition.return_typedef
