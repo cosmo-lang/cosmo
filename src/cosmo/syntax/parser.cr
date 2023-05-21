@@ -29,33 +29,34 @@ class Cosmo::Parser
 
   # Parse a statement and return a node
   private def parse_statement : Statement::Base
-    if at_fn_type?
+    case self
+    when .at_fn_type?
       parse_fn_def_statement
-    elsif check?(Syntax::Class) || check?(Syntax::Class, 1)
+    when .check?(Syntax::Class), .check?(Syntax::Class, 1)
       parse_class_def_statement
-    elsif match?(Syntax::Use)
+    when .match?(Syntax::Use)
       parse_use_statement
-    elsif match?(Syntax::Throw)
+    when .match?(Syntax::Throw)
       parse_throw_statement
-    elsif match?(Syntax::Return)
+    when .match?(Syntax::Return)
       parse_return_statement
-    elsif match?(Syntax::Break)
+    when .match?(Syntax::Break)
       Statement::Break.new(last_token)
-    elsif match?(Syntax::Next)
+    when .match?(Syntax::Next)
       Statement::Next.new(last_token)
-    elsif match?(Syntax::Case)
+    when .match?(Syntax::Case)
       parse_case_statement
-    elsif match?(Syntax::If)
+    when .match?(Syntax::If)
       parse_if_statement
-    elsif match?(Syntax::Unless)
+    when .match?(Syntax::Unless)
       parse_unless_statement
-    elsif match?(Syntax::While)
+    when .match?(Syntax::While)
       parse_while_statement
-    elsif match?(Syntax::Until)
+    when .match?(Syntax::Until)
       parse_until_statement
-    elsif match?(Syntax::Every)
+    when .match?(Syntax::Every)
       parse_every_statement
-    elsif check?(Syntax::LBrace)
+    when .check?(Syntax::LBrace)
       parse_block
     else
       Statement::SingleExpression.new(parse_expression)
@@ -296,7 +297,7 @@ class Cosmo::Parser
     Expression::TernaryOp.new(condition, op, then_expression, else_expression)
   end
 
-  private ACCESS_SYNTAXES = [Syntax::ColonColon, Syntax::Dot, Syntax::HyphenArrow]
+  private ACCESS_SYNTAXES = Set.new([Syntax::ColonColon, Syntax::Dot, Syntax::HyphenArrow])
   private def parse_after(expr : Expression::Base) : Expression::Base
     callee = expr
 
