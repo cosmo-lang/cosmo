@@ -85,7 +85,11 @@ class Cosmo::Interpreter
     if found_main
       main_fn = main_fn.as(Function)
       return_typedef = main_fn.definition.return_typedef
-      @meta["block_return_type"] = return_typedef.value.to_s
+      unless TypeChecker.is?(return_typedef.lexeme, 1, return_typedef) # it's an integer
+        Logger.report_error("Invalid main() function", "A main() function may only return 'int'", stmt.enumerable.token)
+      end
+
+      @meta["block_return_type"] = "int"
       main_result = main_fn.call([ARGV.map(&.as ValueType)])
       TypeChecker.assert("int", main_result, return_typedef)
     end
