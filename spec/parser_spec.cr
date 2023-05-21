@@ -348,8 +348,8 @@ describe Parser do
     expr = stmts.last.as(Statement::SingleExpression).expression
     expr.should be_a Expression::CompoundAssignment
     assignment = expr.as Expression::CompoundAssignment
-    assignment.name.type.should eq Syntax::Identifier
-    assignment.name.value.should eq "a"
+    assignment.name.should be_a Expression::Var
+    assignment.name.as(Expression::Var).token.lexeme.should eq "a"
     assignment.operator.type.should eq Syntax::PlusEqual
     literal = assignment.value.as Expression::IntLiteral
     literal.should be_a Expression::IntLiteral

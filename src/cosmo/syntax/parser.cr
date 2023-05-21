@@ -572,7 +572,7 @@ class Cosmo::Parser
       elsif left.is_a?(Expression::Index) || left.is_a?(Expression::Access)
         left = Expression::PropertyAssignment.new(left, value)
       else
-        Logger.report_error("Expected identifier or property, got", peek(-2).type.to_s, peek(-2))
+        Logger.report_error("Expected identifier or property, got", peek(-2).lexeme, peek(-2))
       end
 
     end
@@ -581,36 +581,23 @@ class Cosmo::Parser
   end
 
   private def parse_compound_assignment : Expression::Base
-    left = parse_compound_assignment_factor
-
-    while match?(Syntax::PlusEqual) || match?(Syntax::MinusEqual)
-      op = last_token
-      right = parse_compound_assignment_factor
-      left = Expression::CompoundAssignment.new(peek(-3), op, right)
-    end
-
-    left
-  end
-
-  private def parse_compound_assignment_factor : Expression::Base
-    left = parse_compound_assignment_coeff
-
-    while match?(Syntax::StarEqual) || match?(Syntax::SlashEqual) || match?(Syntax::PercentEqual)
-      op = last_token
-      right = parse_compound_assignment_coeff
-      left = Expression::CompoundAssignment.new(peek(-3), op, right)
-    end
-
-    left
-  end
-
-  private def parse_compound_assignment_coeff : Expression::Base
     left = parse_logical_or
 
-    while match?(Syntax::CaratEqual)
+    if match?(Syntax::ColonAmpersandEqual) || match?(Syntax::ColonPipeEqual) ||
+      match?(Syntax::CaratEqual) ||
+      match?(Syntax::StarEqual) || match?(Syntax::SlashEqual) || match?(Syntax::PercentEqual) ||
+      match?(Syntax::PlusEqual) || match?(Syntax::MinusEqual)
+
       op = last_token
       right = parse_logical_or
-      left = Expression::CompoundAssignment.new(peek(-3), op, right)
+      unless left.is_a?(Expression::Var) ||
+        left.is_a?(Expression::Access) ||
+        left.is_a?(Expression::Index) ||
+
+        Logger.report_error("Expected identifier or property, got", left.token.lexeme, left.token)
+      end
+
+      left = Expression::CompoundAssignment.new(left.as(Expression::Var | Expression::Index | Expression::Access), op, right)
     end
 
     left

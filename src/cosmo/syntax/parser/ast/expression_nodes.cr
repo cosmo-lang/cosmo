@@ -237,7 +237,7 @@ module Cosmo::AST::Expression
   end
 
   class CompoundAssignment < Base
-    getter name : Token
+    getter name : Var | Index | Access
     getter operator : Token
     getter value : Base
 
@@ -249,12 +249,12 @@ module Cosmo::AST::Expression
     end
 
     def token : Token
-      @name
+      @operator
     end
 
     def to_s(indent : Int = 0)
       "CompoundAssignment<\n"
-      "  #{TAB * indent}name: #{@name.value},\n"
+      "  #{TAB * indent}name: #{@name.to_s(indent + 1)},\n"
       "  #{TAB * indent}operator: #{@operator.to_s},\n"
       "  #{TAB * indent}value: #{@value.to_s(indent + 1)}\n"
       "#{TAB * indent}>"

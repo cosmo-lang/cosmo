@@ -195,7 +195,7 @@ class Cosmo::Resolver
 
   def visit_compound_assignment_expr(expr : Expression::CompoundAssignment) : Nil
     resolve(expr.value)
-    resolve_local(expr, expr.name)
+    resolve_local(expr, expr.name.token)
   end
 
   def visit_ternary_op_expr(expr : Expression::TernaryOp) : Nil

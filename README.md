@@ -9,6 +9,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Enums
 - Throw when defining an already-defined class
 - `uint` type
+- Fix compound assignments for index & access nodes
 - Allow "!" character identifiers for macros
 - Stack trace
 - Package manager

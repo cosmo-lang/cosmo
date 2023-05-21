@@ -8,10 +8,9 @@ module Cosmo::Operator
   end
 
   class Plus < Base
-    def apply(expr : Expression::BinaryOp) : ValueType
+    def apply(expr : Expression::BinaryOp, op : String = "+") : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
-      op = '+'
       if left.is_a?(Float)
         return left + right if right.is_a?(Float)
         return left + right.to_f if right.is_a?(Int)
@@ -34,10 +33,9 @@ module Cosmo::Operator
   end
 
   class Minus < Base
-    def apply(expr : Expression::BinaryOp) : ValueType
+    def apply(expr : Expression::BinaryOp, op : String = "-") : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
-      op = '-'
       if left.is_a?(Float)
         return left - right if right.is_a?(Float)
         return left - right.to_f if right.is_a?(Int)
@@ -52,10 +50,9 @@ module Cosmo::Operator
   end
 
   class Mul < Base
-    def apply(expr : Expression::BinaryOp) : ValueType
+    def apply(expr : Expression::BinaryOp, op : String = "*") : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
-      op = '*'
       if left.is_a?(Float)
         return left * right if right.is_a?(Float)
         return left * right.to_f if right.is_a?(Int)
@@ -70,10 +67,9 @@ module Cosmo::Operator
   end
 
   class Div < Base
-    def apply(expr : Expression::BinaryOp) : ValueType
+    def apply(expr : Expression::BinaryOp, op : String = "/") : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
-      op = '/'
       if left.is_a?(Float)
         return left / right if right.is_a?(Float)
         return left / right.to_f if right.is_a?(Int)
@@ -88,10 +84,9 @@ module Cosmo::Operator
   end
 
   class Pow < Base
-    def apply(expr : Expression::BinaryOp) : ValueType
+    def apply(expr : Expression::BinaryOp, op : String = "^") : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
-      op = '^'
       if left.is_a?(Float)
         return left ** right if right.is_a?(Float)
         return left ** right.to_f if right.is_a?(Int)
@@ -106,7 +101,7 @@ module Cosmo::Operator
   end
 
   class Mod < Base
-    def apply(expr : Expression::BinaryOp) : ValueType
+    def apply(expr : Expression::BinaryOp, op : String = "%") : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
       op = '%'
@@ -278,118 +273,86 @@ module Cosmo::Operator
   end
 
   class PlusAssign < Base
-    def apply(expr : Expression::CompoundAssignment | Expression::UnaryOp, op : String = "+=") : ValueType
-      name_token = expr.is_a?(Expression::CompoundAssignment) ? expr.name : expr.operand.token
-      var = @interpreter.scope.lookup(name_token)
-      value = expr.is_a?(Expression::CompoundAssignment) ? @interpreter.evaluate(expr.value) : 1
-      if var.is_a?(Float)
-        return @interpreter.scope.assign(name_token, var + value) if value.is_a?(Float)
-        return @interpreter.scope.assign(name_token, var + value.to_f) if value.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      elsif var.is_a?(Int)
-        return @interpreter.scope.assign(name_token, var + value) if value.is_a?(Int)
-        return @interpreter.scope.assign(name_token, var.to_f + value) if value.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      elsif var.is_a?(String)
-        return @interpreter.scope.assign(name_token, var + value) if value.is_a?(String)
-        return @interpreter.scope.assign(name_token, var + value.to_s) if value.is_a?(Char)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      elsif var.is_a?(Char)
-        return @interpreter.scope.assign(name_token, var.to_s + value.to_s) if value.is_a?(Char)
-        return @interpreter.scope.assign(name_token, var.to_s + value) if value.is_a?(String)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      end
-      Logger.report_error("Invalid '#{op}' operand type", var.class.to_s, expr.operator)
+    def apply(expr : Expression::CompoundAssignment | Expression::UnaryOp, op_lexeme : String = "+=") : ValueType
+      left = expr.is_a?(Expression::UnaryOp) ? expr.operand : expr.name
+      literal = Expression::IntLiteral.new(1, expr.token)
+      binary = Expression::BinaryOp.new(left, expr.token, expr.is_a?(Expression::UnaryOp) ? literal : expr.value)
+      op = Plus.new(@interpreter)
+      result = op.apply(binary, op_lexeme)
+      @interpreter.scope.assign(left.token, result)
     end
   end
 
   class MinusAssign < Base
-    def apply(expr : Expression::CompoundAssignment | Expression::UnaryOp, op : String = "-=") : ValueType
-      name_token = expr.is_a?(Expression::CompoundAssignment) ? expr.name : expr.operand.token
-      var = @interpreter.scope.lookup(name_token)
-      value = expr.is_a?(Expression::CompoundAssignment) ? @interpreter.evaluate(expr.value) : 1
-      if var.is_a?(Float)
-        return @interpreter.scope.assign(name_token, var - value) if value.is_a?(Float)
-        return @interpreter.scope.assign(name_token, var - value.to_f) if value.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      elsif var.is_a?(Int)
-        return @interpreter.scope.assign(name_token, var - value) if value.is_a?(Int)
-        return @interpreter.scope.assign(name_token, var.to_f - value) if value.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      end
-      Logger.report_error("Invalid '#{op}' operand type", var.class.to_s, expr.operator)
+    def apply(expr : Expression::CompoundAssignment | Expression::UnaryOp, op_lexeme : String = "-=") : ValueType
+      left = expr.is_a?(Expression::UnaryOp) ? expr.operand : expr.name
+      literal = Expression::IntLiteral.new(1, expr.token)
+      binary = Expression::BinaryOp.new(left, expr.token, expr.is_a?(Expression::UnaryOp) ? literal : expr.value)
+      op = Minus.new(@interpreter)
+      result = op.apply(binary, op_lexeme)
+      @interpreter.scope.assign(left.token, result)
     end
   end
 
   class MulAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
-      var = @interpreter.scope.lookup(expr.name)
-      value = @interpreter.evaluate(expr.value)
-      op = "*="
-      if var.is_a?(Float)
-        return @interpreter.scope.assign(expr.name, var * value) if value.is_a?(Float)
-        return @interpreter.scope.assign(expr.name, var * value.to_f) if value.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      elsif var.is_a?(Int)
-        return @interpreter.scope.assign(expr.name, var * value) if value.is_a?(Int)
-        return @interpreter.scope.assign(expr.name, var.to_f * value) if value.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      end
-      Logger.report_error("Invalid '#{op}' operand type", var.class.to_s, expr.operator)
+      binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
+      op = Mul.new(@interpreter)
+      result = op.apply(binary, "*=")
+      @interpreter.scope.assign(expr.name.token, result)
     end
   end
 
   class DivAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
-      var = @interpreter.scope.lookup(expr.name)
-      value = @interpreter.evaluate(expr.value)
-      op = "/="
-      if var.is_a?(Float)
-        return @interpreter.scope.assign(expr.name, var / value) if value.is_a?(Float)
-        return @interpreter.scope.assign(expr.name, var / value.to_f) if value.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      elsif var.is_a?(Int)
-        return @interpreter.scope.assign(expr.name, var / value) if value.is_a?(Int)
-        return @interpreter.scope.assign(expr.name, var.to_f / value) if value.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      end
-      Logger.report_error("Invalid '#{op}' operand type", var.class.to_s, expr.operator)
+      binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
+      op = Div.new(@interpreter)
+      result = op.apply(binary, "/=")
+      @interpreter.scope.assign(expr.name.token, result)
     end
   end
 
   class PowAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
-      var = @interpreter.scope.lookup(expr.name)
-      value = @interpreter.evaluate(expr.value)
-      op = "^="
-      if var.is_a?(Float)
-        return @interpreter.scope.assign(expr.name, var ** value) if value.is_a?(Float)
-        return @interpreter.scope.assign(expr.name, var ** value.to_f) if value.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      elsif var.is_a?(Int)
-        return @interpreter.scope.assign(expr.name, var ** value) if value.is_a?(Int)
-        return @interpreter.scope.assign(expr.name, var.to_f ** value) if value.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      end
-      Logger.report_error("Invalid '#{op}' operand type", var.class.to_s, expr.operator)
+      binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
+      op = Pow.new(@interpreter)
+      result = op.apply(binary, "^=")
+      @interpreter.scope.assign(expr.name.token, result)
     end
   end
 
   class ModAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
-      var = @interpreter.scope.lookup(expr.name)
+      binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
+      op = Mod.new(@interpreter)
+      result = op.apply(binary, "%=")
+      @interpreter.scope.assign(expr.name.token, result)
+    end
+  end
+
+  class AndAssign < Base
+    def apply(expr : Expression::CompoundAssignment) : ValueType
+      expr.token.type = Syntax::ColonAmpersand
+      expr.token.lexeme = ":&"
+
+      binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
+      prop_assignment = Expression::PropertyAssignment.new(expr.name, binary)
+      var_value = @interpreter.evaluate(expr.name.is_a?(Expression::Var) ? expr.name : prop_assignment.object)
       value = @interpreter.evaluate(expr.value)
-      op = "%="
-      if var.is_a?(Float)
-        return @interpreter.scope.assign(expr.name, var % value) if value.is_a?(Float)
-        return @interpreter.scope.assign(expr.name, var % value.to_f) if value.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      elsif var.is_a?(Int)
-        return @interpreter.scope.assign(expr.name, var % value) if value.is_a?(Int)
-        return @interpreter.scope.assign(expr.name, var.to_f % value) if value.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", value.class.to_s, expr.operator)
-      end
-      Logger.report_error("Invalid '#{op}' operand type", var.class.to_s, expr.operator)
+      @interpreter.scope.assign(expr.name.token, var_value && value)
+    end
+  end
+
+  class OrAssign < Base
+    def apply(expr : Expression::CompoundAssignment) : ValueType
+      expr.token.type = Syntax::ColonPipe
+      expr.token.lexeme = ":|"
+
+      binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
+      prop_assignment = Expression::PropertyAssignment.new(expr.name, binary)
+      var_value = @interpreter.evaluate(expr.name.is_a?(Expression::Var) ? expr.name : prop_assignment.object)
+      value = @interpreter.evaluate(expr.value)
+      @interpreter.scope.assign(expr.name.token, var_value || value)
     end
   end
 end

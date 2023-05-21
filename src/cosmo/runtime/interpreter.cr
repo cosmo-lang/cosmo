@@ -502,6 +502,12 @@ class Cosmo::Interpreter
     when Syntax::CaratEqual
       op = Operator::PowAssign.new(self)
       op.apply(expr)
+    when Syntax::ColonAmpersandEqual
+      op = Operator::AndAssign.new(self)
+      op.apply(expr)
+    when Syntax::ColonPipeEqual
+      op = Operator::OrAssign.new(self)
+      op.apply(expr)
     end
   end
 

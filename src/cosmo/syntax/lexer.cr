@@ -93,13 +93,13 @@ class Cosmo::Lexer
       if match_char?(":")
         add_token(Syntax::ColonColon, nil)
       elsif match_char?("&")
-        if match("=")
+        if match_char?("=")
           add_token(Syntax::ColonAmpersandEqual, nil)
         else
           add_token(Syntax::ColonAmpersand, nil)
         end
       elsif match_char?("|")
-        if match("=")
+        if match_char?("=")
           add_token(Syntax::ColonPipeEqual, nil)
         else
           add_token(Syntax::ColonPipe, nil)

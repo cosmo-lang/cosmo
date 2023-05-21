@@ -2,10 +2,10 @@ require "../syntax_type"
 require "./location"
 
 struct Cosmo::Token
-  getter type : Syntax
+  property type : Syntax
   getter value : LiteralType
   getter location : Location
-  getter lexeme : String
+  property lexeme : String
 
   def initialize(@lexeme, @type, @value, @location)
   end
