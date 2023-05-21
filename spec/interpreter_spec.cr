@@ -214,6 +214,16 @@ describe Interpreter do
     result.should eq -10
     result = interpreter.interpret("a *= 4", "test")
     result.should eq -40
+    result = interpreter.interpret("int[] bbb = [2,4]", "test")
+    result.should eq [2, 4]
+    result = interpreter.interpret("bbb << 6", "test")
+    result.should eq [2, 4, 6]
+    result = interpreter.interpret("++bbb[0]", "test")
+    result.should eq [3, 4, 6]
+    result = interpreter.interpret("bbb[1] *= 3", "test")
+    result.should eq [3, 12, 6]
+    result = interpreter.interpret("bbb[2] ^= 2", "test")
+    result.should eq [3, 12, 36]
   end
   it "interprets property assignments" do
     interpreter.interpret("int[] nums = [1,2]", "test")
