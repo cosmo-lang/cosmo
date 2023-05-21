@@ -21,13 +21,13 @@ struct Cosmo::Token
     when Syntax::None
       "none"
     when Syntax::Identifier
-      "Ident<#{@value.to_s}>"
+      "Ident<#{@value}>"
     else
       @value.to_s == "" ? "none" : @value.to_s
     end
   end
 
   def to_s
-    "Token<type: #{@type}, value: #{value_str}, location: [#{@location.to_s}]>"
+    "Token<type: #{@type}, lexeme: \"#{@lexeme}\", value: #{value_str}>"
   end
 end

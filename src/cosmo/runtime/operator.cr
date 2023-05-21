@@ -276,10 +276,18 @@ module Cosmo::Operator
     def apply(expr : Expression::CompoundAssignment | Expression::UnaryOp, op_lexeme : String = "+=") : ValueType
       left = expr.is_a?(Expression::UnaryOp) ? expr.operand : expr.name
       literal = Expression::IntLiteral.new(1, expr.token)
-      binary = Expression::BinaryOp.new(left, expr.token, expr.is_a?(Expression::UnaryOp) ? literal : expr.value)
-      op = Plus.new(@interpreter)
-      result = op.apply(binary, op_lexeme)
-      @interpreter.scope.assign(left.token, result)
+
+      fixed_token = expr.token
+      fixed_token.type = Syntax::Plus
+      fixed_token.lexeme = "+"
+      binary = Expression::BinaryOp.new(left, fixed_token, expr.is_a?(Expression::UnaryOp) ? literal : expr.value)
+      if left.is_a?(Expression::Var)
+        op = Plus.new(@interpreter)
+        result = op.apply(binary, op_lexeme)
+        @interpreter.scope.assign(left.token, result)
+      else
+        @interpreter.evaluate(Expression::PropertyAssignment.new(left, binary))
+      end
     end
   end
 
@@ -287,72 +295,119 @@ module Cosmo::Operator
     def apply(expr : Expression::CompoundAssignment | Expression::UnaryOp, op_lexeme : String = "-=") : ValueType
       left = expr.is_a?(Expression::UnaryOp) ? expr.operand : expr.name
       literal = Expression::IntLiteral.new(1, expr.token)
-      binary = Expression::BinaryOp.new(left, expr.token, expr.is_a?(Expression::UnaryOp) ? literal : expr.value)
-      op = Minus.new(@interpreter)
-      result = op.apply(binary, op_lexeme)
-      @interpreter.scope.assign(left.token, result)
+
+      fixed_token = expr.token
+      fixed_token.type = Syntax::Minus
+      fixed_token.lexeme = "-"
+      binary = Expression::BinaryOp.new(left, fixed_token, expr.is_a?(Expression::UnaryOp) ? literal : expr.value)
+      if left.is_a?(Expression::Var)
+        op = Minus.new(@interpreter)
+        result = op.apply(binary, op_lexeme)
+        @interpreter.scope.assign(left.token, result)
+      else
+        @interpreter.evaluate(Expression::PropertyAssignment.new(left, binary))
+      end
     end
   end
 
   class MulAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
-      binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
-      op = Mul.new(@interpreter)
-      result = op.apply(binary, "*=")
-      @interpreter.scope.assign(expr.name.token, result)
+      fixed_token = expr.token
+      fixed_token.type = Syntax::Star
+      fixed_token.lexeme = "*"
+      binary = Expression::BinaryOp.new(expr.name, fixed_token, expr.value)
+      if expr.name.is_a?(Expression::Var)
+        op = Mul.new(@interpreter)
+        result = op.apply(binary, "*=")
+        @interpreter.scope.assign(expr.name.token, result)
+      else
+        @interpreter.evaluate(Expression::PropertyAssignment.new(expr.name, binary))
+      end
     end
   end
 
   class DivAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
-      binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
-      op = Div.new(@interpreter)
-      result = op.apply(binary, "/=")
-      @interpreter.scope.assign(expr.name.token, result)
+      fixed_token = expr.token
+      fixed_token.type = Syntax::Slash
+      fixed_token.lexeme = "/"
+      binary = Expression::BinaryOp.new(expr.name, fixed_token, expr.value)
+      if expr.name.is_a?(Expression::Var)
+        op = Div.new(@interpreter)
+        result = op.apply(binary, "/=")
+        @interpreter.scope.assign(expr.name.token, result)
+      else
+        @interpreter.evaluate(Expression::PropertyAssignment.new(expr.name, binary))
+      end
     end
   end
 
   class PowAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
-      binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
-      op = Pow.new(@interpreter)
-      result = op.apply(binary, "^=")
-      @interpreter.scope.assign(expr.name.token, result)
+      fixed_token = expr.token
+      fixed_token.type = Syntax::Carat
+      fixed_token.lexeme = "^"
+      binary = Expression::BinaryOp.new(expr.name, fixed_token, expr.value)
+      if expr.name.is_a?(Expression::Var)
+        op = Pow.new(@interpreter)
+        result = op.apply(binary, "^=")
+        @interpreter.scope.assign(expr.name.token, result)
+      else
+        @interpreter.evaluate(Expression::PropertyAssignment.new(expr.name, binary))
+      end
     end
   end
 
   class ModAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
-      binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
-      op = Mod.new(@interpreter)
-      result = op.apply(binary, "%=")
-      @interpreter.scope.assign(expr.name.token, result)
+      fixed_token = expr.token
+      fixed_token.type = Syntax::Percent
+      fixed_token.lexeme = "%"
+      binary = Expression::BinaryOp.new(expr.name, fixed_token, expr.value)
+      if expr.name.is_a?(Expression::Var)
+        op = Mod.new(@interpreter)
+        result = op.apply(binary, "%=")
+        @interpreter.scope.assign(expr.name.token, result)
+      else
+        @interpreter.evaluate(Expression::PropertyAssignment.new(expr.name, binary))
+      end
     end
   end
 
+  ## this is beyond fucked up
   class AndAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
-      expr.token.type = Syntax::AmpersandColon
-      expr.token.lexeme = ":&"
+      fixed_token = expr.token
+      fixed_token.type = Syntax::AmpersandColon
+      fixed_token.lexeme = "&:"
+      expr.token
 
-      binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
-      prop_assignment = Expression::PropertyAssignment.new(expr.name, binary)
-      var_value = @interpreter.evaluate(expr.name.is_a?(Expression::Var) ? expr.name : prop_assignment.object)
+      binary = Expression::BinaryOp.new(expr.name, fixed_token, expr.value)
+      var_value = @interpreter.evaluate(expr.name.is_a?(Expression::Var) ? expr.name : Expression::PropertyAssignment.new(expr.name, binary))
       value = @interpreter.evaluate(expr.value)
-      @interpreter.scope.assign(expr.name.token, var_value && value)
+      if expr.name.is_a?(Expression::Var)
+        @interpreter.scope.assign(expr.name.token, var_value && value)
+      else
+        var_value
+      end
     end
   end
 
   class OrAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
-      expr.token.type = Syntax::PipeColon
-      expr.token.lexeme = ":|"
+      fixed_token = expr.token
+      fixed_token.type = Syntax::PipeColon
+      fixed_token.lexeme = "|:"
 
-      binary = Expression::BinaryOp.new(expr.name, expr.token, expr.value)
+      binary = Expression::BinaryOp.new(expr.name, fixed_token, expr.value)
       prop_assignment = Expression::PropertyAssignment.new(expr.name, binary)
       var_value = @interpreter.evaluate(expr.name.is_a?(Expression::Var) ? expr.name : prop_assignment.object)
       value = @interpreter.evaluate(expr.value)
-      @interpreter.scope.assign(expr.name.token, var_value || value)
+      if expr.name.is_a?(Expression::Var)
+        @interpreter.scope.assign(expr.name.token, var_value || value)
+      else
+        var_value
+      end
     end
   end
 end

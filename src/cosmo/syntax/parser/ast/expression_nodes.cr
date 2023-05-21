@@ -253,10 +253,10 @@ module Cosmo::AST::Expression
     end
 
     def to_s(indent : Int = 0)
-      "CompoundAssignment<\n"
-      "  #{TAB * indent}name: #{@name.to_s(indent + 1)},\n"
-      "  #{TAB * indent}operator: #{@operator.to_s},\n"
-      "  #{TAB * indent}value: #{@value.to_s(indent + 1)}\n"
+      "CompoundAssignment<\n" +
+      "  #{TAB * indent}name: #{@name.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}operator: #{@operator.to_s},\n" +
+      "  #{TAB * indent}value: #{@value.to_s(indent + 1)}\n" +
       "#{TAB * indent}>"
     end
   end

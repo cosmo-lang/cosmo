@@ -3,7 +3,7 @@ bool fn diagonally_dominant?(int[][] matrix) {
   int i = 0
 
   every int[] row in matrix {
-    if matrix[i][i] == none
+    if #row != #matrix
       throw "Matrix must be square."
 
     int main_diagonal = +matrix[i][i]

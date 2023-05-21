@@ -446,7 +446,11 @@ class Cosmo::Interpreter
       unless key.is_a?(Int)
         Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), token)
       end
-      object.insert(key, value)
+      if object[key]?.nil?
+        object.insert(key, value)
+      else
+        object[key] = value
+      end
     elsif object.is_a?(Hash)
       object[key] = value
     else
