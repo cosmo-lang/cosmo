@@ -333,12 +333,12 @@ class Cosmo::Lexer
     ident_str = ""
     until finished?
       if char_exists?(1) && !peek.match(/[a-zA-Z0-9_$?]/)
-        if ident_str.ends_with?("?")
-          report_error("Invalid identifier", "'?' may only be used as the last character of an identifier")
-        end
         ident_str += current_char.to_s
         skip_whitespace
         break
+      end
+      if ident_str.ends_with?("?")
+        report_error("Invalid identifier '#{ident_str + advance}'", "An identifier can only contain one '?' character, and only as the last character")
       end
       ident_str += advance
     end
