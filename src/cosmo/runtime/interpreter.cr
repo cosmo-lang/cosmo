@@ -483,7 +483,7 @@ class Cosmo::Interpreter
       )
     else
       instance = @meta["this"].as ClassInstance
-      instance.define_field(expr.var.token.lexeme, value)
+      instance.define_field(expr.var.token.lexeme, value, typedef: expr.typedef)
     end
   end
 

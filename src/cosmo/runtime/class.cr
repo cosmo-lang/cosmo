@@ -26,6 +26,7 @@ end
 class Cosmo::ClassInstance
   @parent : Class
   @args : Array(ValueType)
+  @field_types = {} of String => Token
   @public : Hash(String, Hash(String, Cosmo::Function) | Hash(String, Cosmo::ValueType)) = {
     "fields" => {} of String => ValueType,
     "methods" => {} of String => Function
@@ -44,6 +45,7 @@ class Cosmo::ClassInstance
 
   def setup : ClassInstance
     ctor_method = get_method("construct", include_private: false)
+    # TODO: assign a meta property to allow assignment to constant fields in constructor
     unless ctor_method.nil?
       ctor_method.call(@args, return_type_override: "void")
     end
@@ -51,7 +53,13 @@ class Cosmo::ClassInstance
     self
   end
 
-  def define_field(name : String, value : ValueType, public : Bool = true, _protected : Bool = false) : ClassInstance
+  def define_field(name : String, value : ValueType, public : Bool = true, _protected : Bool = false, typedef : Token? = nil) : ClassInstance
+    unless typedef.nil?
+      @field_types[name] = typedef
+    else
+      typedef = @field_types[name]
+      TypeChecker.assert(typedef.lexeme + "|void", value, typedef)
+    end
     registry = public ? @public : _protected ? @protected : @private
     registry["fields"].as(Hash(String, ValueType))[name] = value
     self
