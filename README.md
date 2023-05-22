@@ -14,7 +14,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Stack trace
 - Package manager
 - Performance boosts lol
-  * Lexer
   * Parser
   * Interpreter (!!)
 - Multiple assignment
@@ -23,6 +22,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Literal wrapper classes (vector, table) for utility methods (filter, map, etc)
 - Interfaces
 - Classes
+  * make `const` fields actually constant
   * typecheck fields
   * single inheritance
   * mixins
