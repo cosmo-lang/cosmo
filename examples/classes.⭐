@@ -5,10 +5,11 @@ public class Dog {
     $->name = name
   }
 
-  void fn woof() {
+  public void fn woof() {
     puts($->name + " says woof!")
   }
 }
 
 Dog fido = new Dog("Fido")
-fido->woof() ## Fido says woof!
+puts(fido->name) ## Fido says woof!
+fido->name = "Bentley" ## error

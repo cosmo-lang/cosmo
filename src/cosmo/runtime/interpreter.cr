@@ -487,7 +487,14 @@ class Cosmo::Interpreter
       )
     else
       instance = @meta["this"].as ClassInstance
-      instance.define_field(expr.var.token.lexeme, value, visibility: expr.visibility, typedef: expr.typedef)
+      instance.define_field(
+        expr.var.token.lexeme,
+        value,
+        expr.token,
+        visibility: expr.visibility,
+        constant: expr.constant?,
+        typedef: expr.typedef
+      )
     end
   end
 
@@ -512,7 +519,7 @@ class Cosmo::Interpreter
       unless key.is_a?(String)
         Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), token)
       end
-      object.define_field(key, value)
+      object.define_field(key, value, token)
     else
       Logger.report_error("Attempt to assign to index of", TypeChecker.get_mapped(object.class), token)
     end

@@ -24,9 +24,14 @@ class Cosmo::Class
 end
 
 class Cosmo::ClassInstance
+  private alias FieldMeta = NamedTuple(
+    type: Token,
+    constant?: Bool
+  )
+
   @parent : Class
   @args : Array(ValueType)
-  @field_types = {} of String => Token
+  @field_meta = {} of String => FieldMeta
   @public : Hash(String, Hash(String, Cosmo::Function) | Hash(String, Cosmo::ValueType)) = {
     "fields" => {} of String => ValueType,
     "methods" => {} of String => Function
@@ -55,20 +60,45 @@ class Cosmo::ClassInstance
     self
   end
 
-  def define_field(name : String, value : ValueType, visibility : Visibility = Visibility::Public, typedef : Token? = nil) : ClassInstance
-    unless typedef.nil?
-      @field_types[name] = typedef
-    else
-      typedef = @field_types[name]
-      TypeChecker.assert(typedef.lexeme + "|void", value, typedef)
+  def define_field(
+    name : String,
+    value : ValueType,
+    token : Token?,
+    constant : Bool = false,
+    visibility : Visibility = Visibility::Public,
+    typedef : Token? = nil
+  ) : ClassInstance
+
+    current_meta = @field_meta[name]?
+    unless current_meta.nil?
+      if current_meta[:constant?]
+        Logger.report_error("Attempt to assign to constant property", name, token.not_nil!)
+      end
     end
+
+    meta_hash = {} of Symbol => Token | Bool
+    meta_hash[:constant?] = constant
+    unless typedef.nil?
+      meta_hash[:type] = typedef
+    else
+      unless current_meta.nil?
+        typedef = current_meta[:type]
+        TypeChecker.assert(typedef.lexeme + "|void", value, typedef)
+      end
+    end
+
+    @field_meta[name] = FieldMeta.from(meta_hash)
     registry = visibility == Visibility::Public ? @public : visibility == Visibility::Protected ? @protected : @private
     registry["fields"].as(Hash(String, ValueType))[name] = value
     self
   end
 
-  def define_method(name : String, value : Function, visibility : Visibility = Visibility::Public) : ClassInstance
+  def define_method(name : String, value : Function, token : Token? = nil, visibility : Visibility = Visibility::Public) : ClassInstance
     registry = visibility == Visibility::Public ? @public : visibility == Visibility::Protected ? @protected : @private
+    if !token.nil? && registry["methods"].as(Hash(String, Function)).has_key?(name)
+      Logger.report_error("Duplicate method definition in '#{name}'", name, token)
+    end
+
     registry["methods"].as(Hash(String, Function))[name] = value
     self
   end
