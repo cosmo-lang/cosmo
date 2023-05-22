@@ -397,6 +397,26 @@ describe Interpreter do
     result = interpreter.interpret("does_their_life_suck?(\"beezelbub\")", "test")
     result.should eq "maybe"
   end
+  it "interprets class definitions & accessing" do
+    lines = [
+      "class A {",
+      "  public const int x = 1",
+      "  const int y = 10",
+      "}",
+      "A a = new A",
+      "a->x"
+    ]
+
+    result = interpreter.interpret(lines.join('\n'), "test")
+    result.should eq 1
+
+    expect_raises(Exception, "@test [1:4] Attempt to access private field: y") do
+      interpreter.interpret("a->y", "test")
+    end
+    expect_raises(Exception, "@test [1:2] Attempt to assign to constant property: x") do
+      interpreter.interpret("a->x = 2", "test")
+    end
+  end
   describe "types:" do
     it "'is' matching" do
       result = interpreter.interpret("1 is int", "test")

@@ -11,5 +11,4 @@ public class Dog {
 }
 
 Dog fido = new Dog("Fido")
-puts(fido->name) ## Fido says woof!
-fido->name = "Bentley" ## error
+fido->woof() ## Fido says woof!
