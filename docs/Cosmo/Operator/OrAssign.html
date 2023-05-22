@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::Operator::LTE - Cosmo master</title>
+  <title>Cosmo::Operator::OrAssign - Cosmo master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -621,7 +621,7 @@
       
     </li>
   
-  <li class=" current" data-id="Cosmo/Cosmo/Operator/LTE" data-name="cosmo::operator::lte">
+  <li class=" " data-id="Cosmo/Cosmo/Operator/LTE" data-name="cosmo::operator::lte">
       <a href="../../Cosmo/Operator/LTE.html">LTE</a>
       
     </li>
@@ -656,7 +656,7 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/Operator/OrAssign" data-name="cosmo::operator::orassign">
+  <li class=" current" data-id="Cosmo/Cosmo/Operator/OrAssign" data-name="cosmo::operator::orassign">
       <a href="../../Cosmo/Operator/OrAssign.html">OrAssign</a>
       
     </li>
@@ -760,12 +760,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Cosmo::Operator::LTE
+  <span class="kind">class</span> Cosmo::Operator::OrAssign
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Cosmo/Operator/LTE.html">Cosmo::Operator::LTE</a></li><li class="superclass">Cosmo::Operator::Base</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Cosmo/Operator/OrAssign.html">Cosmo::Operator::OrAssign</a></li><li class="superclass">Cosmo::Operator::Base</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -793,7 +793,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/operator.cr#L139" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/operator.cr#L396" target="_blank">
         cosmo/runtime/operator.cr
       </a>
     
@@ -819,7 +819,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#apply%28expr%3AExpression%3A%3ABinaryOp%29%3AValueType-instance-method" class="signature"><strong>#apply</strong>(expr : Expression::BinaryOp) : ValueType</a>
+        <a href="#apply%28expr%3AExpression%3A%3ACompoundAssignment%29%3AValueType-instance-method" class="signature"><strong>#apply</strong>(expr : Expression::CompoundAssignment) : ValueType</a>
         
       </li>
     
@@ -895,18 +895,18 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="apply(expr:Expression::BinaryOp):ValueType-instance-method">
+    <div class="entry-detail" id="apply(expr:Expression::CompoundAssignment):ValueType-instance-method">
       <div class="signature">
         
-        def <strong>apply</strong>(expr : <a href="../../Cosmo/AST/Expression/BinaryOp.html">Expression::BinaryOp</a>) : <a href="../../Cosmo/ValueType.html">ValueType</a>
+        def <strong>apply</strong>(expr : <a href="../../Cosmo/AST/Expression/CompoundAssignment.html">Expression::CompoundAssignment</a>) : <a href="../../Cosmo/ValueType.html">ValueType</a>
 
-        <a class="method-permalink" href="#apply%28expr%3AExpression%3A%3ABinaryOp%29%3AValueType-instance-method">#</a>
+        <a class="method-permalink" href="#apply%28expr%3AExpression%3A%3ACompoundAssignment%29%3AValueType-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/operator.cr#L140" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/operator.cr#L397" target="_blank">View source</a>]
         
       </div>
     </div>

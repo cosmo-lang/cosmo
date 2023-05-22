@@ -136,6 +136,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/New" data-name="cosmo::ast::expression::new">
+      <a href="../Cosmo/AST/Expression/New.html">New</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/NoneLiteral" data-name="cosmo::ast::expression::noneliteral">
       <a href="../Cosmo/AST/Expression/NoneLiteral.html">NoneLiteral</a>
       
@@ -168,6 +173,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/TernaryOp" data-name="cosmo::ast::expression::ternaryop">
       <a href="../Cosmo/AST/Expression/TernaryOp.html">TernaryOp</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/This" data-name="cosmo::ast::expression::this">
+      <a href="../Cosmo/AST/Expression/This.html">This</a>
       
     </li>
   
@@ -338,6 +348,11 @@
   
   <li class=" current" data-id="Cosmo/Cosmo/Class" data-name="cosmo::class">
       <a href="../Cosmo/Class.html">Class</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/ClassInstance" data-name="cosmo::classinstance">
+      <a href="../Cosmo/ClassInstance.html">ClassInstance</a>
       
     </li>
   
@@ -546,6 +561,11 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/Operator/AndAssign" data-name="cosmo::operator::andassign">
+      <a href="../Cosmo/Operator/AndAssign.html">AndAssign</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Operator/Band" data-name="cosmo::operator::band">
       <a href="../Cosmo/Operator/Band.html">Band</a>
       
@@ -636,6 +656,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Operator/OrAssign" data-name="cosmo::operator::orassign">
+      <a href="../Cosmo/Operator/OrAssign.html">OrAssign</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Operator/Plus" data-name="cosmo::operator::plus">
       <a href="../Cosmo/Operator/Plus.html">Plus</a>
       
@@ -721,6 +746,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Stringify" data-name="stringify">
+      <a href="../Stringify.html">Stringify</a>
+      
+    </li>
+  
 </ul>
 
   </div>
@@ -763,7 +793,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/class.cr#L1" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/class.cr#L1" target="_blank">
         cosmo/runtime/class.cr
       </a>
     
@@ -806,7 +836,22 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#definition%3AAST%3A%3AStatement%3A%3AClassDef-instance-method" class="signature"><strong>#definition</strong> : AST::Statement::ClassDef</a>
+        <a href="#construct%28args%3AArray%28ValueType%29%29%3AClassInstance-instance-method" class="signature"><strong>#construct</strong>(args : Array(ValueType)) : ClassInstance</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#definition%3AStatement%3A%3AClassDef-instance-method" class="signature"><strong>#definition</strong> : Statement::ClassDef</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#interpreter%3AInterpreter-instance-method" class="signature"><strong>#interpreter</strong> : Interpreter</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#name-instance-method" class="signature"><strong>#name</strong></a>
         
       </li>
     
@@ -868,7 +913,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/class.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/class.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -887,18 +932,66 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="definition:AST::Statement::ClassDef-instance-method">
+    <div class="entry-detail" id="construct(args:Array(ValueType)):ClassInstance-instance-method">
       <div class="signature">
         
-        def <strong>definition</strong> : <a href="../Cosmo/AST/Statement/ClassDef.html">AST::Statement::ClassDef</a>
+        def <strong>construct</strong>(args : Array(<a href="../Cosmo/ValueType.html">ValueType</a>)) : <a href="../Cosmo/ClassInstance.html">ClassInstance</a>
 
-        <a class="method-permalink" href="#definition%3AAST%3A%3AStatement%3A%3AClassDef-instance-method">#</a>
+        <a class="method-permalink" href="#construct%28args%3AArray%28ValueType%29%29%3AClassInstance-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/class.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/class.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="definition:Statement::ClassDef-instance-method">
+      <div class="signature">
+        
+        def <strong>definition</strong> : <a href="../Cosmo/AST/Statement/ClassDef.html">Statement::ClassDef</a>
+
+        <a class="method-permalink" href="#definition%3AStatement%3A%3AClassDef-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/class.cr#L4" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="interpreter:Interpreter-instance-method">
+      <div class="signature">
+        
+        def <strong>interpreter</strong> : <a href="../Cosmo/Interpreter.html">Interpreter</a>
+
+        <a class="method-permalink" href="#interpreter%3AInterpreter-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/class.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="name-instance-method">
+      <div class="signature">
+        
+        def <strong>name</strong>
+
+        <a class="method-permalink" href="#name-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/class.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -927,7 +1020,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/class.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/class.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>

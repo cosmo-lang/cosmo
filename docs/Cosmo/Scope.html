@@ -136,6 +136,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/New" data-name="cosmo::ast::expression::new">
+      <a href="../Cosmo/AST/Expression/New.html">New</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/NoneLiteral" data-name="cosmo::ast::expression::noneliteral">
       <a href="../Cosmo/AST/Expression/NoneLiteral.html">NoneLiteral</a>
       
@@ -168,6 +173,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/TernaryOp" data-name="cosmo::ast::expression::ternaryop">
       <a href="../Cosmo/AST/Expression/TernaryOp.html">TernaryOp</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/This" data-name="cosmo::ast::expression::this">
+      <a href="../Cosmo/AST/Expression/This.html">This</a>
       
     </li>
   
@@ -338,6 +348,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Class" data-name="cosmo::class">
       <a href="../Cosmo/Class.html">Class</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/ClassInstance" data-name="cosmo::classinstance">
+      <a href="../Cosmo/ClassInstance.html">ClassInstance</a>
       
     </li>
   
@@ -546,6 +561,11 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/Operator/AndAssign" data-name="cosmo::operator::andassign">
+      <a href="../Cosmo/Operator/AndAssign.html">AndAssign</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Operator/Band" data-name="cosmo::operator::band">
       <a href="../Cosmo/Operator/Band.html">Band</a>
       
@@ -636,6 +656,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Operator/OrAssign" data-name="cosmo::operator::orassign">
+      <a href="../Cosmo/Operator/OrAssign.html">OrAssign</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Operator/Plus" data-name="cosmo::operator::plus">
       <a href="../Cosmo/Operator/Plus.html">Plus</a>
       
@@ -721,6 +746,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Stringify" data-name="stringify">
+      <a href="../Stringify.html">Stringify</a>
+      
+    </li>
+  
 </ul>
 
   </div>
@@ -763,7 +793,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L4" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L4" target="_blank">
         cosmo/runtime/scope.cr
       </a>
     
@@ -806,7 +836,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#assign%28identifier%3AToken%2Cvalue%3AValueType%29%3AValueType-instance-method" class="signature"><strong>#assign</strong>(identifier : Token, value : ValueType) : ValueType</a>
+        <a href="#assign%28identifier%3AToken%2Cvalue%3AValueType%2Cmodifying_instance%3ABool%3Dfalse%29%3AValueType-instance-method" class="signature"><strong>#assign</strong>(identifier : Token, value : ValueType, modifying_instance : Bool = <span class="n">false</span>) : ValueType</a>
         
       </li>
     
@@ -826,7 +856,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#lookup%3F%28token%3AToken%29%3AValueType-instance-method" class="signature"><strong>#lookup?</strong>(token : Token) : ValueType</a>
+        <a href="#lookup%3F%28ident%3AString%29%3AValueType-instance-method" class="signature"><strong>#lookup?</strong>(ident : String) : ValueType</a>
         
       </li>
     
@@ -846,7 +876,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#public%3F%28token%3AToken%29%3ABool-instance-method" class="signature"><strong>#public?</strong>(token : Token) : Bool</a>
+        <a href="#public%3F%28ident%3AString%29%3ABool-instance-method" class="signature"><strong>#public?</strong>(ident : String) : Bool</a>
         
           <div class="summary"><p>Returns true if the variable exists and is public, otherwise false</p></div>
         
@@ -920,7 +950,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -939,18 +969,18 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="assign(identifier:Token,value:ValueType):ValueType-instance-method">
+    <div class="entry-detail" id="assign(identifier:Token,value:ValueType,modifying_instance:Bool=false):ValueType-instance-method">
       <div class="signature">
         
-        def <strong>assign</strong>(identifier : <a href="../Cosmo/Token.html">Token</a>, value : <a href="../Cosmo/ValueType.html">ValueType</a>) : <a href="../Cosmo/ValueType.html">ValueType</a>
+        def <strong>assign</strong>(identifier : <a href="../Cosmo/Token.html">Token</a>, value : <a href="../Cosmo/ValueType.html">ValueType</a>, modifying_instance : Bool = <span class="n">false</span>) : <a href="../Cosmo/ValueType.html">ValueType</a>
 
-        <a class="method-permalink" href="#assign%28identifier%3AToken%2Cvalue%3AValueType%29%3AValueType-instance-method">#</a>
+        <a class="method-permalink" href="#assign%28identifier%3AToken%2Cvalue%3AValueType%2Cmodifying_instance%3ABool%3Dfalse%29%3AValueType-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L56" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L56" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -966,7 +996,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L44" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L44" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -982,7 +1012,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -998,23 +1028,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L93" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L89" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="lookup?(token:Token):ValueType-instance-method">
+    <div class="entry-detail" id="lookup?(ident:String):ValueType-instance-method">
       <div class="signature">
         
-        def <strong>lookup?</strong>(token : <a href="../Cosmo/Token.html">Token</a>) : <a href="../Cosmo/ValueType.html">ValueType</a>
+        def <strong>lookup?</strong>(ident : String) : <a href="../Cosmo/ValueType.html">ValueType</a>
 
-        <a class="method-permalink" href="#lookup%3F%28token%3AToken%29%3AValueType-instance-method">#</a>
+        <a class="method-permalink" href="#lookup%3F%28ident%3AString%29%3AValueType-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L77" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1030,7 +1060,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L101" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L97" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1046,7 +1076,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1062,17 +1092,17 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="public?(token:Token):Bool-instance-method">
+    <div class="entry-detail" id="public?(ident:String):Bool-instance-method">
       <div class="signature">
         
-        def <strong>public?</strong>(token : <a href="../Cosmo/Token.html">Token</a>) : Bool
+        def <strong>public?</strong>(ident : String) : Bool
 
-        <a class="method-permalink" href="#public%3F%28token%3AToken%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#public%3F%28ident%3AString%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1083,7 +1113,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L71" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L71" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1112,7 +1142,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L114" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L110" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1128,7 +1158,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1144,7 +1174,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/3225f20804ff8554ff18dc9cee49916f4e4d41ed/src/cosmo/runtime/scope.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/scope.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
