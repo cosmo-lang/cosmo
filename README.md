@@ -27,7 +27,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Better type system
   * generics
   * casting
-  * `typeof`
   * intersections
 
 ## Things I Might Do
