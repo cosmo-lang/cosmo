@@ -5,7 +5,7 @@ public class Dog {
     $->name = name
   }
 
-  public void fn woof() {
+  void fn woof() {
     puts($->name + " says woof!")
   }
 }

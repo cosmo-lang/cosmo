@@ -59,6 +59,10 @@ class Cosmo::Interpreter
     @globals.declare(typedef_token, ident_token, value, const: true)
   end
 
+  def delete_meta(key : String) : Nil
+    @meta.delete(key)
+  end
+
   def set_meta(key : String, value : MetaType?) : Nil
     return if value.nil?
     @meta[key] = value
@@ -382,18 +386,18 @@ class Cosmo::Interpreter
       )
     else
       instance = @meta["this"].as ClassInstance
-      instance.define_method(stmt.identifier.lexeme, fn)
+      instance.define_method(stmt.identifier.lexeme, fn, visibility: stmt.visibility)
     end
     fn
   end
 
   def visit_access_expr(expr : Expression::Access) : ValueType
     object = evaluate(expr.object)
-    key = expr.key.value.to_s
+    key = expr.key.lexeme
     if object.is_a?(Hash)
       object[key]?
     elsif object.is_a?(ClassInstance)
-      object.get_member(key, include_private: !@meta["this"].nil?)
+      object.get_member(key, expr.key, include_private: !@meta["this"]?.nil?)
     else
       Logger.report_error("Attempt to index", TypeChecker.get_mapped(object.class), expr.token)
     end
@@ -483,7 +487,7 @@ class Cosmo::Interpreter
       )
     else
       instance = @meta["this"].as ClassInstance
-      instance.define_field(expr.var.token.lexeme, value, typedef: expr.typedef)
+      instance.define_field(expr.var.token.lexeme, value, visibility: expr.visibility, typedef: expr.typedef)
     end
   end
 

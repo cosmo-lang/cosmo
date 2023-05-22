@@ -38,6 +38,8 @@ class Cosmo::Function < Cosmo::Callable
     rescue ex : Exception
       raise ex
     end
+
+    @interpreter.delete_meta("block_return_type")
     result
   end
 
