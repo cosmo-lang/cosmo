@@ -29,6 +29,7 @@ class Cosmo::ClassInstance
     constant?: Bool
   )
 
+  @constructing = false
   @parent : Class
   @args : Array(ValueType)
   @field_meta = {} of String => FieldMeta
@@ -49,12 +50,11 @@ class Cosmo::ClassInstance
   end
 
   def setup : ClassInstance
-    # TODO: constant fields
     ctor_method = get_method("construct", include_private: false)
     unless ctor_method.nil?
-      @parent.interpreter.set_meta("constructing", name)
+      @constructing = true
       ctor_method.call(@args, return_type_override: "void")
-      @parent.interpreter.delete_meta("constructing")
+      @constructing = false
     end
 
     self
@@ -71,23 +71,26 @@ class Cosmo::ClassInstance
 
     current_meta = @field_meta[name]?
     unless current_meta.nil?
-      if current_meta[:constant?]
+      if current_meta[:constant?] && !@constructing
         Logger.report_error("Attempt to assign to constant property", name, token.not_nil!)
       end
     end
 
-    meta_hash = {} of Symbol => Token | Bool
-    meta_hash[:constant?] = constant
-    unless typedef.nil?
-      meta_hash[:type] = typedef
-    else
-      unless current_meta.nil?
-        typedef = current_meta[:type]
-        TypeChecker.assert(typedef.lexeme + "|void", value, typedef)
+    if @field_meta[name]?.nil?
+      meta_hash = {} of Symbol => Token | Bool
+      meta_hash[:constant?] = constant
+      unless typedef.nil?
+        meta_hash[:type] = typedef
+      else
+        unless current_meta.nil?
+          typedef = current_meta[:type]
+          TypeChecker.assert(typedef.lexeme + "|void", value, typedef)
+        end
       end
+
+      @field_meta[name] = FieldMeta.from(meta_hash)
     end
 
-    @field_meta[name] = FieldMeta.from(meta_hash)
     registry = visibility == Visibility::Public ? @public : visibility == Visibility::Protected ? @protected : @private
     registry["fields"].as(Hash(String, ValueType))[name] = value
     self
