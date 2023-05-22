@@ -31,8 +31,8 @@ class Cosmo::Scope
   ) : ValueType forall V
 
     casted_value = TypeChecker.cast(value)
-    @variables[identifier.value.to_s] = {
-      type: typedef.is_a?(Token) ? typedef.value.to_s : typedef,
+    @variables[identifier.lexeme] = {
+      type: typedef.is_a?(Token) ? typedef.lexeme : typedef,
       value: casted_value,
       constant: constant,
       visibility: visibility
@@ -63,7 +63,7 @@ class Cosmo::Scope
       return create_variable(var[:type], identifier, value, constant: false, visibility: var[:visibility])
     end
 
-    return @parent.not_nil!.assign(identifier, value, modifying_instance) unless @parent.nil?
+    return @parent.not_nil!.assign(identifier, value) unless @parent.nil?
     Logger.report_error("Attempt to assign to undefined variable", identifier.lexeme, identifier)
   end
 

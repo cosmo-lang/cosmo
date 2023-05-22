@@ -2,13 +2,13 @@ public class Dog {
   public const string name
 
   public Dog fn construct(string name) {
-    ## $->name = name
+    $->name = name
   }
 
   public void fn woof() {
-    ## puts($->name + " says woof!")
+    puts($->name + " says woof!")
   }
 }
 
-## Dog fido = new Dog("Fido")
-## fido->woof() ## Fido says woof!
+Dog fido = new Dog("Fido")
+fido->woof() ## Fido says woof!

@@ -34,7 +34,7 @@ class Cosmo::Lexer
   private def lex
     char = current_char
     @current_lexeme.write(char.to_slice)
-    return skip_whitespace if char.blank?
+    return skip_whitespace if char.blank? && char != "\n"
 
     case char
     when "."

@@ -23,6 +23,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Literal wrapper classes (vector, table) for utility methods (filter, map, etc)
 - Interfaces
 - Classes
+  * typecheck fields
   * single inheritance
   * mixins
   * methods

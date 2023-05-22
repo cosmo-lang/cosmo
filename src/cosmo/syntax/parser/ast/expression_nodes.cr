@@ -2,6 +2,7 @@ module Cosmo::AST::Expression
   include Cosmo::AST
 
   module Visitor(R)
+    abstract def visit_this_expr(expr : This) : R
     abstract def visit_is_expr(expr : Is) : R
     abstract def visit_type_alias_expr(expr : TypeAlias) : R
     abstract def visit_type_ref_expr(expr : TypeRef) : R
@@ -350,6 +351,22 @@ module Cosmo::AST::Expression
       "  #{TAB * indent}operator: #{@operator.to_s},\n" +
       "  #{TAB * indent}right: #{@right.to_s(indent + 1)}\n" +
       "#{TAB * indent}>"
+    end
+  end
+
+  class This < Base
+    getter token : Token
+    getter class_name : String
+
+    def initialize(@token, @class_name)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_this_expr(self)
+    end
+
+    def to_s(indent : Int = 0)
+      "This"
     end
   end
 

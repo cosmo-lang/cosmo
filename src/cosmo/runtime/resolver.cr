@@ -236,6 +236,10 @@ class Cosmo::Resolver
     resolve(expr.to)
   end
 
+  def visit_this_expr(expr : Expression::This) : Nil
+    # do nothing
+  end
+
   def visit_table_literal_expr(expr : Expression::TableLiteral) : Nil
     # do nothing
   end

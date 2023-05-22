@@ -14,7 +14,7 @@ class Cosmo::Interpreter
   include Expression::Visitor(ValueType)
   include Statement::Visitor(ValueType)
 
-  private alias MetaType = String | Tuple(Token, Hash(String, ValueType))
+  private alias MetaType = String | ClassInstance
 
   getter globals = Scope.new
   getter scope : Scope
@@ -44,10 +44,18 @@ class Cosmo::Interpreter
     @importable_intrinsics[name] = library
   end
 
+  private def fake_typedef(name : String, location : Location? = nil)
+    Token.new(name, Syntax::TypeDef, name, location || Location.new(@file_path, 0, 0))
+  end
+
+  private def fake_ident(name : String, location : Location? = nil)
+    Token.new(name, Syntax::Identifier, name, location || Location.new(@file_path, 0, 0))
+  end
+
   def declare_intrinsic(type : String, ident : String, value : ValueType)
     location = Location.new("intrinsic", 0, 0)
-    ident_token = Token.new(ident, Syntax::Identifier, ident, location)
-    typedef_token = Token.new(type, Syntax::TypeDef, type, location)
+    ident_token = fake_ident(ident, location)
+    typedef_token = fake_typedef(type, location)
     @globals.declare(typedef_token, ident_token, value, const: true)
   end
 
@@ -132,6 +140,12 @@ class Cosmo::Interpreter
     prev_scope = @scope
     begin
       @scope = block_scope
+
+      unless @meta["this"]?.nil? || !@scope.lookup?("$").nil?
+        this = @meta["this"].as(ClassInstance)
+        @scope.declare(fake_typedef(this.name), fake_ident("$"), this)
+      end
+
       if block.is_a?(Statement::Block)
         unless block.nodes.empty?
           return_node = block.nodes.find { |node| node.is_a?(Statement::Return) } || block.nodes.last
@@ -142,12 +156,16 @@ class Cosmo::Interpreter
         if is_fn
           return_type = @meta["block_return_type"]? || "void"
           token = return_node.nil? ? Token.new("none", Syntax::None, nil, Location.new("", 0, 0)) : return_node.token
-          TypeChecker.assert(return_type.to_s, return_value, token)
+          unless return_type.to_s == "void"
+            TypeChecker.assert(return_type.to_s, return_value, token)
+          end
         end
       else
         return_value = execute(block)
       end
-      return_value
+
+      return return_value unless return_type.to_s == "void"
+      nil
     rescue ex : Exception
       raise ex
     ensure
@@ -343,9 +361,8 @@ class Cosmo::Interpreter
 
   def visit_class_def_stmt(stmt : Statement::ClassDef) : ValueType
     _class = Class.new(self, @scope, stmt)
-    typedef = Token.new("class", Syntax::TypeDef, "class", Location.new(@file_path, 0, 0))
     @scope.declare(
-      typedef,
+      fake_typedef("class"),
       stmt.identifier,
       _class,
       const: true,
@@ -355,21 +372,19 @@ class Cosmo::Interpreter
 
   def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
     fn = Function.new(self, @scope, stmt)
-    typedef = Token.new("func", Syntax::TypeDef, "func", Location.new(@file_path, 0, 0))
     if @meta["this"]?.nil?
       @scope.declare(
-        typedef,
+        fake_typedef("func"),
         stmt.identifier,
         fn,
         const: true,
         visibility: stmt.visibility
       )
     else
-      identifier, instance = @meta["this"].as Tuple(Token, Hash(String, ValueType))
-      instance[stmt.identifier.lexeme] = fn
-      set_meta("this", {identifier, instance})
-      TypeChecker.cast(instance)
+      instance = @meta["this"].as ClassInstance
+      instance.define_method(stmt.identifier.lexeme, fn)
     end
+    fn
   end
 
   def visit_access_expr(expr : Expression::Access) : ValueType
@@ -377,6 +392,8 @@ class Cosmo::Interpreter
     key = expr.key.value.to_s
     if object.is_a?(Hash)
       object[key]?
+    elsif object.is_a?(ClassInstance)
+      object.get_member(key, include_private: !@meta["this"].nil?)
     else
       Logger.report_error("Attempt to index", TypeChecker.get_mapped(object.class), expr.token)
     end
@@ -393,33 +410,29 @@ class Cosmo::Interpreter
       object[key]?
     elsif object.is_a?(Hash)
       object[key]?
+    elsif object.is_a?(ClassInstance)
+      Logger.report_error("Attempt to index class instance", expr.token.lexeme, expr.token)
     else
       Logger.report_error("Attempt to index", TypeChecker.get_mapped(object.class), expr.token)
     end
   end
 
-  def visit_new_expr(expr : Expression::New) : ValueType
+  def visit_new_expr(expr : Expression::New) : ClassInstance
     args = [] of Expression::Base
     class_obj = @scope.lookup(expr.operand.token)
+    unless class_obj.is_a?(Class)
+      Logger.report_error("Invalid 'new' invocation. Expected a class name, got", expr.operand.token.lexeme, expr.operand.token)
+    end
     if expr.operand.is_a?(Expression::FunctionCall)
       args = expr.operand.as(Expression::FunctionCall).arguments
     end
-    TypeChecker.assert("class", class_obj, expr.operand.token)
 
-    set_meta("this", {expr.operand.token, {} of String => ValueType})
-    instance = class_obj.as(Class).construct(args.map { |arg| evaluate(arg) })
-    instance["__class"] = expr.operand.token.lexeme
-    this_meta = {expr.operand.token, instance}
-    set_meta("this", this_meta)
-    TypeChecker.cast(instance)
+    TypeChecker.assert("class", class_obj, expr.operand.token)
+    class_obj.construct(args.map { |arg| evaluate(arg) })
   end
 
-  def visit_this_expr(expr : Expression::This) : Hash(String, ValueType)
-    if @meta["this"]?.nil?
-      Logger.report_error("'$' can only be used within a class body", TypeChecker.get_mapped(object.class), expr.token)
-    end
-    _, instance = @meta["this"]
-    instance
+  def visit_this_expr(expr : Expression::This) : ValueType
+    res = @scope.lookup?("$")
   end
 
   def visit_is_expr(expr : Expression::Is) : Bool
@@ -458,9 +471,9 @@ class Cosmo::Interpreter
   end
 
   def visit_var_declaration_expr(expr : Expression::VarDeclaration) : ValueType
-    is_scoped = @meta["this"]?.nil?
+    in_global = @meta["this"]?.nil?
     value = evaluate(expr.value)
-    if is_scoped
+    if in_global
       @scope.declare(
         expr.typedef,
         expr.var.token,
@@ -469,10 +482,8 @@ class Cosmo::Interpreter
         visibility: expr.visibility
       )
     else
-      identifier, instance = @meta["this"].as Tuple(Token, Hash(String, ValueType))
-      instance[expr.var.token.lexeme] = value
-      set_meta("this", {identifier, instance})
-      TypeChecker.cast(instance)
+      instance = @meta["this"].as ClassInstance
+      instance.define_field(expr.var.token.lexeme, value)
     end
   end
 
@@ -493,6 +504,11 @@ class Cosmo::Interpreter
       end
     elsif object.is_a?(Hash)
       object[key] = value
+    elsif object.is_a?(ClassInstance)
+      unless key.is_a?(String)
+        Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), token)
+      end
+      object.define_field(key, value)
     else
       Logger.report_error("Attempt to assign to index of", TypeChecker.get_mapped(object.class), token)
     end
@@ -523,7 +539,11 @@ class Cosmo::Interpreter
     end
 
     object = add_object_value(expr.token, object, key, value)
-    @scope.assign(expr.token, object)
+    unless meta["this"]?.nil? || expr.token.lexeme != "$" || !object.is_a?(ClassInstance)
+      value
+    else
+      @scope.assign(expr.token, object)
+    end
   end
 
   def visit_compound_assignment_expr(expr : Expression::CompoundAssignment) : ValueType

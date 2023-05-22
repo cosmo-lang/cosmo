@@ -2,6 +2,7 @@ require "./lexer"
 require "./parser/ast"; include Cosmo::AST
 
 class Cosmo::Parser
+  @within_class : String? = nil
   @position : Int32 = 0
   @tokens : Array(Token)
 
@@ -82,6 +83,10 @@ class Cosmo::Parser
 
     consume(Syntax::Class)
     token = last_token
+    unless @within_class.nil?
+      Logger.report_error("Invalid class", "Classes may not be nested", token)
+    end
+
     consume(Syntax::Identifier)
     identifier = last_token
     TypeChecker.register_type(identifier.lexeme)
@@ -100,7 +105,10 @@ class Cosmo::Parser
       mixins = comma_separated { parse_primary }
     end
 
+    @within_class = identifier.lexeme
     body = parse_block
+    @within_class = nil
+
     mixins ||= [] of Expression::Base
     Statement::ClassDef.new(identifier, body, visibility, superclass, mixins)
   end
@@ -768,6 +776,14 @@ class Cosmo::Parser
       ident = last_token
       callee = Expression::Var.new(ident)
       parse_after(callee)
+    elsif match?(Syntax::This)
+      token = last_token
+      if @within_class.nil?
+        Logger.report_error("Invalid '$'", token.lexeme, token)
+      end
+
+      this = Expression::This.new(token, @within_class.not_nil!)
+      parse_after(this)
     elsif match?(Syntax::New)
       token = last_token
       callee = parse_primary

@@ -35,14 +35,16 @@ module Stringify
     hash.each_with_index do |entry, i|
       s.write(("\n" + (TAB * @@indent)).to_slice) if i == 0
       key, value = entry
-      s.write('"'.to_s.to_slice) unless key.is_a?(String)
+      s.write('"'.to_s.to_slice) if key.is_a?(String)
       s.write(key.to_s.to_slice)
-      s.write('"'.to_s.to_slice) unless key.is_a?(String)
+      s.write('"'.to_s.to_slice) if key.is_a?(String)
       s.write(" -> ".to_slice)
       if value.is_a?(Hash)
         s.write(Stringify.hashmap(value, @@indent).to_slice)
       else
-        s.write(value.to_s.to_slice)
+        s.write('"'.to_s.to_slice) if value.is_a?(String)
+        s.write((value.nil? ? "none" : value.to_s).to_slice)
+        s.write('"'.to_s.to_slice) if value.is_a?(String)
       end
 
       s.write(",".to_slice) unless i == hash.size - 1

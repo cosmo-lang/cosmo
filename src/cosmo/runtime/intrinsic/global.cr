@@ -36,9 +36,13 @@ module Cosmo
     def call(args : Array(ValueType)) : Nil
       @interpreter.set_meta("block_return_type", "void")
       mapped = args.map do |arg|
-        return "none" if arg.nil?
-        return arg.to_s unless arg.is_a?(Hash)
-        Stringify.hashmap(arg.as Hash(ValueType, ValueType))
+        if arg.nil?
+          "none"
+        elsif arg.is_a?(Hash)
+          Stringify.hashmap(arg.as Hash(ValueType, ValueType))
+        else
+          arg.to_s
+        end
       end
 
       puts mapped.join('\t')

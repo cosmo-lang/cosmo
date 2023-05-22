@@ -4,7 +4,10 @@ require "./type"
 
 private alias CrystalClass = Class
 module Cosmo
-  private alias NonNestableValueType = LiteralType | Range(Int128 | Int64 | Int32 | Int16 | Int8, Int128 | Int64 | Int32 | Int16 | Int8) | Callable | Class | Type
+  private alias NonNestableValueType = LiteralType |
+    Range(Int128 | Int64 | Int32 | Int16 | Int8, Int128 | Int64 | Int32 | Int16 | Int8) |
+    Callable | Class | ClassInstance | Type
+
   alias ValueType = NonNestableValueType | Array(ValueType) | Hash(ValueType, ValueType)
 end
 
@@ -46,7 +49,7 @@ module Cosmo::TypeChecker
   ALIASES = {} of String => String
 
   private def report_mismatch(typedef : String, value : ValueType, token : Token)
-    got_type = get_mapped(value.class)
+    got_type = value.is_a?(ClassInstance) ? value.name : get_mapped(value.class)
     Logger.report_error("Type mismatch", "Expected '#{typedef}', got '#{got_type}'", token)
   end
 
@@ -199,8 +202,8 @@ module Cosmo::TypeChecker
             if ALIASES.has_key?(registered.name)
               unaliased = ALIASES[registered.name]
               matches = is?(unaliased, value, token)
-            elsif value.is_a?(Hash) && get_mapped(value.class) == "Table"
-              matches = value.as(Hash)["__class"]? == registered.name
+            elsif value.is_a?(ClassInstance)
+              matches = value.name == registered.name
             else
               matches = false
             end
@@ -217,7 +220,7 @@ module Cosmo::TypeChecker
   def assert(typedef : String, value : ValueType, token : Token) : Nil
     matches = is?(typedef, value, token)
 
-    ## assert key & value types
+    # assert key & value types
     if typedef.ends_with?("[]")
       value_type = typedef[0..-3]
       report_mismatch(typedef, value, token) unless value.is_a?(Array)
