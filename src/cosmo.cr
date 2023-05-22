@@ -79,7 +79,8 @@ module Cosmo
     loop do
       line = read_line
       break if line.nil?
-      puts read_source(line, file_path: "repl").to_s
+      result = read_source(line, file_path: "repl")
+      puts result.is_a?(Hash) ? Stringify.hashmap(result.as Hash(ValueType, ValueType)) : result.to_s
     end
   end
 end

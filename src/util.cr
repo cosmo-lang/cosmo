@@ -13,3 +13,45 @@ def get_shard : YAML::Any
   raw_yaml = File.read File.join File.dirname(__FILE__), "..", "shard.yml"
   YAML.parse(raw_yaml)
 end
+
+module Stringify
+  extend self
+
+  @@indent = 0
+  private def push_indent(s : String::Builder) : Nil
+    @@indent += 1
+    s.write((TAB * @@indent).to_slice)
+  end
+
+  private def pop_indent : Nil
+    @@indent -= 1
+  end
+
+  def hashmap(hash : Hash, base_indent : Int = 0) : String
+    @@indent = base_indent
+    s = String::Builder.new("{")
+    push_indent(s)
+
+    hash.each_with_index do |entry, i|
+      s.write(("\n" + (TAB * @@indent)).to_slice) if i == 0
+      key, value = entry
+      s.write('"'.to_s.to_slice) unless key.is_a?(String)
+      s.write(key.to_s.to_slice)
+      s.write('"'.to_s.to_slice) unless key.is_a?(String)
+      s.write(" -> ".to_slice)
+      if value.is_a?(Hash)
+        s.write(Stringify.hashmap(value, @@indent).to_slice)
+      else
+        s.write(value.to_s.to_slice)
+      end
+
+      s.write(",".to_slice) unless i == hash.size - 1
+      s.write("\n".to_slice)
+      s.write((TAB * @@indent).to_slice) unless i == hash.size - 1
+    end
+
+    pop_indent
+    s.write("#{TAB * @@indent}}".to_slice)
+    s.to_s
+  end
+end

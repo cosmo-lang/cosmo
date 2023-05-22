@@ -748,8 +748,7 @@ class Cosmo::Parser
     if match?(Syntax::Plus) || match?(Syntax::Minus) ||
       match?(Syntax::PlusPlus) || match?(Syntax::MinusMinus) ||
       match?(Syntax::Bang) || match?(Syntax::Star) ||
-      match?(Syntax::Hashtag) || match?(Syntax::Tilde) ||
-      match?(Syntax::New)
+      match?(Syntax::Hashtag) || match?(Syntax::Tilde)
 
       op = last_token
       operand = parse_unary

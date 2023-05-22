@@ -38,7 +38,7 @@ module Cosmo::TypeChecker
     Array(Function) => "fn[]",
     Array(ValueType) => "any[]",
     Array => "any[]",
-    Hash => "Table",
+    Hash(ValueType, ValueType) => "Table",
     Range(Int128 | Int16 | Int32 | Int64 | Int8, Int128 | Int16 | Int32 | Int64 | Int8) => "Range"
   }
 
@@ -192,13 +192,15 @@ module Cosmo::TypeChecker
       elsif typedef.ends_with?("?")
         non_nullable_type = typedef[0..-2]
         matches = is?(non_nullable_type + "|void", value, token)
-      else
+      else # TODO: support interface typedefs
         unless matches
           registered = get_registered_type?(typedef, token)
           unless registered.nil?
             if ALIASES.has_key?(registered.name)
               unaliased = ALIASES[registered.name]
               matches = is?(unaliased, value, token)
+            elsif value.is_a?(Hash) && get_mapped(value.class) == "Table"
+              matches = value.as(Hash)["__class"]? == registered.name
             else
               matches = false
             end

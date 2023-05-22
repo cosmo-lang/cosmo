@@ -14,10 +14,12 @@ class Cosmo::Interpreter
   include Expression::Visitor(ValueType)
   include Statement::Visitor(ValueType)
 
+  private alias MetaType = String | Tuple(Token, Hash(String, ValueType))
+
   getter globals = Scope.new
   getter scope : Scope
+  getter meta = {} of String => MetaType
   @locals = {} of Expression::Base => UInt32
-  @meta = {} of String => String
   @file_path : String = ""
   @importable_intrinsics = {} of String => IntrinsicLib
 
@@ -49,7 +51,7 @@ class Cosmo::Interpreter
     @globals.declare(typedef_token, ident_token, value, const: true)
   end
 
-  def set_meta(key : String, value : String?) : Nil
+  def set_meta(key : String, value : MetaType?) : Nil
     return if value.nil?
     @meta[key] = value
   end
@@ -78,9 +80,8 @@ class Cosmo::Interpreter
     end
 
     # Check if "main" fn exists and call it
-    lookup_token = Token.new("main", Syntax::Identifier, "main", Location.new("", 0, 0))
-    main_fn = @globals.lookup?(lookup_token)
-    is_public = @globals.public?(lookup_token)
+    main_fn = @globals.lookup?("main")
+    is_public = @globals.public?("main")
     found_main = !main_fn.nil? && main_fn.is_a?(Function) && is_public
     if found_main
       main_fn = main_fn.as(Function)
@@ -89,7 +90,7 @@ class Cosmo::Interpreter
         Logger.report_error("Invalid main() function", "A main() function may only return 'int'", return_typedef)
       end
 
-      @meta["block_return_type"] = "int"
+      set_meta("block_return_type", "int")
       main_result = main_fn.call([ARGV.map(&.as ValueType)])
       TypeChecker.assert("int", main_result, return_typedef)
     end
@@ -141,7 +142,7 @@ class Cosmo::Interpreter
         if is_fn
           return_type = @meta["block_return_type"]? || "void"
           token = return_node.nil? ? Token.new("none", Syntax::None, nil, Location.new("", 0, 0)) : return_node.token
-          TypeChecker.assert(return_type, return_value, token)
+          TypeChecker.assert(return_type.to_s, return_value, token)
         end
       else
         return_value = execute(block)
@@ -355,13 +356,20 @@ class Cosmo::Interpreter
   def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
     fn = Function.new(self, @scope, stmt)
     typedef = Token.new("func", Syntax::TypeDef, "func", Location.new(@file_path, 0, 0))
-    @scope.declare(
-      typedef,
-      stmt.identifier,
-      fn,
-      const: true,
-      visibility: stmt.visibility
-    )
+    if @meta["this"]?.nil?
+      @scope.declare(
+        typedef,
+        stmt.identifier,
+        fn,
+        const: true,
+        visibility: stmt.visibility
+      )
+    else
+      identifier, instance = @meta["this"].as Tuple(Token, Hash(String, ValueType))
+      instance[stmt.identifier.lexeme] = fn
+      set_meta("this", {identifier, instance})
+      TypeChecker.cast(instance)
+    end
   end
 
   def visit_access_expr(expr : Expression::Access) : ValueType
@@ -390,8 +398,28 @@ class Cosmo::Interpreter
     end
   end
 
-  def visit_new_expr(expr : Expression::New) #: Hash
-    ## TODO: this
+  def visit_new_expr(expr : Expression::New) : ValueType
+    args = [] of Expression::Base
+    class_obj = @scope.lookup(expr.operand.token)
+    if expr.operand.is_a?(Expression::FunctionCall)
+      args = expr.operand.as(Expression::FunctionCall).arguments
+    end
+    TypeChecker.assert("class", class_obj, expr.operand.token)
+
+    set_meta("this", {expr.operand.token, {} of String => ValueType})
+    instance = class_obj.as(Class).construct(args.map { |arg| evaluate(arg) })
+    instance["__class"] = expr.operand.token.lexeme
+    this_meta = {expr.operand.token, instance}
+    set_meta("this", this_meta)
+    TypeChecker.cast(instance)
+  end
+
+  def visit_this_expr(expr : Expression::This) : Hash(String, ValueType)
+    if @meta["this"]?.nil?
+      Logger.report_error("'$' can only be used within a class body", TypeChecker.get_mapped(object.class), expr.token)
+    end
+    _, instance = @meta["this"]
+    instance
   end
 
   def visit_is_expr(expr : Expression::Is) : Bool
@@ -430,14 +458,22 @@ class Cosmo::Interpreter
   end
 
   def visit_var_declaration_expr(expr : Expression::VarDeclaration) : ValueType
+    is_scoped = @meta["this"]?.nil?
     value = evaluate(expr.value)
-    @scope.declare(
-      expr.typedef,
-      expr.var.token,
-      value,
-      const: expr.constant?,
-      visibility: expr.visibility
-    )
+    if is_scoped
+      @scope.declare(
+        expr.typedef,
+        expr.var.token,
+        value,
+        const: expr.constant?,
+        visibility: expr.visibility
+      )
+    else
+      identifier, instance = @meta["this"].as Tuple(Token, Hash(String, ValueType))
+      instance[expr.var.token.lexeme] = value
+      set_meta("this", {identifier, instance})
+      TypeChecker.cast(instance)
+    end
   end
 
   def visit_var_assignment_expr(expr : Expression::VarAssignment) : ValueType
