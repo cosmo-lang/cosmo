@@ -37,7 +37,7 @@ describe Interpreter do
     end
     it "math library" do
       interpreter.interpret("use \"math\"", "test")
-      result = interpreter.interpret("Math->pi", "test")
+      result = interpreter.interpret("Math->π", "test")
       result.as(Float64).should be_close 3.141, 0.001
       result = interpreter.interpret("Math->e", "test")
       result.as(Float64).should be_close 2.718, 0.001

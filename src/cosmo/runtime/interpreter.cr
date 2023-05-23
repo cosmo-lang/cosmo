@@ -48,7 +48,7 @@ class Cosmo::Interpreter
     Token.new(name, Syntax::TypeDef, name, location || Location.new(@file_path, 0, 0))
   end
 
-  def fake_ident(name : String, location : Location? = nil)
+  private def fake_ident(name : String, location : Location? = nil)
     Token.new(name, Syntax::Identifier, name, location || Location.new(@file_path, 0, 0))
   end
 
