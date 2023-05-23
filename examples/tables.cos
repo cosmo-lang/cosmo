@@ -1,15 +1,12 @@
-type Person = string->string
+const string->(string|int) bobert = {{
+  name -> "bobert",
+  address -> "123 bobert st",
+  age -> 69
+}}
 
-Person fn new_person(string name, string address) {
-  {{
-    name -> name,
-    address -> address
-  }}
-}
-
-const Person bobert = new_person("bobert", "123 bobert st")
 puts(bobert.name) ## . is valid
-puts(bobert::address) ## -> is also valid
+puts(bobert::address) ## :: is also valid
+puts(bobert->age)
 
 string->string->string a = {{
   b -> {{

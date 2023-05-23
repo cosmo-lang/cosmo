@@ -200,8 +200,8 @@ class Cosmo::Lexer
       default_char = @source[@position].to_s
       return skip_whitespace if default_char.blank?
 
-      is_ident = default_char.match(/[a-zA-Z_$]/)
-      is_number = default_char.match(/\d/) ||
+      is_ident = !!(/[a-zA-Z_$]/ =~ default_char)
+      is_number = !!(/\d/ =~ default_char) ||
         (default_char == "0" && peek == "x" && peek(2).match(/[0-9a-fA-F]/)) ||
         (default_char == "0" && peek == "b" && peek(2).match(/[01]/))
 
@@ -351,13 +351,15 @@ class Cosmo::Lexer
   private def read_identifier
     ident_str = ""
     until finished?
-      if char_exists?(1) && !peek.match(/[a-zA-Z0-9_$?]/)
+      if char_exists?(1) && !(/[a-zA-Z0-9_$?!]/ =~ peek)
         ident_str += current_char.to_s
         skip_whitespace
         break
       end
       if ident_str.ends_with?("?")
         report_error("Invalid identifier '#{ident_str + advance}'", "An identifier can only contain one '?' character, and only as the last character")
+      elsif ident_str.ends_with?("!")
+        report_error("Invalid identifier '#{ident_str + advance}'", "An identifier can only contain one '!' character, and only as the last character")
       end
       ident_str += advance
     end
