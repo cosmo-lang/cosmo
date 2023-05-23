@@ -88,6 +88,12 @@ describe Interpreter do
       result = interpreter.interpret("'e'", "test")
       result.should eq 'e'
     end
+    it "strings interpolation" do
+      interpreter.interpret("string name = \"johnny\"", "test")
+      interpreter.interpret("int age = 5", "test")
+      result = interpreter.interpret("\"hello %{name}, you are %{age} years old.\"", "test")
+      result.should eq "hello johnny, you are 5 years old."
+    end
     it "vectors" do
       result = interpreter.interpret("[1, 2, 3]", "test")
       result.should eq [1, 2, 3]
