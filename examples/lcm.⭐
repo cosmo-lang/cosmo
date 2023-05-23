@@ -1,0 +1,16 @@
+use "math"
+
+int fn gcd(int x, int y) {
+  unless y == 0 gcd(y, x % y)
+  x
+}
+
+int fn lcm(const int x, const int y) {
+  const float z = (x * y) / gcd(x, y)
+  Math->floor(z)
+}
+
+
+puts(lcm(9, 18)) ## 18
+puts(lcm(8, 5)) ## 40
+puts(lcm(17, 11)) ## 187
