@@ -1,10 +1,10 @@
 require "../syntax/parser"
 require "./hooked_exceptions"
-require "./function"
-require "./class"
+require "./types/function"
+require "./types/class"
+require "./types/type"
 require "./scope"
 require "./operator"
-require "./type"
 require "./resolver"
 require "./intrinsic/lib/math"
 
@@ -48,7 +48,7 @@ class Cosmo::Interpreter
     Token.new(name, Syntax::TypeDef, name, location || Location.new(@file_path, 0, 0))
   end
 
-  private def fake_ident(name : String, location : Location? = nil)
+  def fake_ident(name : String, location : Location? = nil)
     Token.new(name, Syntax::Identifier, name, location || Location.new(@file_path, 0, 0))
   end
 
@@ -154,11 +154,12 @@ class Cosmo::Interpreter
         unless block.nodes.empty?
           return_node = block.nodes.find { |node| node.is_a?(Statement::Return) } || block.nodes.last
           body_nodes = block.nodes[0..-2]
-          body_nodes.each { |expr| execute(expr.as Statement::Base) }
-          return_value = execute(return_node.as Statement::Base) unless return_node.nil?
+          body_nodes.each { |stmt| execute(stmt) }
+          return_value = execute(return_node) unless return_node.nil?
+          # puts return_value, return_node.token.to_s
         end
         if is_fn
-          return_type = @meta["block_return_type"]? || "void"
+          return_type = @meta["block_return_type"]
           token = return_node.nil? ? Token.new("none", Syntax::None, nil, Location.new("", 0, 0)) : return_node.token
           unless return_type.to_s == "void"
             TypeChecker.assert(return_type.to_s, return_value, token)
@@ -442,7 +443,7 @@ class Cosmo::Interpreter
   end
 
   def visit_this_expr(expr : Expression::This) : ValueType
-    res = @scope.lookup?("$")
+    @scope.lookup?("$")
   end
 
   def visit_cast_expr(expr : Expression::Cast) : ValueType
@@ -467,7 +468,7 @@ class Cosmo::Interpreter
   def visit_fn_call_expr(expr : Expression::FunctionCall) : ValueType
     fn = evaluate(expr.callee)
     unless fn.is_a?(Function) || fn.is_a?(IntrinsicFunction)
-      Logger.report_error("Attempt to call", TypeChecker.get_mapped(fn.class), expr.token)
+      Logger.report_error("Attempt to call", fn.is_a?(ClassInstance) ? fn.name : TypeChecker.get_mapped(fn.class), expr.token)
     end
     unless fn.arity.includes?(expr.arguments.size)
       arg_size = fn.arity.begin == fn.arity.end ? fn.arity.begin : fn.arity.to_s
@@ -475,10 +476,7 @@ class Cosmo::Interpreter
     end
 
     arg_values = expr.arguments.map { |arg| evaluate(arg) }
-    enclosing_return_type = @meta["block_return_type"]?
-    result = fn.call(arg_values)
-    set_meta("block_return_type", enclosing_return_type)
-    result
+    fn.call(arg_values)
   end
 
   def visit_var_expr(expr : Expression::Var) : ValueType

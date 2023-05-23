@@ -1,0 +1,24 @@
+class IntSet {
+  public int[] vec
+
+  public IntSet fn construct(const int[]? base_vec) {
+    $->vec = base_vec |: []
+  }
+
+  public void fn push(const int value) {
+    $->vec << value
+  }
+
+  public IntSet fn add$(const IntSet other) {
+    IntSet resultant = new IntSet($->vec)
+    every int n in other->vec
+      resultant->push(n)
+
+    resultant
+  }
+}
+
+const IntSet set_x = new IntSet([1,2,3])
+const IntSet set_y = new IntSet([4,5,6])
+const IntSet set_z = set_x + set_y
+puts(set_z->vec)

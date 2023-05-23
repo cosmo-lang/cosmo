@@ -20,26 +20,31 @@ class Cosmo::Function < Cosmo::Callable
     end
   end
 
-  def call(args : Array(ValueType), return_type_override : String = @definition.return_typedef.value.to_s) : ValueType
+  def call(args : Array(ValueType), return_type_override : String = @definition.return_typedef.lexeme) : ValueType
+    enclosing_return_type = @interpreter.meta["block_return_type"]?
     @interpreter.set_meta("block_return_type", return_type_override)
     scope = Scope.new(@closure)
 
     # assign params
     @definition.parameters.each_with_index do |param, i|
-      value = (args[i] || (param.default_value.nil? ? nil : @interpreter.evaluate(param.default_value.not_nil!))).as ValueType
-      scope.declare(param.typedef, param.identifier, value, const: param.const?)
+      value = args[i]? || (param.default_value.nil? ? nil : @interpreter.evaluate(param.default_value.not_nil!))
+      scope.declare(param.typedef, param.identifier, value.as ValueType, const: param.const?)
     end
 
     result = nil
     begin
       result = @interpreter.execute_block(@definition.body, scope, is_fn: true)
     rescue returner : HookedExceptions::Return
-      result = returner.value
+      result = returner.value unless return_type_override == "void"
     rescue ex : Exception
       raise ex
     end
 
-    @interpreter.delete_meta("block_return_type")
+    if enclosing_return_type.nil?
+      @interpreter.delete_meta("block_return_type")
+    else
+      @interpreter.set_meta("block_return_type", enclosing_return_type)
+    end
     result
   end
 

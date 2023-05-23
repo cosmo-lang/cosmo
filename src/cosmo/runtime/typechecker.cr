@@ -1,6 +1,5 @@
 require "../logger"
 require "./intrinsic/global"
-require "./type"
 
 private alias CrystalClass = Class
 module Cosmo
@@ -26,6 +25,7 @@ module Cosmo::TypeChecker
     Char => "char",
     Bool => "bool",
     Nil => "none",
+    ClassInstance => "classinstance",
     Class => "class",
     Function => "func",
     PutsIntrinsic => "func",
@@ -231,6 +231,7 @@ module Cosmo::TypeChecker
       else # TODO: support interface typedefs
         unless matches
           registered = get_registered_type?(typedef, token)
+
           unless registered.nil?
             if ALIASES.has_key?(registered.name)
               unaliased = ALIASES[registered.name]
@@ -238,10 +239,8 @@ module Cosmo::TypeChecker
             elsif value.is_a?(ClassInstance)
               matches = value.name == registered.name
             else
-              matches = false
+              raise "how did this happen?"
             end
-          else
-            matches = false
           end
         end
       end
@@ -252,6 +251,7 @@ module Cosmo::TypeChecker
 
   def assert(typedef : String, value : ValueType, token : Token) : Nil
     matches = is?(typedef, value, token)
+    # puts typedef, matches
 
     # assert key & value types
     if typedef.ends_with?("[]")

@@ -14,8 +14,9 @@ class Cosmo::Class
     instance = ClassInstance.new(self, args)
     @interpreter.set_meta("this", instance)
     @interpreter.execute_block(@definition.body, Scope.new(@closure))
-    @interpreter.delete_meta("this")
     instance.setup
+    @interpreter.delete_meta("this")
+    instance
   end
 
   def to_s : String
@@ -57,6 +58,7 @@ class Cosmo::ClassInstance
       @constructing = false
     end
 
+    # @parent.interpreter.scope.assign(@parent.interpreter.fake_ident("$"), nil, modifying_instance: true)
     self
   end
 

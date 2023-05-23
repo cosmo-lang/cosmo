@@ -1,16 +1,37 @@
 module Cosmo::Operator
-  private alias ExprType = Expression::BinaryOp | Expression::CompoundAssignment
-
   private abstract class Base
     def initialize(@interpreter : Interpreter)
     end
     abstract def apply(expr : E) : ValueType forall E
   end
 
+  def self.call_meta_method(
+    instance : ClassInstance,
+    operand : ValueType,
+    name : String,
+    op_lexeme : String,
+    op_token : Token
+  ) : ValueType
+
+    meta_method = instance.get_method("add$", include_private: false)
+    unless meta_method.nil?
+      return meta_method.call([ operand ])
+    else
+      Logger.report_error("Invalid '#{op_lexeme}' operand type", instance.class.to_s, op_token)
+    end
+  end
+
   class Plus < Base
     def apply(expr : Expression::BinaryOp, op : String = "+") : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "add$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "add$", op, expr.operator)
+      end
+
       if left.is_a?(Float)
         return left + right if right.is_a?(Float)
         return left + right.to_f if right.is_a?(Int)
@@ -259,12 +280,18 @@ module Cosmo::Operator
     def apply(expr : Expression::BinaryOp) : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
+
       op = "<<"
       if left.is_a?(Int)
         return left << right if right.is_a?(Int)
       elsif left.is_a?(Array)
-        left = @interpreter.add_object_value(expr.operator, left, left.size, right)
-        return @interpreter.scope.assign(expr.token, left)
+        if expr.left.is_a?(Expression::Access) || expr.left.is_a?(Expression::Index)
+          prop_assignment = Expression::PropertyAssignment.new(expr.left, left << right)
+          return @interpreter.evaluate(prop_assignment)
+        else
+          access = @interpreter.add_object_value(expr.operator, left, left.size, right)
+          return @interpreter.scope.assign(expr.token, access)
+        end
       else
         Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
       end

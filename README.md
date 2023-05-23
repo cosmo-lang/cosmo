@@ -7,8 +7,10 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 ## Things I Gotta Do
 
 - Enums
+- Handle infinite recursion
 - `uint` type
 - Allow "!" character identifiers for macro functions
+- Allow unicode characters for identifiers
 - Stack trace
 - Package manager
 - Performance boosts lol
