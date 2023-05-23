@@ -142,10 +142,18 @@ module Cosmo::TypeChecker
       value.to_s
     elsif type.lexeme.includes?("char") && value.to_s.size == 1  # if the type is a char
       value.to_s.chars.first
-    elsif is?(type.lexeme, 1, type) && (value.is_a?(String) || value.is_a?(Float) || value.is_a?(Int)) # if the type is an integer
-      value.to_i
-    elsif is?(type.lexeme, 1.0, type) && (value.is_a?(String) || value.is_a?(Float) || value.is_a?(Int)) # if the type is a float
-      value.to_f
+    elsif is?(type.lexeme, 1, type) && (value.is_a?(String) || value.is_a?(Float) || value.is_a?(Int) || value.is_a?(Bool)) # if the type is an integer
+      if value.is_a?(Bool)
+        value ? 1 : 0
+      else
+        value.to_i
+      end
+    elsif is?(type.lexeme, 1.0, type) && (value.is_a?(String) || value.is_a?(Float) || value.is_a?(Int) || value.is_a?(Bool)) # if the type is a float
+      if value.is_a?(Bool)
+        value ? 1.0 : 0.0
+      else
+        value.to_f
+      end
     elsif is?(type.lexeme, true, type) && (value.is_a?(Float) || value.is_a?(Int)) # if the type is a boolean
       if value.to_i == 1 || value.to_i == 0
         value.to_i == 1
@@ -156,7 +164,8 @@ module Cosmo::TypeChecker
   def cast(value : ValueType, type : Token) : ValueType
     casted = cast?(value, type)
     if casted.nil?
-      Logger.report_error("Failed to cast", "'#{get_mapped(value.class)}' to '#{type.lexeme}'", type)
+      got_type = value.is_a?(ClassInstance) ? value.name : get_mapped(value.class)
+      Logger.report_error("Failed to cast", "'#{got_type}' to '#{type.lexeme}'", type)
     end
     casted
   end

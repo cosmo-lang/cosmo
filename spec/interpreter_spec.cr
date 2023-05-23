@@ -442,6 +442,22 @@ describe Interpreter do
       result = interpreter.interpret("{{yes->true}} is string->bool", "test")
       result.should eq true
     end
+    it "casting" do
+      result = interpreter.interpret("<string>123", "test")
+      result.should eq "123"
+      result = interpreter.interpret("<bool>0", "test")
+      result.should eq false
+      result = interpreter.interpret("<bool>1", "test")
+      result.should eq true
+      result = interpreter.interpret("<char>a", "test")
+      result.should eq 'a'
+      result = interpreter.interpret("<int>false", "test")
+      result.should eq 0
+      result = interpreter.interpret("<int>1.23", "test")
+      result.should eq 1
+      result = interpreter.interpret("<float>10", "test")
+      result.should eq 10.0
+    end
     it "aliases" do
       result = interpreter.interpret("type MyInt = int; MyInt my_int = 123", "test")
       result.should eq 123
