@@ -541,6 +541,8 @@ class Cosmo::Parser
         variable_name = last_token
         if variable_name.lexeme.ends_with?("?")
           Logger.report_error("Invalid identifier '#{variable_name.lexeme}'", "Only function identifiers may include a '?' character", variable_name)
+        elsif variable_name.lexeme.ends_with?("!")
+          Logger.report_error("Invalid identifier '#{variable_name.lexeme}'", "Only function identifiers may include a '!' character", variable_name)
         end
 
         identifier = Expression::Var.new(variable_name)
