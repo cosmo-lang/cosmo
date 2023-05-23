@@ -21,6 +21,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Interfaces
 - Namespaces
 - Classes
+  * operator overloading
   * single inheritance
   * mixins
 - Better type system

@@ -1,0 +1,22 @@
+{
+  "Class Definition": {
+		"prefix": [ "class", "classdef" ],
+		"description": "Create a class with a constructor",
+		"body": [
+			"class ${1:ClassName} {",
+      "\tpublic ${1:ClassName} fn construct() {",
+      "\t\t",
+      "\t}",
+      "}"
+		]
+	},
+  "Public Method Definition": {
+		"prefix": [ "public" ],
+		"description": "Create a public method",
+		"body": [
+      "public ${1:typedef} fn ${2:method_name}() {",
+      "\t",
+      "}"
+		]
+	},
+}
