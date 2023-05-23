@@ -27,6 +27,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ### Fixes
 - Weird expression parsing (`[0].123` evaluates to 0.123??)
+- Private member access within public functions
 - Handle infinite recursion
   * macro function to set recursion depth limit
 - Performance boosts lol
