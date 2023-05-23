@@ -305,7 +305,9 @@ class Cosmo::Interpreter
     unless TypeChecker.is?("string", err, stmt.token)
       Logger.report_error("Throw statement can only be invoked with a string currently, got", TypeChecker.get_mapped(err.class), stmt.token)
     end
-    raise err.to_s
+
+    # TODO: stack traces & error levels
+    Logger.report_error("Error", err.to_s, stmt.token)
   end
 
   def visit_next_stmt(stmt : Statement::Next) : Nil

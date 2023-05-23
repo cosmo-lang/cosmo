@@ -7,7 +7,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 ## Things I Gotta Do
 
 - Enums
-- Throw when defining an already-defined class
 - `uint` type
 - String interpolation literals
 - Allow "!" character identifiers for macros
