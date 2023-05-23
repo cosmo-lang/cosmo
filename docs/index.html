@@ -781,33 +781,23 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
     <use href="#octicon-link"/>
   </svg>
 </a>Things I Gotta Do</h2>
+<h3><a id="features" class="anchor" href="#features">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Features</h3>
 <ul>
 <li>Enums</li>
-<li>Handle infinite recursion</li>
-<li><code>uint</code> type</li>
-<li>Allow &quot;!&quot; character identifiers for macro functions
-<ul>
-<li>macro function to set recursion depth limit</li>
-</ul>
-</li>
-<li>Allow unicode characters for identifiers</li>
-<li>Stack trace</li>
-<li>Package manager</li>
-<li>Performance boosts lol
-<ul>
-<li>Parser</li>
-<li>Interpreter (!!)</li>
-</ul>
-</li>
 <li>Multiple assignment</li>
-<li>Somehow typecheck blocks before execution</li>
-<li>Fix weird expression parsing (<code>[0].123</code> evaluates to 0.123??)</li>
+<li>Allow unicode characters for identifiers</li>
 <li>Literal wrapper classes (vector, table) for utility methods (filter, map, etc)</li>
+<li>Stack trace</li>
+<li><code>uint</code> type</li>
 <li>Interfaces</li>
 <li>Namespaces</li>
 <li>Classes
 <ul>
-<li>operator overloading</li>
+<li>unary <code>+</code>, <code>-</code>, <code>*</code>, and <code>#</code> overloading</li>
 <li>single inheritance</li>
 <li>mixins</li>
 <li>static/protected members</li>
@@ -821,6 +811,33 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </ul>
 </li>
 </ul>
+<h3><a id="fixes" class="anchor" href="#fixes">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Fixes</h3>
+<ul>
+<li>Weird expression parsing (<code>[0].123</code> evaluates to 0.123??)</li>
+<li>Handle infinite recursion
+<ul>
+<li>macro function to set recursion depth limit</li>
+</ul>
+</li>
+<li>Performance boosts lol
+<ul>
+<li>Parser</li>
+<li>Interpreter (!!)</li>
+</ul>
+</li>
+</ul>
+<h3><a id="meta" class="anchor" href="#meta">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Meta</h3>
+<ul>
+<li>Package manager</li>
+</ul>
 <h2><a id="things-i-might-do" class="anchor" href="#things-i-might-do">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -828,7 +845,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </a>Things I Might Do</h2>
 <ul>
 <li>Make declarations immutable by default and replace <code>const</code> with <code>mut</code></li>
-<li>Make into a VM or compiler</li>
+<li>Make into a compiler or bytecode interpreter</li>
 <li>C bindings</li>
 </ul>
 <h2><a id="installation" class="anchor" href="#installation">
