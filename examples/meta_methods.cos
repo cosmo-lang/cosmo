@@ -9,10 +9,23 @@ class IntSet {
     $->vec << value
   }
 
+  public void fn display() {
+    puts($->vec)
+  }
+
   public IntSet fn add$(const IntSet other) {
     IntSet resultant = new IntSet($->vec)
     every int n in other->vec
       resultant->push(n)
+
+    resultant
+  }
+
+  public IntSet fn mul$(const int x) {
+    IntSet resultant = new IntSet($->vec)
+    every int i in 1..x
+      every int n in $->vec
+        resultant->push(n * x)
 
     resultant
   }
@@ -21,4 +34,6 @@ class IntSet {
 const IntSet set_x = new IntSet([1,2,3])
 const IntSet set_y = new IntSet([4,5,6])
 const IntSet set_z = set_x + set_y
-puts(set_z->vec)
+const IntSet set_w = set_x * 3
+set_z->display() ## 1,2,3,4,5,6
+set_w->display() ## 1,2,3,1,2,3,1,2,3

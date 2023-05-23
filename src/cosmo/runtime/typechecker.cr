@@ -239,7 +239,7 @@ module Cosmo::TypeChecker
             elsif value.is_a?(ClassInstance)
               matches = value.name == registered.name
             else
-              raise "how did this happen?"
+              raise "Checking registered type that isn't class instance or alias?: #{registered.name}, got: #{get_mapped(value.class)}"
             end
           end
         end

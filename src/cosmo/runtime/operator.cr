@@ -13,7 +13,7 @@ module Cosmo::Operator
     op_token : Token
   ) : ValueType
 
-    meta_method = instance.get_method("add$", include_private: false)
+    meta_method = instance.get_method(name, include_private: false)
     unless meta_method.nil?
       return meta_method.call([ operand ])
     else
@@ -57,6 +57,13 @@ module Cosmo::Operator
     def apply(expr : Expression::BinaryOp, op : String = "-") : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "sub$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "sub$", op, expr.operator)
+      end
+
       if left.is_a?(Float)
         return left - right if right.is_a?(Float)
         return left - right.to_f if right.is_a?(Int)
@@ -74,6 +81,13 @@ module Cosmo::Operator
     def apply(expr : Expression::BinaryOp, op : String = "*") : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "mul$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "mul$", op, expr.operator)
+      end
+
       if left.is_a?(Float)
         return left * right if right.is_a?(Float)
         return left * right.to_f if right.is_a?(Int)
@@ -91,6 +105,13 @@ module Cosmo::Operator
     def apply(expr : Expression::BinaryOp, op : String = "/") : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "div$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "div$", op, expr.operator)
+      end
+
       if left.is_a?(Float)
         return left / right if right.is_a?(Float)
         return left / right.to_f if right.is_a?(Int)
@@ -108,6 +129,13 @@ module Cosmo::Operator
     def apply(expr : Expression::BinaryOp, op : String = "^") : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "pow$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "pow$", op, expr.operator)
+      end
+
       if left.is_a?(Float)
         return left ** right if right.is_a?(Float)
         return left ** right.to_f if right.is_a?(Int)
@@ -125,7 +153,13 @@ module Cosmo::Operator
     def apply(expr : Expression::BinaryOp, op : String = "%") : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
-      op = '%'
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "mod$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "mod$", op, expr.operator)
+      end
+
       if left.is_a?(Float)
         return left % right if right.is_a?(Float)
         return left % right.to_f if right.is_a?(Int)
@@ -144,6 +178,13 @@ module Cosmo::Operator
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
       op = '<'
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "lt$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "lt$", op, expr.operator)
+      end
+
       if left.is_a?(Float)
         return left < right if right.is_a?(Float)
         return left < right.to_f if right.is_a?(Int)
@@ -162,6 +203,13 @@ module Cosmo::Operator
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
       op = "<="
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "lte$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "lte$", op, expr.operator)
+      end
+
       if left.is_a?(Float)
         return left <= right if right.is_a?(Float)
         return left <= right.to_f if right.is_a?(Int)
@@ -180,6 +228,13 @@ module Cosmo::Operator
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
       op = '>'
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "gt$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "gt$", op, expr.operator)
+      end
+
       if left.is_a?(Float)
         return left > right if right.is_a?(Float)
         return left > right.to_f if right.is_a?(Int)
@@ -198,6 +253,13 @@ module Cosmo::Operator
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
       op = ">="
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "gte$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "gte$", op, expr.operator)
+      end
+
       if left.is_a?(Float)
         return left >= right if right.is_a?(Float)
         return left >= right.to_f if right.is_a?(Int)
@@ -215,6 +277,13 @@ module Cosmo::Operator
     def apply(expr : Expression::UnaryOp) : ValueType
       operand = @interpreter.evaluate(expr.operand)
       op = "~"
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "bnot$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "bnot$", op, expr.operator)
+      end
+
       return ~operand if operand.is_a?(Int)
       Logger.report_error("Invalid '#{op}' operand type", operand.class.to_s, expr.operator)
     end
@@ -225,6 +294,13 @@ module Cosmo::Operator
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
       op = "~"
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "bxor$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "bxor$", op, expr.operator)
+      end
+
       if left.is_a?(Int)
         return left ^ right if right.is_a?(Int)
       else
@@ -239,6 +315,14 @@ module Cosmo::Operator
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
       op = "|"
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "bor$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "bor$", op, expr.operator)
+      end
+
+
       if left.is_a?(Int)
         return left | right if right.is_a?(Int)
       else
@@ -253,6 +337,13 @@ module Cosmo::Operator
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
       op = "&"
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "band$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "band$", op, expr.operator)
+      end
+
       if left.is_a?(Int)
         return left & right if right.is_a?(Int)
       else
@@ -267,6 +358,13 @@ module Cosmo::Operator
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
       op = ">>"
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "bshr$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "bshr$", op, expr.operator)
+      end
+
       if left.is_a?(Int)
         return left >> right if right.is_a?(Int)
       else
@@ -280,8 +378,14 @@ module Cosmo::Operator
     def apply(expr : Expression::BinaryOp) : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
-
       op = "<<"
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "bshl$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "bshl$", op, expr.operator)
+      end
+
       if left.is_a?(Int)
         return left << right if right.is_a?(Int)
       elsif left.is_a?(Array)
@@ -308,6 +412,7 @@ module Cosmo::Operator
       fixed_token.type = Syntax::Plus
       fixed_token.lexeme = "+"
       binary = Expression::BinaryOp.new(left, fixed_token, expr.is_a?(Expression::UnaryOp) ? literal : expr.value)
+
       if left.is_a?(Expression::Var)
         op = Plus.new(@interpreter)
         result = op.apply(binary, op_lexeme)
