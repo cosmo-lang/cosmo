@@ -724,6 +724,13 @@ class Cosmo::Interpreter
     expr.values.map { |v| evaluate(v) }
   end
 
+  def visit_string_interpolation_expr(expr : Expression::StringInterpolation) : ValueType
+    string_parts = expr.parts.map do |part|
+      part.is_a?(String) ? part : evaluate(part).to_s
+    end
+    string_parts.join("")
+  end
+
   def visit_literal_expr(expr : Expression::Literal) : ValueType
     expr.value
   end

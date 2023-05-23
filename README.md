@@ -9,7 +9,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Enums
 - `uint` type
 - String interpolation literals
-- Allow "!" character identifiers for macros
+- Allow "!" character identifiers for macro functions
 - Stack trace
 - Package manager
 - Performance boosts lol

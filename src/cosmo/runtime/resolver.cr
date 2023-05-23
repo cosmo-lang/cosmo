@@ -151,6 +151,12 @@ class Cosmo::Resolver
     resolve(stmt.block)
   end
 
+  def visit_string_interpolation_expr(expr : Expression::StringInterpolation) : Nil
+    expr.parts.each do |part|
+      resolve(part) unless part.is_a?(String)
+    end
+  end
+
   def visit_var_declaration_expr(expr : Expression::VarDeclaration) : Nil
     declare(expr.token)
     resolve(expr.value)

@@ -837,6 +837,51 @@ class Cosmo::Parser
     Expression::VectorLiteral.new(elements, last_token)
   end
 
+  private def extract_interpolation_parts(s : String) : Array(String)
+    pattern = /\%(\{(?:[^{}]|(?R)|\{\{(?:[^{}]|(?R))*\}\})*\})/
+    raw_parts = [] of String
+    match = s.match(pattern)
+
+    unless match.nil?
+      raw_parts << match.pre_match
+      raw_parts << match[0]
+      if !!(pattern =~ match.post_match)
+        raw_parts += extract_interpolation_parts(match.post_match)
+      else
+        raw_parts << match.post_match
+      end
+    end
+
+    raw_parts
+  end
+
+  private def parse_string_interpolation : Expression::StringInterpolation
+    string_token = last_token
+    raw_parts = extract_interpolation_parts(string_token.lexeme)
+    parts = [] of String | Expression::Base
+
+    raw_parts.each do |part|
+      if part.starts_with?("%{")
+        interpolation_parser = Parser.new(part[2..-2], "interpolation:#{@file_path}", @run_benchmarks)
+        statements = interpolation_parser.parse
+        unless statements.size == 1
+          Logger.report_error("Invalid string interpolation", "Only one expression/statement can be used within an interpolation", string_token)
+        end
+
+        root = statements.first
+        unless root.is_a?(Statement::SingleExpression)
+          Logger.report_error("Invalid string interpolation", "Statements are not supported within an interpolation", string_token)
+        end
+
+        parts << root.expression
+      else
+        parts << part
+      end
+    end
+
+    Expression::StringInterpolation.new(parts, string_token)
+  end
+
   # Parse a number and return an AST node
   private def parse_literal : Expression::Literal | Expression::VectorLiteral
     value = current.value
@@ -863,7 +908,11 @@ class Cosmo::Parser
       Expression::BooleanLiteral.new(value.as(Bool), last_token)
     when Syntax::String
       consume_current
-      Expression::StringLiteral.new(value.to_s, last_token)
+      if value.to_s.includes?("%{")
+        parse_string_interpolation
+      else
+        Expression::StringLiteral.new(value.to_s, last_token)
+      end
     when Syntax::Char
       consume_current
       Expression::CharLiteral.new(value.as(Char), last_token)
