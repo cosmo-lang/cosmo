@@ -22,6 +22,33 @@ end
 
 describe Parser do
   describe "parses literals" do
+    it "strings & chars" do
+      stmts = Parser.new("\"hello world\"", "test", false).parse
+      stmts.should_not be_empty
+      expr = stmts.first.as(Statement::SingleExpression).expression
+      expr.should be_a Expression::StringLiteral
+      literal = expr.as Expression::StringLiteral
+      literal.value.should eq "hello world"
+
+      stmts = Parser.new("'a'", "test", false).parse
+      stmts.should_not be_empty
+      expr = stmts.first.as(Statement::SingleExpression).expression
+      expr.should be_a Expression::CharLiteral
+      literal = expr.as Expression::CharLiteral
+      literal.value.should eq 'a'
+    end
+    it "string interpolation" do
+      stmts = Parser.new("\"hello my name is %{name} and i love %{favorite_food}\"", "test", false).parse
+      stmts.should_not be_empty
+      expr = stmts.first.as(Statement::SingleExpression).expression
+      expr.should be_a Expression::StringInterpolation
+      interp = expr.as Expression::StringInterpolation
+      interp.parts.should_not be_empty
+      interp.parts.first.should eq "hello my name is "
+      interp.parts[1].should be_a Expression::Var
+      interp.parts[2].should eq " and i love "
+      interp.parts[3].should be_a Expression::Var
+    end
     it "floats" do
       stmts = Parser.new("6.54321", "test", false).parse
       stmts.should_not be_empty
