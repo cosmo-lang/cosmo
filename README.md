@@ -10,6 +10,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Handle infinite recursion
 - `uint` type
 - Allow "!" character identifiers for macro functions
+  * macro function to set recursion depth limit
 - Allow unicode characters for identifiers
 - Stack trace
 - Package manager

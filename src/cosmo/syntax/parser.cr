@@ -899,6 +899,10 @@ class Cosmo::Parser
 
   # Parse a number and return an AST node
   private def parse_literal : Expression::Literal | Expression::VectorLiteral
+    unless token_exists?
+      Logger.report_error("Expected literal, got", "EOF", last_token)
+    end
+
     value = current.value
     case current.type
     when Syntax::LBracket
