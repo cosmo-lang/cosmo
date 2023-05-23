@@ -108,11 +108,11 @@ class Cosmo::ClassInstance
     self
   end
 
-  def get_member(name : String, token : Token? = nil, include_private : Bool = true, include_protected : Bool = false) : ValueType?
+  def get_member(name : String, token : Token? = nil, include_private : Bool = true, include_protected : Bool = false) : ValueType
     get_method(name, token, include_private, include_protected) || get_field(name, token, include_private, include_protected)
   end
 
-  def get_field(name : String, token : Token? = nil, include_private : Bool = true, include_protected : Bool = false) : ValueType?
+  def get_field(name : String, token : Token? = nil, include_private : Bool = true, include_protected : Bool = false) : ValueType
     field = @public["fields"][name]?
     if include_private
       field ||= @private["fields"][name]?
@@ -126,7 +126,7 @@ class Cosmo::ClassInstance
     unless token.nil? || include_protected || @protected["methods"][name]?.nil?
       Logger.report_error("Attempt to access protected field outside of class definition", name, token)
     end
-    field.as ValueType?
+    field.as ValueType
   end
 
   def get_method(name : String, token : Token? = nil, include_private : Bool = true, include_protected : Bool = false) : Function?

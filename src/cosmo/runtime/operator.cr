@@ -17,7 +17,7 @@ module Cosmo::Operator
     unless meta_method.nil?
       return meta_method.call([ operand ])
     else
-      Logger.report_error("Invalid '#{op_lexeme}' operand type", instance.class.to_s, op_token)
+      Logger.report_error("'#{op_lexeme}' operator metamethod is not defined for", instance.name, op_token)
     end
   end
 
@@ -179,11 +179,11 @@ module Cosmo::Operator
       right = @interpreter.evaluate(expr.right)
       op = '<'
 
-      if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "lt$", op, expr.operator)
-      elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "lt$", op, expr.operator)
-      end
+      # if left.is_a?(ClassInstance)
+      #   return Operator.call_meta_method(left, right, "lt$", op, expr.operator)
+      # elsif right.is_a?(ClassInstance)
+      #   return Operator.call_meta_method(right, left, "lt$", op, expr.operator)
+      # end
 
       if left.is_a?(Float)
         return left < right if right.is_a?(Float)
@@ -229,11 +229,11 @@ module Cosmo::Operator
       right = @interpreter.evaluate(expr.right)
       op = '>'
 
-      if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "gt$", op, expr.operator)
-      elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "gt$", op, expr.operator)
-      end
+      # if left.is_a?(ClassInstance)
+      #   return Operator.call_meta_method(left, right, "gt$", op, expr.operator)
+      # elsif right.is_a?(ClassInstance)
+      #   return Operator.call_meta_method(right, left, "gt$", op, expr.operator)
+      # end
 
       if left.is_a?(Float)
         return left > right if right.is_a?(Float)
@@ -278,10 +278,8 @@ module Cosmo::Operator
       operand = @interpreter.evaluate(expr.operand)
       op = "~"
 
-      if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "bnot$", op, expr.operator)
-      elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "bnot$", op, expr.operator)
+      if operand.is_a?(ClassInstance)
+        return Operator.call_meta_method(operand, nil, "bnot$", op, expr.operator)
       end
 
       return ~operand if operand.is_a?(Int)
