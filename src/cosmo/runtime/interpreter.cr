@@ -365,6 +365,10 @@ class Cosmo::Interpreter
 
   def visit_class_def_stmt(stmt : Statement::ClassDef) : ValueType
     _class = Class.new(self, @scope, stmt)
+    unless @scope.lookup?(stmt.identifier.lexeme).nil?
+      Logger.report_error("Cannot redefine class", "Class #{stmt.identifier.lexeme} is already defined.", stmt.identifier)
+    end
+
     @scope.declare(
       fake_typedef("class"),
       stmt.identifier,
