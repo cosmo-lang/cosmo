@@ -2,7 +2,7 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
   def inject : Nil
     math = {} of String => IntrinsicFunction | Float64
     math["e"] = Math::E
-    math["pi"] = Math::PI
+    math["π"] = Math::PI
     math["floor"] = Floor.new(@i)
     math["ceil"] = Ceil.new(@i)
     math["round"] = Round.new(@i)
