@@ -24,6 +24,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * operator overloading
   * single inheritance
   * mixins
+  * static/protected members
 - Better type system
   * generics
   * casting

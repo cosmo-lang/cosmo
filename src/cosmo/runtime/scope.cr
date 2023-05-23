@@ -30,7 +30,7 @@ class Cosmo::Scope
     visibility : Visibility
   ) : ValueType forall V
 
-    casted_value = TypeChecker.cast(value)
+    casted_value = TypeChecker.as_value_type(value)
     @variables[identifier.lexeme] = {
       type: typedef.is_a?(Token) ? typedef.lexeme : typedef,
       value: casted_value,

@@ -13,6 +13,8 @@ module Cosmo::AST::Expression
     abstract def visit_ternary_op_expr(expr : TernaryOp) : R
     abstract def visit_binary_op_expr(expr : BinaryOp) : R
     abstract def visit_unary_op_expr(expr : UnaryOp) : R
+    abstract def visit_cast_expr(expr : Cast) : R
+    abstract def visit_string_interpolation_expr(expr : StringInterpolation) : R
     abstract def visit_literal_expr(expr : Literal) : R
     abstract def visit_range_literal_expr(expr : RangeLiteral) : R
     abstract def visit_table_literal_expr(expr : TableLiteral) : R
@@ -21,6 +23,29 @@ module Cosmo::AST::Expression
 
   abstract class Base < Node
     abstract def accept(visitor : Visitor(R)) forall R
+  end
+
+  class Cast < Base
+    getter type : TypeRef
+    getter value : Base
+
+    def initialize(@type, @value)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_cast_expr(self)
+    end
+
+    def token : Token
+      @type.token
+    end
+
+    def to_s(indent : Int = 0)
+      "Cast<\n" +
+      "  #{TAB * indent}type: #{@type.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}value: #{@value.to_s(indent + 1)}\n" +
+      "#{TAB * indent}>"
+    end
   end
 
   class TernaryOp < Base

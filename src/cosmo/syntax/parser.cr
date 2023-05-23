@@ -361,6 +361,7 @@ class Cosmo::Parser
   )
 
   # i dont wanna talk about this method
+  # or the one below it
   private def parse_type(
     required : Bool = true,
     check_const : Bool = false,
@@ -761,6 +762,20 @@ class Cosmo::Parser
       op = last_token
       operand = parse_unary
       Expression::UnaryOp.new(op, operand)
+    elsif match?(Syntax::Less)
+      type_info = parse_type(
+        required: true,
+        check_const: false,
+        check_visibility: false
+      )
+
+      if type_info[:type_ref].nil?
+        Logger.report_error("Failed to parse type", last_token.lexeme, last_token)
+      end
+
+      consume(Syntax::Greater)
+      operand = parse_unary
+      Expression::Cast.new(type_info[:type_ref].not_nil!, operand)
     else
       parse_primary
     end

@@ -445,6 +445,11 @@ class Cosmo::Interpreter
     res = @scope.lookup?("$")
   end
 
+  def visit_cast_expr(expr : Expression::Cast) : ValueType
+    value = evaluate(expr.value)
+    TypeChecker.cast(value, expr.type.name)
+  end
+
   def visit_is_expr(expr : Expression::Is) : Bool
     value = evaluate(expr.value)
     TypeChecker.is?(expr.type.name.lexeme, value, expr.token)

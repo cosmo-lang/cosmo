@@ -74,19 +74,19 @@ module Cosmo::TypeChecker
     register_type("void")
   end
 
-  def cast_array(arr : Array(T)) : Array(ValueType) forall T
-    arr.map { |e| cast(e) }
+  def array_as_value_type(arr : Array(T)) : Array(ValueType) forall T
+    arr.map { |e| as_value_type(e) }
   end
 
-  def cast_hash(hash : Hash(K, V)) : Hash(ValueType, ValueType) forall K, V
+  def hash_as_value_type(hash : Hash(K, V)) : Hash(ValueType, ValueType) forall K, V
     res = {} of ValueType => ValueType
-    hash.each { |k, v| res[cast(k)] = cast(v) }
+    hash.each { |k, v| res[as_value_type(k)] = as_value_type(v) }
     res
   end
 
-  def cast(value : T) : ValueType forall T
-    value.is_a?(Array) ? cast_array(value)
-      : value.is_a?(Hash) ? cast_hash(value)
+  def as_value_type(value : T) : ValueType forall T
+    value.is_a?(Array) ? array_as_value_type(value)
+      : value.is_a?(Hash) ? hash_as_value_type(value)
         : value.is_a?(Int128) && value <= Int64::MAX ? value.to_i64 : value.as ValueType
   end
 
@@ -137,7 +137,31 @@ module Cosmo::TypeChecker
     type
   end
 
-  def is?(typedef : String, value, token : Token) : Bool
+  def cast?(value : ValueType, type : Token) : ValueType
+    if is?(type.lexeme, "", type) # if the type is a string
+      value.to_s
+    elsif type.lexeme.includes?("char") && value.to_s.size == 1  # if the type is a char
+      value.to_s.chars.first
+    elsif is?(type.lexeme, 1, type) && (value.is_a?(String) || value.is_a?(Float) || value.is_a?(Int)) # if the type is an integer
+      value.to_i
+    elsif is?(type.lexeme, 1.0, type) && (value.is_a?(String) || value.is_a?(Float) || value.is_a?(Int)) # if the type is a float
+      value.to_f
+    elsif is?(type.lexeme, true, type) && (value.is_a?(Float) || value.is_a?(Int)) # if the type is a boolean
+      if value.to_i == 1 || value.to_i == 0
+        value.to_i == 1
+      end
+    end
+  end
+
+  def cast(value : ValueType, type : Token) : ValueType
+    casted = cast?(value, type)
+    if casted.nil?
+      Logger.report_error("Failed to cast", "'#{get_mapped(value.class)}' to '#{type.lexeme}'", type)
+    end
+    casted
+  end
+
+  def is?(typedef : String, value : ValueType, token : Token) : Bool
     case typedef
     when "Range"
       value.is_a?(Range)
@@ -232,7 +256,7 @@ module Cosmo::TypeChecker
 
       report_mismatch(typedef, value, token) unless value.is_a?(Hash)
 
-      internal = cast_hash(value)
+      internal = hash_as_value_type(value)
       internal.each do |k, v|
         assert(key_type, k, token)
         assert(value_type, v, token)

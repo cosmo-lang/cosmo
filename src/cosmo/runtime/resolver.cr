@@ -173,6 +173,11 @@ class Cosmo::Resolver
     resolve(expr.value.as(Expression::Base)) if expr.value.is_a?(Expression::Base)
   end
 
+  def visit_cast_expr(expr : Expression::Cast) : Nil
+    resolve(expr.type)
+    resolve(expr.value)
+  end
+
   def visit_is_expr(expr : Expression::Is) : Nil
     resolve(expr.value)
     resolve(expr.type)
