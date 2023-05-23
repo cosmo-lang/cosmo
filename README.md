@@ -6,25 +6,17 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ## Things I Gotta Do
 
+### Features
 - Enums
-- Handle infinite recursion
-- `uint` type
-- Allow "!" character identifiers for macro functions
-  * macro function to set recursion depth limit
-- Allow unicode characters for identifiers
-- Stack trace
-- Package manager
-- Performance boosts lol
-  * Parser
-  * Interpreter (!!)
 - Multiple assignment
-- Somehow typecheck blocks before execution
-- Fix weird expression parsing (`[0].123` evaluates to 0.123??)
+- Allow unicode characters for identifiers
 - Literal wrapper classes (vector, table) for utility methods (filter, map, etc)
+- Stack trace
+- `uint` type
 - Interfaces
 - Namespaces
 - Classes
-  * operator overloading
+  * unary `+`, `-`, `*`, and `#` overloading
   * single inheritance
   * mixins
   * static/protected members
@@ -33,10 +25,21 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * casting union types
   * intersections
 
+### Fixes
+- Weird expression parsing (`[0].123` evaluates to 0.123??)
+- Handle infinite recursion
+  * macro function to set recursion depth limit
+- Performance boosts lol
+  * Parser
+  * Interpreter (!!)
+
+### Meta
+- Package manager
+
 ## Things I Might Do
 
 - Make declarations immutable by default and replace `const` with `mut`
-- Make into a VM or compiler
+- Make into a compiler or bytecode interpreter
 - C bindings
 
 ## Installation
