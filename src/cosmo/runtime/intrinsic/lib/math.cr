@@ -37,7 +37,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Int64
-      @interpreter.set_meta("block_return_type", "int")
       TypeChecker.assert("float|int", args.first, token("exp"))
       args.first.as(Number).round(:to_negative).to_i64
     end
@@ -49,7 +48,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Int64
-      @interpreter.set_meta("block_return_type", "int")
       TypeChecker.assert("float|int", args.first, token("exp"))
       args.first.as(Number).round(:to_positive).to_i64
     end
@@ -61,7 +59,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64 | Int64
-      @interpreter.set_meta("block_return_type", "float|int")
       TypeChecker.assert("float|int", args.first, token("round"))
       TypeChecker.assert("int", args.last, token("round"))
 
@@ -77,7 +74,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64 | Int64
-      @interpreter.set_meta("block_return_type", "float|int")
       args.each do |arg|
         TypeChecker.assert("float|int", arg, token("min"))
       end
@@ -97,7 +93,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64 | Int64
-      @interpreter.set_meta("block_return_type", "float|int")
       args.each do |arg|
         TypeChecker.assert("float|int", arg, token("max"))
       end
@@ -117,7 +112,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("exp"))
       x = args.first.as Number
       Math.log2(x).to_f64
@@ -130,7 +124,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("exp"))
       x = args.first.as Number
       Math.log10(x).to_f64
@@ -143,7 +136,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("exp"))
       x = args.first.as Number
       Math.log(x).to_f64
@@ -156,7 +148,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("exp"))
       x = args.first.as Number
       Math.exp(x).to_f64
@@ -169,7 +160,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Int64
-      @interpreter.set_meta("block_return_type", "int")
       TypeChecker.assert("int", args.first, token("isqrt"))
       Math.isqrt(args.first.as Int64)
     end
@@ -181,7 +171,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("sqrt"))
       x = args.first.as Number
       Math.sqrt(x).to_f64
@@ -194,7 +183,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("cbrt"))
       x = args.first.as Number
       Math.cbrt(x).to_f64
@@ -207,7 +195,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("sin"))
       x = args.first.as Number
       Math.sin(x).to_f64
@@ -220,7 +207,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("cos"))
       x = args.first.as Number
       Math.cos(x).to_f64
@@ -233,7 +219,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("tan"))
       x = args.first.as Number
       Math.tan(x).to_f64
@@ -246,7 +231,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("asin"))
       x = args.first.as Number
       Math.asin(x).to_f64
@@ -259,7 +243,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("acos"))
       x = args.first.as(Float64)
       Math.acos(x).to_f64
@@ -272,7 +255,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("atan"))
       x = args.first.as Number
       Math.atan(x).to_f64
@@ -285,7 +267,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("atan2"))
       y = args.first.as Number
       x = args.last.as Number
@@ -299,7 +280,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("sinh"))
       x = args.first.as Number
       Math.sinh(x).to_f64
@@ -312,7 +292,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("cosh"))
       x = args.first.as Number
       Math.cosh(x).to_f64
@@ -325,7 +304,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("tanh"))
       x = args.first.as Number
       Math.tanh(x).to_f64
@@ -338,7 +316,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("asinh"))
       x = args.first.as Number
       Math.asinh(x).to_f64
@@ -351,7 +328,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("acosh"))
       x = args.first.as Number
       Math.acosh(x).to_f64
@@ -364,7 +340,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     end
 
     def call(args : Array(ValueType)) : Float64
-      @interpreter.set_meta("block_return_type", "float")
       TypeChecker.assert("float|int", args.first, token("atanh"))
       x = args.first.as Number
       Math.atanh(x).to_f64

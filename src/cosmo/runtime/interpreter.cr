@@ -156,7 +156,6 @@ class Cosmo::Interpreter
           body_nodes = block.nodes[0..-2]
           body_nodes.each { |stmt| execute(stmt) }
           return_value = execute(return_node) unless return_node.nil?
-          # puts return_value, return_node.token.to_s
         end
         if is_fn
           return_type = @meta["block_return_type"]
