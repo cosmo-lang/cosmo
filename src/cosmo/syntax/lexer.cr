@@ -200,7 +200,7 @@ class Cosmo::Lexer
       default_char = @source[@position].to_s
       return skip_whitespace if default_char.blank?
 
-      is_ident = !!(/[a-zA-Z_$]/ =~ default_char)
+      is_ident = !!(/([a-zA-Z_$]|\p{L})/ =~ default_char)
       is_number = !!(/\d/ =~ default_char) ||
         (default_char == "0" && peek == "x" && peek(2).match(/[0-9a-fA-F]/)) ||
         (default_char == "0" && peek == "b" && peek(2).match(/[01]/))
@@ -351,7 +351,7 @@ class Cosmo::Lexer
   private def read_identifier
     ident_str = ""
     until finished?
-      if char_exists?(1) && !(/[a-zA-Z0-9_$?!]/ =~ peek)
+      if char_exists?(1) && !(/([a-zA-Z0-9_$?!]|\p{L})/ =~ peek)
         ident_str += current_char.to_s
         skip_whitespace
         break
