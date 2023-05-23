@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::AST::Expression::VarAssignment - Cosmo master</title>
+  <title>Cosmo::AST::Expression::Cast - Cosmo master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../../";
   </script>
@@ -96,7 +96,7 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Cast" data-name="cosmo::ast::expression::cast">
+  <li class=" current" data-id="Cosmo/Cosmo/AST/Expression/Cast" data-name="cosmo::ast::expression::cast">
       <a href="../../../Cosmo/AST/Expression/Cast.html">Cast</a>
       
     </li>
@@ -211,7 +211,7 @@
       
     </li>
   
-  <li class=" current" data-id="Cosmo/Cosmo/AST/Expression/VarAssignment" data-name="cosmo::ast::expression::varassignment">
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/VarAssignment" data-name="cosmo::ast::expression::varassignment">
       <a href="../../../Cosmo/AST/Expression/VarAssignment.html">VarAssignment</a>
       
     </li>
@@ -770,12 +770,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Cosmo::AST::Expression::VarAssignment
+  <span class="kind">class</span> Cosmo::AST::Expression::Cast
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../Cosmo/AST/Expression/VarAssignment.html">Cosmo::AST::Expression::VarAssignment</a></li><li class="superclass"><a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a></li><li class="superclass"><a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../Cosmo/AST/Expression/Cast.html">Cosmo::AST::Expression::Cast</a></li><li class="superclass"><a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a></li><li class="superclass"><a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -803,7 +803,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L319" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L28" target="_blank">
         cosmo/syntax/parser/ast/expression_nodes.cr
       </a>
     
@@ -825,7 +825,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28var%3ACosmo%3A%3AAST%3A%3AExpression%3A%3AVar%2Cvalue%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%29-class-method" class="signature"><strong>.new</strong>(var : Cosmo::AST::Expression::Var, value : Cosmo::AST::Expression::Base)</a>
+        <a href="#new%28type%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ATypeRef%2Cvalue%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%29-class-method" class="signature"><strong>.new</strong>(type : Cosmo::AST::Expression::TypeRef, value : Cosmo::AST::Expression::Base)</a>
         
       </li>
     
@@ -863,12 +863,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#value%3ABase-instance-method" class="signature"><strong>#value</strong> : Base</a>
+        <a href="#type%3ATypeRef-instance-method" class="signature"><strong>#type</strong> : TypeRef</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#var%3AVar-instance-method" class="signature"><strong>#var</strong> : Var</a>
+        <a href="#value%3ABase-instance-method" class="signature"><strong>#value</strong> : Base</a>
         
       </li>
     
@@ -990,18 +990,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(var:Cosmo::AST::Expression::Var,value:Cosmo::AST::Expression::Base)-class-method">
+    <div class="entry-detail" id="new(type:Cosmo::AST::Expression::TypeRef,value:Cosmo::AST::Expression::Base)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(var : <a href="../../../Cosmo/AST/Expression/Var.html">Cosmo::AST::Expression::Var</a>, value : <a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a>)
+        def self.<strong>new</strong>(type : <a href="../../../Cosmo/AST/Expression/TypeRef.html">Cosmo::AST::Expression::TypeRef</a>, value : <a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a>)
 
-        <a class="method-permalink" href="#new%28var%3ACosmo%3A%3AAST%3A%3AExpression%3A%3AVar%2Cvalue%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28type%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ATypeRef%2Cvalue%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L323" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1031,7 +1031,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L326" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L35" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1053,14 +1053,14 @@
           <p>Returns a nicely readable and concise string representation of this object,
 typically intended for users.</p>
 <p>This method should usually <strong>not</strong> be overridden. It delegates to
-<code><a href="../../../Cosmo/AST/Expression/VarAssignment.html#to_s%28indent%3AInt%3D0%29-instance-method">#to_s(IO)</a></code> which can be overridden for custom implementations.</p>
+<code><a href="../../../Cosmo/AST/Expression/Cast.html#to_s%28indent%3AInt%3D0%29-instance-method">#to_s(IO)</a></code> which can be overridden for custom implementations.</p>
 <p>Also see <code>#inspect</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L334" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L43" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1076,7 +1076,23 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L330" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L39" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type:TypeRef-instance-method">
+      <div class="signature">
+        
+        def <strong>type</strong> : <a href="../../../Cosmo/AST/Expression/TypeRef.html">TypeRef</a>
+
+        <a class="method-permalink" href="#type%3ATypeRef-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L29" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1092,23 +1108,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L321" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="var:Var-instance-method">
-      <div class="signature">
-        
-        def <strong>var</strong> : <a href="../../../Cosmo/AST/Expression/Var.html">Var</a>
-
-        <a class="method-permalink" href="#var%3AVar-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L320" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L30" target="_blank">View source</a>]
         
       </div>
     </div>

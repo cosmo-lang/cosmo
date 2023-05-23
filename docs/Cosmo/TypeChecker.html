@@ -96,6 +96,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Cast" data-name="cosmo::ast::expression::cast">
+      <a href="../Cosmo/AST/Expression/Cast.html">Cast</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/CharLiteral" data-name="cosmo::ast::expression::charliteral">
       <a href="../Cosmo/AST/Expression/CharLiteral.html">CharLiteral</a>
       
@@ -158,6 +163,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/RangeLiteral" data-name="cosmo::ast::expression::rangeliteral">
       <a href="../Cosmo/AST/Expression/RangeLiteral.html">RangeLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/StringInterpolation" data-name="cosmo::ast::expression::stringinterpolation">
+      <a href="../Cosmo/AST/Expression/StringInterpolation.html">StringInterpolation</a>
       
     </li>
   
@@ -805,7 +815,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/typechecker.cr#L14" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L14" target="_blank">
         cosmo/runtime/typechecker.cr
       </a>
     
@@ -865,22 +875,27 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#array_as_value_type%28arr%3AArray%28T%29%29%3AArray%28ValueType%29forallT-instance-method" class="signature"><strong>#array_as_value_type</strong>(arr : Array(T)) : Array(ValueType) forall T</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#as_value_type%28value%3AT%29%3AValueTypeforallT-instance-method" class="signature"><strong>#as_value_type</strong>(value : T) : ValueType forall T</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#assert%28typedef%3AString%2Cvalue%3AValueType%2Ctoken%3AToken%29%3ANil-instance-method" class="signature"><strong>#assert</strong>(typedef : String, value : ValueType, token : Token) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#cast%28value%3AT%29%3AValueTypeforallT-instance-method" class="signature"><strong>#cast</strong>(value : T) : ValueType forall T</a>
+        <a href="#cast%28value%3AValueType%2Ctype%3AToken%29%3AValueType-instance-method" class="signature"><strong>#cast</strong>(value : ValueType, type : Token) : ValueType</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#cast_array%28arr%3AArray%28T%29%29%3AArray%28ValueType%29forallT-instance-method" class="signature"><strong>#cast_array</strong>(arr : Array(T)) : Array(ValueType) forall T</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#cast_hash%28hash%3AHash%28K%2CV%29%29%3AHash%28ValueType%2CValueType%29forallK%2CV-instance-method" class="signature"><strong>#cast_hash</strong>(hash : Hash(K, V)) : Hash(ValueType, ValueType) forall K, V</a>
+        <a href="#cast%3F%28value%3AValueType%2Ctype%3AToken%29%3AValueType-instance-method" class="signature"><strong>#cast?</strong>(value : ValueType, type : Token) : ValueType</a>
         
       </li>
     
@@ -900,7 +915,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#is%3F%28typedef%3AString%2Cvalue%2Ctoken%3AToken%29%3ABool-instance-method" class="signature"><strong>#is?</strong>(typedef : String, value, token : Token) : Bool</a>
+        <a href="#hash_as_value_type%28hash%3AHash%28K%2CV%29%29%3AHash%28ValueType%2CValueType%29forallK%2CV-instance-method" class="signature"><strong>#hash_as_value_type</strong>(hash : Hash(K, V)) : Hash(ValueType, ValueType) forall K, V</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#is%3F%28typedef%3AString%2Cvalue%3AValueType%2Ctoken%3AToken%29%3ABool-instance-method" class="signature"><strong>#is?</strong>(typedef : String, value : ValueType, token : Token) : Bool</a>
         
       </li>
     
@@ -954,7 +974,39 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/typechecker.cr#L105" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L105" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="array_as_value_type(arr:Array(T)):Array(ValueType)forallT-instance-method">
+      <div class="signature">
+        
+        def <strong>array_as_value_type</strong>(arr : Array(T)) : Array(<a href="../Cosmo/ValueType.html">ValueType</a>) forall T
+
+        <a class="method-permalink" href="#array_as_value_type%28arr%3AArray%28T%29%29%3AArray%28ValueType%29forallT-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L77" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="as_value_type(value:T):ValueTypeforallT-instance-method">
+      <div class="signature">
+        
+        def <strong>as_value_type</strong>(value : T) : <a href="../Cosmo/ValueType.html">ValueType</a> forall T
+
+        <a class="method-permalink" href="#as_value_type%28value%3AT%29%3AValueTypeforallT-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -970,55 +1022,39 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/typechecker.cr#L220" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L253" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="cast(value:T):ValueTypeforallT-instance-method">
+    <div class="entry-detail" id="cast(value:ValueType,type:Token):ValueType-instance-method">
       <div class="signature">
         
-        def <strong>cast</strong>(value : T) : <a href="../Cosmo/ValueType.html">ValueType</a> forall T
+        def <strong>cast</strong>(value : <a href="../Cosmo/ValueType.html">ValueType</a>, type : <a href="../Cosmo/Token.html">Token</a>) : <a href="../Cosmo/ValueType.html">ValueType</a>
 
-        <a class="method-permalink" href="#cast%28value%3AT%29%3AValueTypeforallT-instance-method">#</a>
+        <a class="method-permalink" href="#cast%28value%3AValueType%2Ctype%3AToken%29%3AValueType-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/typechecker.cr#L87" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="cast_array(arr:Array(T)):Array(ValueType)forallT-instance-method">
+    <div class="entry-detail" id="cast?(value:ValueType,type:Token):ValueType-instance-method">
       <div class="signature">
         
-        def <strong>cast_array</strong>(arr : Array(T)) : Array(<a href="../Cosmo/ValueType.html">ValueType</a>) forall T
+        def <strong>cast?</strong>(value : <a href="../Cosmo/ValueType.html">ValueType</a>, type : <a href="../Cosmo/Token.html">Token</a>) : <a href="../Cosmo/ValueType.html">ValueType</a>
 
-        <a class="method-permalink" href="#cast_array%28arr%3AArray%28T%29%29%3AArray%28ValueType%29forallT-instance-method">#</a>
+        <a class="method-permalink" href="#cast%3F%28value%3AValueType%2Ctype%3AToken%29%3AValueType-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/typechecker.cr#L77" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="cast_hash(hash:Hash(K,V)):Hash(ValueType,ValueType)forallK,V-instance-method">
-      <div class="signature">
-        
-        def <strong>cast_hash</strong>(hash : Hash(K, V)) : Hash(<a href="../Cosmo/ValueType.html">ValueType</a>, <a href="../Cosmo/ValueType.html">ValueType</a>) forall K, V
-
-        <a class="method-permalink" href="#cast_hash%28hash%3AHash%28K%2CV%29%29%3AHash%28ValueType%2CValueType%29forallK%2CV-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/typechecker.cr#L81" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L140" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1034,7 +1070,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/typechecker.cr#L56" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L56" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1050,7 +1086,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/typechecker.cr#L134" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L134" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1066,23 +1102,39 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/typechecker.cr#L110" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L110" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="is?(typedef:String,value,token:Token):Bool-instance-method">
+    <div class="entry-detail" id="hash_as_value_type(hash:Hash(K,V)):Hash(ValueType,ValueType)forallK,V-instance-method">
       <div class="signature">
         
-        def <strong>is?</strong>(typedef : String, value, token : <a href="../Cosmo/Token.html">Token</a>) : Bool
+        def <strong>hash_as_value_type</strong>(hash : Hash(K, V)) : Hash(<a href="../Cosmo/ValueType.html">ValueType</a>, <a href="../Cosmo/ValueType.html">ValueType</a>) forall K, V
 
-        <a class="method-permalink" href="#is%3F%28typedef%3AString%2Cvalue%2Ctoken%3AToken%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#hash_as_value_type%28hash%3AHash%28K%2CV%29%29%3AHash%28ValueType%2CValueType%29forallK%2CV-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/typechecker.cr#L140" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L81" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="is?(typedef:String,value:ValueType,token:Token):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>is?</strong>(typedef : String, value : <a href="../Cosmo/ValueType.html">ValueType</a>, token : <a href="../Cosmo/Token.html">Token</a>) : Bool
+
+        <a class="method-permalink" href="#is%3F%28typedef%3AString%2Cvalue%3AValueType%2Ctoken%3AToken%29%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L173" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1098,7 +1150,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/typechecker.cr#L63" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L63" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1114,7 +1166,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/typechecker.cr#L99" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L99" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1130,7 +1182,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/runtime/typechecker.cr#L93" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/runtime/typechecker.cr#L93" target="_blank">View source</a>]
         
       </div>
     </div>

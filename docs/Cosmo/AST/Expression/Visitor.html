@@ -96,6 +96,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Cast" data-name="cosmo::ast::expression::cast">
+      <a href="../../../Cosmo/AST/Expression/Cast.html">Cast</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/CharLiteral" data-name="cosmo::ast::expression::charliteral">
       <a href="../../../Cosmo/AST/Expression/CharLiteral.html">CharLiteral</a>
       
@@ -158,6 +163,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/RangeLiteral" data-name="cosmo::ast::expression::rangeliteral">
       <a href="../../../Cosmo/AST/Expression/RangeLiteral.html">RangeLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/StringInterpolation" data-name="cosmo::ast::expression::stringinterpolation">
+      <a href="../../../Cosmo/AST/Expression/StringInterpolation.html">StringInterpolation</a>
       
     </li>
   
@@ -807,7 +817,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L4" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L4" target="_blank">
         cosmo/syntax/parser/ast/expression_nodes.cr
       </a>
     
@@ -838,6 +848,11 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#visit_cast_expr%28expr%3ACast%29%3AR-instance-method" class="signature"><strong>#visit_cast_expr</strong>(expr : Cast) : R</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#visit_fn_call_expr%28expr%3AFunctionCall%29%3AR-instance-method" class="signature"><strong>#visit_fn_call_expr</strong>(expr : FunctionCall) : R</a>
         
       </li>
@@ -854,6 +869,11 @@
     
       <li class="entry-summary">
         <a href="#visit_range_literal_expr%28expr%3ARangeLiteral%29%3AR-instance-method" class="signature"><strong>#visit_range_literal_expr</strong>(expr : RangeLiteral) : R</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit_string_interpolation_expr%28expr%3AStringInterpolation%29%3AR-instance-method" class="signature"><strong>#visit_string_interpolation_expr</strong>(expr : StringInterpolation) : R</a>
         
       </li>
     
@@ -942,7 +962,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L14" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_cast_expr(expr:Cast):R-instance-method">
+      <div class="signature">
+        abstract 
+        def <strong>visit_cast_expr</strong>(expr : <a href="../../../Cosmo/AST/Expression/Cast.html">Cast</a>) : R
+
+        <a class="method-permalink" href="#visit_cast_expr%28expr%3ACast%29%3AR-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -958,7 +994,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -974,7 +1010,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -990,7 +1026,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1006,7 +1042,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L19" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit_string_interpolation_expr(expr:StringInterpolation):R-instance-method">
+      <div class="signature">
+        abstract 
+        def <strong>visit_string_interpolation_expr</strong>(expr : <a href="../../../Cosmo/AST/Expression/StringInterpolation.html">StringInterpolation</a>) : R
+
+        <a class="method-permalink" href="#visit_string_interpolation_expr%28expr%3AStringInterpolation%29%3AR-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1022,7 +1074,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1038,7 +1090,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1054,7 +1106,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1070,7 +1122,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1086,7 +1138,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1102,7 +1154,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1118,7 +1170,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1134,7 +1186,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1150,7 +1202,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1166,7 +1218,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/ccd8c61c731f2db8cc33ea1469b02e04ff7f36c5/src/cosmo/syntax/parser/ast/expression_nodes.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/fd25af3427a51e11d6cb4f2d44711ee3d18f6a75/src/cosmo/syntax/parser/ast/expression_nodes.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
