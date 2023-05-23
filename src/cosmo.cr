@@ -26,7 +26,7 @@ module Cosmo
         @@options[:debug] = true
       end
       opts.on("-v", "--version", "Outputs the current version of Cosmo") do
-        puts "Cosmo v#{`shards version`}"
+        puts "Cosmo v#{get_shard["version"]}"
         exit
       end
     end.parse(ARGV)
