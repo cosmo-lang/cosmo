@@ -449,7 +449,7 @@ describe Interpreter do
       result.should eq false
       result = interpreter.interpret("<bool>1", "test")
       result.should eq true
-      result = interpreter.interpret("<char>a", "test")
+      result = interpreter.interpret("<char>\"a\"", "test")
       result.should eq 'a'
       result = interpreter.interpret("<int>false", "test")
       result.should eq 0

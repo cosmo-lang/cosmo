@@ -27,7 +27,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * static/protected members
 - Better type system
   * generics
-  * casting
+  * casting union types
   * intersections
 
 ## Things I Might Do
