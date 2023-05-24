@@ -9,6 +9,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 ### Features
 - Enums
 - Multiple assignment
+- Warn when a main function that isn't public is defined
 - Allow unicode characters for identifiers
 - Literal wrapper classes (vector, table) for utility methods (filter, map, etc)
 - Stack trace
@@ -36,6 +37,8 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ### Meta
 - Package manager
+- String interpolation syntax highlighting
+- Playground server
 
 ## Things I Might Do
 

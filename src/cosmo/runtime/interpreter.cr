@@ -8,8 +8,6 @@ require "./operator"
 require "./resolver"
 require "./intrinsic/lib/math"
 
-Cosmo::Version = "v" + get_shard["version"].to_s
-
 class Cosmo::Interpreter
   include Expression::Visitor(ValueType)
   include Statement::Visitor(ValueType)
@@ -34,7 +32,7 @@ class Cosmo::Interpreter
     @scope = @globals
     declare_intrinsic("func", "puts", PutsIntrinsic.new(self))
 
-    version = "Cosmo #{Version}".strip
+    version = "Cosmo #{Version}"
     declare_intrinsic("string", "__version", version)
 
     declare_importable("math", MathLib.new(self))

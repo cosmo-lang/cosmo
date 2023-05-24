@@ -10,9 +10,11 @@ end
 
 # Returns `shard.yml` as a `YAML::Any`
 def get_shard : YAML::Any
-  raw_yaml = File.read File.join File.dirname(__FILE__), "..", "shard.yml"
+  path = File.expand_path File.join File.dirname(__FILE__), "..", "shard.yml"
+  raw_yaml = File.read(path)
   YAML.parse(raw_yaml)
 end
+Cosmo::Version = "v" + get_shard["version"].to_s
 
 module Stringify
   extend self
