@@ -2,11 +2,16 @@ require "./lexer"
 require "./parser/ast"; include Cosmo::AST
 
 class Cosmo::Parser
-  @within_class : String? = nil
   @position : Int32 = 0
   @tokens : Array(Token)
 
-  def initialize(source : String, @file_path : String, @run_benchmarks : Bool)
+  def initialize(
+    source : String,
+    @file_path : String,
+    @run_benchmarks : Bool,
+    @within_class : String? = nil
+  )
+
     TypeChecker.reset if @file_path == "test"
     lexer = Lexer.new(source, @file_path, @run_benchmarks)
     @tokens = lexer.tokenize
@@ -879,7 +884,7 @@ class Cosmo::Parser
 
     raw_parts.each do |part|
       if part.starts_with?("%{")
-        interpolation_parser = Parser.new(part[2..-2], "interpolation:#{@file_path}", @run_benchmarks)
+        interpolation_parser = Parser.new(part[2..-2], "interpolation:#{@file_path}", @run_benchmarks, @within_class)
         statements = interpolation_parser.parse
         unless statements.size == 1
           Logger.report_error("Invalid string interpolation", "Only one expression/statement can be used within an interpolation", string_token)
