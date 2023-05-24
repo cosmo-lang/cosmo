@@ -92,16 +92,20 @@ class Cosmo::Interpreter
     # Check if "main" fn exists and call it
     main_fn = @globals.lookup?("main")
     is_public = @globals.public?("main")
-    found_main = !main_fn.nil? && main_fn.is_a?(Function) && is_public
+    found_main = !main_fn.nil? && main_fn.is_a?(Function)
     if found_main
-      main_fn = main_fn.as(Function)
-      return_typedef = main_fn.definition.return_typedef
-      unless TypeChecker.is?(return_typedef.lexeme, 1, return_typedef) # it's an integer
-        Logger.report_error("Invalid main() function", "A main() function may only return 'int'", return_typedef)
-      end
+      if is_public
+        main_fn = main_fn.as(Function)
+        return_typedef = main_fn.definition.return_typedef
+        unless TypeChecker.is?(return_typedef.lexeme, 1, return_typedef) # it's an integer
+          Logger.report_error("Invalid main() function", "A main() function may only return 'int'", return_typedef)
+        end
 
-      main_result = main_fn.call([ARGV.map(&.as ValueType)])
-      TypeChecker.assert("int", main_result, return_typedef)
+        main_result = main_fn.call([ARGV.map(&.as ValueType)])
+        TypeChecker.assert("int", main_result, return_typedef)
+      else
+        puts "[WARNING]: Found main() function, but it is not public. It will not be called on program execution."
+      end
     end
 
     end_time = Time.monotonic
