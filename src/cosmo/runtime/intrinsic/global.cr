@@ -34,7 +34,6 @@ module Cosmo
     end
 
     def call(args : Array(ValueType)) : Nil
-      @interpreter.set_meta("block_return_type", "void")
       mapped = args.map do |arg|
         if arg.nil?
           "none"

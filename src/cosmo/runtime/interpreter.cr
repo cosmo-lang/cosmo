@@ -100,7 +100,6 @@ class Cosmo::Interpreter
         Logger.report_error("Invalid main() function", "A main() function may only return 'int'", return_typedef)
       end
 
-      set_meta("block_return_type", "int")
       main_result = main_fn.call([ARGV.map(&.as ValueType)])
       TypeChecker.assert("int", main_result, return_typedef)
     end
