@@ -602,12 +602,18 @@ class Cosmo::Interpreter
     operand = evaluate(expr.operand)
     case expr.operator.type
     when Syntax::Plus
+      if operand.is_a?(ClassInstance)
+        return Operator.call_meta_method(operand, nil, "unp$", expr.operator.lexeme, expr.operator)
+      end
       if operand.is_a?(Float) || operand.is_a?(Int)
         operand.abs
       else
         Logger.report_error("Invalid '+' operand type", operand.class.to_s, expr.operator)
       end
     when Syntax::Minus
+      if operand.is_a?(ClassInstance)
+        return Operator.call_meta_method(operand, nil, "unm$", expr.operator.lexeme, expr.operator)
+      end
       if operand.is_a?(Float) || operand.is_a?(Int)
         -operand
       else
@@ -625,8 +631,14 @@ class Cosmo::Interpreter
       op = Operator::Bnot.new(self)
       op.apply(expr)
     when Syntax::Star
+      if operand.is_a?(ClassInstance)
+        return Operator.call_meta_method(operand, nil, "splat$", expr.operator.lexeme, expr.operator)
+      end
       raise "'*' unary operator has not yet implemented."
     when Syntax::Hashtag
+      if operand.is_a?(ClassInstance)
+        return Operator.call_meta_method(operand, nil, "size$", expr.operator.lexeme, expr.operator)
+      end
       unless operand.is_a?(Array) || operand.is_a?(Hash)
         Logger.report_error("Invalid '#' operand type", TypeChecker.get_mapped(operand.class), expr.operator)
       end

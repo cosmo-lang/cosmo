@@ -31,6 +31,10 @@ class IntSet {
 
     resultant
   }
+
+  public int fn size$() {
+    #$->vec
+  }
 }
 
 const IntSet set_x = new IntSet([1,2,3])
@@ -39,5 +43,7 @@ const IntSet set_z = set_x + set_y
 const IntSet set_w = set_x * 3
 set_z->display() ## 1,2,3,4,5,6
 set_w->display() ## 1,2,3,1,2,3,1,2,3
+Assert->eq(#set_z, 6)
 Assert->eq(set_z->vec, [1,2,3,4,5,6])
+Assert->eq(#set_w, 9)
 Assert->eq(set_w->vec, [1,2,3,1,2,3,1,2,3])
