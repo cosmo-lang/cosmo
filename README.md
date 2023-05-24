@@ -34,7 +34,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ### Meta
 - Package manager (WIP)
-- String interpolation syntax highlighting
 - Playground server
 
 ## Things I Might Do
