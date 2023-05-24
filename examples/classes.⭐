@@ -8,7 +8,7 @@ public class Dog {
   }
 
   public void fn woof() {
-    puts($->name + " says woof!")
+    puts("%{$->name} says woof!")
   }
 }
 
