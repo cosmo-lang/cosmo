@@ -1,5 +1,7 @@
+use "assert"
+
 string[] letters = ["a", "b", "c"]
 puts(letters[0], letters[1], letters[2]) ## a b c
 
 letters << "d"
-puts(letters[3]) ## d
+Assert->eq(letters[3], "d")

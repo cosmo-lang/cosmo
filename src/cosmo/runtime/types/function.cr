@@ -13,9 +13,9 @@ class Cosmo::Function < Cosmo::Callable
 
   def initialize(@interpreter, @closure, @definition)
     params = @definition.parameters
-    @non_nullable_params = params.select { |param| !param.default_value.nil? }
+    @non_nullable_params = params.select { |param| !param.default_value.nil? && !param.typedef.lexeme.ends_with?("?") }
     params.each do |param| # initialize params & define default values
-      value = @interpreter.evaluate(param.default_value.as Expression::Base) unless param.default_value.nil?
+      value = @interpreter.evaluate(param.default_value.not_nil!) unless param.default_value.nil?
       @closure.declare(param.typedef, param.identifier, value)
     end
   end

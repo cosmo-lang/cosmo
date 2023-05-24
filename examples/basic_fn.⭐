@@ -1,6 +1,10 @@
+use "assert"
+
 bool fn is_eq(int a = 1, int b) {
   a == b
 }
 
 const bool a = is_eq(none, 1)
-puts(a) ## true
+const bool b = is_eq(5, 1)
+Assert->truthy(a)
+Assert->falsey(b)

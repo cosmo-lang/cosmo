@@ -1,7 +1,12 @@
+use "assert"
 use "math"
 
 int fn gcd(int x, int y) {
-  unless y == 0 gcd(y, x % y)
+  until y == 0 {
+    const int r = x % y
+    x = y
+    y = r
+  }
   x
 }
 
@@ -10,7 +15,6 @@ int fn lcm(const int x, const int y) {
   Math->floor(z)
 }
 
-
-puts(lcm(9, 18)) ## 18
-puts(lcm(8, 5)) ## 40
-puts(lcm(17, 11)) ## 187
+Assert->eq(lcm(9, 18), 18) ## 18
+Assert->eq(lcm(8, 5), 40) ## 40
+Assert->eq(lcm(17, 11), 187) ## 187

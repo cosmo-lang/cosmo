@@ -1,4 +1,0 @@
-public void fn assert(bool condition, string error_msg) {
-  unless condition
-    throw error_msg
-}

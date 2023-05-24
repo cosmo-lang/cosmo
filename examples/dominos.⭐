@@ -1,3 +1,5 @@
+use "assert"
+
 string fn domino(const string sequence) {
   string result = ""
   bool finished = false
@@ -15,6 +17,6 @@ string fn domino(const string sequence) {
   result
 }
 
-puts(domino("||//||")) ## ////||
-puts(domino("||| ||||//| |/")) ## /// ||||//| |/
-puts(domino("||||")) ## ////
+Assert->eq(domino("||//||"), "////||")
+Assert->eq(domino("||| ||||//| |/"), "/// ||||//| |/")
+Assert->eq(domino("||||"), "////")

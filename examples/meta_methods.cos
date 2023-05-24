@@ -1,3 +1,5 @@
+use "assert"
+
 class IntSet {
   public int[] vec
 
@@ -22,10 +24,10 @@ class IntSet {
   }
 
   public IntSet fn mul$(const int x) {
-    IntSet resultant = new IntSet($->vec)
+    IntSet resultant = new IntSet
     every int i in 1..x
       every int n in $->vec
-        resultant->push(n * x)
+        resultant->push(n)
 
     resultant
   }
@@ -37,3 +39,5 @@ const IntSet set_z = set_x + set_y
 const IntSet set_w = set_x * 3
 set_z->display() ## 1,2,3,4,5,6
 set_w->display() ## 1,2,3,1,2,3,1,2,3
+Assert->eq(set_z->vec, [1,2,3,4,5,6])
+Assert->eq(set_w->vec, [1,2,3,1,2,3,1,2,3])

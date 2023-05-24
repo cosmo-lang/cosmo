@@ -1,5 +1,7 @@
+use "assert"
+
 int fn fib(const int n) {
   n < 2 ? n : fib(n - 1) + fib(n - 2)
 }
 
-puts(fib(10)) ## 55
+Assert->eq(fib(10), 55)

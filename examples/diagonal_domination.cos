@@ -1,3 +1,5 @@
+use "assert"
+
 bool fn diagonally_dominant?(int[][] matrix) {
   bool dominant = true
   int i = 0
@@ -23,8 +25,8 @@ bool fn diagonally_dominant?(int[][] matrix) {
   dominant
 }
 
-puts(diagonally_dominant?([
+Assert->truthy(diagonally_dominant?([
   [10, 3, 6],
   [2, -9, -6],
   [1, -1, 4]
-])) ## true
+]))

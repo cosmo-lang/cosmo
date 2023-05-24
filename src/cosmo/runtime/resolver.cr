@@ -62,15 +62,16 @@ class Cosmo::Resolver
 
     scope = @scopes.last
     unless scope.nil?
-      Logger.report_error("Variable already declared in scope", name.lexeme, name) if scope.has_key?(name.lexeme)
+      if scope.has_key?(name.lexeme)
+        # Logger.report_error("Variable already declared in scope", name.lexeme, name)
+      end
       scope[name.lexeme] = false
     end
   end
 
   private def define(name : Token) : Nil
     return if @scopes.empty?
-    scope = @scopes.last
-    scope[name.lexeme] = true unless scope.nil?
+    @scopes.last[name.lexeme] = true unless @scopes.last.nil?
   end
 
   def visit_block_stmt(stmt : Statement::Block) : Nil
@@ -129,10 +130,10 @@ class Cosmo::Resolver
 
   def visit_class_def_stmt(stmt : Statement::ClassDef) : Nil
     declare(stmt.identifier)
-    define(stmt.identifier)
     resolve(stmt.superclass.not_nil!) unless stmt.superclass.nil?
     stmt.mixins.each { |mixin| resolve(mixin) }
     resolve(stmt.body)
+    define(stmt.identifier)
   end
 
   def visit_fn_def_stmt(stmt : Statement::FunctionDef) : Nil
