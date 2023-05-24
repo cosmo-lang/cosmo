@@ -1,4 +1,4 @@
-![build](https://github.com/R-unic/cosmo/actions/workflows/crystal.yml/badge.svg)
+![build](https://github.com/cosmo-lang/cosmo/actions/workflows/crystal.yml/badge.svg)
 # Cosmo
 
 Cosmo is a statically-typed programming language written in pure Crystal.<br>
