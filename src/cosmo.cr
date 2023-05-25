@@ -1,7 +1,6 @@
 require "./cosmo/logger"
 require "./util"
 require "./cosmo/runtime/interpreter"
-require "./playground_server"
 require "option_parser"
 require "readline"
 
@@ -13,9 +12,6 @@ module Cosmo
   begin
     OptionParser.new do |opts|
       opts.banner = "Thank you for using Cosmo!\nUsage: cosmo [OPTIONS] [FILE]"
-      opts.on("--play", "Starts the Cosmo playground server") do
-        @@options[:playground] = true
-      end
       opts.on("-a", "--ast", "Outputs the AST") do
         @@options[:ast] = true
       end
@@ -93,14 +89,8 @@ module Cosmo
   end
 end
 
-if Cosmo.options[:playground]?.nil?
-  if ARGV.empty?
-    Cosmo.run_repl
-  else
-    Cosmo.read_file(ARGV.first)
-  end
+if ARGV.empty?
+  Cosmo.run_repl
 else
-  Cosmo::PlaygroundServer.start do
-    puts "Playground server listening at http://127.0.0.1:6060"
-  end
+  Cosmo.read_file(ARGV.first)
 end
