@@ -2,6 +2,7 @@ module Cosmo::AST::Expression
   include Cosmo::AST
 
   module Visitor(R)
+    abstract def visit_lambda_expr(expr : Lambda) : R
     abstract def visit_this_expr(expr : This) : R
     abstract def visit_is_expr(expr : Is) : R
     abstract def visit_type_alias_expr(expr : TypeAlias) : R
@@ -27,7 +28,7 @@ module Cosmo::AST::Expression
 
   class Lambda < Base
     getter parameters : Array(Parameter)
-    getter body : Statement::Block
+    getter body : Statement::Base
     getter return_typedef : Token
 
     def initialize(@parameters, @body, @return_typedef)

@@ -836,7 +836,7 @@ class Cosmo::Parser
       consume(Syntax::LParen)
       params = parse_fn_params
       consume(Syntax::RParen)
-      body = parse_block
+      body = parse_statement
 
       Expression::Lambda.new(params, body, return_type_info[:type_ref].not_nil!.name)
     elsif match?(Syntax::This)
