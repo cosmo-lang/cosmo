@@ -1,9 +1,8 @@
 use "assert"
-use "math"
 
 bool fn is_prime?(const int n) {
   if n < 2 return false
-  every int i in 2..(Math->isqrt(n) + 1)
+  every int i in 2..(n->isqrt() + 1)
     if n % i == 0 return false
   true
 }

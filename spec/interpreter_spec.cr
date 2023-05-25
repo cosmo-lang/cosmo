@@ -41,11 +41,11 @@ describe Interpreter do
       result.as(Float64).should be_close 3.141, 0.001
       result = interpreter.interpret("Math->e", "test")
       result.as(Float64).should be_close 2.718, 0.001
-      result = interpreter.interpret("Math->round(1.2345, 2)", "test")
+      result = interpreter.interpret("1.2345->round(2)", "test")
       result.should eq 1.23
-      result = interpreter.interpret("Math::floor(1.75)", "test")
+      result = interpreter.interpret("1.75->floor()", "test")
       result.should eq 1
-      result = interpreter.interpret("Math::ceil(1.1)", "test")
+      result = interpreter.interpret("1.1->ceil()", "test")
       result.should eq 2
       result = interpreter.interpret("Math::max(3, 6, 4, 3, 9, 12, 2)", "test")
       result.should eq 12

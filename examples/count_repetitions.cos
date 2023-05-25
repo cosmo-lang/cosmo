@@ -1,10 +1,9 @@
 use "assert"
-use "math"
 
 int fn count_repetitions(string str) {
-  every int i in 1..Math->floor(#str / 2) {
+  every int i in 1..(#str / 2)->floor() {
     string substring = str[0..i]
-    int max_repetitions = Math->floor(#str / #substring)
+    int max_repetitions = (#str / #substring)->floor()
     string constructed = substring * max_repetitions
 
     if constructed == str

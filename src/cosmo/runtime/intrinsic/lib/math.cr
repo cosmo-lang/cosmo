@@ -3,7 +3,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     math = {} of String => IntrinsicFunction | Float64
     math["e"] = Math::E
     math["π"] = Math::PI
-    math["round"] = Round.new(@i)
     math["min"] = Min.new(@i)
     math["max"] = Max.new(@i)
     math["log"] = Log.new(@i)
@@ -26,21 +25,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     math["atan"] = Atan.new(@i)
     math["atan2"] = Atan2.new(@i)
     @i.declare_intrinsic("string->(func|float)", "Math", math)
-  end
-
-  class Round < IntrinsicFunction
-    def arity : Range(UInt32, UInt32)
-      2.to_u..2.to_u
-    end
-
-    def call(args : Array(ValueType)) : Float64 | Int64
-      TypeChecker.assert("float|int", args.first, token("Math->round"))
-      TypeChecker.assert("int", args.last, token("Math->round"))
-
-      n = args.first.as Number
-      d = args.last.as Int64
-      n.round(d).as(Float64 | Int64)
-    end
   end
 
   class Min < IntrinsicFunction
