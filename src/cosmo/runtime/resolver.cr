@@ -23,7 +23,7 @@ class Cosmo::Resolver
     end
   end
 
-  private def resolve_fn(fn : Statement::FunctionDef, type : FnType) : Nil
+  private def resolve_fn(fn : Statement::FunctionDef | Expression::Lambda, type : FnType) : Nil
     enclosing_fn = @current_fn
     @current_fn = type
 
@@ -150,6 +150,10 @@ class Cosmo::Resolver
   def visit_until_stmt(stmt : Statement::Until) : Nil
     resolve(stmt.condition)
     resolve(stmt.block)
+  end
+
+  def visit_lambda_expr(expr : Expression::Lambda) : Nil
+    resolve_fn(expr, FnType::Fn)
   end
 
   def visit_string_interpolation_expr(expr : Expression::StringInterpolation) : Nil

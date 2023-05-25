@@ -8,12 +8,10 @@ Assert->eq(letters[3], "d")
 
 int[] nums = [1,2,3,4,5,6]
 
-int fn double(int n) { n * 2 }
-int[] doubled = nums->map(double)
+int[] doubled = nums->map(&-> int (int n) { n * 2 })
 Assert->eq(doubled, [2,4,6,8,10,12])
 
-bool fn even?(int n) { n % 2 == 0 }
-int[] evens = nums->filter(even?)
+int[] evens = nums->filter(&-> bool (int n) { n % 2 == 0})
 Assert->eq(evens, [2,4,6])
 Assert->eq(evens->first(), 2)
 Assert->eq(doubled->last(), 12)

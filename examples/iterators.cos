@@ -10,8 +10,7 @@ func fn doubled(const int[] nums) {
 }
 
 func fn even(const int[] nums) {
-  bool fn even?(int x) { x % 2 == 0 }
-  const int[] even_nums = nums->filter(even?)
+  const int[] even_nums = nums->filter(&-> bool (int x) { x % 2 == 0 })
   int i = 0
 
   int? fn generator() {

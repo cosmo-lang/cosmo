@@ -1,4 +1,4 @@
 public int fn main(const string[] args) {
   puts("hello, world!", #args, args)
-  return 0
+  0
 }

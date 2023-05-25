@@ -800,6 +800,17 @@ class Cosmo::Parser
     elsif match?(Syntax::Identifier)
       ident = last_token
       Expression::Var.new(ident)
+    elsif check?(Syntax::Ampersand) && check?(Syntax::HyphenArrow, 1)
+      consume(Syntax::Ampersand)
+      consume(Syntax::HyphenArrow)
+      return_type_info = parse_type(check_const: false, check_visibility: false)
+
+      consume(Syntax::LParen)
+      params = parse_fn_params
+      consume(Syntax::RParen)
+      body = parse_block
+
+      Expression::Lambda.new(params, body, return_type_info[:type_ref].not_nil!.name)
     elsif match?(Syntax::This)
       token = last_token
       if @within_class.nil?

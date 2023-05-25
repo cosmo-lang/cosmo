@@ -10,10 +10,13 @@ class Cosmo::Function < Cosmo::Callable
   @closure : Scope
   @class_instance : ClassInstance?
   @non_nullable_params : Array(Expression::Parameter)
-  getter definition : Statement::FunctionDef
+  getter definition : Statement::FunctionDef | Expression::Lambda
 
   def initialize(@interpreter, @closure, @definition, @class_instance = nil)
-    params = @definition.parameters
+    params = @definition.is_a?(Statement::FunctionDef) ?
+      @definition.as(Statement::FunctionDef).parameters
+      : @definition.as(Expression::Lambda).parameters
+
     params.each do |param| # initialize params & define default values
       value = @interpreter.evaluate(param.default_value.not_nil!) unless param.default_value.nil?
       @closure.declare(param.typedef, param.identifier, value)
@@ -24,9 +27,10 @@ class Cosmo::Function < Cosmo::Callable
 
   def call(
     args : Array(ValueType),
-    return_type_override : String = @definition.return_typedef.lexeme
+    return_type_override : String? = nil
   ) : ValueType
 
+    return_type_override ||= return_typedef.lexeme
     enclosing_return_type = @interpreter.meta["block_return_type"]?
     @interpreter.set_meta("block_return_type", return_type_override)
     scope = Scope.new(@closure)
@@ -40,7 +44,11 @@ class Cosmo::Function < Cosmo::Callable
     end
 
     # assign params
-    @definition.parameters.each_with_index do |param, i|
+    params = @definition.is_a?(Statement::FunctionDef) ?
+      @definition.as(Statement::FunctionDef).parameters
+      : @definition.as(Expression::Lambda).parameters
+
+    params.each_with_index do |param, i|
       value = args[i]? || (param.default_value.nil? ? nil : @interpreter.evaluate(param.default_value.not_nil!))
       scope.declare(
         param.typedef,
@@ -52,7 +60,10 @@ class Cosmo::Function < Cosmo::Callable
 
     result = nil
     begin
-      result = @interpreter.execute_block(@definition.body, scope, is_fn: true)
+      body = @definition.is_a?(Statement::FunctionDef) ?
+        @definition.as(Statement::FunctionDef).body
+        : @definition.as(Expression::Lambda).body
+      result = @interpreter.execute_block(body, scope, is_fn: true)
     rescue returner : HookedExceptions::Return
       result = returner.value unless return_type_override == "void"
     rescue ex : Exception
@@ -67,8 +78,18 @@ class Cosmo::Function < Cosmo::Callable
     result
   end
 
+  def return_typedef
+    @definition.is_a?(Statement::FunctionDef) ?
+      @definition.as(Statement::FunctionDef).return_typedef
+      : @definition.as(Expression::Lambda).return_typedef
+  end
+
   def arity : Range(UInt32, UInt32)
-    @non_nullable_params.size.to_u .. @definition.parameters.size.to_u
+    params = @definition.is_a?(Statement::FunctionDef) ?
+      @definition.as(Statement::FunctionDef).parameters
+      : @definition.as(Expression::Lambda).parameters
+
+    @non_nullable_params.size.to_u .. params.size.to_u
   end
 
   def intrinsic? : Bool

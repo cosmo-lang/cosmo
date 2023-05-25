@@ -98,7 +98,7 @@ class Cosmo::Interpreter
     if found_main
       if is_public
         main_fn = main_fn.as(Function)
-        return_typedef = main_fn.definition.return_typedef
+        return_typedef = main_fn.return_typedef
         unless TypeChecker.is?(return_typedef.lexeme, 1, return_typedef) # it's an integer
           Logger.report_error("Invalid main() function", "A main() function may only return 'int'", return_typedef)
         end
@@ -408,6 +408,10 @@ class Cosmo::Interpreter
         visibility: stmt.visibility
       )
     end
+  end
+
+  def visit_lambda_expr(expr : Expression::Lambda) : ValueType
+    Function.new(self, @scope, expr)
   end
 
   def visit_access_expr(expr : Expression::Access) : ValueType
