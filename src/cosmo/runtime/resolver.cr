@@ -169,13 +169,17 @@ class Cosmo::Resolver
   end
 
   def visit_var_assignment_expr(expr : Expression::VarAssignment) : Nil
-    resolve(expr.value)
+    resolve(expr.value.as Expression::Base) if expr.value.is_a?(Expression::Base)
     resolve_local(expr, expr.token)
   end
 
   def visit_property_assignment_expr(expr : Expression::PropertyAssignment) : Nil
     resolve(expr.object)
-    resolve(expr.value.as(Expression::Base)) if expr.value.is_a?(Expression::Base)
+    resolve(expr.value.as Expression::Base) if expr.value.is_a?(Expression::Base)
+  end
+
+  def visit_multiple_assignment_expr(expr : Expression::MultipleAssignment) : Nil
+    expr.assignments.each { |assignment| resolve(assignment) }
   end
 
   def visit_cast_expr(expr : Expression::Cast) : Nil

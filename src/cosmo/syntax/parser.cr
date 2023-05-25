@@ -4,6 +4,7 @@ require "./parser/ast"; include Cosmo::AST
 class Cosmo::Parser
   @position : Int32 = 0
   @tokens : Array(Token)
+  @in_assignment_value = false
 
   def initialize(
     source : String,
@@ -593,6 +594,7 @@ class Cosmo::Parser
               type_info[:visibility]
             )
           else
+            # return parse_multiple_declaration if match?(Syntax::Comma)
             Expression::VarDeclaration.new(
               typedef, identifier,
               Expression::NoneLiteral.new(nil, variable_name),
@@ -609,20 +611,72 @@ class Cosmo::Parser
     end
   end
 
-  # Parse a variable assignment expression and return a node
-  private def parse_assignment : Expression::Base
-    left = parse_compound_assignment
+  private alias AssignmentLocation = Expression::Var | Expression::Index | Expression::Access
+  private def assert_assignment_location(expr : Expression::Base, token : Token = expr.token)
+    unless expr.is_a?(AssignmentLocation)
+      Logger.report_error("Expected identifier or property, got", token.lexeme, token)
+    end
+  end
 
-    while match?(Syntax::Equal)
-      value = parse_assignment
+  private def parse_multiple_assignment(expr : Expression::Base) : Expression::MultipleAssignment
+    assert_assignment_location(expr)
+
+    location_commas = 0
+    locations = [ expr ] of AssignmentLocation
+    while match?(Syntax::Comma)
+      location_commas += 1
+      location = parse_assignment(match_equal: false, check_comma: false)
+      assert_assignment_location(location)
+      locations << location
+    end
+
+    consume(Syntax::Equal)
+    @in_assignment_value = true
+    values = [ parse_expression ]
+    consume(Syntax::Comma) # make sure there's at least one comma, since a multiple assignment requires at least one
+    values << parse_expression
+
+    value_commas = 1
+    while match?(Syntax::Comma)
+      value_commas += 1
+      values << parse_expression
+    end
+
+    @in_assignment_value = false
+    unless location_commas == value_commas
+      Logger.report_error(
+        "Uneven multiple assignment",
+        "The left side of this assignment has #{location_commas} commas while the right side has #{value_commas} commas",
+        values.last.token
+      )
+    end
+
+    nodes = [] of Expression::VarAssignment | Expression::PropertyAssignment
+    locations.each_with_index do |loc, i|
+      respective_value = values[i]
+      if loc.is_a?(Expression::Var)
+        nodes << Expression::VarAssignment.new(loc, respective_value)
+      elsif loc.is_a?(Expression::Index) || loc.is_a?(Expression::Access)
+        nodes << Expression::PropertyAssignment.new(loc, respective_value)
+      end
+    end
+
+    Expression::MultipleAssignment.new(nodes)
+  end
+
+  # Parse a variable assignment expression and return a node
+  private def parse_assignment(match_equal = true, check_comma = true) : Expression::Base
+    left = parse_compound_assignment
+    return parse_multiple_assignment(left) if check?(Syntax::Comma) && !@in_assignment_value && check_comma
+
+    if match_equal && match?(Syntax::Equal)
+      value = parse_expression
+      assert_assignment_location(left, peek(-2))
       if left.is_a?(Expression::Var)
         left = Expression::VarAssignment.new(left, value)
       elsif left.is_a?(Expression::Index) || left.is_a?(Expression::Access)
         left = Expression::PropertyAssignment.new(left, value)
-      else
-        Logger.report_error("Expected identifier or property, got", peek(-2).lexeme, peek(-2))
       end
-
     end
 
     left
@@ -1047,6 +1101,9 @@ class Cosmo::Parser
   # Consume the current token and advance position if token syntax
   # matches the expected syntax, else log an error
   private def consume(syntax : Syntax) : Nil
+    unless token_exists?
+      raise "Failed to consume: Token stream finished"
+    end
     Logger.report_error("Expected #{syntax}, got", current.lexeme, current) unless current.type == syntax
     @position += 1
   end

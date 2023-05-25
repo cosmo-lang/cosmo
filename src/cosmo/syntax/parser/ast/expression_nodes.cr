@@ -8,8 +8,10 @@ module Cosmo::AST::Expression
     abstract def visit_type_alias_expr(expr : TypeAlias) : R
     abstract def visit_type_ref_expr(expr : TypeRef) : R
     abstract def visit_fn_call_expr(expr : FunctionCall) : R
-    abstract def visit_var_declaration_expr(expr : VarDeclaration) : R
+    abstract def visit_multiple_assignment_expr(expr : MultipleAssignment) : R
+    abstract def visit_property_assignment_expr(expr : PropertyAssignment) : R
     abstract def visit_var_assignment_expr(expr : VarAssignment) : R
+    abstract def visit_var_declaration_expr(expr : VarDeclaration) : R
     abstract def visit_var_expr(expr : Var) : R
     abstract def visit_ternary_op_expr(expr : TernaryOp) : R
     abstract def visit_binary_op_expr(expr : BinaryOp) : R
@@ -24,6 +26,29 @@ module Cosmo::AST::Expression
 
   abstract class Base < Node
     abstract def accept(visitor : Visitor(R)) forall R
+  end
+
+  class MultipleAssignment < Base
+    getter assignments : Array(VarAssignment | PropertyAssignment)
+
+    def initialize(@assignments)
+    end
+
+    def accept(visitor : Visitor(R)) : R forall R
+      visitor.visit_multiple_assignment_expr(self)
+    end
+
+    def token : Token
+      @assignments.first.token
+    end
+
+    def to_s(indent : Int = 0)
+      "MultipleAssignment<\n" +
+      "  #{TAB * indent}assignments: [\n" +
+      "    #{TAB * indent}#{@assignments.map(&.to_s(indent + 2).as String).join(",\n#{TAB * (indent + 2)}")}\n" +
+      "  #{TAB * indent}]\n" +
+      "#{TAB * indent}>"
+    end
   end
 
   class Lambda < Base
@@ -104,7 +129,7 @@ module Cosmo::AST::Expression
 
   class PropertyAssignment < Base
     getter object : Access | Index
-    getter value : Base | ValueType
+    property value : Base | ValueType
 
     def initialize(@object, @value)
     end
@@ -347,7 +372,7 @@ module Cosmo::AST::Expression
 
   class VarAssignment < Base
     getter var : Var
-    getter value : Base
+    property value : Base | ValueType
 
     def initialize(@var, @value)
     end
@@ -361,9 +386,14 @@ module Cosmo::AST::Expression
     end
 
     def to_s(indent : Int = 0)
+      if value.is_a?(Base)
+        value_s = @value.as(Base).to_s(indent + 1)
+      else
+        value_s = @value.to_s
+      end
       "VarAssignment<\n" +
       "  #{TAB * indent}var: #{@var.token.value.to_s},\n" +
-      "  #{TAB * indent}value: #{@value.to_s(indent + 1)}\n" +
+      "  #{TAB * indent}value: #{value_s}\n" +
       "#{TAB * indent}>"
     end
   end

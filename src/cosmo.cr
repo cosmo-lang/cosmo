@@ -93,14 +93,14 @@ module Cosmo
   end
 end
 
-if Cosmo.options[:playground]
-  Cosmo::PlaygroundServer.start do
-    puts "Playground server listening at http://127.0.0.1:6060"
-  end
-else
+if Cosmo.options[:playground]?.nil?
   if ARGV.empty?
     Cosmo.run_repl
   else
     Cosmo.read_file(ARGV.first)
+  end
+else
+  Cosmo::PlaygroundServer.start do
+    puts "Playground server listening at http://127.0.0.1:6060"
   end
 end

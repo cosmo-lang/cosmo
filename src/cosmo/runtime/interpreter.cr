@@ -542,8 +542,42 @@ class Cosmo::Interpreter
   end
 
   def visit_var_assignment_expr(expr : Expression::VarAssignment) : ValueType
-    value = evaluate(expr.value)
-    @scope.assign(expr.var.token, value)
+    value = expr.value.is_a?(Expression::Base) ? evaluate(expr.value.as Expression::Base) : expr.value
+    @scope.assign(expr.var.token, TypeChecker.as_value_type(value))
+  end
+
+  def visit_multiple_assignment_expr(expr : Expression::MultipleAssignment) : Array(ValueType)
+    values = [] of ValueType
+    expr.assignments.each do |assignment|
+      if assignment.is_a?(Expression::VarAssignment)
+        if assignment.value.is_a?(Expression::Base)
+          values << evaluate(assignment.value.as Expression::Base)
+        else
+          values << assignment.value.as ValueType
+        end
+      elsif assignment.is_a?(Expression::PropertyAssignment)
+        if assignment.value.is_a?(Expression::Base)
+          values << evaluate(assignment.value.as Expression::Base)
+        else
+          values << assignment.value.as ValueType
+        end
+      end
+    end
+
+    resolved_assignments = expr.assignments.map_with_index do |assignment, i|
+      if assignment.is_a?(Expression::VarAssignment)
+        assignment.value = values[i]
+      elsif assignment.is_a?(Expression::PropertyAssignment)
+        assignment.value = values[i]
+      end
+      assignment
+    end
+
+    resultant_values : Array(ValueType) = resolved_assignments.map do |assignment|
+      evaluate(assignment)
+    end
+
+    resultant_values
   end
 
   def add_object_value(token : Token, object : V, key : ValueType, value : ValueType) : V forall V
