@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 1.7.3">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="Cosmo">
+
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../js/doc.js"></script>
+
+  <meta name="repository-name" content="Cosmo">
+  <title>Cosmo::NumberIntrinsics::Sqrt - Cosmo master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../../index.html">
+          Cosmo
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="Cosmo/toplevel" data-name="top level namespace">
+      <a href="../../toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="Cosmo/Cosmo" data-name="cosmo">
+      <a href="../../Cosmo.html">Cosmo</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/AST" data-name="cosmo::ast">
+      <a href="../../Cosmo/AST.html">AST</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/AST/Expression" data-name="cosmo::ast::expression">
+      <a href="../../Cosmo/AST/Expression.html">Expression</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Access" data-name="cosmo::ast::expression::access">
+      <a href="../../Cosmo/AST/Expression/Access.html">Access</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Base" data-name="cosmo::ast::expression::base">
+      <a href="../../Cosmo/AST/Expression/Base.html">Base</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/BigIntLiteral" data-name="cosmo::ast::expression::bigintliteral">
+      <a href="../../Cosmo/AST/Expression/BigIntLiteral.html">BigIntLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/BinaryOp" data-name="cosmo::ast::expression::binaryop">
+      <a href="../../Cosmo/AST/Expression/BinaryOp.html">BinaryOp</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/BooleanLiteral" data-name="cosmo::ast::expression::booleanliteral">
+      <a href="../../Cosmo/AST/Expression/BooleanLiteral.html">BooleanLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Cast" data-name="cosmo::ast::expression::cast">
+      <a href="../../Cosmo/AST/Expression/Cast.html">Cast</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/CharLiteral" data-name="cosmo::ast::expression::charliteral">
+      <a href="../../Cosmo/AST/Expression/CharLiteral.html">CharLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/CompoundAssignment" data-name="cosmo::ast::expression::compoundassignment">
+      <a href="../../Cosmo/AST/Expression/CompoundAssignment.html">CompoundAssignment</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/FloatLiteral" data-name="cosmo::ast::expression::floatliteral">
+      <a href="../../Cosmo/AST/Expression/FloatLiteral.html">FloatLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/FunctionCall" data-name="cosmo::ast::expression::functioncall">
+      <a href="../../Cosmo/AST/Expression/FunctionCall.html">FunctionCall</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Index" data-name="cosmo::ast::expression::index">
+      <a href="../../Cosmo/AST/Expression/Index.html">Index</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/IntLiteral" data-name="cosmo::ast::expression::intliteral">
+      <a href="../../Cosmo/AST/Expression/IntLiteral.html">IntLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Is" data-name="cosmo::ast::expression::is">
+      <a href="../../Cosmo/AST/Expression/Is.html">Is</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Lambda" data-name="cosmo::ast::expression::lambda">
+      <a href="../../Cosmo/AST/Expression/Lambda.html">Lambda</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Literal" data-name="cosmo::ast::expression::literal">
+      <a href="../../Cosmo/AST/Expression/Literal.html">Literal</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/MultipleAssignment" data-name="cosmo::ast::expression::multipleassignment">
+      <a href="../../Cosmo/AST/Expression/MultipleAssignment.html">MultipleAssignment</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/MultipleDeclaration" data-name="cosmo::ast::expression::multipledeclaration">
+      <a href="../../Cosmo/AST/Expression/MultipleDeclaration.html">MultipleDeclaration</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/New" data-name="cosmo::ast::expression::new">
+      <a href="../../Cosmo/AST/Expression/New.html">New</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/NoneLiteral" data-name="cosmo::ast::expression::noneliteral">
+      <a href="../../Cosmo/AST/Expression/NoneLiteral.html">NoneLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Parameter" data-name="cosmo::ast::expression::parameter">
+      <a href="../../Cosmo/AST/Expression/Parameter.html">Parameter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/PropertyAssignment" data-name="cosmo::ast::expression::propertyassignment">
+      <a href="../../Cosmo/AST/Expression/PropertyAssignment.html">PropertyAssignment</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/RangeLiteral" data-name="cosmo::ast::expression::rangeliteral">
+      <a href="../../Cosmo/AST/Expression/RangeLiteral.html">RangeLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/StringInterpolation" data-name="cosmo::ast::expression::stringinterpolation">
+      <a href="../../Cosmo/AST/Expression/StringInterpolation.html">StringInterpolation</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/StringLiteral" data-name="cosmo::ast::expression::stringliteral">
+      <a href="../../Cosmo/AST/Expression/StringLiteral.html">StringLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/TableLiteral" data-name="cosmo::ast::expression::tableliteral">
+      <a href="../../Cosmo/AST/Expression/TableLiteral.html">TableLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/TernaryOp" data-name="cosmo::ast::expression::ternaryop">
+      <a href="../../Cosmo/AST/Expression/TernaryOp.html">TernaryOp</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/This" data-name="cosmo::ast::expression::this">
+      <a href="../../Cosmo/AST/Expression/This.html">This</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/TypeAlias" data-name="cosmo::ast::expression::typealias">
+      <a href="../../Cosmo/AST/Expression/TypeAlias.html">TypeAlias</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/TypeRef" data-name="cosmo::ast::expression::typeref">
+      <a href="../../Cosmo/AST/Expression/TypeRef.html">TypeRef</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/UnaryOp" data-name="cosmo::ast::expression::unaryop">
+      <a href="../../Cosmo/AST/Expression/UnaryOp.html">UnaryOp</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Var" data-name="cosmo::ast::expression::var">
+      <a href="../../Cosmo/AST/Expression/Var.html">Var</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/VarAssignment" data-name="cosmo::ast::expression::varassignment">
+      <a href="../../Cosmo/AST/Expression/VarAssignment.html">VarAssignment</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/VarDeclaration" data-name="cosmo::ast::expression::vardeclaration">
+      <a href="../../Cosmo/AST/Expression/VarDeclaration.html">VarDeclaration</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/VectorLiteral" data-name="cosmo::ast::expression::vectorliteral">
+      <a href="../../Cosmo/AST/Expression/VectorLiteral.html">VectorLiteral</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Visitor" data-name="cosmo::ast::expression::visitor(r)">
+      <a href="../../Cosmo/AST/Expression/Visitor.html">Visitor</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Node" data-name="cosmo::ast::node">
+      <a href="../../Cosmo/AST/Node.html">Node</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/AST/Statement" data-name="cosmo::ast::statement">
+      <a href="../../Cosmo/AST/Statement.html">Statement</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Base" data-name="cosmo::ast::statement::base">
+      <a href="../../Cosmo/AST/Statement/Base.html">Base</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Block" data-name="cosmo::ast::statement::block">
+      <a href="../../Cosmo/AST/Statement/Block.html">Block</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Break" data-name="cosmo::ast::statement::break">
+      <a href="../../Cosmo/AST/Statement/Break.html">Break</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Case" data-name="cosmo::ast::statement::case">
+      <a href="../../Cosmo/AST/Statement/Case.html">Case</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/ClassDef" data-name="cosmo::ast::statement::classdef">
+      <a href="../../Cosmo/AST/Statement/ClassDef.html">ClassDef</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Every" data-name="cosmo::ast::statement::every">
+      <a href="../../Cosmo/AST/Statement/Every.html">Every</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/FunctionDef" data-name="cosmo::ast::statement::functiondef">
+      <a href="../../Cosmo/AST/Statement/FunctionDef.html">FunctionDef</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/If" data-name="cosmo::ast::statement::if">
+      <a href="../../Cosmo/AST/Statement/If.html">If</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Next" data-name="cosmo::ast::statement::next">
+      <a href="../../Cosmo/AST/Statement/Next.html">Next</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Return" data-name="cosmo::ast::statement::return">
+      <a href="../../Cosmo/AST/Statement/Return.html">Return</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/SingleExpression" data-name="cosmo::ast::statement::singleexpression">
+      <a href="../../Cosmo/AST/Statement/SingleExpression.html">SingleExpression</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Throw" data-name="cosmo::ast::statement::throw">
+      <a href="../../Cosmo/AST/Statement/Throw.html">Throw</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Unless" data-name="cosmo::ast::statement::unless">
+      <a href="../../Cosmo/AST/Statement/Unless.html">Unless</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Until" data-name="cosmo::ast::statement::until">
+      <a href="../../Cosmo/AST/Statement/Until.html">Until</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Use" data-name="cosmo::ast::statement::use">
+      <a href="../../Cosmo/AST/Statement/Use.html">Use</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Visitor" data-name="cosmo::ast::statement::visitor(r)">
+      <a href="../../Cosmo/AST/Statement/Visitor.html">Visitor</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/When" data-name="cosmo::ast::statement::when">
+      <a href="../../Cosmo/AST/Statement/When.html">When</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/While" data-name="cosmo::ast::statement::while">
+      <a href="../../Cosmo/AST/Statement/While.html">While</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/AST/Visibility" data-name="cosmo::ast::visibility">
+      <a href="../../Cosmo/AST/Visibility.html">Visibility</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Callable" data-name="cosmo::callable">
+      <a href="../../Cosmo/Callable.html">Callable</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Class" data-name="cosmo::class">
+      <a href="../../Cosmo/Class.html">Class</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/ClassInstance" data-name="cosmo::classinstance">
+      <a href="../../Cosmo/ClassInstance.html">ClassInstance</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Function" data-name="cosmo::function">
+      <a href="../../Cosmo/Function.html">Function</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/HookedExceptions" data-name="cosmo::hookedexceptions">
+      <a href="../../Cosmo/HookedExceptions.html">HookedExceptions</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/HookedExceptions/Break" data-name="cosmo::hookedexceptions::break">
+      <a href="../../Cosmo/HookedExceptions/Break.html">Break</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/HookedExceptions/Next" data-name="cosmo::hookedexceptions::next">
+      <a href="../../Cosmo/HookedExceptions/Next.html">Next</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/HookedExceptions/Return" data-name="cosmo::hookedexceptions::return">
+      <a href="../../Cosmo/HookedExceptions/Return.html">Return</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Interpreter" data-name="cosmo::interpreter">
+      <a href="../../Cosmo/Interpreter.html">Interpreter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/IntrinsicFunction" data-name="cosmo::intrinsicfunction">
+      <a href="../../Cosmo/IntrinsicFunction.html">IntrinsicFunction</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/IntrinsicLib" data-name="cosmo::intrinsiclib">
+      <a href="../../Cosmo/IntrinsicLib.html">IntrinsicLib</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Keywords" data-name="cosmo::keywords">
+      <a href="../../Cosmo/Keywords.html">Keywords</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Lexer" data-name="cosmo::lexer">
+      <a href="../../Cosmo/Lexer.html">Lexer</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Location" data-name="cosmo::location">
+      <a href="../../Cosmo/Location.html">Location</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Logger" data-name="cosmo::logger">
+      <a href="../../Cosmo/Logger.html">Logger</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/MathLib" data-name="cosmo::mathlib">
+      <a href="../../Cosmo/MathLib.html">MathLib</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Acos" data-name="cosmo::mathlib::acos">
+      <a href="../../Cosmo/MathLib/Acos.html">Acos</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Acosh" data-name="cosmo::mathlib::acosh">
+      <a href="../../Cosmo/MathLib/Acosh.html">Acosh</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Asin" data-name="cosmo::mathlib::asin">
+      <a href="../../Cosmo/MathLib/Asin.html">Asin</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Asinh" data-name="cosmo::mathlib::asinh">
+      <a href="../../Cosmo/MathLib/Asinh.html">Asinh</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Atan" data-name="cosmo::mathlib::atan">
+      <a href="../../Cosmo/MathLib/Atan.html">Atan</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Atan2" data-name="cosmo::mathlib::atan2">
+      <a href="../../Cosmo/MathLib/Atan2.html">Atan2</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Atanh" data-name="cosmo::mathlib::atanh">
+      <a href="../../Cosmo/MathLib/Atanh.html">Atanh</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Cbrt" data-name="cosmo::mathlib::cbrt">
+      <a href="../../Cosmo/MathLib/Cbrt.html">Cbrt</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Cos" data-name="cosmo::mathlib::cos">
+      <a href="../../Cosmo/MathLib/Cos.html">Cos</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Cosh" data-name="cosmo::mathlib::cosh">
+      <a href="../../Cosmo/MathLib/Cosh.html">Cosh</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Exp" data-name="cosmo::mathlib::exp">
+      <a href="../../Cosmo/MathLib/Exp.html">Exp</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Isqrt" data-name="cosmo::mathlib::isqrt">
+      <a href="../../Cosmo/MathLib/Isqrt.html">Isqrt</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Log" data-name="cosmo::mathlib::log">
+      <a href="../../Cosmo/MathLib/Log.html">Log</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Log10" data-name="cosmo::mathlib::log10">
+      <a href="../../Cosmo/MathLib/Log10.html">Log10</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Log2" data-name="cosmo::mathlib::log2">
+      <a href="../../Cosmo/MathLib/Log2.html">Log2</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Max" data-name="cosmo::mathlib::max">
+      <a href="../../Cosmo/MathLib/Max.html">Max</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Min" data-name="cosmo::mathlib::min">
+      <a href="../../Cosmo/MathLib/Min.html">Min</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Sin" data-name="cosmo::mathlib::sin">
+      <a href="../../Cosmo/MathLib/Sin.html">Sin</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Sinh" data-name="cosmo::mathlib::sinh">
+      <a href="../../Cosmo/MathLib/Sinh.html">Sinh</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Tan" data-name="cosmo::mathlib::tan">
+      <a href="../../Cosmo/MathLib/Tan.html">Tan</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/MathLib/Tanh" data-name="cosmo::mathlib::tanh">
+      <a href="../../Cosmo/MathLib/Tanh.html">Tanh</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent open current" data-id="Cosmo/Cosmo/NumberIntrinsics" data-name="cosmo::numberintrinsics">
+      <a href="../../Cosmo/NumberIntrinsics.html">NumberIntrinsics</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/NumberIntrinsics/Ceil" data-name="cosmo::numberintrinsics::ceil">
+      <a href="../../Cosmo/NumberIntrinsics/Ceil.html">Ceil</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/NumberIntrinsics/Floor" data-name="cosmo::numberintrinsics::floor">
+      <a href="../../Cosmo/NumberIntrinsics/Floor.html">Floor</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/NumberIntrinsics/ISqrt" data-name="cosmo::numberintrinsics::isqrt">
+      <a href="../../Cosmo/NumberIntrinsics/ISqrt.html">ISqrt</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/NumberIntrinsics/Round" data-name="cosmo::numberintrinsics::round">
+      <a href="../../Cosmo/NumberIntrinsics/Round.html">Round</a>
+      
+    </li>
+  
+  <li class=" current" data-id="Cosmo/Cosmo/NumberIntrinsics/Sqrt" data-name="cosmo::numberintrinsics::sqrt">
+      <a href="../../Cosmo/NumberIntrinsics/Sqrt.html">Sqrt</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/Operator" data-name="cosmo::operator">
+      <a href="../../Cosmo/Operator.html">Operator</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/AndAssign" data-name="cosmo::operator::andassign">
+      <a href="../../Cosmo/Operator/AndAssign.html">AndAssign</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Band" data-name="cosmo::operator::band">
+      <a href="../../Cosmo/Operator/Band.html">Band</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bnot" data-name="cosmo::operator::bnot">
+      <a href="../../Cosmo/Operator/Bnot.html">Bnot</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bor" data-name="cosmo::operator::bor">
+      <a href="../../Cosmo/Operator/Bor.html">Bor</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bshl" data-name="cosmo::operator::bshl">
+      <a href="../../Cosmo/Operator/Bshl.html">Bshl</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bshr" data-name="cosmo::operator::bshr">
+      <a href="../../Cosmo/Operator/Bshr.html">Bshr</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Bxor" data-name="cosmo::operator::bxor">
+      <a href="../../Cosmo/Operator/Bxor.html">Bxor</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Div" data-name="cosmo::operator::div">
+      <a href="../../Cosmo/Operator/Div.html">Div</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/DivAssign" data-name="cosmo::operator::divassign">
+      <a href="../../Cosmo/Operator/DivAssign.html">DivAssign</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/GT" data-name="cosmo::operator::gt">
+      <a href="../../Cosmo/Operator/GT.html">GT</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/GTE" data-name="cosmo::operator::gte">
+      <a href="../../Cosmo/Operator/GTE.html">GTE</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/LT" data-name="cosmo::operator::lt">
+      <a href="../../Cosmo/Operator/LT.html">LT</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/LTE" data-name="cosmo::operator::lte">
+      <a href="../../Cosmo/Operator/LTE.html">LTE</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Minus" data-name="cosmo::operator::minus">
+      <a href="../../Cosmo/Operator/Minus.html">Minus</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/MinusAssign" data-name="cosmo::operator::minusassign">
+      <a href="../../Cosmo/Operator/MinusAssign.html">MinusAssign</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Mod" data-name="cosmo::operator::mod">
+      <a href="../../Cosmo/Operator/Mod.html">Mod</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/ModAssign" data-name="cosmo::operator::modassign">
+      <a href="../../Cosmo/Operator/ModAssign.html">ModAssign</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Mul" data-name="cosmo::operator::mul">
+      <a href="../../Cosmo/Operator/Mul.html">Mul</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/MulAssign" data-name="cosmo::operator::mulassign">
+      <a href="../../Cosmo/Operator/MulAssign.html">MulAssign</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/OrAssign" data-name="cosmo::operator::orassign">
+      <a href="../../Cosmo/Operator/OrAssign.html">OrAssign</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Plus" data-name="cosmo::operator::plus">
+      <a href="../../Cosmo/Operator/Plus.html">Plus</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/PlusAssign" data-name="cosmo::operator::plusassign">
+      <a href="../../Cosmo/Operator/PlusAssign.html">PlusAssign</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/Pow" data-name="cosmo::operator::pow">
+      <a href="../../Cosmo/Operator/Pow.html">Pow</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/PowAssign" data-name="cosmo::operator::powassign">
+      <a href="../../Cosmo/Operator/PowAssign.html">PowAssign</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Parser" data-name="cosmo::parser">
+      <a href="../../Cosmo/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/PutsIntrinsic" data-name="cosmo::putsintrinsic">
+      <a href="../../Cosmo/PutsIntrinsic.html">PutsIntrinsic</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Resolver" data-name="cosmo::resolver">
+      <a href="../../Cosmo/Resolver.html">Resolver</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Scope" data-name="cosmo::scope">
+      <a href="../../Cosmo/Scope.html">Scope</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/StringIntrinsics" data-name="cosmo::stringintrinsics">
+      <a href="../../Cosmo/StringIntrinsics.html">StringIntrinsics</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/Blank" data-name="cosmo::stringintrinsics::blank">
+      <a href="../../Cosmo/StringIntrinsics/Blank.html">Blank</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/Chars" data-name="cosmo::stringintrinsics::chars">
+      <a href="../../Cosmo/StringIntrinsics/Chars.html">Chars</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Syntax" data-name="cosmo::syntax">
+      <a href="../../Cosmo/Syntax.html">Syntax</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Token" data-name="cosmo::token">
+      <a href="../../Cosmo/Token.html">Token</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Type" data-name="cosmo::type">
+      <a href="../../Cosmo/Type.html">Type</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/TypeChecker" data-name="cosmo::typechecker">
+      <a href="../../Cosmo/TypeChecker.html">TypeChecker</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/ValueType" data-name="cosmo::valuetype">
+      <a href="../../Cosmo/ValueType.html">ValueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/VectorIntrinsics" data-name="cosmo::vectorintrinsics">
+      <a href="../../Cosmo/VectorIntrinsics.html">VectorIntrinsics</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Filter" data-name="cosmo::vectorintrinsics::filter">
+      <a href="../../Cosmo/VectorIntrinsics/Filter.html">Filter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/First" data-name="cosmo::vectorintrinsics::first">
+      <a href="../../Cosmo/VectorIntrinsics/First.html">First</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/FirstNullable" data-name="cosmo::vectorintrinsics::firstnullable">
+      <a href="../../Cosmo/VectorIntrinsics/FirstNullable.html">FirstNullable</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Last" data-name="cosmo::vectorintrinsics::last">
+      <a href="../../Cosmo/VectorIntrinsics/Last.html">Last</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/LastNullable" data-name="cosmo::vectorintrinsics::lastnullable">
+      <a href="../../Cosmo/VectorIntrinsics/LastNullable.html">LastNullable</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Map" data-name="cosmo::vectorintrinsics::map">
+      <a href="../../Cosmo/VectorIntrinsics/Map.html">Map</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/FnType" data-name="fntype">
+      <a href="../../FnType.html">FnType</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/LiteralType" data-name="literaltype">
+      <a href="../../LiteralType.html">LiteralType</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Stringify" data-name="stringify">
+      <a href="../../Stringify.html">Stringify</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Cosmo::NumberIntrinsics::Sqrt
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Cosmo/NumberIntrinsics/Sqrt.html">Cosmo::NumberIntrinsics::Sqrt</a></li><li class="superclass"><a href="../../Cosmo/IntrinsicFunction.html">Cosmo::IntrinsicFunction</a></li><li class="superclass"><a href="../../Cosmo/Callable.html">Cosmo::Callable</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/R-unic/cosmo/blob/3f8e31c60f51480c5f7b2b302f6bca41b3afecc5/src/cosmo/runtime/intrinsic/number.cr#L47" target="_blank">
+        cosmo/runtime/intrinsic/number.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28interpreter%3AInterpreter%2C_self%3ANum%2Ctoken%3AToken%29-class-method" class="signature"><strong>.new</strong>(interpreter : Interpreter, _self : Num, token : Token)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#arity%3ARange%28UInt32%2CUInt32%29-instance-method" class="signature"><strong>#arity</strong> : Range(UInt32, UInt32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#call%28args%3AArray%28ValueType%29%29%3AInt64%7CFloat64-instance-method" class="signature"><strong>#call</strong>(args : Array(ValueType)) : Int64 | Float64</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../../Cosmo/IntrinsicFunction.html">Cosmo::IntrinsicFunction</a></code></h3>
+  
+  
+    <a href="../../Cosmo/IntrinsicFunction.html#call%28args%3AArray%28ValueType%29%29%3AValueType-instance-method" class="tooltip">
+      <span>call(args : Array(ValueType)) : ValueType</span>
+    call</a>, 
+    
+  
+    <a href="../../Cosmo/IntrinsicFunction.html#intrinsic%3F%3ABool-instance-method" class="tooltip">
+      <span>intrinsic? : Bool</span>
+    intrinsic?</a>, 
+    
+  
+    <a href="../../Cosmo/IntrinsicFunction.html#to_s%3AString-instance-method" class="tooltip">
+      <span>to_s : String</span>
+    to_s</a>, 
+    
+  
+    <a href="../../Cosmo/IntrinsicFunction.html#token%28name%3AString%29%3AToken-instance-method" class="tooltip">
+      <span>token(name : String) : Token</span>
+    token</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../../Cosmo/IntrinsicFunction.html">Cosmo::IntrinsicFunction</a></code></h3>
+  
+  
+    <a href="../../Cosmo/IntrinsicFunction.html#new%28interpreter%3AInterpreter%29-class-method" class="tooltip">
+      <span>new(interpreter : Interpreter)</span>
+    new</a>
+    
+  
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../../Cosmo/Callable.html">Cosmo::Callable</a></code></h3>
+  
+  
+    <a href="../../Cosmo/Callable.html#arity%3ARange%28UInt32%2CUInt32%29-instance-method" class="tooltip">
+      <span>arity : Range(UInt32, UInt32)</span>
+    arity</a>, 
+    
+  
+    <a href="../../Cosmo/Callable.html#call%28args%3AArray%28ValueType%29%29%3AValueType-instance-method" class="tooltip">
+      <span>call(args : Array(ValueType)) : ValueType</span>
+    call</a>, 
+    
+  
+    <a href="../../Cosmo/Callable.html#intrinsic%3F%3ABool-instance-method" class="tooltip">
+      <span>intrinsic? : Bool</span>
+    intrinsic?</a>, 
+    
+  
+    <a href="../../Cosmo/Callable.html#to_s%3AString-instance-method" class="tooltip">
+      <span>to_s : String</span>
+    to_s</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(interpreter:Interpreter,_self:Num,token:Token)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(interpreter : <a href="../../Cosmo/Interpreter.html">Interpreter</a>, _self : Num, token : <a href="../../Cosmo/Token.html">Token</a>)
+
+        <a class="method-permalink" href="#new%28interpreter%3AInterpreter%2C_self%3ANum%2Ctoken%3AToken%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/3f8e31c60f51480c5f7b2b302f6bca41b3afecc5/src/cosmo/runtime/intrinsic/number.cr#L48" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="arity:Range(UInt32,UInt32)-instance-method">
+      <div class="signature">
+        
+        def <strong>arity</strong> : Range(UInt32, UInt32)
+
+        <a class="method-permalink" href="#arity%3ARange%28UInt32%2CUInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/3f8e31c60f51480c5f7b2b302f6bca41b3afecc5/src/cosmo/runtime/intrinsic/number.cr#L57" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="call(args:Array(ValueType)):Int64|Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>call</strong>(args : Array(<a href="../../Cosmo/ValueType.html">ValueType</a>)) : Int64 | Float64
+
+        <a class="method-permalink" href="#call%28args%3AArray%28ValueType%29%29%3AInt64%7CFloat64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/3f8e31c60f51480c5f7b2b302f6bca41b3afecc5/src/cosmo/runtime/intrinsic/number.cr#L61" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
