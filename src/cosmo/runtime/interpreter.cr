@@ -669,7 +669,7 @@ class Cosmo::Interpreter
       if operand.is_a?(ClassInstance)
         return Operator.call_meta_method(operand, nil, "size$", expr.operator.lexeme, expr.operator)
       end
-      unless operand.is_a?(Array) || operand.is_a?(Hash)
+      unless operand.is_a?(Array) || operand.is_a?(Hash) || operand.is_a?(String) || operand.is_a?(Range)
         Logger.report_error("Invalid '#' operand type", TypeChecker.get_mapped(operand.class), expr.operator)
       end
       operand.size

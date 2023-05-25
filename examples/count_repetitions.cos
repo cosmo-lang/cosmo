@@ -1,9 +1,33 @@
+use "assert"
+use "math"
+
 int fn count_repetitions(string s) {
-  char first = s[0]
-  1
+  int repetitions = 0
+
+  every int sub_length in 1..(Math->floor(#s / 2) + 1)
+    if #s % sub_length == 0 {
+      bool possible = true
+      int count = Math->floor(#s / sub_length)
+      string first_sub = s[0..sub_length]
+
+      every int i in 1..count {
+        string sub = s[(i * sub_length)..((i + 1) * sub_length)]
+        unless sub == first_sub {
+          possible = false
+          break
+        }
+      }
+
+      if possible {
+        repetitions = count
+        break
+      }
+    }
+
+  repetitions
 }
 
-count_repetitions("abcabcabcabc") ## 4
-count_repetitions("bcbcbc") ## 3
-count_repetitions("llbllbllbllbllbllb") ## 6
-count_repetitions("kc") ## 1
+Assert->eq(count_repetitions("abcabcabcabc"), 4)
+Assert->eq(count_repetitions("bcbcbc"), 3)
+Assert->eq(count_repetitions("llbllbllbllbllbllb"), 6)
+Assert->eq(count_repetitions("kc"), 1)

@@ -11,7 +11,7 @@
 		]
 	},
   "Public Method Definition": {
-		"prefix": [ "public" ],
+		"prefix": [ "pub", "public" ],
 		"description": "Create a public method",
 		"body": [
       "public ${1:typedef} fn ${2:method_name}() {",
