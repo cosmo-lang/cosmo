@@ -136,6 +136,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Lambda" data-name="cosmo::ast::expression::lambda">
+      <a href="Cosmo/AST/Expression/Lambda.html">Lambda</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Literal" data-name="cosmo::ast::expression::literal">
       <a href="Cosmo/AST/Expression/Literal.html">Literal</a>
       
@@ -701,6 +706,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/PlaygroundServer" data-name="cosmo::playgroundserver">
+      <a href="Cosmo/PlaygroundServer.html">PlaygroundServer</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/PutsIntrinsic" data-name="cosmo::putsintrinsic">
       <a href="Cosmo/PutsIntrinsic.html">PutsIntrinsic</a>
       
@@ -738,6 +748,36 @@
   
   <li class=" " data-id="Cosmo/Cosmo/ValueType" data-name="cosmo::valuetype">
       <a href="Cosmo/ValueType.html">ValueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/VectorIntrinsics" data-name="cosmo::vectorintrinsics">
+      <a href="Cosmo/VectorIntrinsics.html">VectorIntrinsics</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Filter" data-name="cosmo::vectorintrinsics::filter">
+      <a href="Cosmo/VectorIntrinsics/Filter.html">Filter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/First" data-name="cosmo::vectorintrinsics::first">
+      <a href="Cosmo/VectorIntrinsics/First.html">First</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Last" data-name="cosmo::vectorintrinsics::last">
+      <a href="Cosmo/VectorIntrinsics/Last.html">Last</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Map" data-name="cosmo::vectorintrinsics::map">
+      <a href="Cosmo/VectorIntrinsics/Map.html">Map</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -789,7 +829,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 <ul>
 <li>Enums</li>
 <li>Multiple assignment</li>
-<li>Literal wrapper classes (vector, table) for utility methods (filter, map, etc)</li>
+<li>Utility methods for: table, string</li>
 <li>Stack trace</li>
 <li><code>uint</code> type</li>
 <li>Interfaces</li>
@@ -816,18 +856,12 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </a>Fixes</h3>
 <ul>
 <li>Weird expression parsing (<code>[0].123</code> evaluates to 0.123??)</li>
-<li>Private member access within public functions</li>
 <li>Handle infinite recursion
 <ul>
 <li>macro function to set recursion depth limit</li>
 </ul>
 </li>
-<li>Performance boosts lol
-<ul>
-<li>Lexer</li>
-<li>Interpreter (!!)</li>
-</ul>
-</li>
+<li>Performance boosts lol</li>
 </ul>
 <h3><a id="meta" class="anchor" href="#meta">
   <svg class="octicon-link" aria-hidden="true">
@@ -835,7 +869,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Meta</h3>
 <ul>
-<li>Package manager (WIP)</li>
+<li>Package manager (<a href="https://github.com/cosmo-lang/stars">WIP</a>)</li>
 <li>Playground server</li>
 </ul>
 <h2><a id="things-i-might-do" class="anchor" href="#things-i-might-do">

@@ -136,6 +136,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Lambda" data-name="cosmo::ast::expression::lambda">
+      <a href="../../Cosmo/AST/Expression/Lambda.html">Lambda</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Literal" data-name="cosmo::ast::expression::literal">
       <a href="../../Cosmo/AST/Expression/Literal.html">Literal</a>
       
@@ -701,6 +706,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/PlaygroundServer" data-name="cosmo::playgroundserver">
+      <a href="../../Cosmo/PlaygroundServer.html">PlaygroundServer</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/PutsIntrinsic" data-name="cosmo::putsintrinsic">
       <a href="../../Cosmo/PutsIntrinsic.html">PutsIntrinsic</a>
       
@@ -738,6 +748,36 @@
   
   <li class=" " data-id="Cosmo/Cosmo/ValueType" data-name="cosmo::valuetype">
       <a href="../../Cosmo/ValueType.html">ValueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/VectorIntrinsics" data-name="cosmo::vectorintrinsics">
+      <a href="../../Cosmo/VectorIntrinsics.html">VectorIntrinsics</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Filter" data-name="cosmo::vectorintrinsics::filter">
+      <a href="../../Cosmo/VectorIntrinsics/Filter.html">Filter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/First" data-name="cosmo::vectorintrinsics::first">
+      <a href="../../Cosmo/VectorIntrinsics/First.html">First</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Last" data-name="cosmo::vectorintrinsics::last">
+      <a href="../../Cosmo/VectorIntrinsics/Last.html">Last</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Map" data-name="cosmo::vectorintrinsics::map">
+      <a href="../../Cosmo/VectorIntrinsics/Map.html">Map</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -803,7 +843,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/hooked_exceptions.cr#L16" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/hooked_exceptions.cr#L16" target="_blank">
         cosmo/runtime/hooked_exceptions.cr
       </a>
     
@@ -825,7 +865,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28token%3AToken%29-class-method" class="signature"><strong>.new</strong>(token : Token)</a>
+        <a href="#new%28token%3AToken%2Cloop_level%3AUInt32%29-class-method" class="signature"><strong>.new</strong>(token : Token, loop_level : UInt32)</a>
         
       </li>
     
@@ -834,6 +874,23 @@
 
 
 
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#loop_level%3AUInt32-instance-method" class="signature"><strong>#loop_level</strong> : UInt32</a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -902,18 +959,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(token:Token)-class-method">
+    <div class="entry-detail" id="new(token:Token,loop_level:UInt32)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(token : <a href="../../Cosmo/Token.html">Token</a>)
+        def self.<strong>new</strong>(token : <a href="../../Cosmo/Token.html">Token</a>, loop_level : UInt32)
 
-        <a class="method-permalink" href="#new%28token%3AToken%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28token%3AToken%2Cloop_level%3AUInt32%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/hooked_exceptions.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/hooked_exceptions.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -922,6 +979,32 @@
 
 
 
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="loop_level:UInt32-instance-method">
+      <div class="signature">
+        
+        def <strong>loop_level</strong> : UInt32
+
+        <a class="method-permalink" href="#loop_level%3AUInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/hooked_exceptions.cr#L17" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 

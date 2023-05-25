@@ -136,6 +136,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Lambda" data-name="cosmo::ast::expression::lambda">
+      <a href="../Cosmo/AST/Expression/Lambda.html">Lambda</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Literal" data-name="cosmo::ast::expression::literal">
       <a href="../Cosmo/AST/Expression/Literal.html">Literal</a>
       
@@ -701,6 +706,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/PlaygroundServer" data-name="cosmo::playgroundserver">
+      <a href="../Cosmo/PlaygroundServer.html">PlaygroundServer</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/PutsIntrinsic" data-name="cosmo::putsintrinsic">
       <a href="../Cosmo/PutsIntrinsic.html">PutsIntrinsic</a>
       
@@ -738,6 +748,36 @@
   
   <li class=" " data-id="Cosmo/Cosmo/ValueType" data-name="cosmo::valuetype">
       <a href="../Cosmo/ValueType.html">ValueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/VectorIntrinsics" data-name="cosmo::vectorintrinsics">
+      <a href="../Cosmo/VectorIntrinsics.html">VectorIntrinsics</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Filter" data-name="cosmo::vectorintrinsics::filter">
+      <a href="../Cosmo/VectorIntrinsics/Filter.html">Filter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/First" data-name="cosmo::vectorintrinsics::first">
+      <a href="../Cosmo/VectorIntrinsics/First.html">First</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Last" data-name="cosmo::vectorintrinsics::last">
+      <a href="../Cosmo/VectorIntrinsics/Last.html">Last</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Map" data-name="cosmo::vectorintrinsics::map">
+      <a href="../Cosmo/VectorIntrinsics/Map.html">Map</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -803,7 +843,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/class.cr#L27" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/class.cr#L31" target="_blank">
         cosmo/runtime/types/class.cr
       </a>
     
@@ -846,27 +886,27 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#define_field%28name%3AString%2Cvalue%3AValueType%2Ctoken%3AToken%7CNil%2Cconstant%3ABool%3Dfalse%2Cvisibility%3AVisibility%3DVisibility%3A%3APublic%2Ctypedef%3AToken%7CNil%3Dnil%29%3AClassInstance-instance-method" class="signature"><strong>#define_field</strong>(name : String, value : ValueType, token : Token | Nil, constant : Bool = <span class="n">false</span>, visibility : Visibility = <span class="t">Visibility</span><span class="t">::</span><span class="t">Public</span>, typedef : Token | Nil = <span class="n">nil</span>) : ClassInstance</a>
+        <a href="#define_field%28field_name%3AString%2Cvalue%3AValueType%2Ctoken%3AToken%7CNil%2Cconstant%3ABool%3Dfalse%2Cvisibility%3AVisibility%3DVisibility%3A%3APublic%2Ctypedef%3AToken%7CNil%3Dnil%29%3AValueType-instance-method" class="signature"><strong>#define_field</strong>(field_name : String, value : ValueType, token : Token | Nil, constant : Bool = <span class="n">false</span>, visibility : Visibility = <span class="t">Visibility</span><span class="t">::</span><span class="t">Public</span>, typedef : Token | Nil = <span class="n">nil</span>) : ValueType</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#define_method%28name%3AString%2Cvalue%3AFunction%2Ctoken%3AToken%7CNil%3Dnil%2Cvisibility%3AVisibility%3DVisibility%3A%3APublic%29%3AClassInstance-instance-method" class="signature"><strong>#define_method</strong>(name : String, value : Function, token : Token | Nil = <span class="n">nil</span>, visibility : Visibility = <span class="t">Visibility</span><span class="t">::</span><span class="t">Public</span>) : ClassInstance</a>
+        <a href="#define_method%28method_name%3AString%2Cvalue%3AFunction%2Ctoken%3AToken%7CNil%3Dnil%2Cvisibility%3AVisibility%3DVisibility%3A%3APublic%29%3AFunction-instance-method" class="signature"><strong>#define_method</strong>(method_name : String, value : Function, token : Token | Nil = <span class="n">nil</span>, visibility : Visibility = <span class="t">Visibility</span><span class="t">::</span><span class="t">Public</span>) : Function</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#get_field%28name%3AString%2Ctoken%3AToken%7CNil%3Dnil%2Cinclude_private%3ABool%3Dtrue%2Cinclude_protected%3ABool%3Dfalse%29%3AValueType-instance-method" class="signature"><strong>#get_field</strong>(name : String, token : Token | Nil = <span class="n">nil</span>, include_private : Bool = <span class="n">true</span>, include_protected : Bool = <span class="n">false</span>) : ValueType</a>
+        <a href="#get_field%28field_name%3AString%2Ctoken%3AToken%7CNil%3Dnil%2Cinclude_private%3ABool%3Dtrue%2Cinclude_protected%3ABool%3Dfalse%29%3AValueType-instance-method" class="signature"><strong>#get_field</strong>(field_name : String, token : Token | Nil = <span class="n">nil</span>, include_private : Bool = <span class="n">true</span>, include_protected : Bool = <span class="n">false</span>) : ValueType</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#get_member%28name%3AString%2Ctoken%3AToken%7CNil%3Dnil%2Cinclude_private%3ABool%3Dtrue%2Cinclude_protected%3ABool%3Dfalse%29%3AValueType-instance-method" class="signature"><strong>#get_member</strong>(name : String, token : Token | Nil = <span class="n">nil</span>, include_private : Bool = <span class="n">true</span>, include_protected : Bool = <span class="n">false</span>) : ValueType</a>
+        <a href="#get_member%28member_name%3AString%2Ctoken%3AToken%7CNil%3Dnil%2Cinclude_private%3ABool%3Dtrue%2Cinclude_protected%3ABool%3Dfalse%29%3AValueType-instance-method" class="signature"><strong>#get_member</strong>(member_name : String, token : Token | Nil = <span class="n">nil</span>, include_private : Bool = <span class="n">true</span>, include_protected : Bool = <span class="n">false</span>) : ValueType</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#get_method%28name%3AString%2Ctoken%3AToken%7CNil%3Dnil%2Cinclude_private%3ABool%3Dtrue%2Cinclude_protected%3ABool%3Dfalse%29%3AFunction%7CNil-instance-method" class="signature"><strong>#get_method</strong>(name : String, token : Token | Nil = <span class="n">nil</span>, include_private : Bool = <span class="n">true</span>, include_protected : Bool = <span class="n">false</span>) : Function | Nil</a>
+        <a href="#get_method%28method_name%3AString%2Ctoken%3AToken%7CNil%3Dnil%2Cinclude_private%3ABool%3Dtrue%2Cinclude_protected%3ABool%3Dfalse%29%3AFunction%7CNil-instance-method" class="signature"><strong>#get_method</strong>(method_name : String, token : Token | Nil = <span class="n">nil</span>, include_private : Bool = <span class="n">true</span>, include_protected : Bool = <span class="n">false</span>) : Function | Nil</a>
         
       </li>
     
@@ -876,7 +916,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#setup%3AClassInstance-instance-method" class="signature"><strong>#setup</strong> : ClassInstance</a>
+        <a href="#name_token-instance-method" class="signature"><strong>#name_token</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#setup%3ANil-instance-method" class="signature"><strong>#setup</strong> : Nil</a>
         
       </li>
     
@@ -931,7 +976,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/class.cr#L50" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/class.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -950,82 +995,82 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="define_field(name:String,value:ValueType,token:Token|Nil,constant:Bool=false,visibility:Visibility=Visibility::Public,typedef:Token|Nil=nil):ClassInstance-instance-method">
+    <div class="entry-detail" id="define_field(field_name:String,value:ValueType,token:Token|Nil,constant:Bool=false,visibility:Visibility=Visibility::Public,typedef:Token|Nil=nil):ValueType-instance-method">
       <div class="signature">
         
-        def <strong>define_field</strong>(name : String, value : <a href="../Cosmo/ValueType.html">ValueType</a>, token : <a href="../Cosmo/Token.html">Token</a> | Nil, constant : Bool = <span class="n">false</span>, visibility : <a href="../Cosmo/AST/Visibility.html">Visibility</a> = <span class="t">Visibility</span><span class="t">::</span><span class="t">Public</span>, typedef : <a href="../Cosmo/Token.html">Token</a> | Nil = <span class="n">nil</span>) : <a href="../Cosmo/ClassInstance.html">ClassInstance</a>
+        def <strong>define_field</strong>(field_name : String, value : <a href="../Cosmo/ValueType.html">ValueType</a>, token : <a href="../Cosmo/Token.html">Token</a> | Nil, constant : Bool = <span class="n">false</span>, visibility : <a href="../Cosmo/AST/Visibility.html">Visibility</a> = <span class="t">Visibility</span><span class="t">::</span><span class="t">Public</span>, typedef : <a href="../Cosmo/Token.html">Token</a> | Nil = <span class="n">nil</span>) : <a href="../Cosmo/ValueType.html">ValueType</a>
 
-        <a class="method-permalink" href="#define_field%28name%3AString%2Cvalue%3AValueType%2Ctoken%3AToken%7CNil%2Cconstant%3ABool%3Dfalse%2Cvisibility%3AVisibility%3DVisibility%3A%3APublic%2Ctypedef%3AToken%7CNil%3Dnil%29%3AClassInstance-instance-method">#</a>
+        <a class="method-permalink" href="#define_field%28field_name%3AString%2Cvalue%3AValueType%2Ctoken%3AToken%7CNil%2Cconstant%3ABool%3Dfalse%2Cvisibility%3AVisibility%3DVisibility%3A%3APublic%2Ctypedef%3AToken%7CNil%3Dnil%29%3AValueType-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/class.cr#L65" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/class.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="define_method(name:String,value:Function,token:Token|Nil=nil,visibility:Visibility=Visibility::Public):ClassInstance-instance-method">
+    <div class="entry-detail" id="define_method(method_name:String,value:Function,token:Token|Nil=nil,visibility:Visibility=Visibility::Public):Function-instance-method">
       <div class="signature">
         
-        def <strong>define_method</strong>(name : String, value : <a href="../Cosmo/Function.html">Function</a>, token : <a href="../Cosmo/Token.html">Token</a> | Nil = <span class="n">nil</span>, visibility : <a href="../Cosmo/AST/Visibility.html">Visibility</a> = <span class="t">Visibility</span><span class="t">::</span><span class="t">Public</span>) : <a href="../Cosmo/ClassInstance.html">ClassInstance</a>
+        def <strong>define_method</strong>(method_name : String, value : <a href="../Cosmo/Function.html">Function</a>, token : <a href="../Cosmo/Token.html">Token</a> | Nil = <span class="n">nil</span>, visibility : <a href="../Cosmo/AST/Visibility.html">Visibility</a> = <span class="t">Visibility</span><span class="t">::</span><span class="t">Public</span>) : <a href="../Cosmo/Function.html">Function</a>
 
-        <a class="method-permalink" href="#define_method%28name%3AString%2Cvalue%3AFunction%2Ctoken%3AToken%7CNil%3Dnil%2Cvisibility%3AVisibility%3DVisibility%3A%3APublic%29%3AClassInstance-instance-method">#</a>
+        <a class="method-permalink" href="#define_method%28method_name%3AString%2Cvalue%3AFunction%2Ctoken%3AToken%7CNil%3Dnil%2Cvisibility%3AVisibility%3DVisibility%3A%3APublic%29%3AFunction-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/class.cr#L101" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/class.cr#L102" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="get_field(name:String,token:Token|Nil=nil,include_private:Bool=true,include_protected:Bool=false):ValueType-instance-method">
+    <div class="entry-detail" id="get_field(field_name:String,token:Token|Nil=nil,include_private:Bool=true,include_protected:Bool=false):ValueType-instance-method">
       <div class="signature">
         
-        def <strong>get_field</strong>(name : String, token : <a href="../Cosmo/Token.html">Token</a> | Nil = <span class="n">nil</span>, include_private : Bool = <span class="n">true</span>, include_protected : Bool = <span class="n">false</span>) : <a href="../Cosmo/ValueType.html">ValueType</a>
+        def <strong>get_field</strong>(field_name : String, token : <a href="../Cosmo/Token.html">Token</a> | Nil = <span class="n">nil</span>, include_private : Bool = <span class="n">true</span>, include_protected : Bool = <span class="n">false</span>) : <a href="../Cosmo/ValueType.html">ValueType</a>
 
-        <a class="method-permalink" href="#get_field%28name%3AString%2Ctoken%3AToken%7CNil%3Dnil%2Cinclude_private%3ABool%3Dtrue%2Cinclude_protected%3ABool%3Dfalse%29%3AValueType-instance-method">#</a>
+        <a class="method-permalink" href="#get_field%28field_name%3AString%2Ctoken%3AToken%7CNil%3Dnil%2Cinclude_private%3ABool%3Dtrue%2Cinclude_protected%3ABool%3Dfalse%29%3AValueType-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/class.cr#L115" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/class.cr#L123" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="get_member(name:String,token:Token|Nil=nil,include_private:Bool=true,include_protected:Bool=false):ValueType-instance-method">
+    <div class="entry-detail" id="get_member(member_name:String,token:Token|Nil=nil,include_private:Bool=true,include_protected:Bool=false):ValueType-instance-method">
       <div class="signature">
         
-        def <strong>get_member</strong>(name : String, token : <a href="../Cosmo/Token.html">Token</a> | Nil = <span class="n">nil</span>, include_private : Bool = <span class="n">true</span>, include_protected : Bool = <span class="n">false</span>) : <a href="../Cosmo/ValueType.html">ValueType</a>
+        def <strong>get_member</strong>(member_name : String, token : <a href="../Cosmo/Token.html">Token</a> | Nil = <span class="n">nil</span>, include_private : Bool = <span class="n">true</span>, include_protected : Bool = <span class="n">false</span>) : <a href="../Cosmo/ValueType.html">ValueType</a>
 
-        <a class="method-permalink" href="#get_member%28name%3AString%2Ctoken%3AToken%7CNil%3Dnil%2Cinclude_private%3ABool%3Dtrue%2Cinclude_protected%3ABool%3Dfalse%29%3AValueType-instance-method">#</a>
+        <a class="method-permalink" href="#get_member%28member_name%3AString%2Ctoken%3AToken%7CNil%3Dnil%2Cinclude_private%3ABool%3Dtrue%2Cinclude_protected%3ABool%3Dfalse%29%3AValueType-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/class.cr#L111" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/class.cr#L112" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="get_method(name:String,token:Token|Nil=nil,include_private:Bool=true,include_protected:Bool=false):Function|Nil-instance-method">
+    <div class="entry-detail" id="get_method(method_name:String,token:Token|Nil=nil,include_private:Bool=true,include_protected:Bool=false):Function|Nil-instance-method">
       <div class="signature">
         
-        def <strong>get_method</strong>(name : String, token : <a href="../Cosmo/Token.html">Token</a> | Nil = <span class="n">nil</span>, include_private : Bool = <span class="n">true</span>, include_protected : Bool = <span class="n">false</span>) : <a href="../Cosmo/Function.html">Function</a> | Nil
+        def <strong>get_method</strong>(method_name : String, token : <a href="../Cosmo/Token.html">Token</a> | Nil = <span class="n">nil</span>, include_private : Bool = <span class="n">true</span>, include_protected : Bool = <span class="n">false</span>) : <a href="../Cosmo/Function.html">Function</a> | Nil
 
-        <a class="method-permalink" href="#get_method%28name%3AString%2Ctoken%3AToken%7CNil%3Dnil%2Cinclude_private%3ABool%3Dtrue%2Cinclude_protected%3ABool%3Dfalse%29%3AFunction%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#get_method%28method_name%3AString%2Ctoken%3AToken%7CNil%3Dnil%2Cinclude_private%3ABool%3Dtrue%2Cinclude_protected%3ABool%3Dfalse%29%3AFunction%7CNil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/class.cr#L132" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/class.cr#L147" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1041,23 +1086,39 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/class.cr#L149" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/class.cr#L169" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="setup:ClassInstance-instance-method">
+    <div class="entry-detail" id="name_token-instance-method">
       <div class="signature">
         
-        def <strong>setup</strong> : <a href="../Cosmo/ClassInstance.html">ClassInstance</a>
+        def <strong>name_token</strong>
 
-        <a class="method-permalink" href="#setup%3AClassInstance-instance-method">#</a>
+        <a class="method-permalink" href="#name_token-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/class.cr#L53" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/class.cr#L165" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="setup:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>setup</strong> : Nil
+
+        <a class="method-permalink" href="#setup%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/class.cr#L57" target="_blank">View source</a>]
         
       </div>
     </div>

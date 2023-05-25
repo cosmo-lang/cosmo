@@ -136,6 +136,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Lambda" data-name="cosmo::ast::expression::lambda">
+      <a href="../../../Cosmo/AST/Expression/Lambda.html">Lambda</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Literal" data-name="cosmo::ast::expression::literal">
       <a href="../../../Cosmo/AST/Expression/Literal.html">Literal</a>
       
@@ -701,6 +706,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/PlaygroundServer" data-name="cosmo::playgroundserver">
+      <a href="../../../Cosmo/PlaygroundServer.html">PlaygroundServer</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/PutsIntrinsic" data-name="cosmo::putsintrinsic">
       <a href="../../../Cosmo/PutsIntrinsic.html">PutsIntrinsic</a>
       
@@ -738,6 +748,36 @@
   
   <li class=" " data-id="Cosmo/Cosmo/ValueType" data-name="cosmo::valuetype">
       <a href="../../../Cosmo/ValueType.html">ValueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/VectorIntrinsics" data-name="cosmo::vectorintrinsics">
+      <a href="../../../Cosmo/VectorIntrinsics.html">VectorIntrinsics</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Filter" data-name="cosmo::vectorintrinsics::filter">
+      <a href="../../../Cosmo/VectorIntrinsics/Filter.html">Filter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/First" data-name="cosmo::vectorintrinsics::first">
+      <a href="../../../Cosmo/VectorIntrinsics/First.html">First</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Last" data-name="cosmo::vectorintrinsics::last">
+      <a href="../../../Cosmo/VectorIntrinsics/Last.html">Last</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Map" data-name="cosmo::vectorintrinsics::map">
+      <a href="../../../Cosmo/VectorIntrinsics/Map.html">Map</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -803,7 +843,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/syntax/parser/ast/expression_nodes.cr#L125" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/syntax/parser/ast/expression_nodes.cr#L152" target="_blank">
         cosmo/syntax/parser/ast/expression_nodes.cr
       </a>
     
@@ -825,7 +865,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28object%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%2Ckey%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%29-class-method" class="signature"><strong>.new</strong>(object : Cosmo::AST::Expression::Base, key : Cosmo::AST::Expression::Base)</a>
+        <a href="#new%28object%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%2Ckey%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%2Cnullable%3ABool%29-class-method" class="signature"><strong>.new</strong>(object : Cosmo::AST::Expression::Base, key : Cosmo::AST::Expression::Base, nullable : Bool)</a>
         
       </li>
     
@@ -852,6 +892,11 @@
     
       <li class="entry-summary">
         <a href="#key%3ABase-instance-method" class="signature"><strong>#key</strong> : Base</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#nullable%3ABool-instance-method" class="signature"><strong>#nullable</strong> : Bool</a>
         
       </li>
     
@@ -990,18 +1035,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(object:Cosmo::AST::Expression::Base,key:Cosmo::AST::Expression::Base)-class-method">
+    <div class="entry-detail" id="new(object:Cosmo::AST::Expression::Base,key:Cosmo::AST::Expression::Base,nullable:Bool)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(object : <a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a>, key : <a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a>)
+        def self.<strong>new</strong>(object : <a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a>, key : <a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a>, nullable : Bool)
 
-        <a class="method-permalink" href="#new%28object%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%2Ckey%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28object%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%2Ckey%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%2Cnullable%3ABool%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/syntax/parser/ast/expression_nodes.cr#L129" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/syntax/parser/ast/expression_nodes.cr#L157" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1031,7 +1076,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/syntax/parser/ast/expression_nodes.cr#L132" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/syntax/parser/ast/expression_nodes.cr#L160" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1047,7 +1092,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/syntax/parser/ast/expression_nodes.cr#L127" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/syntax/parser/ast/expression_nodes.cr#L154" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="nullable:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>nullable</strong> : Bool
+
+        <a class="method-permalink" href="#nullable%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/syntax/parser/ast/expression_nodes.cr#L155" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1063,7 +1124,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/syntax/parser/ast/expression_nodes.cr#L126" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/syntax/parser/ast/expression_nodes.cr#L153" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1092,7 +1153,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/syntax/parser/ast/expression_nodes.cr#L140" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/syntax/parser/ast/expression_nodes.cr#L168" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1108,7 +1169,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/syntax/parser/ast/expression_nodes.cr#L136" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/syntax/parser/ast/expression_nodes.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>

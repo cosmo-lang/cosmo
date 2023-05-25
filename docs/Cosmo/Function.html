@@ -136,6 +136,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Lambda" data-name="cosmo::ast::expression::lambda">
+      <a href="../Cosmo/AST/Expression/Lambda.html">Lambda</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Literal" data-name="cosmo::ast::expression::literal">
       <a href="../Cosmo/AST/Expression/Literal.html">Literal</a>
       
@@ -701,6 +706,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/PlaygroundServer" data-name="cosmo::playgroundserver">
+      <a href="../Cosmo/PlaygroundServer.html">PlaygroundServer</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/PutsIntrinsic" data-name="cosmo::putsintrinsic">
       <a href="../Cosmo/PutsIntrinsic.html">PutsIntrinsic</a>
       
@@ -738,6 +748,36 @@
   
   <li class=" " data-id="Cosmo/Cosmo/ValueType" data-name="cosmo::valuetype">
       <a href="../Cosmo/ValueType.html">ValueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/VectorIntrinsics" data-name="cosmo::vectorintrinsics">
+      <a href="../Cosmo/VectorIntrinsics.html">VectorIntrinsics</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Filter" data-name="cosmo::vectorintrinsics::filter">
+      <a href="../Cosmo/VectorIntrinsics/Filter.html">Filter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/First" data-name="cosmo::vectorintrinsics::first">
+      <a href="../Cosmo/VectorIntrinsics/First.html">First</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Last" data-name="cosmo::vectorintrinsics::last">
+      <a href="../Cosmo/VectorIntrinsics/Last.html">Last</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Map" data-name="cosmo::vectorintrinsics::map">
+      <a href="../Cosmo/VectorIntrinsics/Map.html">Map</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -803,7 +843,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/function.cr#L8" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/function.cr#L8" target="_blank">
         cosmo/runtime/types/function.cr
       </a>
     
@@ -825,7 +865,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28interpreter%3ACosmo%3A%3AInterpreter%2Cclosure%3ACosmo%3A%3AScope%2Cdefinition%3ACosmo%3A%3AAST%3A%3AStatement%3A%3AFunctionDef%29-class-method" class="signature"><strong>.new</strong>(interpreter : Cosmo::Interpreter, closure : Cosmo::Scope, definition : Cosmo::AST::Statement::FunctionDef)</a>
+        <a href="#new%28interpreter%3ACosmo%3A%3AInterpreter%2Cclosure%3ACosmo%3A%3AScope%2Cdefinition%3ACosmo%3A%3AAST%3A%3ANode%2Cclass_instance%3ANil%7CCosmo%3A%3AClassInstance%3Dnil%29-class-method" class="signature"><strong>.new</strong>(interpreter : Cosmo::Interpreter, closure : Cosmo::Scope, definition : Cosmo::AST::Node, class_instance : Nil | Cosmo::ClassInstance = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -851,17 +891,22 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#call%28args%3AArray%28ValueType%29%2Creturn_type_override%3AString%3D%40definition.return_typedef.lexeme%29%3AValueType-instance-method" class="signature"><strong>#call</strong>(args : Array(ValueType), return_type_override : String = @definition.return_typedef.lexeme) : ValueType</a>
+        <a href="#call%28args%3AArray%28ValueType%29%2Creturn_type_override%3AString%7CNil%3Dnil%29%3AValueType-instance-method" class="signature"><strong>#call</strong>(args : Array(ValueType), return_type_override : String | Nil = <span class="n">nil</span>) : ValueType</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#definition%3AStatement%3A%3AFunctionDef-instance-method" class="signature"><strong>#definition</strong> : Statement::FunctionDef</a>
+        <a href="#definition%3AStatement%3A%3AFunctionDef%7CExpression%3A%3ALambda-instance-method" class="signature"><strong>#definition</strong> : Statement::FunctionDef | Expression::Lambda</a>
         
       </li>
     
       <li class="entry-summary">
         <a href="#intrinsic%3F%3ABool-instance-method" class="signature"><strong>#intrinsic?</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#return_typedef-instance-method" class="signature"><strong>#return_typedef</strong></a>
         
       </li>
     
@@ -946,18 +991,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(interpreter:Cosmo::Interpreter,closure:Cosmo::Scope,definition:Cosmo::AST::Statement::FunctionDef)-class-method">
+    <div class="entry-detail" id="new(interpreter:Cosmo::Interpreter,closure:Cosmo::Scope,definition:Cosmo::AST::Node,class_instance:Nil|Cosmo::ClassInstance=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(interpreter : <a href="../Cosmo/Interpreter.html">Cosmo::Interpreter</a>, closure : <a href="../Cosmo/Scope.html">Cosmo::Scope</a>, definition : <a href="../Cosmo/AST/Statement/FunctionDef.html">Cosmo::AST::Statement::FunctionDef</a>)
+        def self.<strong>new</strong>(interpreter : <a href="../Cosmo/Interpreter.html">Cosmo::Interpreter</a>, closure : <a href="../Cosmo/Scope.html">Cosmo::Scope</a>, definition : <a href="../Cosmo/AST/Node.html">Cosmo::AST::Node</a>, class_instance : Nil | <a href="../Cosmo/ClassInstance.html">Cosmo::ClassInstance</a> = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28interpreter%3ACosmo%3A%3AInterpreter%2Cclosure%3ACosmo%3A%3AScope%2Cdefinition%3ACosmo%3A%3AAST%3A%3AStatement%3A%3AFunctionDef%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28interpreter%3ACosmo%3A%3AInterpreter%2Cclosure%3ACosmo%3A%3AScope%2Cdefinition%3ACosmo%3A%3AAST%3A%3ANode%2Cclass_instance%3ANil%7CCosmo%3A%3AClassInstance%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/function.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/function.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -987,39 +1032,39 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/function.cr#L51" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/function.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="call(args:Array(ValueType),return_type_override:String=@definition.return_typedef.lexeme):ValueType-instance-method">
+    <div class="entry-detail" id="call(args:Array(ValueType),return_type_override:String|Nil=nil):ValueType-instance-method">
       <div class="signature">
         
-        def <strong>call</strong>(args : Array(<a href="../Cosmo/ValueType.html">ValueType</a>), return_type_override : String = @definition.return_typedef.lexeme) : <a href="../Cosmo/ValueType.html">ValueType</a>
+        def <strong>call</strong>(args : Array(<a href="../Cosmo/ValueType.html">ValueType</a>), return_type_override : String | Nil = <span class="n">nil</span>) : <a href="../Cosmo/ValueType.html">ValueType</a>
 
-        <a class="method-permalink" href="#call%28args%3AArray%28ValueType%29%2Creturn_type_override%3AString%3D%40definition.return_typedef.lexeme%29%3AValueType-instance-method">#</a>
+        <a class="method-permalink" href="#call%28args%3AArray%28ValueType%29%2Creturn_type_override%3AString%7CNil%3Dnil%29%3AValueType-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/function.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/function.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="definition:Statement::FunctionDef-instance-method">
+    <div class="entry-detail" id="definition:Statement::FunctionDef|Expression::Lambda-instance-method">
       <div class="signature">
         
-        def <strong>definition</strong> : <a href="../Cosmo/AST/Statement/FunctionDef.html">Statement::FunctionDef</a>
+        def <strong>definition</strong> : <a href="../Cosmo/AST/Statement/FunctionDef.html">Statement::FunctionDef</a> | <a href="../Cosmo/AST/Expression/Lambda.html">Expression::Lambda</a>
 
-        <a class="method-permalink" href="#definition%3AStatement%3A%3AFunctionDef-instance-method">#</a>
+        <a class="method-permalink" href="#definition%3AStatement%3A%3AFunctionDef%7CExpression%3A%3ALambda-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/function.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/function.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1035,7 +1080,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/function.cr#L55" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/function.cr#L95" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="return_typedef-instance-method">
+      <div class="signature">
+        
+        def <strong>return_typedef</strong>
+
+        <a class="method-permalink" href="#return_typedef-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/function.cr#L81" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1064,7 +1125,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/f60c8268c8374ed685cdc68cd9e5254ca0d187bf/src/cosmo/runtime/types/function.cr#L59" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/193709bf0051714aad4a8b5de7089fcc5b7f2370/src/cosmo/runtime/types/function.cr#L99" target="_blank">View source</a>]
         
       </div>
     </div>
