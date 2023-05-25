@@ -8,27 +8,46 @@ end
 class Cosmo::Function < Cosmo::Callable
   @interpreter : Interpreter
   @closure : Scope
+  @class_instance : ClassInstance?
   @non_nullable_params : Array(Expression::Parameter)
   getter definition : Statement::FunctionDef
 
-  def initialize(@interpreter, @closure, @definition)
+  def initialize(@interpreter, @closure, @definition, @class_instance = nil)
     params = @definition.parameters
-    @non_nullable_params = params.select { |param| !param.default_value.nil? && !param.typedef.lexeme.ends_with?("?") }
     params.each do |param| # initialize params & define default values
       value = @interpreter.evaluate(param.default_value.not_nil!) unless param.default_value.nil?
       @closure.declare(param.typedef, param.identifier, value)
     end
+
+    @non_nullable_params = params.select { |param| !param.default_value.nil? && !param.typedef.lexeme.ends_with?("?") }
   end
 
-  def call(args : Array(ValueType), return_type_override : String = @definition.return_typedef.lexeme) : ValueType
+  def call(
+    args : Array(ValueType),
+    return_type_override : String = @definition.return_typedef.lexeme
+  ) : ValueType
+
     enclosing_return_type = @interpreter.meta["block_return_type"]?
     @interpreter.set_meta("block_return_type", return_type_override)
     scope = Scope.new(@closure)
 
+    unless @class_instance.nil?
+      scope.declare(
+        @interpreter.fake_typedef(@class_instance.not_nil!.name),
+        @interpreter.fake_ident("$"),
+        @class_instance
+      )
+    end
+
     # assign params
     @definition.parameters.each_with_index do |param, i|
       value = args[i]? || (param.default_value.nil? ? nil : @interpreter.evaluate(param.default_value.not_nil!))
-      scope.declare(param.typedef, param.identifier, value.as ValueType, const: param.const?)
+      scope.declare(
+        param.typedef,
+        param.identifier,
+        value.as ValueType,
+        const: param.const?
+      )
     end
 
     result = nil

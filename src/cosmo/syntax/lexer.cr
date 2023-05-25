@@ -38,7 +38,7 @@ class Cosmo::Lexer
 
     case char
     when "."
-      if char_exists?(1) && peek.match(/[0-9]/)
+      if char_exists?(1) && !!(/[0-9]/ =~ peek)
         read_number
       else
         if match_char?(".")
@@ -197,7 +197,7 @@ class Cosmo::Lexer
         add_token(Syntax::Greater, nil)
       end
     else
-      default_char = @source[@position].to_s
+      default_char = current_char
       return skip_whitespace if default_char.blank?
 
       is_ident = !!(/([a-zA-Z_$]|\p{L})/ =~ default_char)
@@ -210,9 +210,10 @@ class Cosmo::Lexer
       elsif is_ident
         read_identifier
       else
-        report_error("Unexpected character", default_char.to_s)
+        report_error("Unexpected character", default_char)
       end
     end
+
     @position += 1
   end
 
@@ -244,7 +245,7 @@ class Cosmo::Lexer
   end
 
   private def advance : String
-    char = @source[@position].to_s
+    char = current_char
     @position += 1
     @char_pos += 1
     char
@@ -326,7 +327,7 @@ class Cosmo::Lexer
     advance
     res_str = ""
     until finished? || current_char == delim
-      res_str += advance.to_s
+      res_str += advance
     end
 
     @current_lexeme = String::Builder.new(res_str)
@@ -351,8 +352,10 @@ class Cosmo::Lexer
   private def read_identifier
     ident_str = ""
     until finished?
+      # as soon as it's not a valid identifier character,
+      # add the current character and end the loop
       if char_exists?(1) && !(/([a-zA-Z0-9_$?!]|\p{L})/ =~ peek)
-        ident_str += current_char.to_s
+        ident_str += current_char
         skip_whitespace
         break
       end

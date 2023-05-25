@@ -335,7 +335,13 @@ module Cosmo::AST::Statement
     getter return_typedef : Token
     getter visibility : Visibility
 
-    def initialize(@identifier, @parameters, @body, @return_typedef, @visibility)
+    def initialize(
+      @identifier,
+      @parameters,
+      @body,
+      @return_typedef,
+      @visibility
+    )
     end
 
     def accept(visitor : Visitor(R)) : R forall R

@@ -240,6 +240,7 @@ class Cosmo::Parser
   private def parse_fn_def_statement : Statement::FunctionDef
     type_info = parse_type(required: true, check_visibility: true)
     return_typedef = type_info[:type_ref].not_nil!.name
+
     consume(Syntax::Function)
     consume(Syntax::Identifier)
     function_ident = last_token
@@ -247,6 +248,7 @@ class Cosmo::Parser
     params = parse_fn_params
     consume(Syntax::RParen)
     body = parse_block
+
     Statement::FunctionDef.new(
       function_ident,
       params, body,

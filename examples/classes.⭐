@@ -1,7 +1,7 @@
 use "assert"
 
 public class Dog {
-  public const string name
+  const string name
 
   public Dog fn construct(string name) {
     $->name = name
@@ -14,4 +14,4 @@ public class Dog {
 
 Dog fido = new Dog("Fido")
 fido->woof() ## Fido says woof!
-Assert->eq(fido->name, "Fido")
+## Assert->eq(fido->name, "Fido")

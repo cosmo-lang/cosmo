@@ -29,8 +29,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Handle infinite recursion
   * macro function to set recursion depth limit
 - Performance boosts lol
-  * Lexer
-  * Interpreter (!!)
 
 ### Meta
 - Package manager (WIP)

@@ -42,11 +42,11 @@ class Cosmo::Interpreter
     @importable_intrinsics[name] = library
   end
 
-  private def fake_typedef(name : String, location : Location? = nil)
+  def fake_typedef(name : String, location : Location? = nil)
     Token.new(name, Syntax::TypeDef, name, location || Location.new(@file_path, 0, 0))
   end
 
-  private def fake_ident(name : String, location : Location? = nil)
+  def fake_ident(name : String, location : Location? = nil)
     Token.new(name, Syntax::Identifier, name, location || Location.new(@file_path, 0, 0))
   end
 
@@ -142,13 +142,17 @@ class Cosmo::Interpreter
   end
 
   def execute_block(block : Statement::Base, block_scope : Scope, is_fn : Bool = false) : ValueType
-    prev_scope = @scope
+    enclosing = @scope
     begin
       @scope = block_scope
 
       unless @meta["this"]?.nil? || !@scope.lookup?("$").nil?
         this = @meta["this"].as(ClassInstance)
-        @scope.declare(fake_typedef(this.name), fake_ident("$"), this)
+        @scope.declare(
+          fake_typedef(this.name),
+          fake_ident("$"),
+          this
+        )
       end
 
       if block.is_a?(Statement::Block)
@@ -174,7 +178,7 @@ class Cosmo::Interpreter
     rescue ex : Exception
       raise ex
     ensure
-      @scope = prev_scope
+      @scope = enclosing
     end
   end
 
@@ -382,20 +386,23 @@ class Cosmo::Interpreter
   end
 
   def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
-    fn = Function.new(self, @scope, stmt)
     if @meta["this"]?.nil?
       @scope.declare(
         fake_typedef("func"),
         stmt.identifier,
-        fn,
+        Function.new(self, @scope, stmt),
         const: true,
         visibility: stmt.visibility
       )
     else
       instance = @meta["this"].as ClassInstance
-      instance.define_method(stmt.identifier.lexeme, fn, visibility: stmt.visibility)
+      instance.define_method(
+        stmt.identifier.lexeme,
+        Function.new(self, @scope, stmt, instance),
+        token: stmt.token,
+        visibility: stmt.visibility
+      )
     end
-    fn
   end
 
   def visit_access_expr(expr : Expression::Access) : ValueType

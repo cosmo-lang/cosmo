@@ -6,8 +6,12 @@ class Cosmo::Class
   def initialize(@interpreter, @closure, @definition)
   end
 
+  def name_token
+    @definition.identifier
+  end
+
   def name
-    @definition.identifier.lexeme
+    name_token.lexeme
   end
 
   def construct(args : Array(ValueType)) : ClassInstance
@@ -50,35 +54,32 @@ class Cosmo::ClassInstance
   def initialize(@parent, @args)
   end
 
-  def setup : ClassInstance
+  def setup : Nil
     ctor_method = get_method("construct", include_private: false)
     unless ctor_method.nil?
       @constructing = true
       ctor_method.call(@args, return_type_override: "void")
       @constructing = false
     end
-
-    # @parent.interpreter.scope.assign(@parent.interpreter.fake_ident("$"), nil, modifying_instance: true)
-    self
   end
 
   def define_field(
-    name : String,
+    field_name : String,
     value : ValueType,
     token : Token?,
     constant : Bool = false,
     visibility : Visibility = Visibility::Public,
     typedef : Token? = nil
-  ) : ClassInstance
+  ) : ValueType
 
-    current_meta = @field_meta[name]?
+    current_meta = @field_meta[field_name]?
     unless current_meta.nil?
       if current_meta[:constant?] && !@constructing
-        Logger.report_error("Attempt to assign to constant property", name, token.not_nil!)
+        Logger.report_error("Attempt to assign to constant property", field_name, token.not_nil!)
       end
     end
 
-    if @field_meta[name]?.nil?
+    if @field_meta[field_name]?.nil?
       meta_hash = {} of Symbol => Token | Bool
       meta_hash[:constant?] = constant
       unless typedef.nil?
@@ -90,60 +91,79 @@ class Cosmo::ClassInstance
         end
       end
 
-      @field_meta[name] = FieldMeta.from(meta_hash)
+      @field_meta[field_name] = FieldMeta.from(meta_hash)
     end
 
-    registry = visibility == Visibility::Public ? @public : visibility == Visibility::Protected ? @protected : @private
-    registry["fields"].as(Hash(String, ValueType))[name] = value
-    self
+    registry = visibility == Visibility::Public ? @public : (visibility == Visibility::Protected ? @protected : @private)
+    registry["fields"].as(Hash(String, ValueType))[field_name] = value
+    value
   end
 
-  def define_method(name : String, value : Function, token : Token? = nil, visibility : Visibility = Visibility::Public) : ClassInstance
-    registry = visibility == Visibility::Public ? @public : visibility == Visibility::Protected ? @protected : @private
-    if !token.nil? && registry["methods"].as(Hash(String, Function)).has_key?(name)
-      Logger.report_error("Duplicate method definition in '#{name}'", name, token)
+  def define_method(method_name : String, value : Function, token : Token? = nil, visibility : Visibility = Visibility::Public) : Function
+    registry = visibility == Visibility::Public ? @public : (visibility == Visibility::Protected ? @protected : @private)
+    if !token.nil? && registry["methods"].has_key?(method_name)
+      Logger.report_error("Duplicate method definition in '#{name}'", method_name, token)
     end
 
-    registry["methods"].as(Hash(String, Function))[name] = value
-    self
+    registry["methods"][method_name] = value
+    value
   end
 
-  def get_member(name : String, token : Token? = nil, include_private : Bool = true, include_protected : Bool = false) : ValueType
-    get_method(name, token, include_private, include_protected) || get_field(name, token, include_private, include_protected)
+  def get_member(
+    member_name : String,
+    token : Token? = nil,
+    include_private : Bool = true,
+    include_protected : Bool = false
+  ) : ValueType
+
+    get_method(member_name, token, include_private, include_protected) ||
+      get_field(member_name, token, include_private, include_protected)
   end
 
-  def get_field(name : String, token : Token? = nil, include_private : Bool = true, include_protected : Bool = false) : ValueType
-    field = @public["fields"][name]?
+  def get_field(
+    field_name : String,
+    token : Token? = nil,
+    include_private : Bool = true,
+    include_protected : Bool = false
+  ) : ValueType
+
+    field = @public["fields"][field_name]?
     if include_private
-      field ||= @private["fields"][name]?
+      field ||= @private["fields"][field_name]?
     end
     if include_protected
-      field ||= @protected["fields"][name]?
+      field ||= @protected["fields"][field_name]?
     end
-    unless token.nil? || include_private || @private["fields"][name]?.nil?
-      Logger.report_error("Attempt to access private field", name, token)
+    unless token.nil? || include_private || @private["fields"][field_name]?.nil?
+      Logger.report_error("Attempt to access private field", field_name, token)
     end
-    unless token.nil? || include_protected || @protected["methods"][name]?.nil?
-      Logger.report_error("Attempt to access protected field outside of class definition", name, token)
+    unless token.nil? || include_protected || @protected["methods"][field_name]?.nil?
+      Logger.report_error("Attempt to access protected field outside of class definition", field_name, token)
     end
+
     field.as ValueType
   end
 
-  def get_method(name : String, token : Token? = nil, include_private : Bool = true, include_protected : Bool = false) : Function?
-    method = @public["methods"][name]?
+  def get_method(method_name : String, token : Token? = nil, include_private : Bool = true, include_protected : Bool = false) : Function?
+    method = @public["methods"][method_name]?
     if include_private
-      method ||= @private["methods"][name]?
+      method ||= @private["methods"][method_name]?
     end
     if include_protected
-      method ||= @protected["methods"][name]?
+      method ||= @protected["methods"][method_name]?
     end
-    unless token.nil? || include_private || @private["methods"][name]?.nil?
-      Logger.report_error("Attempt to access private method", name, token)
+    unless token.nil? || include_private || @private["methods"][method_name]?.nil?
+      Logger.report_error("Attempt to access private method", method_name, token)
     end
-    unless token.nil? || include_protected || @protected["methods"][name]?.nil?
-      Logger.report_error("Attempt to access protected method outside of class definition", name, token)
+    unless token.nil? || include_protected || @protected["methods"][method_name]?.nil?
+      Logger.report_error("Attempt to access protected method outside of class definition", method_name, token)
     end
+
     method.as Function?
+  end
+
+  def name_token
+    @parent.name_token
   end
 
   def name
