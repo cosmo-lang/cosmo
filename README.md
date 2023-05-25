@@ -8,6 +8,9 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ### Features
 - Enums
+- The below literal intrinsic methods
+  * String->split
+  * Vector->join
 - Utility methods for tables
 - Stack trace
 - `uint` type

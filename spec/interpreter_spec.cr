@@ -35,7 +35,7 @@ describe Interpreter do
       result.should be_a Callable
       result.should be_a IntrinsicFunction
     end
-    it "math library" do
+    it "math/number library" do
       interpreter.interpret("use \"math\"", "test")
       result = interpreter.interpret("Math->π", "test")
       result.as(Float64).should be_close 3.141, 0.001
@@ -59,10 +59,20 @@ describe Interpreter do
       result.as(Float64).should be_close 5.3219, 0.0001
     end
     it "string library" do
-
+      result = interpreter.interpret("\"    \".blank?()", "test")
+      result.should be_true
+      result = interpreter.interpret("\"baba\".chars()", "test")
+      result.should eq ['b','a','b','a']
     end
     it "vector library" do
-
+      result = interpreter.interpret("[1,2,3].map(&-> int (int n) n * 2)", "test")
+      result.should eq [2,4,6]
+      result = interpreter.interpret("int[] ABABABA = [15, 2]", "test")
+      result.should eq [15, 2]
+      result = interpreter.interpret("ABABABA->first()", "test")
+      result.should eq 15
+      result = interpreter.interpret("ABABABA->last()", "test")
+      result.should eq 2
     end
   end
   describe "interprets literals:" do
@@ -119,9 +129,9 @@ describe Interpreter do
     it "lambdas" do
       interpreter.interpret("func even = &-> bool (int n) n % 2 == 0", "test")
       result = interpreter.interpret("even(6)", "test")
-      result.should eq true
+      result.should be_true
       result = interpreter.interpret("even(3)", "test")
-      result.should eq false
+      result.should be_false
       interpreter.interpret("func double = &-> int (int n) n * 2", "test")
       result = interpreter.interpret("double(6)", "test")
       result.should eq 12
