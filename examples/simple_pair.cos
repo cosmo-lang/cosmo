@@ -3,10 +3,10 @@ use "assert"
 int[]? fn simple_pair(int[] vec, int n) {
   int i = 0
   every int x in vec {
-    int y = vec[i + 1]
-    int z = vec[i - 1]
+    int y = (i + 1) >= #vec ? none : vec[i + 1]
     if y == none next
 
+    int z = vec[i - 1]
     if x * y == n return [x, y]
     if x * z == n return [x, z]
     ++i

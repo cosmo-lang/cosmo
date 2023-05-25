@@ -12,8 +12,8 @@ int fn double(int n) { n * 2 }
 int[] doubled = nums->map(double)
 Assert->eq(doubled, [2,4,6,8,10,12])
 
-bool fn even(int n) { n % 2 == 0 }
-int[] evens = nums->filter(even)
+bool fn even?(int n) { n % 2 == 0 }
+int[] evens = nums->filter(even?)
 Assert->eq(evens, [2,4,6])
 Assert->eq(evens->first(), 2)
 Assert->eq(doubled->last(), 12)

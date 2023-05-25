@@ -1,29 +1,25 @@
 func fn doubled(const int[] nums) {
   int i = 0
   int? fn generator() {
+    if i >= #nums
+      return none
+
     const int value = nums[i]
     ++i
-    unless value == none
-      value * 2
+    value * 2
   }
   generator
 }
 
-any[] fn filter(any[] vec, func predicate) {
-  any[] res = []
-  every any e in vec
-    if predicate(e)
-      res << e
-
-  res
-}
-
 func fn even(const int[] nums) {
   bool fn even?(int x) { x % 2 == 0 }
-  const int[] even_nums = filter(nums, even?)
+  const int[] even_nums = nums->filter(even?)
   int i = 0
 
   int? fn generator() {
+    if i >= #even_nums
+      return none
+
     const int x = even_nums[i]
     ++i
     x

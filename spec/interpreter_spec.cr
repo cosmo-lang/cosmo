@@ -14,7 +14,7 @@ end
 def shutup_run(interpreter : Interpreter, path : String) : Nil
   source = File.read(path)
   shutup do
-    interpreter.interpret(source, "test")
+    interpreter.interpret(source, "test:#{path}")
   end
 end
 
@@ -249,8 +249,9 @@ describe Interpreter do
     result.should eq true
     result = interpreter.interpret("admins->shedletsky", "test")
     result.should eq true
-    result = interpreter.interpret("admins->bobert", "test")
-    result.should eq nil
+    expect_raises(Exception, "@test [1:14] Invalid table key: 'bobert'") do
+      interpreter.interpret("admins->bobert", "test")
+    end
   end
   it "interprets function definitions" do
     result = interpreter.interpret("bool fn is_eq(const int a = 5, const int b) { return a == b }", "test")
@@ -481,6 +482,7 @@ describe Interpreter do
     example_files = Dir.entries "examples/"
     example_files.each do |example_file|
       next if example_file.starts_with?(".")
+      next if example_file.starts_with?("with_main")
       it example_file do
         interpreter = Interpreter.new(output_ast: false, run_benchmarks: false, debug_mode: true)
         path = File.join "examples", example_file

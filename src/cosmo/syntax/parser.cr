@@ -786,7 +786,7 @@ class Cosmo::Parser
       operand = parse_unary
       Expression::Cast.new(type_info[:type_ref].not_nil!, operand)
     else
-      parse_primary
+      parse_after(parse_primary)
     end
   end
 
@@ -798,19 +798,17 @@ class Cosmo::Parser
       node
     elsif match?(Syntax::Identifier)
       ident = last_token
-      callee = Expression::Var.new(ident)
-      parse_after(callee)
+      Expression::Var.new(ident)
     elsif match?(Syntax::This)
       token = last_token
       if @within_class.nil?
         Logger.report_error("Invalid '$'", token.lexeme, token)
       end
 
-      this = Expression::This.new(token, @within_class.not_nil!)
-      parse_after(this)
+      Expression::This.new(token, @within_class.not_nil!)
     elsif match?(Syntax::New)
       token = last_token
-      callee = parse_primary
+      callee = parse_after(parse_primary)
       unless callee.is_a?(Expression::Var) || callee.is_a?(Expression::FunctionCall)
         Logger.report_error("Expected class name, got", callee.token.lexeme, callee.token)
       end

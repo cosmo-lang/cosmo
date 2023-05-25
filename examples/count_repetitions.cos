@@ -1,0 +1,9 @@
+int fn count_repetitions(string s) {
+  char first = s[0]
+  1
+}
+
+count_repetitions("abcabcabcabc") ## 4
+count_repetitions("bcbcbc") ## 3
+count_repetitions("llbllbllbllbllbllb") ## 6
+count_repetitions("kc") ## 1
