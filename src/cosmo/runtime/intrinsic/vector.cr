@@ -5,7 +5,7 @@ class Cosmo::VectorIntrinsics
   )
   end
 
-  def get_method(name : Token) #: IntrinsicFunction
+  def get_method(name : Token) : IntrinsicFunction
     case name.lexeme
     when "first"
       First.new(@interpreter, @cache, name)
