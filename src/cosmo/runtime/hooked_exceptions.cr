@@ -14,13 +14,17 @@ module Cosmo::HookedExceptions
   end
 
   class Break < HookedException
-    def initialize(token : Token)
+    getter loop_level : UInt32
+
+    def initialize(token : Token, @loop_level)
       super token, "Invalid break: 'break' can only be used within a loop"
     end
   end
 
   class Next < HookedException
-    def initialize(token : Token)
+    getter loop_level : UInt32
+
+    def initialize(token : Token, @loop_level)
       super token, "Invalid next: 'next' can only be used within a loop"
     end
   end

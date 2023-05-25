@@ -21,6 +21,7 @@ class Cosmo::Interpreter
   @locals = {} of Expression::Base => UInt32
   @file_path : String = ""
   @importable_intrinsics = {} of String => IntrinsicLib
+  @loop_level : UInt32 = 0
 
   def initialize(
     @output_ast : Bool,
@@ -183,61 +184,6 @@ class Cosmo::Interpreter
     end
   end
 
-  def visit_every_stmt(stmt : Statement::Every) : Nil
-    enclosing = @scope
-    @scope = Scope.new(@scope)
-
-    enumerable = evaluate(stmt.enumerable)
-
-    @scope.declare(stmt.var.typedef, stmt.var.token, nil)
-    if enumerable.is_a?(Array) || enumerable.is_a?(Range)
-      enumerable.each do |value|
-        @scope.assign(stmt.var.token, value)
-        begin
-          execute_block(stmt.block, scope)
-        rescue _break : HookedExceptions::Break
-          break
-        rescue _next : HookedExceptions::Next
-          next
-        end
-      end
-    elsif enumerable.is_a?(String)
-      enumerable.chars.each do |value|
-        @scope.assign(stmt.var.token, value)
-        begin
-          execute_block(stmt.block, scope)
-        rescue _break : HookedExceptions::Break
-          break
-        rescue _next : HookedExceptions::Next
-          next
-        end
-      end
-    elsif enumerable.is_a?(Callable)
-      if enumerable.is_a?(IntrinsicFunction)
-        Logger.report_error("Invalid iterator", "An iterator cannot be an intrinsic function", stmt.enumerable.token)
-      end
-      unless enumerable.is_a?(Function)
-        Logger.report_error("Invalid iterator", "An iterator must return a generator function", stmt.enumerable.token)
-      end
-
-      # keep looping until the iterator returns none
-      until (value = enumerable.call([] of ValueType)).nil?
-        @scope.assign(stmt.var.token, value)
-        begin
-          execute_block(stmt.block, scope)
-        rescue _break : HookedExceptions::Break
-          break
-        rescue _next : HookedExceptions::Next
-          next
-        end
-      end
-    else
-      Logger.report_error("Invalid iterator type", TypeChecker.get_mapped(enumerable.class), stmt.token)
-    end
-
-    @scope = enclosing
-  end
-
   private def import_file(path : String) : Nil
     # TODO: import main file if directory
 
@@ -317,11 +263,11 @@ class Cosmo::Interpreter
   end
 
   def visit_next_stmt(stmt : Statement::Next) : Nil
-    raise HookedExceptions::Next.new(stmt.keyword)
+    raise HookedExceptions::Next.new(stmt.keyword, @loop_level)
   end
 
   def visit_break_stmt(stmt : Statement::Break) : Nil
-    raise HookedExceptions::Break.new(stmt.keyword)
+    raise HookedExceptions::Break.new(stmt.keyword, @loop_level)
   end
 
   def visit_return_stmt(stmt : Statement::Return) : Nil
@@ -330,27 +276,85 @@ class Cosmo::Interpreter
   end
 
   def visit_until_stmt(stmt : Statement::Until) : Nil
+    @loop_level += 1
     until evaluate(stmt.condition)
       begin
         execute(stmt.block)
       rescue _break : HookedExceptions::Break
-        break
+        break if @loop_level == _break.loop_level
       rescue _next : HookedExceptions::Next
-        next
+        next if @loop_level == _next.loop_level
       end
     end
   end
 
   def visit_while_stmt(stmt : Statement::While) : Nil
+    @loop_level += 1
     while evaluate(stmt.condition)
       begin
         execute(stmt.block)
       rescue _break : HookedExceptions::Break
-        break
+        break if @loop_level == _break.loop_level
       rescue _next : HookedExceptions::Next
-        next
+        next if @loop_level == _next.loop_level
       end
     end
+  end
+
+  def visit_every_stmt(stmt : Statement::Every) : Nil
+    enclosing = @scope
+    @scope = Scope.new(@scope)
+
+    enumerable = evaluate(stmt.enumerable)
+    @scope.declare(stmt.var.typedef, stmt.var.token, nil)
+
+    @loop_level += 1
+    if enumerable.is_a?(Array) || enumerable.is_a?(Range)
+      enumerable.each do |value|
+        @scope.assign(stmt.var.token, value)
+        begin
+          execute_block(stmt.block, scope)
+        rescue _break : HookedExceptions::Break
+          break if @loop_level == _break.loop_level
+        rescue _next : HookedExceptions::Next
+          next if @loop_level == _next.loop_level
+        end
+      end
+    elsif enumerable.is_a?(String)
+      enumerable.chars.each do |value|
+        @scope.assign(stmt.var.token, value)
+        begin
+          execute_block(stmt.block, scope)
+        rescue _break : HookedExceptions::Break
+          break if @loop_level == _break.loop_level
+        rescue _next : HookedExceptions::Next
+          next if @loop_level == _next.loop_level
+        end
+      end
+    elsif enumerable.is_a?(Callable)
+      if enumerable.is_a?(IntrinsicFunction)
+        Logger.report_error("Invalid iterator", "An iterator cannot be an intrinsic function", stmt.enumerable.token)
+      end
+      unless enumerable.is_a?(Function)
+        Logger.report_error("Invalid iterator", "An iterator must return a generator function", stmt.enumerable.token)
+      end
+
+      # keep looping until the iterator returns none
+      until (value = enumerable.call([] of ValueType)).nil?
+        @scope.assign(stmt.var.token, value)
+        begin
+          execute_block(stmt.block, scope)
+        rescue _break : HookedExceptions::Break
+          break if @loop_level == _break.loop_level
+        rescue _next : HookedExceptions::Next
+          next if @loop_level == _next.loop_level
+        end
+      end
+    else
+      Logger.report_error("Invalid iterator type", TypeChecker.get_mapped(enumerable.class), stmt.token)
+    end
+
+    @scope = enclosing
   end
 
   def visit_unless_stmt(stmt : Statement::Unless) : ValueType

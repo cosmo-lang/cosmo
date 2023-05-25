@@ -9,6 +9,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 ### Features
 - Enums
 - Lambdas
+- Nullable indexing (`[]?` operator)
 - Multiple assignment
 - Literal wrapper classes (vector, table) for utility methods (filter, map, etc)
 - Stack trace

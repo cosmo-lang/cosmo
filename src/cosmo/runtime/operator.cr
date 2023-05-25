@@ -96,6 +96,9 @@ module Cosmo::Operator
         return left * right if right.is_a?(Int)
         return left.to_f * right if right.is_a?(Float)
         Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(String)
+        return left * right if right.is_a?(Int)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
       end
       Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
     end

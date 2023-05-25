@@ -1,30 +1,17 @@
 use "assert"
 use "math"
 
-int fn count_repetitions(string s) {
-  int repetitions = 0
+int fn count_repetitions(string str) {
+  every int i in 1..Math->floor(#str / 2) {
+    string substring = str[0..i]
+    int max_repetitions = Math->floor(#str / #substring)
+    string constructed = substring * max_repetitions
 
-  every int sub_length in 1..(Math->floor(#s / 2) + 1)
-    if #s % sub_length == 0 {
-      bool possible = true
-      int count = Math->floor(#s / sub_length)
-      string first_sub = s[0..sub_length]
+    if constructed == str
+      return max_repetitions
+  }
 
-      every int i in 1..count {
-        string sub = s[(i * sub_length)..((i + 1) * sub_length)]
-        unless sub == first_sub {
-          possible = false
-          break
-        }
-      }
-
-      if possible {
-        repetitions = count
-        break
-      }
-    }
-
-  repetitions
+  1
 }
 
 Assert->eq(count_repetitions("abcabcabcabc"), 4)
