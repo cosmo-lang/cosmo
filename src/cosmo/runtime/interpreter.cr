@@ -6,6 +6,7 @@ require "./types/type"
 require "./scope"
 require "./operator"
 require "./resolver"
+require "./intrinsic/vector"
 require "./intrinsic/lib/math"
 
 class Cosmo::Interpreter
@@ -409,7 +410,15 @@ class Cosmo::Interpreter
     object = evaluate(expr.object)
     key = expr.key.lexeme
     if object.is_a?(Hash)
-      object[key]?
+      value = object[key]?
+      if value.nil?
+        Logger.report_error("Invalid table key", "'#{key}'", expr.key)
+        # redirect to hash intrinsic methods, else error
+      end
+      value
+    elsif object.is_a?(Array)
+      VectorIntrinsics.new(self, object)
+        .get_method(expr.key)
     elsif object.is_a?(ClassInstance)
       object.get_member(key, expr.key, include_private: !@meta["this"]?.nil?)
     else
