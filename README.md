@@ -8,7 +8,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ### Features
 - Enums
-- Utility methods for: table, string
+- Utility methods for tables
 - Stack trace
 - `uint` type
 - Interfaces
@@ -30,7 +30,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ### Meta
 - Package manager ([WIP](https://github.com/cosmo-lang/stars))
-- Playground server
 
 ## Things I Might Do
 
