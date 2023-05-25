@@ -6,6 +6,7 @@ require "./types/type"
 require "./scope"
 require "./operator"
 require "./resolver"
+require "./intrinsic/number"
 require "./intrinsic/string"
 require "./intrinsic/vector"
 require "./intrinsic/lib/math"
@@ -431,6 +432,9 @@ class Cosmo::Interpreter
         .get_method(expr.key)
     elsif object.is_a?(String)
       StringIntrinsics.new(self, object)
+        .get_method(expr.key)
+    elsif object.is_a?(Number)
+      NumberIntrinsics.new(self, object)
         .get_method(expr.key)
     elsif object.is_a?(ClassInstance)
       object.get_member(key, expr.key, include_private: !@meta["this"]?.nil?)

@@ -3,8 +3,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     math = {} of String => IntrinsicFunction | Float64
     math["e"] = Math::E
     math["π"] = Math::PI
-    math["floor"] = Floor.new(@i)
-    math["ceil"] = Ceil.new(@i)
     math["round"] = Round.new(@i)
     math["min"] = Min.new(@i)
     math["max"] = Max.new(@i)
@@ -12,7 +10,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     math["log2"] = Log2.new(@i)
     math["log10"] = Log10.new(@i)
     math["exp"] = Exp.new(@i)
-    math["sqrt"] = Sqrt.new(@i)
     math["isqrt"] = Isqrt.new(@i)
     math["cbrt"] = Cbrt.new(@i)
     math["sin"] = Sin.new(@i)
@@ -29,28 +26,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     math["atan"] = Atan.new(@i)
     math["atan2"] = Atan2.new(@i)
     @i.declare_intrinsic("string->(func|float)", "Math", math)
-  end
-
-  class Floor < IntrinsicFunction
-    def arity : Range(UInt32, UInt32)
-      1.to_u..1.to_u
-    end
-
-    def call(args : Array(ValueType)) : Int64
-      TypeChecker.assert("float|int", args.first, token("Math->exp"))
-      args.first.as(Number).round(:to_negative).to_i64
-    end
-  end
-
-  class Ceil < IntrinsicFunction
-    def arity : Range(UInt32, UInt32)
-      1.to_u..1.to_u
-    end
-
-    def call(args : Array(ValueType)) : Int64
-      TypeChecker.assert("float|int", args.first, token("Math->exp"))
-      args.first.as(Number).round(:to_positive).to_i64
-    end
   end
 
   class Round < IntrinsicFunction
@@ -162,18 +137,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     def call(args : Array(ValueType)) : Int64
       TypeChecker.assert("int", args.first, token("Math->isqrt"))
       Math.isqrt(args.first.as Int64)
-    end
-  end
-
-  class Sqrt < IntrinsicFunction
-    def arity : Range(UInt32, UInt32)
-      1.to_u..1.to_u
-    end
-
-    def call(args : Array(ValueType)) : Float64
-      TypeChecker.assert("float|int", args.first, token("Math->sqrt"))
-      x = args.first.as Number
-      Math.sqrt(x).to_f64
     end
   end
 
