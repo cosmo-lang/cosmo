@@ -1,5 +1,7 @@
 module Cosmo::AST::Statement
   module Visitor(R)
+    # abstract def visit_enum_def_stmt(stmt : EnumDef) : R
+    abstract def visit_class_def_stmt(stmt : ClassDef) : R
     abstract def visit_case_stmt(stmt : Case) : R
     abstract def visit_every_stmt(stmt : Every) : R
     abstract def visit_while_stmt(stmt : While) : R
@@ -19,6 +21,33 @@ module Cosmo::AST::Statement
   abstract class Base < Node
     abstract def accept(visitor : Visitor(R)) forall R
   end
+
+  # class EnumDef < Base
+  #   getter identifier : Token
+  #   getter members : Array(Tuple(Token, Expression::Base?))
+  #   getter visibility : Visibility
+
+  #   def initialize(@identifier, @members, @visibility)
+  #   end
+
+  #   def accept(visitor : Visitor(R)) : R forall R
+  #     visitor.visit_enum_def_stmt(self)
+  #   end
+
+  #   def token : Token
+  #     @identifier
+  #   end
+
+  #   def to_s(indent : Int = 0)
+  #     "EnumDef<\n" +
+  #     "  #{TAB * indent}identifier: #{@identifier.value.to_s},\n" +
+  #     "  #{TAB * indent}visibility: #{@visibility.to_s}\n" +
+  #     "  #{TAB * indent}members: [\n" +
+  #     "    #{TAB * indent}#{@members.map(&.to_s).join(",\n#{TAB * (indent + 2)}")}\n" +
+  #     "  #{TAB * indent}],\n" +
+  #     "#{TAB * indent}>"
+  #   end
+  # end
 
   class ClassDef < Base
     getter identifier : Token

@@ -19,6 +19,7 @@ enum Cosmo::Syntax
   Comma
   Hashtag
   Class; Mixin; New
+  Enum
   Function
   If; Unless
   In; Of

@@ -40,6 +40,8 @@ class Cosmo::Parser
       parse_fn_def_statement
     when .check?(Syntax::Class), .check?(Syntax::Class, 1)
       parse_class_def_statement
+    # when .check?(Syntax::Enum), .check?(Syntax::Enum, 1)
+    #   parse_enum_def_statement
     when .match?(Syntax::Use)
       parse_use_statement
     when .match?(Syntax::Throw)
@@ -82,8 +84,34 @@ class Cosmo::Parser
     Statement::Block.new(statements)
   end
 
+  # private def parse_enum_def_statement : Statement::EnumDef
+  #   has_visibility = match?(Syntax::Public)
+  #   visibility = get_visibility(last_token.lexeme)
+
+  #   consume(Syntax::Enum)
+  #   token = last_token
+  #   unless @within_class.nil?
+  #     Logger.report_error("Invalid enum", "Enums may not be class members", token)
+  #   end
+
+  #   consume(Syntax::LBrace)
+
+  #   members = [] of Tuple(Token, Expression::Base?)
+  #   while match?(Syntax::Identifier)
+  #     member_ident = last_token
+  #     value = nil
+  #     if match?(Syntax::Equal)
+  #       value = parse_literal
+  #     end
+  #     members << {member_ident, value}
+  #   end
+
+  #   consume(Syntax::RBrace)
+  #   Statement::EnumDef.new(identifier, members, visibility)
+  # end
+
   private def parse_class_def_statement : Statement::ClassDef
-    has_visibility = match?(Syntax::Public) || match?(Syntax::ClassVisibility)
+    has_visibility = match?(Syntax::Public)
     visibility = get_visibility(last_token.lexeme)
 
     consume(Syntax::Class)

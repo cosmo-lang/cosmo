@@ -26,6 +26,7 @@ module Cosmo::Keywords
     "class" => Syntax::Class,
     "mixin" => Syntax::Mixin,
     "new" => Syntax::New,
+    "enum" => Syntax::Enum
   }
 
   # These cannot be any of the keywords above
