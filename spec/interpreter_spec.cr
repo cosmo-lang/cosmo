@@ -58,6 +58,12 @@ describe Interpreter do
       result = interpreter.interpret("Math::log2(40)", "test")
       result.as(Float64).should be_close 5.3219, 0.0001
     end
+    it "string library" do
+
+    end
+    it "vector library" do
+
+    end
   end
   describe "interprets literals:" do
     it "booleans" do
@@ -109,6 +115,18 @@ describe Interpreter do
       result.should eq 5..20
       result = interpreter.interpret("Range my_neg_range = -20..-5", "test")
       result.should eq -20..-5
+    end
+    it "lambdas" do
+      interpreter.interpret("func even = &-> bool (int n) n % 2 == 0", "test")
+      result = interpreter.interpret("even(6)", "test")
+      result.should eq true
+      result = interpreter.interpret("even(3)", "test")
+      result.should eq false
+      interpreter.interpret("func double = &-> int (int n) n * 2", "test")
+      result = interpreter.interpret("double(6)", "test")
+      result.should eq 12
+      result = interpreter.interpret("double(15)", "test")
+      result.should eq 30
     end
   end
   it "interprets unary operators" do
