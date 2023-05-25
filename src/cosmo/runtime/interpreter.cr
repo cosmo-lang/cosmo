@@ -541,6 +541,16 @@ class Cosmo::Interpreter
     end
   end
 
+  def visit_multiple_declaration_expr(expr : Expression::MultipleDeclaration) : Array(ValueType)
+    resultant_values = [] of ValueType
+
+    expr.declarations.each do |declaration|
+      resultant_values << evaluate(declaration)
+    end
+
+    resultant_values
+  end
+
   def visit_var_assignment_expr(expr : Expression::VarAssignment) : ValueType
     value = expr.value.is_a?(Expression::Base) ? evaluate(expr.value.as Expression::Base) : expr.value
     @scope.assign(expr.var.token, TypeChecker.as_value_type(value))

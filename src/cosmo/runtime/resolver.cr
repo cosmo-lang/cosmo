@@ -178,6 +178,10 @@ class Cosmo::Resolver
     resolve(expr.value.as Expression::Base) if expr.value.is_a?(Expression::Base)
   end
 
+  def visit_multiple_declaration_expr(expr : Expression::MultipleDeclaration) : Nil
+    expr.declarations.each { |declaration| resolve(declaration) }
+  end
+
   def visit_multiple_assignment_expr(expr : Expression::MultipleAssignment) : Nil
     expr.assignments.each { |assignment| resolve(assignment) }
   end

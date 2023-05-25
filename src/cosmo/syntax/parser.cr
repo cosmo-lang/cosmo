@@ -596,6 +596,9 @@ class Cosmo::Parser
         if typedef.value == "type"
           parse_type_alias(typedef, identifier)
         else
+          if check?(Syntax::Comma) && !@not_assignment
+            return parse_multiple_declaration(typedef, identifier, type_info)
+          end
           if match?(Syntax::Equal)
             value = parse_expression
             Expression::VarDeclaration.new(
@@ -604,14 +607,14 @@ class Cosmo::Parser
               type_info[:visibility]
             )
           else
-            # TODO:
-            # return parse_multiple_declaration if match?(Syntax::Comma)
-            Expression::VarDeclaration.new(
+            first = Expression::VarDeclaration.new(
               typedef, identifier,
               Expression::NoneLiteral.new(nil, variable_name),
               type_info[:is_const],
               type_info[:visibility]
             )
+
+            first
           end
         end
       else
@@ -620,6 +623,58 @@ class Cosmo::Parser
     else
       parse_assignment
     end
+  end
+
+  private def parse_multiple_declaration(
+    typedef : Token,
+    expr : Expression::Var,
+    type_info : TypeInfo
+  ) : Expression::MultipleDeclaration
+
+    location_commas = 0
+    locations = [ expr ] of Expression::Var
+    while match?(Syntax::Comma)
+      consume(Syntax::Identifier)
+      location_commas += 1
+      locations << Expression::Var.new(last_token)
+    end
+
+    if match?(Syntax::Equal)
+      enclosing = @not_assignment
+      @not_assignment = true
+
+      values = [ parse_expression ]
+      consume(Syntax::Comma) # make sure there's at least one comma, since a multiple assignment requires at least one
+      values << parse_expression
+
+      value_commas = 1
+      while match?(Syntax::Comma)
+        value_commas += 1
+        values << parse_expression
+      end
+
+      @not_assignment = enclosing
+      unless location_commas == value_commas
+        Logger.report_error(
+          "Uneven multiple assignment",
+          "The left side of this assignment has #{location_commas} commas while the right side has #{value_commas} commas",
+          values.last.token
+        )
+      end
+    end
+
+    nodes = [] of Expression::VarDeclaration
+    locations.each_with_index do |var, i|
+      respective_value = (!values.nil? ? values[i]? : nil) || Expression::NoneLiteral.new(nil, var.token)
+      nodes << Expression::VarDeclaration.new(
+        typedef, var,
+        respective_value,
+        type_info[:is_const],
+        type_info[:visibility]
+      )
+    end
+
+    Expression::MultipleDeclaration.new(nodes)
   end
 
   private alias AssignmentLocation = Expression::Var | Expression::Index | Expression::Access
@@ -1064,11 +1119,16 @@ class Cosmo::Parser
 
   # Returns a list of comma separated expressions
   private def comma_separated(&) : Array(Expression::Base)
+    enclosing = @not_assignment
+    @not_assignment = true
+
     expressions = [] of Expression::Base
     expressions << yield
     while match?(Syntax::Comma)
       expressions << yield
     end
+
+    @not_assignment = enclosing
     expressions
   end
 
@@ -1122,7 +1182,10 @@ class Cosmo::Parser
     unless token_exists?
       raise "Failed to consume: Token stream finished"
     end
-    Logger.report_error("Expected #{syntax}, got", current.lexeme, current) unless current.type == syntax
+
+    got = current.type == Syntax::Identifier ? "identifier" : current.lexeme
+    got = current.type == Syntax::TypeDef ? "type" : got
+    Logger.report_error("Expected #{syntax}, got", got, current) unless current.type == syntax
     @position += 1
   end
 
