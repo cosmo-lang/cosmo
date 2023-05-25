@@ -4,7 +4,7 @@ require "./parser/ast"; include Cosmo::AST
 class Cosmo::Parser
   @position : Int32 = 0
   @tokens : Array(Token)
-  @in_assignment_value = false
+  @not_assignment = false
 
   def initialize(
     source : String,
@@ -292,6 +292,9 @@ class Cosmo::Parser
 
     type_info = parse_type(required: false, check_const: true)
     if type_info[:found_typedef]
+      enclosing = @not_assignment
+      @not_assignment = true
+
       param_type = type_info[:type_ref].not_nil!.name
       is_const = type_info[:is_const]
       consume(Syntax::Identifier)
@@ -317,6 +320,8 @@ class Cosmo::Parser
           params << Expression::Parameter.new(param_type, param_ident, is_const)
         end
       end
+
+      @not_assignment = enclosing
     end
 
     params
@@ -346,11 +351,16 @@ class Cosmo::Parser
     callee = expr
 
     if match?(Syntax::LParen)
+      enclosing = @not_assignment
+      @not_assignment = true
+
       arguments = [] of Expression::Base
       until match?(Syntax::RParen)
         arguments << parse_expression
         match?(Syntax::Comma)
       end
+
+      @not_assignment = enclosing
       callee = Expression::FunctionCall.new(callee, arguments)
     elsif match?(Syntax::LBracket)
       key = parse_expression
@@ -594,6 +604,7 @@ class Cosmo::Parser
               type_info[:visibility]
             )
           else
+            # TODO:
             # return parse_multiple_declaration if match?(Syntax::Comma)
             Expression::VarDeclaration.new(
               typedef, identifier,
@@ -631,7 +642,8 @@ class Cosmo::Parser
     end
 
     consume(Syntax::Equal)
-    @in_assignment_value = true
+    enclosing = @not_assignment
+    @not_assignment = true
     values = [ parse_expression ]
     consume(Syntax::Comma) # make sure there's at least one comma, since a multiple assignment requires at least one
     values << parse_expression
@@ -642,7 +654,7 @@ class Cosmo::Parser
       values << parse_expression
     end
 
-    @in_assignment_value = false
+    @not_assignment = enclosing
     unless location_commas == value_commas
       Logger.report_error(
         "Uneven multiple assignment",
@@ -667,7 +679,7 @@ class Cosmo::Parser
   # Parse a variable assignment expression and return a node
   private def parse_assignment(match_equal = true, check_comma = true) : Expression::Base
     left = parse_compound_assignment
-    return parse_multiple_assignment(left) if check?(Syntax::Comma) && !@in_assignment_value && check_comma
+    return parse_multiple_assignment(left) if check?(Syntax::Comma) && !@not_assignment && check_comma
 
     if match_equal && match?(Syntax::Equal)
       value = parse_expression
@@ -924,8 +936,10 @@ class Cosmo::Parser
   end
 
   private def parse_table_literal : Expression::TableLiteral
-    hash = {} of Expression::Base => Expression::Base
+    enclosing = @not_assignment
+    @not_assignment = true
 
+    hash = {} of Expression::Base => Expression::Base
     until match?(Syntax::DoubleRBrace)
       if match?(Syntax::LBracket)
         key = parse_expression
@@ -938,17 +952,21 @@ class Cosmo::Parser
       hash[key] = value
       match?(Syntax::Comma)
     end
+    @not_assignment = enclosing
 
     Expression::TableLiteral.new(hash, last_token)
   end
 
   private def parse_vector_literal : Expression::VectorLiteral
-    elements = [] of Expression::Base
+    enclosing = @not_assignment
+    @not_assignment = true
 
+    elements = [] of Expression::Base
     until match?(Syntax::RBracket)
       elements << parse_expression
       match?(Syntax::Comma)
     end
+    @not_assignment = enclosing
 
     Expression::VectorLiteral.new(elements, last_token)
   end
