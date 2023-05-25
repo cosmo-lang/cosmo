@@ -8,7 +8,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ### Features
 - Enums
-- Lambdas
 - Multiple assignment
 - Utility methods for: table, string
 - Stack trace

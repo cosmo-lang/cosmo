@@ -1,6 +1,7 @@
 require "./cosmo/logger"
 require "./util"
 require "./cosmo/runtime/interpreter"
+require "./playground_server"
 require "option_parser"
 require "readline"
 
@@ -12,9 +13,8 @@ module Cosmo
   begin
     OptionParser.new do |opts|
       opts.banner = "Thank you for using Cosmo!\nUsage: cosmo [OPTIONS] [FILE]"
-      opts.on("-h", "--help", "Outputs help menu for Cosmo CLI") do
-        puts opts
-        exit
+      opts.on("--play", "Starts the Cosmo playground server") do
+        @@options[:playground] = true
       end
       opts.on("-a", "--ast", "Outputs the AST") do
         @@options[:ast] = true
@@ -24,6 +24,10 @@ module Cosmo
       end
       opts.on("-d", "--debug", "Toggles debug mode (full error messages)") do
         @@options[:debug] = true
+      end
+      opts.on("-h", "--help", "Outputs help menu for Cosmo CLI") do
+        puts opts
+        exit
       end
       opts.on("-v", "--version", "Outputs the current version of Cosmo") do
         puts "Cosmo #{Version}"
@@ -83,10 +87,20 @@ module Cosmo
       puts result.is_a?(Hash) ? Stringify.hashmap(result.as Hash(ValueType, ValueType)) : result.to_s
     end
   end
+
+  def options
+    @@options
+  end
 end
 
-if ARGV.empty?
-  Cosmo.run_repl
+if Cosmo.options[:playground]
+  Cosmo::PlaygroundServer.start do
+    puts "Playground server listening at http://127.0.0.1:6060"
+  end
 else
-  Cosmo.read_file(ARGV.first)
+  if ARGV.empty?
+    Cosmo.run_repl
+  else
+    Cosmo.read_file(ARGV.first)
+  end
 end
