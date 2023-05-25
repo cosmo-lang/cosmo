@@ -11,10 +11,10 @@ class Cosmo::VectorIntrinsics
       First.new(@interpreter, @cache, name)
     when "last"
       Last.new(@interpreter, @cache, name)
-    # when "first?"
-    #   FirstNullable.new(@interpreter, @cache, name)
-    # when "last?"
-    #   LastNullable.new(@interpreter, @cache, name)
+    when "first?"
+      FirstNullable.new(@interpreter, @cache, name)
+    when "last?"
+      LastNullable.new(@interpreter, @cache, name)
     when "filter"
       Filter.new(@interpreter, @cache, name)
     when "map"
@@ -24,43 +24,43 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  # class FirstNullable < IntrinsicFunction
-  #   def initialize(
-  #     interpreter : Interpreter,
-  #     @_self : Array(ValueType),
-  #     @token : Token
-  #   )
+  class FirstNullable < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
 
-  #     super interpreter
-  #   end
+      super interpreter
+    end
 
-  #   def arity : Range(UInt32, UInt32)
-  #     0.to_u..0.to_u
-  #   end
+    def arity : Range(UInt32, UInt32)
+      0.to_u..0.to_u
+    end
 
-  #   def call(args : Array(ValueType)) : ValueType
-  #     @_self[0]?
-  #   end
-  # end
+    def call(args : Array(ValueType)) : ValueType
+      @_self[0]?
+    end
+  end
 
-  # class LastNullable < IntrinsicFunction
-  #   def initialize(
-  #     interpreter : Interpreter,
-  #     @_self : Array(ValueType),
-  #     @token : Token
-  #   )
+  class LastNullable < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
 
-  #     super interpreter
-  #   end
+      super interpreter
+    end
 
-  #   def arity : Range(UInt32, UInt32)
-  #     0.to_u..0.to_u
-  #   end
+    def arity : Range(UInt32, UInt32)
+      0.to_u..0.to_u
+    end
 
-  #   def call(args : Array(ValueType)) : ValueType
-  #     @_self[@_self.size - 1]?
-  #   end
-  # end
+    def call(args : Array(ValueType)) : ValueType
+      @_self[@_self.size - 1]?
+    end
+  end
 
   class First < IntrinsicFunction
     def initialize(
