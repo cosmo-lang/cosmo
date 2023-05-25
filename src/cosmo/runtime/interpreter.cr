@@ -409,6 +409,7 @@ class Cosmo::Interpreter
   def visit_access_expr(expr : Expression::Access) : ValueType
     object = evaluate(expr.object)
     key = expr.key.lexeme
+
     if object.is_a?(Hash)
       value = object[key]?
       if value.nil?
@@ -432,11 +433,20 @@ class Cosmo::Interpreter
 
     if object.is_a?(String) || object.is_a?(Array)
       unless key.is_a?(Int) || key.is_a?(Range)
-        Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.token)
+        Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), expr.key.token)
       end
-      object[key]?
+
+      value = object[key]?
+      if value.nil?
+        Logger.report_error("Index out of bounds", "Index #{key}, array size #{object.size}", expr.key.token)
+      end
+      value
     elsif object.is_a?(Hash)
-      object[key]?
+      value = object[key]?
+      if value.nil?
+        Logger.report_error("Invalid table key", "'#{key}'", expr.key.token)
+      end
+      value
     elsif object.is_a?(ClassInstance)
       Logger.report_error("Attempt to index class instance", expr.token.lexeme, expr.token)
     else
