@@ -326,7 +326,8 @@ class Cosmo::Parser
     elsif match?(Syntax::LBracket)
       key = parse_expression
       consume(Syntax::RBracket)
-      callee = Expression::Index.new(callee, key)
+      nullable = match?(Syntax::Question)
+      callee = Expression::Index.new(callee, key, nullable)
     elsif token_exists? && ACCESS_SYNTAXES.includes?(current.type) # it's a property access
       consume_current
       consume(Syntax::Identifier)

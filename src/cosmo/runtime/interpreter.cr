@@ -441,7 +441,7 @@ class Cosmo::Interpreter
       end
 
       value = object[key]?
-      if value.nil?
+      if value.nil? && !expr.nullable
         Logger.report_error("Index out of bounds", "Index #{key}, array size #{object.size}", expr.key.token)
       end
       value

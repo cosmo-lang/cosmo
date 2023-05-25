@@ -1,12 +1,10 @@
 func fn doubled(const int[] nums) {
   int i = 0
   int? fn generator() {
-    if i >= #nums
-      return none
-
-    const int value = nums[i]
+    const int value = nums[i]?
     ++i
-    value * 2
+    unless value is void
+      value * 2
   }
   generator
 }
@@ -17,10 +15,7 @@ func fn even(const int[] nums) {
   int i = 0
 
   int? fn generator() {
-    if i >= #even_nums
-      return none
-
-    const int x = even_nums[i]
+    const int x = even_nums[i]?
     ++i
     x
   }
