@@ -37,6 +37,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 ### Meta
 - Package manager ([WIP](https://github.com/cosmo-lang/stars))
 - Documentation generator
+- Linting/language server
 
 ## Things I Might Do
 
@@ -48,6 +49,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ## Installation
 
+### Linux/OSX
 1. Install [Crystal](https://crystal-lang.org/install/).
 2. Run `sudo make install`.
 3. Assert everything is working by running `cosmo -h`
