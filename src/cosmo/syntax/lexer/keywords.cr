@@ -30,7 +30,7 @@ module Cosmo::Keywords
   }
 
   # These cannot be any of the keywords above
-  TYPE_KEYWORDS = ["type", "any", "bool", "string", "char", "int", "bigint", "float", "void", "func"]
+  TYPE_KEYWORDS = ["type", "any", "bool", "string", "char", "int", "uint", "bigint", "float", "void", "func"]
   CLASS_VISIBILITY_KEYWORDS = ["protected", "static"]
 
   # Returns whether or not `s` is a class vibility keyword

@@ -196,6 +196,12 @@ describe Interpreter do
     result = interpreter.interpret("bigint boba = 13582385623792389735", "test")
     result.should eq 13582385623792389735_i128
 
+    result = interpreter.interpret("uint ijija = 1500", "test")
+    result.should eq 1500
+    expect_raises(Exception, "@test [1:6] Type mismatch: Expected 'uint', got 'int'") do
+      interpreter.interpret("ijija = -1", "test")
+    end
+
     result = interpreter.interpret("char y = 'h'", "test")
     result.should eq 'h'
 
@@ -209,7 +215,7 @@ describe Interpreter do
     result.should eq 123
 
     interpreter.interpret("const int foo = 10", "test")
-    expect_raises(Exception, "[1:4] Attempt to assign to constant variable: foo") do
+    expect_raises(Exception, "@test [1:4] Attempt to assign to constant variable: foo") do
       interpreter.interpret("foo = 15", "test")
     end
 

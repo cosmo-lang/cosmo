@@ -10,8 +10,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Enums
 - Utility methods for tables
 - Stack trace
-- `uint` type
-- Integer division operator (`//`)
+- Multiline strings
 - Allow throwing class instances that inherit from a base `Exception` class
 - Interfaces
 - Namespaces

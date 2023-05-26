@@ -19,6 +19,8 @@ module Cosmo::TypeChecker
     Int32 => "int",
     Int16 => "int",
     Int8 => "int",
+    UInt64 => "uint",
+    UInt32 => "uint",
     Float64 => "float",
     Float32 => "float",
     String => "string",
@@ -66,6 +68,7 @@ module Cosmo::TypeChecker
     register_type("class")
     register_type("func")
     register_type("bigint")
+    register_type("uint")
     register_type("int")
     register_type("float")
     register_type("bool")
@@ -182,6 +185,8 @@ module Cosmo::TypeChecker
       value.is_a?(Function) || value.is_a?(IntrinsicFunction)
     when "bigint"
       value.is_a?(Int)
+    when "uint"
+      value.is_a?(Int) && value > 0
     when "int"
       value.is_a?(Int64 | Int32 | Int16 | Int8)
     when "float"
