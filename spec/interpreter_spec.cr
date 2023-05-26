@@ -63,6 +63,8 @@ describe Interpreter do
       result.should be_true
       result = interpreter.interpret("\"baba\".chars()", "test")
       result.should eq ['b','a','b','a']
+      result = interpreter.interpret("\"baba.booey.god\".split('.')", "test")
+      result.should eq ["baba", "booey", "god"]
     end
     it "vector library" do
       result = interpreter.interpret("[1,2,3].map(&-> int (int n): n * 2)", "test")
@@ -75,6 +77,10 @@ describe Interpreter do
       result.should eq 2
       result = interpreter.interpret("[]->first?() is void", "test")
       result.should eq true
+      result = interpreter.interpret("['a', 'b', 'c'].join(',')", "test")
+      result.should eq "a,b,c"
+      result = interpreter.interpret("[].push(1,2,3,4,5)", "test")
+      result.should eq [1,2,3,4,5]
     end
   end
   describe "interprets literals:" do
@@ -174,6 +180,8 @@ describe Interpreter do
     result.should eq 31
     result = interpreter.interpret("~15 >> 12 << 14", "test")
     result.should eq -16384
+    result = interpreter.interpret("482 // 23", "test")
+    result.should eq 20
   end
   it "interprets ternary operators" do
     result = interpreter.interpret("true ? (true ? \"yes\" : \"wtf\") : \"wtf x2\"", "test")

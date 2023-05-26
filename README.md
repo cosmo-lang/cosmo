@@ -27,11 +27,13 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * intersections
 
 ### Fixes
-- Segfault with `TypeChecker.get_mapped`
+- Performance boosts lol
 - Weird expression parsing (`[0].123` evaluates to 0.123??)
+- Segfaults
+  * `TypeChecker.get_mapped`
+  * e.x. `x << [1]`
 - Handle infinite recursion
   * macro function to set recursion depth limit
-- Performance boosts lol
 
 ### Meta
 - Package manager ([WIP](https://github.com/cosmo-lang/stars))
