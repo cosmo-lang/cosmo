@@ -55,7 +55,7 @@ module Cosmo
 
     def call(args : Array(ValueType)) : String? # named argument here for adding history?
       TypeChecker.assert("string|char", args.first, token("gets"))
-      STDIN.write(args.first.to_s.to_slice)
+      STDOUT.write(args.first.to_s.to_slice)
       STDIN.gets
     end
   end
