@@ -73,6 +73,8 @@ describe Interpreter do
       result.should eq 15
       result = interpreter.interpret("ABABABA->last()", "test")
       result.should eq 2
+      result = interpreter.interpret("[]->first?() is void", "test")
+      result.should eq true
     end
   end
   describe "interprets literals:" do

@@ -17,7 +17,7 @@ module Cosmo
     end
 
     def to_s : String
-      "<intrinsic ##{self.hash}>"
+      "<intrinsic ##{self.object_id.to_s(16)}>"
     end
   end
 

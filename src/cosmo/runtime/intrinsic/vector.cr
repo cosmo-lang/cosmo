@@ -7,6 +7,12 @@ class Cosmo::VectorIntrinsics
 
   def get_method(name : Token) : IntrinsicFunction
     case name.lexeme
+    when "push"
+      Push.new(@interpreter, @cache, name)
+    when "pop"
+      Pop.new(@interpreter, @cache, name)
+    when "shift"
+      Shift.new(@interpreter, @cache, name)
     when "first"
       First.new(@interpreter, @cache, name)
     when "last"
@@ -26,6 +32,66 @@ class Cosmo::VectorIntrinsics
     end
   end
 
+  class Shift < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : ValueType
+      @_self.shift
+    end
+  end
+
+  class Push < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. MAX_INTRINSIC_PARAMS.to_u
+    end
+
+    def call(args : Array(ValueType)) : Array(ValueType)
+      args.each do |arg|
+        @_self << arg
+      end
+      @_self
+    end
+  end
+
+  class Pop < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : ValueType
+      @_self.pop
+    end
+  end
+
   class Sum < IntrinsicFunction
     def initialize(
       interpreter : Interpreter,
@@ -37,7 +103,7 @@ class Cosmo::VectorIntrinsics
     end
 
     def arity : Range(UInt32, UInt32)
-      0.to_u..0.to_u
+      0.to_u .. 0.to_u
     end
 
     def call(args : Array(ValueType)) : Num
@@ -58,7 +124,7 @@ class Cosmo::VectorIntrinsics
     end
 
     def arity : Range(UInt32, UInt32)
-      0.to_u..0.to_u
+      0.to_u .. 0.to_u
     end
 
     def call(args : Array(ValueType)) : ValueType
@@ -77,7 +143,7 @@ class Cosmo::VectorIntrinsics
     end
 
     def arity : Range(UInt32, UInt32)
-      0.to_u..0.to_u
+      0.to_u .. 0.to_u
     end
 
     def call(args : Array(ValueType)) : ValueType
@@ -96,7 +162,7 @@ class Cosmo::VectorIntrinsics
     end
 
     def arity : Range(UInt32, UInt32)
-      0.to_u..0.to_u
+      0.to_u .. 0.to_u
     end
 
     def call(args : Array(ValueType)) : ValueType
@@ -119,7 +185,7 @@ class Cosmo::VectorIntrinsics
     end
 
     def arity : Range(UInt32, UInt32)
-      0.to_u..0.to_u
+      0.to_u .. 0.to_u
     end
 
     def call(args : Array(ValueType)) : ValueType
@@ -143,7 +209,7 @@ class Cosmo::VectorIntrinsics
     end
 
     def arity : Range(UInt32, UInt32)
-      1.to_u..1.to_u
+      1.to_u .. 1.to_u
     end
 
     def call(args : Array(ValueType)) : Array(ValueType)
@@ -169,7 +235,7 @@ class Cosmo::VectorIntrinsics
     end
 
     def arity : Range(UInt32, UInt32)
-      1.to_u..1.to_u
+      1.to_u .. 1.to_u
     end
 
     def call(args : Array(ValueType)) : Array(ValueType)
