@@ -34,6 +34,9 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Handle infinite recursion
   * macro function to set recursion depth limit
 
+### Refactorings
+- File for each AST node
+
 ### Meta
 - Package manager ([WIP](https://github.com/cosmo-lang/stars))
 - Documentation generator
