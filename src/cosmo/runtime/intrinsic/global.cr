@@ -30,7 +30,7 @@ module Cosmo
 
   class PutsIntrinsic < IntrinsicFunction
     def arity : Range(UInt32, UInt32)
-      1.to_u..MAX_INTRINSIC_PARAMS.to_u
+      1.to_u .. MAX_INTRINSIC_PARAMS.to_u
     end
 
     def call(args : Array(ValueType)) : Nil
@@ -45,6 +45,17 @@ module Cosmo
       end
 
       puts mapped.join('\t')
+    end
+  end
+
+  class GetsIntrinsic < IntrinsicFunction
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 1.to_u
+    end
+
+    def call(args : Array(ValueType)) : String? # named argument here?
+      TypeChecker.assert("string|char", args.first, token("gets"))
+      Readline.readline(args.first.to_s, add_history: true) # default to true for now
     end
   end
 end

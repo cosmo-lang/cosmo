@@ -14,3 +14,4 @@ float|int fn missing((float|int)[] seq) {
 Assert::eq(missing([1, 3, 4, 5]), 2)
 Assert::eq(missing([2, 4, 6, 8, 10, 14, 16]), 12)
 Assert::eq(missing([1.5, 2, 3]), 2.5)
+

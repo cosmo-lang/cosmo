@@ -35,6 +35,7 @@ class Cosmo::Interpreter
 
     @scope = @globals
     declare_intrinsic("func", "puts", PutsIntrinsic.new(self))
+    declare_intrinsic("func", "gets", GetsIntrinsic.new(self))
 
     version = "Cosmo #{Version}"
     declare_intrinsic("string", "__version", version)

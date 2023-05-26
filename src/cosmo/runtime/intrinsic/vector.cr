@@ -41,7 +41,7 @@ class Cosmo::VectorIntrinsics
     end
 
     def call(args : Array(ValueType)) : Num
-      TypeChecker.assert("(float|int)[]", @_self, @token)
+      TypeChecker.assert("(float|int)[]", @_self, token("Vector->sum"))
       sum = @_self.map { |e| e.as Num }.sum
       sum.to_i == sum ? sum.to_i64 : sum.to_f64
     end
@@ -102,7 +102,7 @@ class Cosmo::VectorIntrinsics
     def call(args : Array(ValueType)) : ValueType
       value = @_self[0]?
       if value.nil?
-        Logger.report_error("Index out of bounds", "Index 0, array size #{@_self.size}", @token)
+        Logger.report_error("Index out of bounds", "Index 0, array size #{@_self.size}", token("Vector->first"))
       end
       value
     end
@@ -126,7 +126,7 @@ class Cosmo::VectorIntrinsics
       i = @_self.size - 1
       value = @_self[i]?
       if value.nil?
-        Logger.report_error("Index out of bounds", "Index #{i}, array size #{@_self.size}", @token)
+        Logger.report_error("Index out of bounds", "Index #{i}, array size #{@_self.size}", token("Vector->last"))
       end
       value
     end
