@@ -5,6 +5,7 @@ enum Cosmo::Syntax
   PlusPlus; MinusMinus;
   Plus; PlusEqual; Minus; MinusEqual
   Star; StarEqual; Slash; SlashEqual
+  SlashSlash; SlashSlashEqual
   Carat; CaratEqual; Percent; PercentEqual
   Less; LessEqual; Greater; GreaterEqual
   Equal; EqualEqual; Bang; BangEqual

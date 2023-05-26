@@ -35,6 +35,8 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ### Meta
 - Package manager ([WIP](https://github.com/cosmo-lang/stars))
+- Wiki
+  * operator overloading
 
 ## Things I Might Do
 

@@ -754,6 +754,9 @@ class Cosmo::Interpreter
     when Syntax::Slash
       op = Operator::Div.new(self)
       op.apply(expr)
+    when Syntax::SlashSlash
+      op = Operator::IntDiv.new(self)
+      op.apply(expr)
     when Syntax::Carat
       op = Operator::Pow.new(self)
       op.apply(expr)

@@ -128,6 +128,30 @@ module Cosmo::Operator
     end
   end
 
+  class IntDiv < Base
+    def apply(expr : Expression::BinaryOp, op : String = "//") : ValueType
+      left = @interpreter.evaluate(expr.left)
+      right = @interpreter.evaluate(expr.right)
+
+      if left.is_a?(ClassInstance)
+        return Operator.call_meta_method(left, right, "idiv$", op, expr.operator)
+      elsif right.is_a?(ClassInstance)
+        return Operator.call_meta_method(right, left, "idiv$", op, expr.operator)
+      end
+
+      if left.is_a?(Float)
+        return left // right if right.is_a?(Float)
+        return left // right.to_f if right.is_a?(Int)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      elsif left.is_a?(Int)
+        return left // right if right.is_a?(Int)
+        return left.to_f // right if right.is_a?(Float)
+        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      end
+      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+    end
+  end
+
   class Pow < Base
     def apply(expr : Expression::BinaryOp, op : String = "^") : ValueType
       left = @interpreter.evaluate(expr.left)

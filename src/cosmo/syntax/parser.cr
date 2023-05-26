@@ -754,7 +754,8 @@ class Cosmo::Parser
 
     if match?(Syntax::AmpersandColonEqual) || match?(Syntax::PipeColonEqual) ||
       match?(Syntax::CaratEqual) ||
-      match?(Syntax::StarEqual) || match?(Syntax::SlashEqual) || match?(Syntax::PercentEqual) ||
+      match?(Syntax::StarEqual) || match?(Syntax::SlashEqual) ||
+      match?(Syntax::SlashSlashEqual) || match?(Syntax::PercentEqual) ||
       match?(Syntax::PlusEqual) || match?(Syntax::MinusEqual)
 
       op = last_token
@@ -885,7 +886,9 @@ class Cosmo::Parser
   private def parse_multiplicative : Expression::Base
     left = parse_exponential
 
-    while match?(Syntax::Star) || match?(Syntax::Slash) || match?(Syntax::Percent)
+    while match?(Syntax::Star) || match?(Syntax::Slash) ||
+      match?(Syntax::SlashSlash) || match?(Syntax::Percent)
+
       op = last_token
       right = parse_exponential
       left = Expression::BinaryOp.new(left, op, right)

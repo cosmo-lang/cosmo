@@ -129,6 +129,12 @@ class Cosmo::Lexer
     when "/"
       if match_char?("=")
         add_token(Syntax::SlashEqual, nil)
+      elsif match_char?("/")
+        if match_char?("=")
+          add_token(Syntax::SlashSlashEqual, nil)
+        else
+          add_token(Syntax::SlashSlash, nil)
+        end
       else
         add_token(Syntax::Slash, nil)
       end
