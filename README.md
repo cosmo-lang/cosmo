@@ -8,12 +8,15 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 ### Features
 - Enums
-- The below literal intrinsic methods
-  * String->split
-  * Vector->join
+- The below intrinsic methods
+  * gets()
+  * String->split()
+  * Vector->join()
 - Utility methods for tables
 - Stack trace
 - `uint` type
+- Integer division operator (`//`)
+- Allow throwing class instances that inherit from a base `Exception` class
 - Interfaces
 - Namespaces
 - Classes
@@ -21,11 +24,14 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * mixins
   * static/protected members
 - Better type system
+  * type inference
   * generics
   * casting union types
+  * implicit conversions
   * intersections
 
 ### Fixes
+- Segfault with `TypeChecker.get_mapped`
 - Weird expression parsing (`[0].123` evaluates to 0.123??)
 - Handle infinite recursion
   * macro function to set recursion depth limit

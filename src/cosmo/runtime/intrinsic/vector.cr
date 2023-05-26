@@ -15,12 +15,35 @@ class Cosmo::VectorIntrinsics
       FirstNullable.new(@interpreter, @cache, name)
     when "last?"
       LastNullable.new(@interpreter, @cache, name)
+    when "sum"
+      Sum.new(@interpreter, @cache, name)
     when "filter"
       Filter.new(@interpreter, @cache, name)
     when "map"
       Map.new(@interpreter, @cache, name)
     else
       Logger.report_error("Invalid vector method", name.lexeme, name)
+    end
+  end
+
+  class Sum < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u..0.to_u
+    end
+
+    def call(args : Array(ValueType)) : Num
+      TypeChecker.assert("(float|int)[]", @_self, @token)
+      sum = @_self.map { |e| e.as Num }.sum
+      sum.to_i == sum ? sum.to_i64 : sum.to_f64
     end
   end
 

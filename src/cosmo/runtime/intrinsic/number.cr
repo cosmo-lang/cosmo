@@ -1,6 +1,8 @@
-class Cosmo::NumberIntrinsics
-  private alias Num = Int128 | Int64 | Int32 | Int16 | Int8 | Float64 | Float32
+module Cosmo
+  alias Num = Int128 | Int64 | Int32 | Int16 | Int8 | Float64 | Float32
+end
 
+class Cosmo::NumberIntrinsics
   def initialize(
     @interpreter : Interpreter,
     @value : Num
