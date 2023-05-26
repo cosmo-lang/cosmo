@@ -16,6 +16,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Install libreadline
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libreadline-dev
     - name: Install dependencies
       run: shards install
     - name: Run tests
