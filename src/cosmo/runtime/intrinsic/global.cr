@@ -53,9 +53,10 @@ module Cosmo
       1.to_u .. 1.to_u
     end
 
-    def call(args : Array(ValueType)) : String? # named argument here?
+    def call(args : Array(ValueType)) : String? # named argument here for adding history?
       TypeChecker.assert("string|char", args.first, token("gets"))
-      Readline.readline(args.first.to_s, add_history: true) # default to true for now
+      STDIN.write(args.first.to_s.to_slice)
+      STDIN.gets
     end
   end
 end

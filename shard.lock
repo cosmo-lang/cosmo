@@ -1,10 +1,10 @@
 version: 2.0
 shards:
-  readline:
-    git: https://github.com/crystal-lang/crystal-readline.git
-    version: 0.1.1
-
   stdio:
     git: https://github.com/mosop/stdio.git
     version: 0.1.4
+
+  termbox:
+    git: https://github.com/andrewsuzuki/termbox-crystal.git
+    version: 0.1.0+git.commit.9471d1f1852dec251d6bcb6f8a583e7abdf04f68
 

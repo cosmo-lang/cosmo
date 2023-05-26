@@ -9,8 +9,6 @@ targets:
     main: src/cosmo.cr
 
 dependencies:
-  readline:
-    github: crystal-lang/crystal-readline
   stdio:
     github: mosop/stdio
 

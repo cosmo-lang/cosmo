@@ -1,7 +1,5 @@
 require "./cosmo/logger"
 require "./util"
-require "readline"
-
 require "./cosmo/runtime/interpreter"
 require "option_parser"
 
@@ -70,16 +68,14 @@ module Cosmo
     rainbow_str
   end
 
-  private def read_line : String?
-    Readline.readline "➤ ", add_history: true
-  end
-
   # Starts the REPL
   def run_repl
-    puts "Welcome to the #{rainbow "Cosmo"} REPL"
+    puts "Welcome to the #{rainbow "Cosmo"} REPL!"
     loop do
-      line = read_line
-      break if line.nil?
+      STDIN.write("» ".to_slice)
+      line = STDIN.gets
+      break if line.nil? || line.chomp.empty?
+
       result = read_source(line, file_path: "repl")
       puts result.is_a?(Hash) ? Stringify.hashmap(result.as Hash(ValueType, ValueType)) : result.to_s
     end
