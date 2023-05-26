@@ -386,6 +386,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/GetsIntrinsic" data-name="cosmo::getsintrinsic">
+      <a href="Cosmo/GetsIntrinsic.html">GetsIntrinsic</a>
+      
+    </li>
+  
   <li class="parent " data-id="Cosmo/Cosmo/HookedExceptions" data-name="cosmo::hookedexceptions">
       <a href="Cosmo/HookedExceptions.html">HookedExceptions</a>
       
@@ -561,6 +566,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Num" data-name="cosmo::num">
+      <a href="Cosmo/Num.html">Num</a>
+      
+    </li>
+  
   <li class="parent " data-id="Cosmo/Cosmo/NumberIntrinsics" data-name="cosmo::numberintrinsics">
       <a href="Cosmo/NumberIntrinsics.html">NumberIntrinsics</a>
       
@@ -653,6 +663,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Operator/GTE" data-name="cosmo::operator::gte">
       <a href="Cosmo/Operator/GTE.html">GTE</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/IntDiv" data-name="cosmo::operator::intdiv">
+      <a href="Cosmo/Operator/IntDiv.html">IntDiv</a>
       
     </li>
   
@@ -761,6 +776,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/Split" data-name="cosmo::stringintrinsics::split">
+      <a href="Cosmo/StringIntrinsics/Split.html">Split</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -811,6 +831,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Join" data-name="cosmo::vectorintrinsics::join">
+      <a href="Cosmo/VectorIntrinsics/Join.html">Join</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Last" data-name="cosmo::vectorintrinsics::last">
       <a href="Cosmo/VectorIntrinsics/Last.html">Last</a>
       
@@ -823,6 +848,26 @@
   
   <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Map" data-name="cosmo::vectorintrinsics::map">
       <a href="Cosmo/VectorIntrinsics/Map.html">Map</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Pop" data-name="cosmo::vectorintrinsics::pop">
+      <a href="Cosmo/VectorIntrinsics/Pop.html">Pop</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Push" data-name="cosmo::vectorintrinsics::push">
+      <a href="Cosmo/VectorIntrinsics/Push.html">Push</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Shift" data-name="cosmo::vectorintrinsics::shift">
+      <a href="Cosmo/VectorIntrinsics/Shift.html">Shift</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Sum" data-name="cosmo::vectorintrinsics::sum">
+      <a href="Cosmo/VectorIntrinsics/Sum.html">Sum</a>
       
     </li>
   
@@ -878,15 +923,10 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </a>Features</h3>
 <ul>
 <li>Enums</li>
-<li>The below literal intrinsic methods
-<ul>
-<li>String-&gt;split</li>
-<li>Vector-&gt;join</li>
-</ul>
-</li>
 <li>Utility methods for tables</li>
 <li>Stack trace</li>
-<li><code>uint</code> type</li>
+<li>Multiline strings</li>
+<li>Allow throwing class instances that inherit from a base <code>Exception</code> class</li>
 <li>Interfaces</li>
 <li>Namespaces</li>
 <li>Classes
@@ -898,8 +938,10 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </li>
 <li>Better type system
 <ul>
+<li>type inference</li>
 <li>generics</li>
 <li>casting union types</li>
+<li>implicit conversions</li>
 <li>intersections</li>
 </ul>
 </li>
@@ -910,13 +952,19 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Fixes</h3>
 <ul>
+<li>Performance boosts lol</li>
 <li>Weird expression parsing (<code>[0].123</code> evaluates to 0.123??)</li>
+<li>Segfaults
+<ul>
+<li><code>TypeChecker.get_mapped</code></li>
+<li>e.x. <code>x &lt;&lt; [1]</code></li>
+</ul>
+</li>
 <li>Handle infinite recursion
 <ul>
 <li>macro function to set recursion depth limit</li>
 </ul>
 </li>
-<li>Performance boosts lol</li>
 </ul>
 <h3><a id="meta" class="anchor" href="#meta">
   <svg class="octicon-link" aria-hidden="true">
@@ -925,6 +973,11 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </a>Meta</h3>
 <ul>
 <li>Package manager (<a href="https://github.com/cosmo-lang/stars">WIP</a>)</li>
+<li>Wiki
+<ul>
+<li>operator overloading</li>
+</ul>
+</li>
 </ul>
 <h2><a id="things-i-might-do" class="anchor" href="#things-i-might-do">
   <svg class="octicon-link" aria-hidden="true">
@@ -932,6 +985,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Things I Might Do</h2>
 <ul>
+<li>Named arguments</li>
 <li>Allow functions with no arguments to be called without parentheses</li>
 <li>Make declarations immutable by default and replace <code>const</code> with <code>mut</code></li>
 <li>Make into a compiler or bytecode interpreter</li>
