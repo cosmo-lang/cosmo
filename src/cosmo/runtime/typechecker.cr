@@ -29,6 +29,7 @@ module Cosmo::TypeChecker
     Nil => "none",
     ClassInstance => "classinstance",
     Class => "class",
+    Type => "type",
     Function => "func",
     PutsIntrinsic => "func",
     Array(Int64) => "int[]",
