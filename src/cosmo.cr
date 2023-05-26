@@ -72,7 +72,7 @@ module Cosmo
   def run_repl
     puts "Welcome to the #{rainbow "Cosmo"} REPL!"
     loop do
-      STDIN.write("» ".to_slice)
+      STDOUT.write("» ".to_slice)
       line = STDIN.gets
       break if line.nil? || line.chomp.empty?
 
