@@ -24,6 +24,7 @@ class Cosmo::Interpreter
   @file_path : String = ""
   @importable_intrinsics = {} of String => IntrinsicLib
   @loop_level : UInt32 = 0
+  @evaluating_fn_call = false
 
   def initialize(
     @output_ast : Bool,
@@ -427,18 +428,39 @@ class Cosmo::Interpreter
         Logger.report_error("Invalid table key", "'#{key}'", expr.key)
         # redirect to hash intrinsic methods, else error
       end
-      value
+      if value.is_a?(Function) && value.arity.begin == 0 && !@evaluating_fn_call
+        value.call([] of ValueType)
+      else
+        value
+      end
     elsif object.is_a?(Array)
-      VectorIntrinsics.new(self, object)
+      fn = VectorIntrinsics.new(self, object)
         .get_method(expr.key)
+
+      fn.arity.begin == 0 && !@evaluating_fn_call ?
+        fn.call([] of ValueType)
+        : fn
     elsif object.is_a?(String)
-      StringIntrinsics.new(self, object)
+      fn = StringIntrinsics.new(self, object)
         .get_method(expr.key)
+
+      fn.arity.begin == 0 && !@evaluating_fn_call ?
+        fn.call([] of ValueType)
+        : fn
     elsif object.is_a?(Number)
-      NumberIntrinsics.new(self, object)
+      fn = NumberIntrinsics.new(self, object)
         .get_method(expr.key)
+
+      fn.arity.begin == 0 && !@evaluating_fn_call ?
+        fn.call([] of ValueType)
+        : fn
     elsif object.is_a?(ClassInstance)
-      object.get_member(key, expr.key, include_private: !@meta["this"]?.nil?)
+      value = object.get_member(key, expr.key, include_private: !@meta["this"]?.nil?)
+      if value.is_a?(Function) && value.arity.begin == 0 && !@evaluating_fn_call
+        value.call([] of ValueType)
+      else
+        value
+      end
     else
       Logger.report_error("Attempt to index", TypeChecker.get_mapped(object.class), expr.token)
     end
@@ -509,6 +531,8 @@ class Cosmo::Interpreter
   end
 
   def visit_fn_call_expr(expr : Expression::FunctionCall) : ValueType
+    @evaluating_fn_call = true
+
     fn = evaluate(expr.callee)
     unless fn.is_a?(Function) || fn.is_a?(IntrinsicFunction)
       Logger.report_error("Attempt to call", fn.is_a?(ClassInstance) ? fn.name : TypeChecker.get_mapped(fn.class), expr.token)
@@ -519,11 +543,19 @@ class Cosmo::Interpreter
     end
 
     arg_values = expr.arguments.map { |arg| evaluate(arg) }
-    fn.call(arg_values)
+    result = fn.call(arg_values)
+
+    @evaluating_fn_call = false
+    result
   end
 
   def visit_var_expr(expr : Expression::Var) : ValueType
-    @scope.lookup(expr.token)
+    value = @scope.lookup(expr.token)
+    if value.is_a?(Function) && value.arity.begin == 0 && !@evaluating_fn_call
+      value.call([] of ValueType)
+    else
+      value
+    end
   end
 
   def visit_var_declaration_expr(expr : Expression::VarDeclaration) : ValueType

@@ -1,8 +1,0 @@
-use "assert"
-
-bool fn is_cool() {
-  true
-}
-
-const func[] methods = [is_cool]
-Assert->truthy(methods[0]())

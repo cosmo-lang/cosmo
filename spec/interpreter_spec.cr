@@ -43,9 +43,9 @@ describe Interpreter do
       result.as(Float64).should be_close 2.718, 0.001
       result = interpreter.interpret("1.2345->round(2)", "test")
       result.should eq 1.23
-      result = interpreter.interpret("1.75->floor()", "test")
+      result = interpreter.interpret("1.75->floor", "test")
       result.should eq 1
-      result = interpreter.interpret("1.1->ceil()", "test")
+      result = interpreter.interpret("1.1->ceil", "test")
       result.should eq 2
       result = interpreter.interpret("Math::max(3, 6, 4, 3, 9, 12, 2)", "test")
       result.should eq 12
@@ -59,9 +59,9 @@ describe Interpreter do
       result.as(Float64).should be_close 5.3219, 0.0001
     end
     it "string library" do
-      result = interpreter.interpret("\"    \".blank?()", "test")
+      result = interpreter.interpret("\"    \".blank?", "test")
       result.should be_true
-      result = interpreter.interpret("\"baba\".chars()", "test")
+      result = interpreter.interpret("\"baba\".chars", "test")
       result.should eq ['b','a','b','a']
       result = interpreter.interpret("\"baba.booey.god\".split('.')", "test")
       result.should eq ["baba", "booey", "god"]
@@ -71,11 +71,11 @@ describe Interpreter do
       result.should eq [2,4,6]
       result = interpreter.interpret("int[] ABABABA = [15, 2]", "test")
       result.should eq [15, 2]
-      result = interpreter.interpret("ABABABA->first()", "test")
+      result = interpreter.interpret("ABABABA->first", "test")
       result.should eq 15
-      result = interpreter.interpret("ABABABA->last()", "test")
+      result = interpreter.interpret("ABABABA->last", "test")
       result.should eq 2
-      result = interpreter.interpret("[]->first?() is void", "test")
+      result = interpreter.interpret("[]->first? is void", "test")
       result.should eq true
       result = interpreter.interpret("['a', 'b', 'c'].join(',')", "test")
       result.should eq "a,b,c"
@@ -306,7 +306,7 @@ describe Interpreter do
     result.should be_a Callable
     result.should be_a Function
 
-    result = interpreter.interpret("(bool|void) fn balls?() { none }", "test")
+    result = interpreter.interpret("(bool|void) fn balls? { none }", "test")
     result.should be_a Callable
     result.should be_a Function
   end

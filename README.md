@@ -44,11 +44,11 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Package manager ([WIP](https://github.com/cosmo-lang/stars))
 - Documentation generator
 - Linting/language server
+- Highlight function names without parentheses
 
 ## Things I Might Do
 
 - Named arguments
-- Allow functions with no arguments to be called without parentheses
 - Make declarations immutable by default and replace `const` with `mut`
 - Make into a compiler or bytecode interpreter
 - C bindings

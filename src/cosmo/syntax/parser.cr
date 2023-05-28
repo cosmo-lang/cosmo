@@ -273,14 +273,16 @@ class Cosmo::Parser
     consume(Syntax::Function)
     consume(Syntax::Identifier)
     function_ident = last_token
-    consume(Syntax::LParen)
-    params = parse_fn_params
-    consume(Syntax::RParen)
-    body = parse_block
 
+    if match?(Syntax::LParen)
+      params = parse_fn_params
+      consume(Syntax::RParen)
+    end
+
+    body = parse_block
     Statement::FunctionDef.new(
       function_ident,
-      params, body,
+      params || [] of Expression::Parameter, body,
       return_typedef,
       type_info[:visibility]
     )

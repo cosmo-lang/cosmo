@@ -1,24 +1,23 @@
 func fn doubled(const int[] nums) {
   int i = 0
-  int? fn generator() {
+
+  int? fn generator {
     const int value = nums[i]?
     ++i
     unless value is void
       value * 2
   }
-  generator
 }
 
 func fn even(const int[] nums) {
   const int[] even_nums = nums->filter(&bool (int x): x % 2 == 0)
   int i = 0
 
-  int? fn generator() {
+  int? fn generator {
     const int x = even_nums[i]?
     ++i
     x
   }
-  generator
 }
 
 ## 2, 4, 6, 8

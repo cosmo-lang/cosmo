@@ -443,7 +443,7 @@ describe Parser do
     binary.right.should be_a Expression::NoneLiteral
 
     lines = [
-      "void fn say_hi() {",
+      "void fn say_hi {",
       " puts(\"hi\")",
       "}",
       "say_hi()",
