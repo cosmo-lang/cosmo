@@ -38,7 +38,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
   * macro function to set recursion depth limit
 
 ### Refactorings
-- File for each AST node
+(empty)
 
 ### Meta
 - Package manager ([WIP](https://github.com/cosmo-lang/stars))
