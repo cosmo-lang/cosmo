@@ -952,9 +952,7 @@ class Cosmo::Parser
     elsif match?(Syntax::Identifier)
       ident = last_token
       Expression::Var.new(ident)
-    elsif check?(Syntax::Ampersand) && check?(Syntax::HyphenArrow, 1)
-      consume(Syntax::Ampersand)
-      consume(Syntax::HyphenArrow)
+    elsif match?(Syntax::Ampersand)
       return_type_info = parse_type(check_const: false, check_visibility: false)
 
       consume(Syntax::LParen)
