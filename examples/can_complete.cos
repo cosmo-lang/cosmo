@@ -1,0 +1,20 @@
+use "assert"
+
+bool fn can_complete(string input, string word) {
+  int idx = 0
+
+  every int i in 1..#word {
+    if word[i - 1] == input[idx]
+      ++idx
+
+    if idx == #input
+      return true
+  }
+
+  false
+}
+
+Assert->truthy(can_complete("butl", "beautiful"))
+Assert->falsey(can_complete("butlz", "beautiful"))
+Assert->falsey(can_complete("tulb", "beautiful"))
+Assert->falsey(can_complete("bbutl", "beautiful"))

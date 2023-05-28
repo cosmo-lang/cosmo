@@ -30,5 +30,5 @@ module Cosmo::AST
   end
 end
 
-require "./ast/expression_nodes"
-require "./ast/statement_nodes"
+require "./expressions"
+require "./statements"
