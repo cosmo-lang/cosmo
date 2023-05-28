@@ -67,7 +67,7 @@ describe Interpreter do
       result.should eq ["baba", "booey", "god"]
     end
     it "vector library" do
-      result = interpreter.interpret("[1,2,3].map(&-> int (int n): n * 2)", "test")
+      result = interpreter.interpret("[1,2,3].map(&int (int n): n * 2)", "test")
       result.should eq [2,4,6]
       result = interpreter.interpret("int[] ABABABA = [15, 2]", "test")
       result.should eq [15, 2]
@@ -135,12 +135,12 @@ describe Interpreter do
       result.should eq -20..-5
     end
     it "lambdas" do
-      interpreter.interpret("func even = &-> bool (int n): n % 2 == 0", "test")
+      interpreter.interpret("func even = &bool (int n): n % 2 == 0", "test")
       result = interpreter.interpret("even(6)", "test")
       result.should be_true
       result = interpreter.interpret("even(3)", "test")
       result.should be_false
-      interpreter.interpret("func double = &-> int (int n): n * 2", "test")
+      interpreter.interpret("func double = &int (int n): n * 2", "test")
       result = interpreter.interpret("double(6)", "test")
       result.should eq 12
       result = interpreter.interpret("double(15)", "test")
