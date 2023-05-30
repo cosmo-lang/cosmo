@@ -36,6 +36,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer) an
   * intersections
 
 ### Fixes
+- Accessing private class members in public class methods
 - Performance boosts lol
 - Weird expression parsing (`[0].123` evaluates to 0.123??)
 - Segfaults
