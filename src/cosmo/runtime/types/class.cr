@@ -127,7 +127,8 @@ class Cosmo::ClassInstance
     include_protected : Bool = false
   ) : ValueType
 
-    field = @public["fields"][field_name]?
+    field : ValueType? = @public["fields"][field_name]?
+    meta : FieldMeta? = @field_meta[field_name]?
     if include_private
       field ||= @private["fields"][field_name]?
     end
@@ -137,29 +138,34 @@ class Cosmo::ClassInstance
     unless token.nil? || include_private || @private["fields"][field_name]?.nil?
       Logger.report_error("Attempt to access private field", field_name, token)
     end
-    unless token.nil? || include_protected || @protected["methods"][field_name]?.nil?
-      Logger.report_error("Attempt to access protected field outside of class definition", field_name, token)
+    if meta.nil? && !token.nil?
+      Logger.report_error("Field '#{field_name}' does not exist on", name, token)
     end
 
     field.as ValueType
   end
 
   def get_method(method_name : String, token : Token? = nil, include_private : Bool = true, include_protected : Bool = false) : Function?
-    method = @public["methods"][method_name]?
+    method : Function? = @public["methods"][method_name]?.as Function?
+
     if include_private
-      method ||= @private["methods"][method_name]?
+      method ||= @private["methods"][method_name]?.as Function?
     end
     if include_protected
-      method ||= @protected["methods"][method_name]?
+      method ||= @protected["methods"][method_name]?.as Function?
     end
+
     unless token.nil? || include_private || @private["methods"][method_name]?.nil?
       Logger.report_error("Attempt to access private method", method_name, token)
     end
     unless token.nil? || include_protected || @protected["methods"][method_name]?.nil?
       Logger.report_error("Attempt to access protected method outside of class definition", method_name, token)
     end
+    if method.nil? && !token.nil?
+      Logger.report_error("Method '#{method_name}' does not exist on", name, token)
+    end
 
-    method.as Function?
+    method
   end
 
   def name_token

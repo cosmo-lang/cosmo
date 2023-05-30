@@ -1,0 +1,8 @@
+name: lexer
+version: 0.1.0
+
+entry_point: src/lexer.⭐
+authors:
+  - R-unic
+
+cosmo: ^0.6.4

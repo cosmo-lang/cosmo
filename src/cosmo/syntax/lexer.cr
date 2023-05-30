@@ -31,7 +31,7 @@ class Cosmo::Lexer
     @tokens
   end
 
-  private def lex
+  private def lex : Nil
     char = current_char
     @current_lexeme.write(char.to_slice)
     return add_newline if char == "\n"
@@ -259,7 +259,7 @@ class Cosmo::Lexer
     char
   end
 
-  private def add_token(syntax : Syntax, value : LiteralType)
+  private def add_token(syntax : Syntax, value : LiteralType) : Nil
     location = Location.new(@file_path, @line, @char_pos + 1)
     @tokens << Token.new(@current_lexeme.to_s, syntax, value, location)
     @current_lexeme = String::Builder.new
@@ -390,8 +390,8 @@ class Cosmo::Lexer
       end
       ident_str += advance
     end
-    ident_str = ident_str.strip
 
+    ident_str = ident_str.strip
     @current_lexeme = String::Builder.new(ident_str)
     if Keywords.keyword?(ident_str)
       syntax_type = Keywords.get_syntax(ident_str)

@@ -6,7 +6,9 @@ class Cosmo::StringIntrinsics
   end
 
   def get_method(name : Token) : IntrinsicFunction
-    case name.lexeme
+    case name.lexeme.strip
+    when "empty?"
+      Empty.new(@interpreter, @value, name)
     when "numeric?"
       Numeric.new(@interpreter, @value, name)
     when "alphanumeric?"
@@ -29,6 +31,25 @@ class Cosmo::StringIntrinsics
       Blank.new(@interpreter, @value, name)
     else
       Logger.report_error("Invalid string method", name.lexeme, name)
+    end
+  end
+
+  class Empty < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : Bool
+      @_self.chars.empty?
     end
   end
 

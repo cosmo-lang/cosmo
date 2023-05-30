@@ -1,0 +1,77 @@
+class Token {
+  int syntax_type
+  string lexeme
+  any value
+
+  public Token fn construct(
+    int syntax_type,
+    string lexeme,
+    any value
+  ) {
+    $->syntax_type = syntax_type
+    $->lexeme = lexeme
+    $->value = value
+  }
+}
+
+class Lexer {
+  mut int line = 1
+  mut int pos = 0
+  mut int row = 1
+  string source
+
+  public Lexer fn construct(string source) {
+    $->source = source
+  }
+
+  void fn lex {
+
+  }
+
+  void fn add_token(int syntax_type, any value) {
+
+  }
+
+  void fn newline {
+    $->advance
+    ++$->line
+    $->row = 1
+  }
+
+  char fn advance {
+    char current = $->current
+    ++$->pos
+    ++$->row
+    current
+  }
+
+  char fn peek(int offset = 1) {
+    $->source[$->pos + offset]
+  }
+
+  char fn current {
+    $->peek(0)
+  }
+
+  bool fn finished? {
+    $->pos >= #$->source
+  }
+
+  bool fn match_char?(char expected) {
+    if finished? return false
+    unless char_exists?(1) return false
+    unless $->peek == expected return false
+    $->advance
+    true
+  }
+}
+
+public int fn main(string[] args) {
+  while true {
+    string input = gets("> ")
+    Lexer lexer = new Lexer(input)
+    Token[] tokens = lexer.tokenize
+    puts(tokens)
+  }
+  0
+}

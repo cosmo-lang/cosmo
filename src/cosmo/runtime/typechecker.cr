@@ -31,7 +31,6 @@ module Cosmo::TypeChecker
     Class => "class",
     Type => "type",
     Function => "func",
-    PutsIntrinsic => "func",
     Array(Int64) => "int[]",
     Array(Int32) => "int[]",
     Array(Int16) => "int[]",
@@ -263,7 +262,6 @@ module Cosmo::TypeChecker
 
   def assert(typedef : String, value : ValueType, token : Token) : Nil
     matches = is?(typedef, value, token)
-    # puts typedef, matches
 
     # assert key & value types
     if typedef.ends_with?("[]")
