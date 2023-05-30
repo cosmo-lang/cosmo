@@ -74,10 +74,8 @@ class Cosmo::Lexer
       add_token(Syntax::Comma, nil)
     when ";"
       advance
-    when "\""
+    when "\"", "'"
       read_string(char)
-    when "'"
-      read_char(char)
     when "~"
       add_token(Syntax::Tilde, nil)
     when "#"
@@ -336,27 +334,43 @@ class Cosmo::Lexer
   private def read_string(delim : String)
     advance
     res_str = ""
-    until finished? || current_char == delim
-      res_str += advance
-    end
+    escaping = false
 
-    @current_lexeme = String::Builder.new(res_str)
-    add_token(Syntax::String, res_str)
-  end
-
-  private def read_char(delim : String)
-    advance
-    res_str = ""
-    until finished? || current_char == delim
-      res_str += advance.to_s
-      if res_str.size > 1
-        report_error("Character overflow", "Character literal has more than one character")
+    until finished?
+      if escaping
+        case current_char
+        when "n" # newline
+          res_str += "\n"
+        when "t" # tab
+          res_str += "\t"
+        when "\\" # backslash
+          res_str += "\\"
+        when "\"" # double quote
+          res_str += "\""
+        when "'" # single quote
+          res_str += "'"
+        else
+          report_error("Invalid string", "Invalid escape sequence '\\#{current_char}'")
+        end
+        advance
+        escaping = false
+      elsif current_char == "\\"
+        advance
+        escaping = true
+      elsif current_char == delim
         break
+      elsif res_str.size > 1 && delim == "'"
+        report_error("Character overflow", "Character literal has more than one character")
+      else
+        res_str += advance
       end
     end
 
     @current_lexeme = String::Builder.new(res_str)
-    add_token(Syntax::Char, res_str.chars.first)
+    add_token(
+      delim == "'" ? Syntax::Char : Syntax::String,
+      delim == "'" ? res_str.chars.first : res_str
+    )
   end
 
   private def read_identifier
