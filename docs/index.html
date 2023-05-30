@@ -786,6 +786,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/Empty" data-name="cosmo::stringintrinsics::empty">
+      <a href="Cosmo/StringIntrinsics/Empty.html">Empty</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/EndsWith" data-name="cosmo::stringintrinsics::endswith">
       <a href="Cosmo/StringIntrinsics/EndsWith.html">EndsWith</a>
       
@@ -976,15 +981,15 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 <li>Enums</li>
 <li>Utility methods for tables</li>
 <li>Stack trace</li>
+<li>Allow throwing class instances that inherit from a base <code>Exception</code> class</li>
 <li>String stuff
 <ul>
 <li>Multiline strings</li>
 <li>Regexes</li>
 </ul>
 </li>
-<li>Allow throwing class instances that inherit from a base <code>Exception</code> class</li>
 <li><code>try..catch</code> statements</li>
-<li><code>none</code> coalescing/accessing</li>
+<li><code>none</code> accessing (<code>hello&amp;.world</code> evaluates to <code>none</code> if <code>hello == none</code>)</li>
 <li>Intrinsic methods for all datatypes (inherit from a base type)</li>
 <li>Decorators</li>
 <li>Interfaces</li>
@@ -1012,6 +1017,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Fixes</h3>
 <ul>
+<li>Accessing private class members in public class methods</li>
 <li>Performance boosts lol</li>
 <li>Weird expression parsing (<code>[0].123</code> evaluates to 0.123??)</li>
 <li>Segfaults
