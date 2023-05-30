@@ -1,6 +1,6 @@
 use "assert"
 
-const bool life_sucks = true
+bool life_sucks = true
 case life_sucks { ## life sucks
   when true => puts("life sucks")
   else => puts("life does not suck")

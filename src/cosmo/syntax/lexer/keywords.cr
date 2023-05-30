@@ -20,7 +20,7 @@ module Cosmo::Keywords
     "use" => Syntax::Use,
     "case" => Syntax::Case,
     "when" => Syntax::When,
-    "const" => Syntax::Const,
+    "mut" => Syntax::Mut,
     "return" => Syntax::Return,
     "throw" => Syntax::Throw,
     "class" => Syntax::Class,

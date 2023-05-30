@@ -1,8 +1,8 @@
 use "assert"
 use "math"
 
-int fn lcm(const int x, const int y) {
-  int i = 1
+int fn lcm(int x, int y) {
+  mut int i = 1
   until i % x == 0 &: i % y == 0
     ++i
 

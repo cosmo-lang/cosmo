@@ -5,7 +5,7 @@ class Cosmo::Scope
   private alias Variable = NamedTuple(
     type: String,
     value: ValueType,
-    constant: Bool,
+    mutable: Bool,
     visibility: Visibility
   )
 
@@ -26,7 +26,7 @@ class Cosmo::Scope
     typedef : Token | String,
     identifier : Token,
     value : V,
-    constant : Bool,
+    mutable : Bool,
     visibility : Visibility
   ) : ValueType forall V
 
@@ -34,7 +34,7 @@ class Cosmo::Scope
     @variables[identifier.lexeme] = {
       type: typedef.is_a?(Token) ? typedef.lexeme : typedef,
       value: casted_value,
-      constant: constant,
+      mutable: mutable,
       visibility: visibility
     }
 
@@ -45,22 +45,28 @@ class Cosmo::Scope
     typedef : Token,
     identifier : Token,
     value : ValueType,
-    const : Bool = false,
+    mutable : Bool = false,
     visibility : Visibility = Visibility::Private
   ) : ValueType
 
     TypeChecker.assert(typedef.lexeme, value, typedef) unless value.nil?
-    create_variable(typedef, identifier, value, const, visibility)
+    create_variable(typedef, identifier, value, mutable, visibility)
   end
 
   def assign(identifier : Token, value : ValueType, modifying_instance : Bool = false) : ValueType
     if @variables.has_key?(identifier.lexeme)
       var : Variable = @variables[identifier.lexeme]
-      if var[:constant] && !modifying_instance
-        Logger.report_error("Attempt to assign to constant variable", identifier.lexeme, identifier)
+      unless var[:mutable] || modifying_instance
+        Logger.report_error("Attempt to assign to an immutable variable", identifier.lexeme, identifier)
       end
+
       TypeChecker.assert(var[:type], value, identifier)
-      return create_variable(var[:type], identifier, value, constant: false, visibility: var[:visibility])
+      return create_variable(
+        var[:type],
+        identifier, value,
+        mutable: var[:mutable],
+        visibility: var[:visibility]
+      )
     end
 
     return @parent.not_nil!.assign(identifier, value) unless @parent.nil?
@@ -75,15 +81,12 @@ class Cosmo::Scope
 
   def lookup?(ident : String) : ValueType
     if @variables.has_key?(ident)
-      var = @variables[ident]
-      typedef = var[:type]
-      return var[:value]
+      @variables[ident][:value]
     else
       unless @parent.nil?
         return @parent.not_nil!.lookup?(ident)
       end
     end
-    nil
   end
 
   def lookup(token : Token) : ValueType
@@ -108,6 +111,6 @@ class Cosmo::Scope
   end
 
   def to_s
-    "Scope<#{@parent ? "parent: " + @parent.to_s + ", " : ""}#{@variables}>"
+    "Scope<#{@parent ? "parent: " + @parent.to_s + ", " : ""}#{Stringify.hashmap @variables}>"
   end
 end

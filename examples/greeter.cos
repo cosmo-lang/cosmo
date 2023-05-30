@@ -1,9 +1,9 @@
-func fn greeter(const string greeting) {
-  void fn greet(const string person) {
+func fn greeter(string greeting) {
+  void fn greet(string person) {
     puts(greeting + " " + person)
   }
 }
 
-const func greet = greeter("hello")
+func greet = greeter("hello")
 greet("world") ## hello world
 greet("bob") ## hello bob

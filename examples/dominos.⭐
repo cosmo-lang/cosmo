@@ -1,8 +1,8 @@
 use "assert"
 
-string fn domino(const string sequence) {
-  string result = ""
-  bool finished = false
+string fn domino(string sequence) {
+  mut string result = ""
+  mut bool finished = false
 
   every char ch in sequence {
     if ch == '|' &: !finished

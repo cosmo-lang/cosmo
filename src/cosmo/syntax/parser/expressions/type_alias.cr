@@ -3,10 +3,10 @@ module Cosmo::AST::Expression
     getter type_token : Token
     getter var : Var
     getter value : Expression::Base
-    getter? constant : Bool
+    getter? mutable : Bool
     getter visibility : Visibility
 
-    def initialize(@type_token, @var, @value, @constant, @visibility)
+    def initialize(@type_token, @var, @value, @mutable, @visibility)
     end
 
     def accept(visitor : Visitor(R)) : R forall R

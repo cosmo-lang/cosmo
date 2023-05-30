@@ -2,11 +2,11 @@ module Cosmo::AST::Expression
   class Parameter < Base
     getter typedef : Token
     getter identifier : Token
-    getter? const : Bool
+    getter? mutable : Bool
     getter default_value : Base?
     getter? spread : Bool
 
-    def initialize(@typedef, @identifier, @const, @spread, @default_value = NoneLiteral.new(nil, identifier))
+    def initialize(@typedef, @identifier, @mutable, @default_value = NoneLiteral.new(nil, identifier), @spread = false)
     end
 
     def accept(visitor : Visitor(R)) : R forall R

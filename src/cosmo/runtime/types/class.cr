@@ -31,7 +31,7 @@ end
 class Cosmo::ClassInstance
   private alias FieldMeta = NamedTuple(
     type: Token,
-    constant?: Bool
+    mutable?: Bool
   )
 
   @constructing = false
@@ -67,21 +67,21 @@ class Cosmo::ClassInstance
     field_name : String,
     value : ValueType,
     token : Token?,
-    constant : Bool = false,
+    mutable : Bool = false,
     visibility : Visibility = Visibility::Public,
     typedef : Token? = nil
   ) : ValueType
 
     current_meta = @field_meta[field_name]?
     unless current_meta.nil?
-      if current_meta[:constant?] && !@constructing
-        Logger.report_error("Attempt to assign to constant property", field_name, token.not_nil!)
+      unless current_meta[:mutable?] || @constructing
+        Logger.report_error("Attempt to assign to an immutable property", field_name, token.not_nil!)
       end
     end
 
     if @field_meta[field_name]?.nil?
       meta_hash = {} of Symbol => Token | Bool
-      meta_hash[:constant?] = constant
+      meta_hash[:mutable?] = mutable
       unless typedef.nil?
         meta_hash[:type] = typedef
       else

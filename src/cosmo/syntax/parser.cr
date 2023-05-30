@@ -293,13 +293,13 @@ class Cosmo::Parser
     params = [] of Expression::Parameter
     reached_spread = false
 
-    type_info = parse_type(required: false, check_const: true)
+    type_info = parse_type(required: false, check_mut: true)
     if type_info[:found_typedef]
       enclosing = @not_assignment
       @not_assignment = true
 
       param_type = type_info[:type_ref].not_nil!.name
-      is_const = type_info[:is_const]
+      is_mut = type_info[:is_mut]
 
       if reached_spread && check?(Syntax::Star)
         Logger.report_error("Invalid parameter", "Cannot define other parameters after spread parameter", last_token)
@@ -311,15 +311,15 @@ class Cosmo::Parser
 
       if match?(Syntax::Equal)
         value = parse_expression
-        params << Expression::Parameter.new(param_type, param_ident, is_const, value, spread: reached_spread)
+        params << Expression::Parameter.new(param_type, param_ident, is_mut, value, spread: reached_spread)
       else
-        params << Expression::Parameter.new(param_type, param_ident, is_const, spread: reached_spread)
+        params << Expression::Parameter.new(param_type, param_ident, is_mut, spread: reached_spread)
       end
 
       while match?(Syntax::Comma)
-        type_info = parse_type(required: true, check_const: true)
+        type_info = parse_type(required: true, check_mut: true)
         param_type = type_info[:type_ref].not_nil!.name
-        is_const = type_info[:is_const]
+        is_mut = type_info[:is_mut]
 
         if reached_spread && check?(Syntax::Star)
           Logger.report_error("Invalid parameter", "Cannot define other parameters after spread parameter", last_token)
@@ -330,9 +330,9 @@ class Cosmo::Parser
         param_ident = last_token
         if match?(Syntax::Equal)
           value = parse_expression
-          params << Expression::Parameter.new(param_type, param_ident, is_const, value, spread: reached_spread)
+          params << Expression::Parameter.new(param_type, param_ident, is_mut, value, spread: reached_spread)
         else
-          params << Expression::Parameter.new(param_type, param_ident, is_const, spread: reached_spread)
+          params << Expression::Parameter.new(param_type, param_ident, is_mut, spread: reached_spread)
         end
       end
 
@@ -417,7 +417,7 @@ class Cosmo::Parser
     found_typedef: Bool,
     variable_type: Token?,
     type_ref: Expression::TypeRef?,
-    is_const: Bool,
+    is_mut: Bool,
     is_nullable: Bool,
     visibility: Visibility
   )
@@ -426,7 +426,7 @@ class Cosmo::Parser
   # or the one below it
   private def parse_type(
     required : Bool = true,
-    check_const : Bool = false,
+    check_mut : Bool = false,
     check_visibility : Bool = false,
     paren_depth : Int = 0
   ) : TypeInfo
@@ -438,7 +438,7 @@ class Cosmo::Parser
     end
 
     visibility = get_visibility(visibility_lexeme)
-    is_const = match?(Syntax::Const) if check_const
+    is_mut = match?(Syntax::Mut) if check_mut
     if check?(Syntax::LParen) &&
       token_exists?(1) && (peek.type == Syntax::TypeDef || peek.type == Syntax::Identifier) &&
       token_exists?(2) && (peek(2).type == Syntax::Identifier ||
@@ -456,7 +456,7 @@ class Cosmo::Parser
         found_typedef: info[:found_typedef],
         variable_type: variable_type,
         type_ref: type_ref,
-        is_const: is_const || false,
+        is_mut: is_mut || false,
         is_nullable: info[:is_nullable],
         visibility: visibility.not_nil!
       }
@@ -468,7 +468,7 @@ class Cosmo::Parser
     else
       found_registered_type = token_exists? &&
         current.type == Syntax::Identifier &&
-        !TypeChecker.get_registered_type?(current.value.to_s, current).nil?
+        !TypeChecker.get_registered_type?(current.lexeme, current).nil?
 
       found_typedef = match?(Syntax::TypeDef) || found_registered_type
     end
@@ -486,7 +486,7 @@ class Cosmo::Parser
       found_typedef: found_typedef,
       variable_type: variable_type,
       type_ref: type_ref,
-      is_const: is_const || false,
+      is_mut: is_mut || false,
       is_nullable: is_nullable,
       visibility: visibility.not_nil!
     }
@@ -557,7 +557,7 @@ class Cosmo::Parser
     peeked = peek(offset + 1)
     next_peeked = token_exists?(offset + 2) ? peek(offset + 2) : nil
 
-    if cur.type == Syntax::Const ||
+    if cur.type == Syntax::Mut ||
       cur.type == Syntax::Public ||
       cur.type == Syntax::ClassVisibility ||
       cur.type == Syntax::LParen
@@ -576,14 +576,14 @@ class Cosmo::Parser
 
   private def parse_type_alias(type_token : Token, identifier : Expression::Var) : Expression::TypeAlias
     consume(Syntax::Equal)
-    type_info = parse_type(required: true, check_visibility: true, check_const: true)
+    type_info = parse_type(required: true, check_visibility: true, check_mut: true)
     type_ref = type_info[:type_ref].not_nil!
-    TypeChecker.alias_type(identifier.token.value.to_s, type_ref.name.value.to_s)
+    TypeChecker.alias_type(identifier.token.lexeme, type_ref.name.lexeme)
     Expression::TypeAlias.new(
       type_token,
       identifier,
       type_ref,
-      type_info[:is_const],
+      type_info[:is_mut],
       type_info[:visibility]
     )
   end
@@ -592,7 +592,7 @@ class Cosmo::Parser
   private def parse_var_declaration : Expression::Base
     type_info = parse_type(
       required: false,
-      check_const: true,
+      check_mut: true,
       check_visibility: true
     )
 
@@ -618,14 +618,14 @@ class Cosmo::Parser
             value = parse_expression
             Expression::VarDeclaration.new(
               typedef, identifier, value,
-              type_info[:is_const],
+              type_info[:is_mut],
               type_info[:visibility]
             )
           else
             first = Expression::VarDeclaration.new(
               typedef, identifier,
               Expression::NoneLiteral.new(nil, variable_name),
-              type_info[:is_const],
+              type_info[:is_mut],
               type_info[:visibility]
             )
 
@@ -684,7 +684,7 @@ class Cosmo::Parser
       nodes << Expression::VarDeclaration.new(
         typedef, var,
         respective_value,
-        type_info[:is_const],
+        type_info[:is_mut],
         type_info[:visibility]
       )
     end
@@ -942,7 +942,7 @@ class Cosmo::Parser
     elsif match?(Syntax::Less)
       type_info = parse_type(
         required: true,
-        check_const: false,
+        check_mut: false,
         check_visibility: false
       )
 
@@ -968,7 +968,7 @@ class Cosmo::Parser
       ident = last_token
       Expression::Var.new(ident)
     elsif match?(Syntax::Ampersand)
-      return_type_info = parse_type(check_const: false, check_visibility: false)
+      return_type_info = parse_type(check_mut: false, check_visibility: false)
 
       consume(Syntax::LParen)
       params = parse_fn_params
@@ -999,11 +999,11 @@ class Cosmo::Parser
 
   private def parse_table_key : Expression::Base
     if match?(Syntax::Identifier)
-      Expression::StringLiteral.new(last_token.value.to_s, last_token)
+      Expression::StringLiteral.new(last_token.lexeme, last_token)
     elsif match?(Syntax::String)
-      Expression::StringLiteral.new(last_token.value.to_s, last_token)
+      Expression::StringLiteral.new(last_token.lexeme, last_token)
     else
-      Logger.report_error("Invalid table key", current.value.to_s, current)
+      Logger.report_error("Invalid table key", current.lexeme, current)
     end
   end
 

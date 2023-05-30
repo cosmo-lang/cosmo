@@ -4,7 +4,7 @@ bool fn is_eq(int a = 1, int b) {
   a == b
 }
 
-const bool a = is_eq(none, 1)
-const bool b = is_eq(5, 1)
+bool a = is_eq(none, 1)
+bool b = is_eq(5, 1)
 Assert->truthy(a)
 Assert->falsey(b)

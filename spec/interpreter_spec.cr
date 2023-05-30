@@ -196,7 +196,7 @@ describe Interpreter do
     result = interpreter.interpret("bigint boba = 13582385623792389735", "test")
     result.should eq 13582385623792389735_i128
 
-    result = interpreter.interpret("uint ijija = 1500", "test")
+    result = interpreter.interpret("mut uint ijija = 1500", "test")
     result.should eq 1500
     expect_raises(Exception, "@test [1:6] Type mismatch: Expected 'uint', got 'int'") do
       interpreter.interpret("ijija = -1", "test")
@@ -211,11 +211,11 @@ describe Interpreter do
     result = interpreter.interpret("bool abc = false", "test")
     result.should eq false
 
-    result = interpreter.interpret("const (string|int) g = 123", "test")
+    result = interpreter.interpret("string|int g = 123", "test")
     result.should eq 123
 
-    interpreter.interpret("const int foo = 10", "test")
-    expect_raises(Exception, "@test [1:4] Attempt to assign to constant variable: foo") do
+    interpreter.interpret("int foo = 10", "test")
+    expect_raises(Exception, "@test [1:4] Attempt to assign to an immutable variable: foo") do
       interpreter.interpret("foo = 15", "test")
     end
 
@@ -241,7 +241,7 @@ describe Interpreter do
     result.should eq 1..16
   end
   it "interprets variable assignments" do
-    interpreter.interpret("int x = 0b11", "test")
+    interpreter.interpret("mut int x = 0b11", "test")
     result = interpreter.interpret("x = 5", "test")
     result.should eq 5
     result = interpreter.interpret("x = 12", "test")
@@ -256,7 +256,7 @@ describe Interpreter do
     result.should eq 12
   end
   it "interprets compound assignment" do
-    result = interpreter.interpret("int a = 5", "test")
+    result = interpreter.interpret("mut int a = 5", "test")
     result.should eq 5
     result = interpreter.interpret("a += 2", "test")
     result.should eq 7
@@ -264,7 +264,7 @@ describe Interpreter do
     result.should eq -10
     result = interpreter.interpret("a *= 4", "test")
     result.should eq -40
-    result = interpreter.interpret("int[] bbb = [2,4]", "test")
+    result = interpreter.interpret("mut int[] bbb = [2,4]", "test")
     result.should eq [2, 4]
     result = interpreter.interpret("bbb << 6", "test")
     result.should eq [2, 4, 6]
@@ -276,7 +276,7 @@ describe Interpreter do
     result.should eq [3, 12, 36]
   end
   it "interprets property assignments" do
-    interpreter.interpret("int[] nums = [1,2]", "test")
+    interpreter.interpret("mut int[] nums = [1,2]", "test")
     interpreter.interpret("nums[2] = 3", "test")
     result = interpreter.interpret("nums[2]", "test")
     result.should eq 3
@@ -287,7 +287,7 @@ describe Interpreter do
       interpreter.interpret("nums[3] = \"hi\"", "test")
     end
 
-    interpreter.interpret("string->bool admins = {{runic -> true}}", "test")
+    interpreter.interpret("mut string->bool admins = {{runic -> true}}", "test")
     interpreter.interpret("admins->shedletsky = true", "test")
     result = interpreter.interpret("admins->runic", "test")
     result.should eq true
@@ -298,15 +298,15 @@ describe Interpreter do
     end
   end
   it "interprets function definitions" do
-    result = interpreter.interpret("bool fn is_eq(const int a = 5, const int b) { return a == b }", "test")
+    result = interpreter.interpret("bool fn is_eq(int a = 5, int b) { return a == b }", "test")
     result.should be_a Callable
     result.should be_a Function
 
-    result = interpreter.interpret("(float|int) fn half_sum(const int a, const int b) { (a + b) / 2 }", "test")
+    result = interpreter.interpret("float|int fn half_sum(int a, int b) { (a + b) / 2 }", "test")
     result.should be_a Callable
     result.should be_a Function
 
-    result = interpreter.interpret("(bool|void) fn balls? { none }", "test")
+    result = interpreter.interpret("bool? fn balls? { none }", "test")
     result.should be_a Callable
     result.should be_a Function
   end
@@ -324,7 +324,7 @@ describe Interpreter do
     result.should eq 10
   end
   it "interprets string concatenation" do
-    interpreter.interpret("string msg = \"\"", "test")
+    interpreter.interpret("mut string msg = \"\"", "test")
     interpreter.interpret("msg += \"hello\"", "test")
     result = interpreter.interpret("msg + \" world\"", "test")
     result.should eq "hello world"
@@ -368,7 +368,7 @@ describe Interpreter do
   it "interprets if/unless statements" do
     lines = [
       "int x = 5",
-      "int doubled",
+      "mut int doubled",
       "if x == 5",
       "  doubled = x * 2",
       "else",
@@ -382,7 +382,7 @@ describe Interpreter do
 
     lines = [
       "int x = 5",
-      "int doubled",
+      "mut int doubled",
       "unless x == 5",
       "  doubled = x * 2",
       "else",
@@ -396,7 +396,7 @@ describe Interpreter do
   end
   it "interprets while/until statements" do
     lines = [
-      "int x = 0",
+      "mut int x = 0",
       "while x < 10",
       "  x += 1",
       "",
@@ -407,7 +407,7 @@ describe Interpreter do
     result.should eq 10
 
     lines = [
-      "int x = 0",
+      "mut int x = 0",
       "until x == 15",
       "  ++x",
       "x"
@@ -419,7 +419,7 @@ describe Interpreter do
   it "interprets every statements" do
     lines = [
       "int[] nums = [1,2,3]",
-      "int sum = 0",
+      "mut int sum = 0",
       "every int n in nums",
       "  sum += n",
       "",
@@ -451,8 +451,8 @@ describe Interpreter do
   it "interprets class definitions & accessing" do
     lines = [
       "class A {",
-      "  public const int x = 1",
-      "  const int y = 10",
+      "  public int x = 1",
+      "  int y = 10",
       "}",
       "A a = new A",
       "a->x"
@@ -464,7 +464,7 @@ describe Interpreter do
     expect_raises(Exception, "@test [1:4] Attempt to access private field: y") do
       interpreter.interpret("a->y", "test")
     end
-    expect_raises(Exception, "@test [1:2] Attempt to assign to constant property: x") do
+    expect_raises(Exception, "@test [1:2] Attempt to assign to an immutable property: x") do
       interpreter.interpret("a->x = 2", "test")
     end
   end
@@ -510,7 +510,7 @@ describe Interpreter do
       result.should eq true
     end
     it "throws when a mismatch occurs" do
-      interpreter.interpret("int x = 1", "test")
+      interpreter.interpret("mut int x = 1", "test")
       expect_raises(Exception, "[1:2] Type mismatch: Expected 'int', got 'float'") do
         interpreter.interpret("x = 2.0", "test")
       end

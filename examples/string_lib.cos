@@ -1,7 +1,7 @@
 use "assert"
 
 string empty = "     "
-Assert->truthy(empty->blank?())
+Assert::truthy(empty->blank?)
 
-char[] hello_chars = "hello"->chars()
-Assert->eq(hello_chars, ['h', 'e', 'l', 'l', 'o'])
+char[] hello_chars = "hello"->chars
+Assert::eq(hello_chars, ['h', 'e', 'l', 'l', 'o'])

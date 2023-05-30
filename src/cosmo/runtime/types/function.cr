@@ -19,7 +19,7 @@ class Cosmo::Function < Cosmo::Callable
 
     params.each do |param| # initialize params & define default values
       value = @interpreter.evaluate(param.default_value.not_nil!) unless param.default_value.nil?
-      @closure.declare(param.typedef, param.identifier, value)
+      @closure.declare(param.typedef, param.identifier, value, mutable: param.mutable?)
     end
 
     @non_nullable_params = params.select { |param| !param.default_value.nil? && !param.typedef.lexeme.ends_with?("?") }
@@ -39,7 +39,8 @@ class Cosmo::Function < Cosmo::Callable
       scope.declare(
         @interpreter.fake_typedef(@class_instance.not_nil!.name),
         @interpreter.fake_ident("$"),
-        @class_instance
+        @class_instance,
+        mutable: true
       )
     end
 
@@ -54,7 +55,7 @@ class Cosmo::Function < Cosmo::Callable
         param.typedef,
         param.identifier,
         value.as ValueType,
-        const: param.const?
+        mutable: param.mutable?
       )
     end
 

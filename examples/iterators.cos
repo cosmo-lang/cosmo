@@ -1,20 +1,20 @@
-func fn doubled(const int[] nums) {
-  int i = 0
+func fn doubled(int[] nums) {
+  mut int i = 0
 
   int? fn generator {
-    const int value = nums[i]?
+    int value = nums[i]?
     ++i
     unless value is void
       value * 2
   }
 }
 
-func fn even(const int[] nums) {
-  const int[] even_nums = nums->filter(&bool (int x): x % 2 == 0)
-  int i = 0
+func fn even(int[] nums) {
+  int[] even_nums = nums->filter(&bool (int x): x % 2 == 0)
+  mut int i = 0
 
   int? fn generator {
-    const int x = even_nums[i]?
+    int x = even_nums[i]?
     ++i
     x
   }

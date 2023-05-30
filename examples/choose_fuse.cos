@@ -1,13 +1,13 @@
 use "assert"
 use "math"
 
-string fn choose_fuse(string[] fuses, const string current_output) {
-  string best_fuse = ""
-  const float current = <float>current_output[0..-2]
+string fn choose_fuse(mut string[] fuses, string current_output) {
+  mut string best_fuse = ""
+  float current = <float>current_output[0..-2]
   fuses = fuses.sort(&float (string a, string b): <float>a[0..-2] - <float>b[0..-2])
 
   every string fuse in fuses {
-    const float fuse_rating = <float>fuse[0..-2]
+    float fuse_rating = <float>fuse[0..-2]
     if fuse_rating >= current
       if best_fuse == "" |: fuse_rating - current < <float>best_fuse[0..-2] - current
         best_fuse = fuse

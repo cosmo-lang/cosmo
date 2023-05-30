@@ -28,7 +28,7 @@ enum Cosmo::Syntax
   Else
   Every
   While; Until
-  Const
+  Mut
   Throw
   Break
   Next

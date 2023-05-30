@@ -1,7 +1,7 @@
 use "assert"
 
 bool fn alternating_negatives?(int[] nums) {
-  bool negative
+  mut bool negative
   every int n in nums {
     if !(negative is void) &: (n < 0 &: negative |: n >= 0 &: !negative)
       return false

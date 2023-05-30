@@ -5,11 +5,11 @@ def assert_var_declaration(
   expr : Expression::Base,
   type : String,
   ident : String,
-  constant : Bool = false
+  mutable : Bool = false
 ) : Expression::Base
   expr.should be_a Expression::VarDeclaration
   declaration = expr.as Expression::VarDeclaration
-  declaration.constant?.should eq constant
+  declaration.mutable?.should eq mutable
   declaration.typedef.type.should eq Syntax::TypeDef
   declaration.typedef.value.should eq type
   declaration.typedef.lexeme.should eq type
@@ -571,8 +571,8 @@ describe Parser do
   end
   it "parses every statements" do
     lines = [
-      "const int[] nums = [1,2,3]",
-      "int sum = 0",
+      "int[] nums = [1,2,3]",
+      "mut int sum = 0",
       "every int n in nums",
       " sum += n"
     ]
@@ -581,20 +581,20 @@ describe Parser do
     stmts.should_not be_empty
 
     expr = stmts.first.as(Statement::SingleExpression).expression
-    declaration = assert_var_declaration(expr, "int[]", "nums", constant: true)
+    declaration = assert_var_declaration(expr, "int[]", "nums")
     literal = declaration.value.as Expression::VectorLiteral
     literal.should be_a Expression::VectorLiteral
     literal.values.first.should be_a Expression::IntLiteral
 
     expr = stmts[1].as(Statement::SingleExpression).expression
-    declaration = assert_var_declaration(expr, "int", "sum")
+    declaration = assert_var_declaration(expr, "int", "sum", mutable: true)
     literal = declaration.value.as Expression::IntLiteral
     literal.should be_a Expression::IntLiteral
     literal.value.should eq 0
 
     stmts.last.should be_a Statement::Every
     every_stmt = stmts.last.as Statement::Every
-    declaration = assert_var_declaration(every_stmt.var, "int", "n", constant: false)
+    declaration = assert_var_declaration(every_stmt.var, "int", "n")
     every_stmt.enumerable.should be_a Expression::Var
     every_stmt.block.should be_a Statement::SingleExpression
     block = every_stmt.block.as Statement::SingleExpression

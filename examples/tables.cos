@@ -1,6 +1,6 @@
 use "assert"
 
-const string->(string|int) bobert = {{
+string->(string|int) bobert = {{
   name -> "bobert",
   address -> "123 bobert st",
   age -> 69
@@ -10,7 +10,7 @@ Assert->eq(bobert.name, "bobert") ## . is valid
 Assert->eq(bobert::address, "123 bobert st") ## :: is also valid
 Assert->eq(bobert->age, 69)
 
-string->string->string a = {{
+mut string->string->string a = {{
   b -> {{
     c -> "hello world"
   }}

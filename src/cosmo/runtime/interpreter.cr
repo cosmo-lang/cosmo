@@ -60,7 +60,7 @@ class Cosmo::Interpreter
     location = Location.new("intrinsic", 0, 0)
     ident_token = fake_ident(ident, location)
     typedef_token = fake_typedef(type, location)
-    @globals.declare(typedef_token, ident_token, value, const: true)
+    @globals.declare(typedef_token, ident_token, value, mutable: true)
   end
 
   def delete_meta(key : String) : Nil
@@ -157,7 +157,8 @@ class Cosmo::Interpreter
         @scope.declare(
           fake_typedef(this.name),
           fake_ident("$"),
-          this
+          this,
+          mutable: true
         )
       end
 
@@ -310,7 +311,7 @@ class Cosmo::Interpreter
     @scope = Scope.new(@scope)
 
     enumerable = evaluate(stmt.enumerable)
-    @scope.declare(stmt.var.typedef, stmt.var.token, nil)
+    @scope.declare(stmt.var.typedef, stmt.var.token, nil, mutable: true)
 
     @loop_level += 1
     if enumerable.is_a?(Array) || enumerable.is_a?(Range)
@@ -389,7 +390,7 @@ class Cosmo::Interpreter
       fake_typedef("class"),
       stmt.identifier,
       _class,
-      const: true,
+      mutable: false,
       visibility: stmt.visibility
     )
   end
@@ -400,7 +401,7 @@ class Cosmo::Interpreter
         fake_typedef("func"),
         stmt.identifier,
         Function.new(self, @scope, stmt),
-        const: true,
+        mutable: false,
         visibility: stmt.visibility
       )
     else
@@ -522,12 +523,12 @@ class Cosmo::Interpreter
   end
 
   def visit_type_ref_expr(expr : Expression::TypeRef) : Type
-    TypeChecker.get_registered_type(expr.name.value.to_s, expr.name)
+    TypeChecker.get_registered_type(expr.name.lexeme, expr.name)
   end
 
   def visit_type_alias_expr(expr : Expression::TypeAlias) : Nil
     value = evaluate(expr.value)
-    @scope.declare(expr.type_token, expr.token, value, expr.constant?, expr.visibility)
+    @scope.declare(expr.type_token, expr.token, value, expr.mutable?, expr.visibility)
   end
 
   def visit_fn_call_expr(expr : Expression::FunctionCall) : ValueType
@@ -555,6 +556,7 @@ class Cosmo::Interpreter
     if value.is_a?(Function) && value.arity.begin == 0 && !@evaluating_fn_callee
       value = value.call([] of ValueType)
     end
+    value
   end
 
   def visit_var_declaration_expr(expr : Expression::VarDeclaration) : ValueType
@@ -565,7 +567,7 @@ class Cosmo::Interpreter
         expr.typedef,
         expr.var.token,
         value,
-        const: expr.constant?,
+        mutable: expr.mutable?,
         visibility: expr.visibility
       )
     else
@@ -575,7 +577,7 @@ class Cosmo::Interpreter
         value,
         expr.token,
         visibility: expr.visibility,
-        constant: expr.constant?,
+        mutable: expr.mutable?,
         typedef: expr.typedef
       )
     end
@@ -794,7 +796,8 @@ class Cosmo::Interpreter
     when Syntax::AmpersandColon
       evaluate(expr.left) && evaluate(expr.right)
     when Syntax::PipeColon
-      return true if evaluate(expr.left)
+      left = evaluate(expr.left)
+      return left if left
       evaluate(expr.right)
     when Syntax::EqualEqual
       evaluate(expr.left) == evaluate(expr.right)
