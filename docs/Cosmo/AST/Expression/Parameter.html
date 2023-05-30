@@ -516,11 +516,6 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/MathLib/Isqrt" data-name="cosmo::mathlib::isqrt">
-      <a href="../../../Cosmo/MathLib/Isqrt.html">Isqrt</a>
-      
-    </li>
-  
   <li class=" " data-id="Cosmo/Cosmo/MathLib/Log" data-name="cosmo::mathlib::log">
       <a href="../../../Cosmo/MathLib/Log.html">Log</a>
       
@@ -771,6 +766,16 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/Alpha" data-name="cosmo::stringintrinsics::alpha">
+      <a href="../../../Cosmo/StringIntrinsics/Alpha.html">Alpha</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/AlphaNumeric" data-name="cosmo::stringintrinsics::alphanumeric">
+      <a href="../../../Cosmo/StringIntrinsics/AlphaNumeric.html">AlphaNumeric</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/Blank" data-name="cosmo::stringintrinsics::blank">
       <a href="../../../Cosmo/StringIntrinsics/Blank.html">Blank</a>
       
@@ -781,8 +786,33 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/EndsWith" data-name="cosmo::stringintrinsics::endswith">
+      <a href="../../../Cosmo/StringIntrinsics/EndsWith.html">EndsWith</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/Numeric" data-name="cosmo::stringintrinsics::numeric">
+      <a href="../../../Cosmo/StringIntrinsics/Numeric.html">Numeric</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/Split" data-name="cosmo::stringintrinsics::split">
       <a href="../../../Cosmo/StringIntrinsics/Split.html">Split</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/StartsWith" data-name="cosmo::stringintrinsics::startswith">
+      <a href="../../../Cosmo/StringIntrinsics/StartsWith.html">StartsWith</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/WithoutFirst" data-name="cosmo::stringintrinsics::withoutfirst">
+      <a href="../../../Cosmo/StringIntrinsics/WithoutFirst.html">WithoutFirst</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/WithoutLast" data-name="cosmo::stringintrinsics::withoutlast">
+      <a href="../../../Cosmo/StringIntrinsics/WithoutLast.html">WithoutLast</a>
       
     </li>
   
@@ -836,6 +866,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/IsEmpty" data-name="cosmo::vectorintrinsics::isempty">
+      <a href="../../../Cosmo/VectorIntrinsics/IsEmpty.html">IsEmpty</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Join" data-name="cosmo::vectorintrinsics::join">
       <a href="../../../Cosmo/VectorIntrinsics/Join.html">Join</a>
       
@@ -868,6 +903,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Shift" data-name="cosmo::vectorintrinsics::shift">
       <a href="../../../Cosmo/VectorIntrinsics/Shift.html">Shift</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Sort" data-name="cosmo::vectorintrinsics::sort">
+      <a href="../../../Cosmo/VectorIntrinsics/Sort.html">Sort</a>
       
     </li>
   
@@ -943,7 +983,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/0b1bf704f72cba6c59c9c6bdc6bac8ec5994a176/src/cosmo/syntax/parser/expressions/parameter.cr#L2" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/a9e9d0b79d1c14e6081355fed9d498122c61180e/src/cosmo/syntax/parser/expressions/parameter.cr#L2" target="_blank">
         cosmo/syntax/parser/expressions/parameter.cr
       </a>
     
@@ -965,7 +1005,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28typedef%3ACosmo%3A%3AToken%2Cidentifier%3ACosmo%3A%3AToken%2Cconst%3ABool%2Cdefault_value%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%7CNil%3DNoneLiteral.new%28nil%2Cidentifier%29%29-class-method" class="signature"><strong>.new</strong>(typedef : Cosmo::Token, identifier : Cosmo::Token, const : Bool, default_value : Cosmo::AST::Expression::Base | Nil = <span class="t">NoneLiteral</span>.new(<span class="n">nil</span>, identifier))</a>
+        <a href="#new%28typedef%3ACosmo%3A%3AToken%2Cidentifier%3ACosmo%3A%3AToken%2Cmutable%3ABool%2Cdefault_value%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%7CNil%3DNoneLiteral.new%28nil%2Cidentifier%29%2Cspread%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(typedef : Cosmo::Token, identifier : Cosmo::Token, mutable : Bool, default_value : Cosmo::AST::Expression::Base | Nil = <span class="t">NoneLiteral</span>.new(<span class="n">nil</span>, identifier), spread : Bool = <span class="n">false</span>)</a>
         
       </li>
     
@@ -991,17 +1031,22 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#const%3F%3ABool-instance-method" class="signature"><strong>#const?</strong> : Bool</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#default_value%3ABase%7CNil-instance-method" class="signature"><strong>#default_value</strong> : Base | Nil</a>
         
       </li>
     
       <li class="entry-summary">
         <a href="#identifier%3AToken-instance-method" class="signature"><strong>#identifier</strong> : Token</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mutable%3F%3ABool-instance-method" class="signature"><strong>#mutable?</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#spread%3F%3ABool-instance-method" class="signature"><strong>#spread?</strong> : Bool</a>
         
       </li>
     
@@ -1140,18 +1185,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(typedef:Cosmo::Token,identifier:Cosmo::Token,const:Bool,default_value:Cosmo::AST::Expression::Base|Nil=NoneLiteral.new(nil,identifier))-class-method">
+    <div class="entry-detail" id="new(typedef:Cosmo::Token,identifier:Cosmo::Token,mutable:Bool,default_value:Cosmo::AST::Expression::Base|Nil=NoneLiteral.new(nil,identifier),spread:Bool=false)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(typedef : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, identifier : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, const : Bool, default_value : <a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a> | Nil = <span class="t">NoneLiteral</span>.new(<span class="n">nil</span>, identifier))
+        def self.<strong>new</strong>(typedef : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, identifier : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, mutable : Bool, default_value : <a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a> | Nil = <span class="t">NoneLiteral</span>.new(<span class="n">nil</span>, identifier), spread : Bool = <span class="n">false</span>)
 
-        <a class="method-permalink" href="#new%28typedef%3ACosmo%3A%3AToken%2Cidentifier%3ACosmo%3A%3AToken%2Cconst%3ABool%2Cdefault_value%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%7CNil%3DNoneLiteral.new%28nil%2Cidentifier%29%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28typedef%3ACosmo%3A%3AToken%2Cidentifier%3ACosmo%3A%3AToken%2Cmutable%3ABool%2Cdefault_value%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%7CNil%3DNoneLiteral.new%28nil%2Cidentifier%29%2Cspread%3ABool%3Dfalse%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/0b1bf704f72cba6c59c9c6bdc6bac8ec5994a176/src/cosmo/syntax/parser/expressions/parameter.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/a9e9d0b79d1c14e6081355fed9d498122c61180e/src/cosmo/syntax/parser/expressions/parameter.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1181,23 +1226,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/0b1bf704f72cba6c59c9c6bdc6bac8ec5994a176/src/cosmo/syntax/parser/expressions/parameter.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="const?:Bool-instance-method">
-      <div class="signature">
-        
-        def <strong>const?</strong> : Bool
-
-        <a class="method-permalink" href="#const%3F%3ABool-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/0b1bf704f72cba6c59c9c6bdc6bac8ec5994a176/src/cosmo/syntax/parser/expressions/parameter.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/a9e9d0b79d1c14e6081355fed9d498122c61180e/src/cosmo/syntax/parser/expressions/parameter.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1213,7 +1242,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/0b1bf704f72cba6c59c9c6bdc6bac8ec5994a176/src/cosmo/syntax/parser/expressions/parameter.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/a9e9d0b79d1c14e6081355fed9d498122c61180e/src/cosmo/syntax/parser/expressions/parameter.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1229,7 +1258,39 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/0b1bf704f72cba6c59c9c6bdc6bac8ec5994a176/src/cosmo/syntax/parser/expressions/parameter.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/a9e9d0b79d1c14e6081355fed9d498122c61180e/src/cosmo/syntax/parser/expressions/parameter.cr#L4" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mutable?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>mutable?</strong> : Bool
+
+        <a class="method-permalink" href="#mutable%3F%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/a9e9d0b79d1c14e6081355fed9d498122c61180e/src/cosmo/syntax/parser/expressions/parameter.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="spread?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>spread?</strong> : Bool
+
+        <a class="method-permalink" href="#spread%3F%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/a9e9d0b79d1c14e6081355fed9d498122c61180e/src/cosmo/syntax/parser/expressions/parameter.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1258,7 +1319,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/0b1bf704f72cba6c59c9c6bdc6bac8ec5994a176/src/cosmo/syntax/parser/expressions/parameter.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/a9e9d0b79d1c14e6081355fed9d498122c61180e/src/cosmo/syntax/parser/expressions/parameter.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1274,7 +1335,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/0b1bf704f72cba6c59c9c6bdc6bac8ec5994a176/src/cosmo/syntax/parser/expressions/parameter.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/a9e9d0b79d1c14e6081355fed9d498122c61180e/src/cosmo/syntax/parser/expressions/parameter.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1290,7 +1351,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/0b1bf704f72cba6c59c9c6bdc6bac8ec5994a176/src/cosmo/syntax/parser/expressions/parameter.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/a9e9d0b79d1c14e6081355fed9d498122c61180e/src/cosmo/syntax/parser/expressions/parameter.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
