@@ -291,6 +291,7 @@ class Cosmo::Parser
   # Parse function parameters and return an array of nodes
   private def parse_fn_params : Array(Expression::Parameter)
     params = [] of Expression::Parameter
+    reached_spread = false
 
     type_info = parse_type(required: false, check_const: true)
     if type_info[:found_typedef]
@@ -299,27 +300,39 @@ class Cosmo::Parser
 
       param_type = type_info[:type_ref].not_nil!.name
       is_const = type_info[:is_const]
+
+      if reached_spread && check?(Syntax::Star)
+        Logger.report_error("Invalid parameter", "Cannot define other parameters after spread parameter", last_token)
+      end
+
+      reached_spread = match?(Syntax::Star)
       consume(Syntax::Identifier)
       param_ident = last_token
 
       if match?(Syntax::Equal)
         value = parse_expression
-        params << Expression::Parameter.new(param_type, param_ident, is_const, value)
+        params << Expression::Parameter.new(param_type, param_ident, is_const, value, spread: reached_spread)
       else
-        params << Expression::Parameter.new(param_type, param_ident, is_const)
+        params << Expression::Parameter.new(param_type, param_ident, is_const, spread: reached_spread)
       end
 
       while match?(Syntax::Comma)
         type_info = parse_type(required: true, check_const: true)
         param_type = type_info[:type_ref].not_nil!.name
         is_const = type_info[:is_const]
+
+        if reached_spread && check?(Syntax::Star)
+          Logger.report_error("Invalid parameter", "Cannot define other parameters after spread parameter", last_token)
+        end
+
+        reached_spread = match?(Syntax::Star)
         consume(Syntax::Identifier)
         param_ident = last_token
         if match?(Syntax::Equal)
           value = parse_expression
-          params << Expression::Parameter.new(param_type, param_ident, is_const, value)
+          params << Expression::Parameter.new(param_type, param_ident, is_const, value, spread: reached_spread)
         else
-          params << Expression::Parameter.new(param_type, param_ident, is_const)
+          params << Expression::Parameter.new(param_type, param_ident, is_const, spread: reached_spread)
         end
       end
 

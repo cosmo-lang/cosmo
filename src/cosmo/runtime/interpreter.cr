@@ -553,9 +553,7 @@ class Cosmo::Interpreter
   def visit_var_expr(expr : Expression::Var) : ValueType
     value = @scope.lookup(expr.token)
     if value.is_a?(Function) && value.arity.begin == 0 && !@evaluating_fn_callee
-      value.call([] of ValueType)
-    else
-      value
+      value = value.call([] of ValueType)
     end
   end
 
@@ -796,8 +794,7 @@ class Cosmo::Interpreter
     when Syntax::AmpersandColon
       evaluate(expr.left) && evaluate(expr.right)
     when Syntax::PipeColon
-      left = evaluate(expr.left)
-      return true if left
+      return true if evaluate(expr.left)
       evaluate(expr.right)
     when Syntax::EqualEqual
       evaluate(expr.left) == evaluate(expr.right)

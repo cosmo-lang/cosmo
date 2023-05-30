@@ -11,7 +11,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Utility methods for tables
 - Stack trace
 - String stuff
- * Escaping
  * Multiline strings
  * Regexes
 - Allow throwing class instances that inherit from a base `Exception` class

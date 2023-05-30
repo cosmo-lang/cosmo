@@ -20,7 +20,7 @@ module Cosmo::AST::Expression
     def to_s(indent : Int = 0)
       "VarDeclaration<\n" +
       "  #{TAB * indent}typedef: #{@typedef.value},\n" +
-      "  #{TAB * indent}var: #{@var.token.value.to_s},\n" +
+      "  #{TAB * indent}var: #{@var.token.lexeme},\n" +
       "  #{TAB * indent}value: #{@value.to_s(indent + 1)}\n" +
       "  #{TAB * indent}constant?: #{@constant}\n" +
       "  #{TAB * indent}visibility: #{@visibility.to_s}\n" +

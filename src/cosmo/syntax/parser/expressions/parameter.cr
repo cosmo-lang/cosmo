@@ -4,8 +4,9 @@ module Cosmo::AST::Expression
     getter identifier : Token
     getter? const : Bool
     getter default_value : Base?
+    getter? spread : Bool
 
-    def initialize(@typedef, @identifier, @const, @default_value = NoneLiteral.new(nil, identifier))
+    def initialize(@typedef, @identifier, @const, @spread, @default_value = NoneLiteral.new(nil, identifier))
     end
 
     def accept(visitor : Visitor(R)) : R forall R
