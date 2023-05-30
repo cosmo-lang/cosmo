@@ -51,7 +51,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 ## Things I Might Do
 
 - Named arguments
-- Make declarations immutable by default and replace `const` with `mut`
 - Make into a compiler or bytecode interpreter
 - C bindings
 
