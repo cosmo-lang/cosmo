@@ -7,6 +7,12 @@ class Cosmo::StringIntrinsics
 
   def get_method(name : Token) : IntrinsicFunction
     case name.lexeme
+    when "numeric?"
+      Numeric.new(@interpreter, @value, name)
+    when "alphanumeric?"
+      AlphaNumeric.new(@interpreter, @value, name)
+    when "alpha?"
+      Alpha.new(@interpreter, @value, name)
     when "without_last"
       WithoutLast.new(@interpreter, @value, name)
     when "without_first"
@@ -23,6 +29,63 @@ class Cosmo::StringIntrinsics
       Blank.new(@interpreter, @value, name)
     else
       Logger.report_error("Invalid string method", name.lexeme, name)
+    end
+  end
+
+  class Numeric < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : Bool
+      !!(/[0-9]/ =~ @_self)
+    end
+  end
+
+  class AlphaNumeric < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : Bool
+      !!(/[a-zA-Z0-9]/ =~ @_self)
+    end
+  end
+
+  class Alpha < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : Bool
+      !!(/[a-zA-Z]/ =~ @_self)
     end
   end
 

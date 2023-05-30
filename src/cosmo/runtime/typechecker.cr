@@ -167,12 +167,17 @@ module Cosmo::TypeChecker
   end
 
   def cast(value : ValueType, type : Token) : ValueType
-    casted = cast?(value, type)
-    if casted.nil?
+    begin
+      casted = cast?(value, type)
+      if casted.nil?
+        got_type = value.is_a?(ClassInstance) ? value.name : get_mapped(value.class)
+        Logger.report_error("Failed to cast", "'#{got_type}' to '#{type.lexeme}'", type)
+      end
+      casted
+    rescue ex : Exception
       got_type = value.is_a?(ClassInstance) ? value.name : get_mapped(value.class)
       Logger.report_error("Failed to cast", "'#{got_type}' to '#{type.lexeme}'", type)
     end
-    casted
   end
 
   def is?(typedef : String, value : ValueType, token : Token) : Bool
