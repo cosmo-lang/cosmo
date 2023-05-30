@@ -12,7 +12,7 @@ enum Cosmo::Syntax
   Ampersand; Pipe; Tilde; RDoubleArrow; LDoubleArrow
   AmpersandColon; PipeColon;
   AmpersandColonEqual; PipeColonEqual;
-  Question
+  Question; QuestionColon
   ColonColon; Colon; Dot; DotDot; HyphenArrow;
   FatArrow; This
   LBrace; RBrace; DoubleLBrace; DoubleRBrace;

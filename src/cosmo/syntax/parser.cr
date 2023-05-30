@@ -792,7 +792,7 @@ class Cosmo::Parser
   private def parse_logical_or : Expression::Base
     left = parse_logical_and
 
-    while match?(Syntax::PipeColon)
+    while match?(Syntax::PipeColon) || match?(Syntax::QuestionColon)
       op = last_token
       right = parse_logical_and
       left = Expression::BinaryOp.new(left, op, right)

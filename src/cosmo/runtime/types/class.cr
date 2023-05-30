@@ -116,7 +116,7 @@ class Cosmo::ClassInstance
     include_protected : Bool = false
   ) : ValueType
 
-    get_method(member_name, token, include_private, include_protected) ||
+    get_method(member_name, token, include_private, include_protected, required: false) ||
       get_field(member_name, token, include_private, include_protected)
   end
 
@@ -145,7 +145,13 @@ class Cosmo::ClassInstance
     field.as ValueType
   end
 
-  def get_method(method_name : String, token : Token? = nil, include_private : Bool = true, include_protected : Bool = false) : Function?
+  def get_method(
+    method_name : String,
+    token : Token? = nil,
+    include_private = true,
+    include_protected = false,
+    required = true
+  ) : Function?
     method : Function? = @public["methods"][method_name]?.as Function?
 
     if include_private
@@ -161,7 +167,7 @@ class Cosmo::ClassInstance
     unless token.nil? || include_protected || @protected["methods"][method_name]?.nil?
       Logger.report_error("Attempt to access protected method outside of class definition", method_name, token)
     end
-    if method.nil? && !token.nil?
+    if method.nil? && !token.nil? && required
       Logger.report_error("Method '#{method_name}' does not exist on", name, token)
     end
 

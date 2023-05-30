@@ -14,12 +14,12 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer) an
 - Enums
 - Utility methods for tables
 - Stack trace
+- Allow throwing class instances that inherit from a base `Exception` class
 - String stuff
   * Multiline strings
   * Regexes
-- Allow throwing class instances that inherit from a base `Exception` class
 - `try..catch` statements
-- `none` coalescing/accessing
+- `none` accessing (`hello&.world` evaluates to `none` if `hello == none`)
 - Intrinsic methods for all datatypes (inherit from a base type)
 - Decorators
 - Interfaces

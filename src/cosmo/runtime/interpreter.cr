@@ -171,7 +171,7 @@ class Cosmo::Interpreter
         end
         if is_fn
           return_type = @meta["block_return_type"]
-          token = return_node.nil? ? Token.new("none", Syntax::None, nil, Location.new("", 0, 0)) : return_node.token
+          token = return_node.nil? ? block.token : return_node.token
           unless return_type.to_s == "void"
             TypeChecker.assert(return_type.to_s, return_value, token)
           end
@@ -798,6 +798,10 @@ class Cosmo::Interpreter
     when Syntax::PipeColon
       left = evaluate(expr.left)
       return left if left
+      evaluate(expr.right)
+    when Syntax::QuestionColon
+      left = evaluate(expr.left)
+      return left unless left.nil?
       evaluate(expr.right)
     when Syntax::EqualEqual
       evaluate(expr.left) == evaluate(expr.right)
