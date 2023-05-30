@@ -15,6 +15,8 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
  * Regexes
 - Allow throwing class instances that inherit from a base `Exception` class
 - `try..catch` statements
+- `none` coalescing/accessing
+- Intrinsic methods for all datatypes (inherit from a base type)
 - Decorators
 - Interfaces
 - Namespaces
@@ -33,7 +35,6 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Performance boosts lol
 - Weird expression parsing (`[0].123` evaluates to 0.123??)
 - Segfaults
-  * `TypeChecker.get_mapped`
   * e.x. `x << [1]`
 - Handle infinite recursion
   * macro function to set recursion depth limit
