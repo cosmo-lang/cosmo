@@ -7,6 +7,10 @@ class Cosmo::VectorIntrinsics
 
   def get_method(name : Token) : IntrinsicFunction
     case name.lexeme
+    when "empty?"
+      IsEmpty.new(@interpreter, @cache, name)
+    when "sort"
+      Sort.new(@interpreter, @cache, name)
     when "join"
       Join.new(@interpreter, @cache, name)
     when "push"
@@ -31,6 +35,56 @@ class Cosmo::VectorIntrinsics
       Map.new(@interpreter, @cache, name)
     else
       Logger.report_error("Invalid vector method", name.lexeme, name)
+    end
+  end
+
+  class IsEmpty < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : Bool
+      @_self.empty?
+    end
+  end
+
+  class Sort < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 1.to_u
+    end
+
+    def call(args : Array(ValueType)) : Array(ValueType)
+      TypeChecker.assert("func", args.first, token("Vector->sort"))
+
+      if args.first.is_a?(Callable)
+        sorter = args.first.as Callable
+        res = @_self.map { |v| TypeChecker.as_value_type(v) }.sort do |a, b|
+          value = sorter.call([a, b])
+          TypeChecker.assert("int|float", value, token("Vector->sort"))
+          value.as(Num).to_i unless value.nil?
+        end
+        res.map(&.as ValueType)
+      else
+        [] of ValueType
+      end
     end
   end
 
@@ -129,7 +183,7 @@ class Cosmo::VectorIntrinsics
     end
 
     def call(args : Array(ValueType)) : Num
-      TypeChecker.assert("(float|int)[]", @_self, token("Vector->sum"))
+      TypeChecker.assert("float|int[]", @_self, token("Vector->sum"))
       sum = @_self.map { |e| e.as Num }.sum
       sum.to_i == sum ? sum.to_i64 : sum.to_f64
     end
@@ -236,13 +290,18 @@ class Cosmo::VectorIntrinsics
 
     def call(args : Array(ValueType)) : Array(ValueType)
       TypeChecker.assert("func", args.first, token("Vector->map"))
-      fn = args.first.as(Callable)
+      if args.first.is_a?(Callable)
+        fn = args.first.as Callable
+        res = [] of ValueType
 
-      res = [] of ValueType
-      @_self.each do |v|
-        res << fn.call([v])
+        @_self.each do |v|
+          res << fn.call([v])
+        end
+
+        res
+      else
+        [] of ValueType
       end
-      res
     end
   end
 
@@ -262,9 +321,14 @@ class Cosmo::VectorIntrinsics
 
     def call(args : Array(ValueType)) : Array(ValueType)
       TypeChecker.assert("func", args.first, token("Vector->filter"))
-      fn = args.first.as(Callable)
-      @_self.select do |v|
-        fn.call([v])
+      if args.first.is_a?(Callable)
+        fn = args.first.as Callable
+
+        @_self.select do |v|
+          fn.call([v])
+        end
+      else
+        [] of ValueType
       end
     end
   end

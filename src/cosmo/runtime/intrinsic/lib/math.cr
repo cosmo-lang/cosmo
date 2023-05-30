@@ -3,13 +3,13 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     math = {} of String => IntrinsicFunction | Float64
     math["e"] = Math::E
     math["π"] = Math::PI
+    math["inf"] = Float64::MAX
     math["min"] = Min.new(@i)
     math["max"] = Max.new(@i)
     math["log"] = Log.new(@i)
     math["log2"] = Log2.new(@i)
     math["log10"] = Log10.new(@i)
     math["exp"] = Exp.new(@i)
-    math["isqrt"] = Isqrt.new(@i)
     math["cbrt"] = Cbrt.new(@i)
     math["sin"] = Sin.new(@i)
     math["cos"] = Cos.new(@i)
@@ -110,17 +110,6 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
       TypeChecker.assert("float|int", args.first, token("Math->exp"))
       x = args.first.as Number
       Math.exp(x).to_f64
-    end
-  end
-
-  class Isqrt < IntrinsicFunction
-    def arity : Range(UInt32, UInt32)
-      1.to_u..1.to_u
-    end
-
-    def call(args : Array(ValueType)) : Int64
-      TypeChecker.assert("int", args.first, token("Math->isqrt"))
-      Math.isqrt(args.first.as Int64)
     end
   end
 

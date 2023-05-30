@@ -80,11 +80,11 @@ class Cosmo::NumberIntrinsics
       1.to_u .. 1.to_u
     end
 
-    def call(args : Array(ValueType)) : Float64 | Int64
+    def call(args : Array(ValueType)) : Num
       TypeChecker.assert("int", args.first, token("Number->round"))
 
-      d = args.first.as Int64
-      @_self.round(d).as(Float64 | Int64)
+      decimal_place = args.first.to_s.to_i64
+      @_self.round(decimal_place).as Num
     end
   end
 

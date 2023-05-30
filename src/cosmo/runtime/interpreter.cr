@@ -771,9 +771,6 @@ class Cosmo::Interpreter
   end
 
   def visit_binary_op_expr(expr : Expression::BinaryOp) : ValueType
-    left = evaluate(expr.left)
-    right = evaluate(expr.right)
-
     case expr.operator.type
     when Syntax::Plus
       op = Operator::Plus.new(self)
@@ -797,13 +794,15 @@ class Cosmo::Interpreter
       op = Operator::Mod.new(self)
       op.apply(expr)
     when Syntax::AmpersandColon
-      left && right
+      evaluate(expr.left) && evaluate(expr.right)
     when Syntax::PipeColon
-      left || right
+      left = evaluate(expr.left)
+      return true if left
+      evaluate(expr.right)
     when Syntax::EqualEqual
-      left == right
+      evaluate(expr.left) == evaluate(expr.right)
     when Syntax::BangEqual
-      left != right
+      evaluate(expr.left) != evaluate(expr.right)
     when Syntax::Less
       op = Operator::LT.new(self)
       op.apply(expr)

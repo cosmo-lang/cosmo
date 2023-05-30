@@ -7,6 +7,10 @@ class Cosmo::StringIntrinsics
 
   def get_method(name : Token) : IntrinsicFunction
     case name.lexeme
+    when "starts_with?"
+      StartsWith.new(@interpreter, @value, name)
+    when "ends_with?"
+      EndsWith.new(@interpreter, @value, name)
     when "split"
       Split.new(@interpreter, @value, name)
     when "chars"
@@ -15,6 +19,46 @@ class Cosmo::StringIntrinsics
       Blank.new(@interpreter, @value, name)
     else
       Logger.report_error("Invalid string method", name.lexeme, name)
+    end
+  end
+
+  class StartsWith < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 1.to_u
+    end
+
+    def call(args : Array(ValueType)) : Bool
+      TypeChecker.assert("string|char", args.first, token("string->starts_with?"))
+      @_self.starts_with?(args.first.to_s)
+    end
+  end
+
+  class EndsWith < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 1.to_u
+    end
+
+    def call(args : Array(ValueType)) : Bool
+      TypeChecker.assert("string|char", args.first, token("string->ends_with?"))
+      @_self.ends_with?(args.first.to_s)
     end
   end
 
