@@ -15,8 +15,8 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer) an
 - Utility methods for tables
 - Stack trace
 - String stuff
- * Multiline strings
- * Regexes
+  * Multiline strings
+  * Regexes
 - Allow throwing class instances that inherit from a base `Exception` class
 - `try..catch` statements
 - `none` coalescing/accessing
