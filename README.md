@@ -10,8 +10,10 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 - Enums
 - Utility methods for tables
 - Stack trace
-- Multiline strings
-- Regexes
+- String stuff
+ * Escaping
+ * Multiline strings
+ * Regexes
 - Allow throwing class instances that inherit from a base `Exception` class
 - `try..catch` statements
 - Decorators

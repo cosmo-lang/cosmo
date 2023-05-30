@@ -57,6 +57,7 @@ module Cosmo::TypeChecker
   end
 
   def get_mapped(t : CrystalClass) : String
+    return t.to_s if t < IntrinsicFunction
     unless TYPE_MAP.has_key?(t)
       raise "Unhandled type to map: #{t}"
     end

@@ -1,0 +1,18 @@
+use "assert"
+
+string fn choose_fuse(string[] fuses, string output) {
+  float current_output = <float>output[0..-2]
+  string best_fuse = fuses.first
+  
+  every string fuse in fuses[1..(#fuses-1)] {
+    float fuse_rating = <float>fuse[0..-2]
+    if fuse_rating > current_output &: fuse_rating - current_output < <float>best_fuse[0..-2] - current_output
+      best_fuse = fuse
+  }
+  
+  best_fuse
+}
+
+Assert::eq(choose_fuse(["3V", "5V", "12V"], "4.5V"), "5V")
+Assert::eq(choose_fuse(["5V", "14V", "2V"], "5.5V"), "14V")
+Assert::eq(choose_fuse(["17V", "15V", "12V"], "9V"), "12V")

@@ -34,7 +34,8 @@ class Cosmo::Lexer
   private def lex
     char = current_char
     @current_lexeme.write(char.to_slice)
-    return skip_whitespace if char.blank? && char != "\n"
+    return add_newline if char == "\n"
+    return skip_whitespace if char.blank?
 
     case char
     when "."
@@ -73,9 +74,6 @@ class Cosmo::Lexer
       add_token(Syntax::Comma, nil)
     when ";"
       advance
-    when "\n"
-      @line += 1
-      @char_pos = 0
     when "\""
       read_string(char)
     when "'"
@@ -248,6 +246,12 @@ class Cosmo::Lexer
 
   private def char_exists?(offset)
     (@position + offset) < @source.size
+  end
+
+  private def add_newline
+    advance
+    @line += 1
+    @char_pos = 0
   end
 
   private def advance : String
