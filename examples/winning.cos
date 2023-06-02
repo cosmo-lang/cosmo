@@ -1,0 +1,25 @@
+use "assert"
+
+char[] fn whos_winning?(int[] scoresets) {
+  unless #scoresets % 2 == 0 |: #scoresets != 0
+    throw "Uneven scoreset array"
+
+  mut char[] scores = []
+  every int i in 0..((#scoresets // 2) - 1) {
+    int even_idx = i * 2
+    int y = scoresets[even_idx]
+    int o = scoresets[even_idx + 1]
+
+    if y == o
+      scores << 'T'
+    else
+      scores << (y > o ? 'Y' : 'O')
+  }
+
+  scores
+}
+
+Assert::eq(whos_winning?([10, 10, 22, 30, 5, 40]), ['T', 'O', 'O'])
+Assert::eq(whos_winning?([5, 1, 2, 10]), ['Y', 'O'])
+Assert::eq(whos_winning?([10, 10, 5, 5, 2, 2, 1, 3, 100, 5]), ['T', 'T', 'T', 'O', 'Y'])
+
