@@ -1,4 +1,5 @@
 require "./lexer"
+require "./type_hoister"
 require "./parser/ast"; include Cosmo::AST
 
 class Cosmo::Parser
@@ -22,6 +23,9 @@ class Cosmo::Parser
   # Entry point
   def parse : Array(Statement::Base)
     start_time = Time.monotonic
+
+    hoister = TypeHoister.new(@tokens)
+    hoister.hoist_types
 
     statements = [] of Statement::Base
     until finished?
@@ -123,7 +127,6 @@ class Cosmo::Parser
 
     consume(Syntax::Identifier)
     identifier = last_token
-    TypeChecker.register_type(identifier.lexeme)
 
     # superclass
     if match?(Syntax::Colon)
@@ -282,7 +285,8 @@ class Cosmo::Parser
     body = parse_block
     Statement::FunctionDef.new(
       function_ident,
-      params || [] of Expression::Parameter, body,
+      params || [] of Expression::Parameter,
+      body,
       return_typedef,
       type_info[:visibility]
     )
@@ -328,6 +332,7 @@ class Cosmo::Parser
         reached_spread = match?(Syntax::Star)
         consume(Syntax::Identifier)
         param_ident = last_token
+
         if match?(Syntax::Equal)
           value = parse_expression
           params << Expression::Parameter.new(param_type, param_ident, is_mut, value, spread: reached_spread)
@@ -579,6 +584,7 @@ class Cosmo::Parser
     type_info = parse_type(required: true, check_visibility: true, check_mut: true)
     type_ref = type_info[:type_ref].not_nil!
     TypeChecker.alias_type(identifier.token.lexeme, type_ref.name.lexeme)
+
     Expression::TypeAlias.new(
       type_token,
       identifier,

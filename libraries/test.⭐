@@ -1,0 +1,71 @@
+class Context {
+  TestContext test
+  public string description
+  public mut bool passing = true
+
+  public Context fn construct(TestContext test, string description) {
+    $->test = test
+    $->description = description
+  }
+
+  public void fn fail {
+    $->passing = false
+    $->test->fail
+  }
+}
+
+class TestContext {
+  public any value
+  public mut (Context|TestContext)? current_context
+  public mut (Context|TestContext)[] contexts = []
+  public mut bool passing = true
+
+  public TestContext fn construct(any value) {
+    $->value = value
+  }
+
+  public void fn fail {
+    $->passing = false
+  }
+}
+
+mut TestContext? current_context
+mut TestContext[] tests = []
+
+public void fn describe(any value, func closure) {
+  TestContext? enclosing = current_context
+  TestContext ctx = new TestContext(value)
+  if enclosing is void
+    current_context = ctx
+  else {
+    current_context::contexts << ctx
+    current_context::current_context = ctx
+  }
+
+  closure()
+  current_context = enclosing
+}
+
+public void fn it(string description, func closure) {
+  if current_context is void
+    throw "Test::it cannot be called outside of a 'describe' context"
+
+  Context ctx = new Context(current_context, description)
+  current_context::contexts << cts
+
+  Context|TestContext|void enclosing = current_context::current_context
+  current_context::current_context = ctx
+  closure()
+  current_context::current_context = enclosing
+}
+
+public string->any fn expect(any value) {
+  {{
+    to -> {{
+      equal -> &void (any other): {
+        unless value == other
+          current_context::current_context->fail
+      }
+    }}
+  }}
+}

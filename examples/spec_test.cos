@@ -1,0 +1,9 @@
+use "test"
+
+describe("vector methods", &void (): {
+  it("map", &void (): {
+    int[] nums = [1,2,3,4,5,6]
+    int[] doubled = nums::map(&int (int n): n * 2)
+    expect(doubled).to.equal([2,4,6,8,10,12])
+  })
+})

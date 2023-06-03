@@ -56,6 +56,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Documentation generator?
 - Linting/language server
 - Highlight function names without parentheses
+- Put snippets into VSC extension
 
 ## Things I Might Do
 
