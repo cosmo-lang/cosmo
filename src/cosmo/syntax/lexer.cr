@@ -363,8 +363,9 @@ class Cosmo::Lexer
         escaping = true
       elsif current_char == delim
         break
-      elsif res_str.size > 1 && delim == "'"
-        report_error("Character overflow", "Character literal has more than one character")
+      elsif delim == "'"
+        report_error("Character overflow", "Character literal has more than one character") if res_str.size > 1
+        report_error("Invalid character", "Character literal has no characters") if res_str.chars.empty?
       else
         res_str += advance
       end
