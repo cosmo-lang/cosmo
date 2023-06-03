@@ -871,6 +871,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/Index" data-name="cosmo::vectorintrinsics::index">
+      <a href="Cosmo/VectorIntrinsics/Index.html">Index</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/VectorIntrinsics/IsEmpty" data-name="cosmo::vectorintrinsics::isempty">
       <a href="Cosmo/VectorIntrinsics/IsEmpty.html">IsEmpty</a>
       
@@ -978,20 +983,12 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Features</h3>
 <ul>
-<li>Enums</li>
-<li>Utility methods for tables</li>
-<li>Stack trace</li>
-<li>Allow throwing class instances that inherit from a base <code>Exception</code> class</li>
-<li>Allow <code>none</code> keyword in <code>is</code> expressions</li>
-<li>String stuff
+<li>Grammar
 <ul>
-<li>Multiline strings</li>
-<li>Regexes</li>
-</ul>
-</li>
 <li><code>try..catch</code> statements</li>
 <li><code>none</code> accessing (<code>hello&amp;.world</code> evaluates to <code>none</code> if <code>hello == none</code>)</li>
-<li>Intrinsic methods for all datatypes (inherit from a base type)</li>
+<li>Regexes</li>
+<li>Enums</li>
 <li>Decorators</li>
 <li>Interfaces</li>
 <li>Namespaces</li>
@@ -1004,11 +1001,22 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </li>
 <li>Better type system
 <ul>
+<li>bound expressions</li>
 <li>type inference</li>
 <li>generics</li>
 <li>casting union types</li>
 <li>implicit conversions</li>
-<li>intersections</li>
+<li>intersection types</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Other
+<ul>
+<li>Utility methods for tables</li>
+<li>Stack trace</li>
+<li>Allow throwing class instances that inherit from a base <code>Exception</code> class</li>
+<li>Intrinsic methods for all datatypes (inherit from a base type)</li>
 </ul>
 </li>
 </ul>
@@ -1021,11 +1029,6 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 <li>Accessing private class members in public class methods</li>
 <li>Performance boosts lol</li>
 <li>Weird expression parsing (<code>[0].123</code> evaluates to 0.123??)</li>
-<li>Segfaults
-<ul>
-<li>e.x. <code>x &lt;&lt; [1]</code></li>
-</ul>
-</li>
 <li>Handle infinite recursion
 <ul>
 <li>macro function to set recursion depth limit</li>
@@ -1056,7 +1059,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </a>Things I Might Do</h2>
 <ul>
 <li>Named arguments</li>
-<li>Make into a compiler or bytecode interpreter</li>
+<li>Make a Cosmo-&gt;C compiler</li>
 <li>C bindings</li>
 </ul>
 <h2><a id="contributing" class="anchor" href="#contributing">
