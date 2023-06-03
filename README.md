@@ -15,7 +15,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer) an
 - Utility methods for tables
 - Stack trace
 - Allow throwing class instances that inherit from a base `Exception` class
-- Allow `none` keyword in `is` expressions
 - String stuff
   * Multiline strings
   * Regexes
@@ -30,18 +29,17 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer) an
   * mixins
   * static/protected members
 - Better type system
+  * bound expressions
   * type inference
   * generics
   * casting union types
   * implicit conversions
-  * intersections
+  * intersection types
 
 ### Fixes
 - Accessing private class members in public class methods
 - Performance boosts lol
 - Weird expression parsing (`[0].123` evaluates to 0.123??)
-- Segfaults
-  * e.x. `x << [1]`
 - Handle infinite recursion
   * macro function to set recursion depth limit
 

@@ -1,6 +1,5 @@
 require "./spec_helper"
 
-# this still sucks
 def shutup(&block : ->)
   out, err, in = Stdio.capture do |io|
     STDOUT.puts ":)"
