@@ -362,7 +362,7 @@ class Cosmo::Lexer
         advance
         escaping = true
       elsif current_char == delim
-        if res_str.size == 0
+        if res_str.size == 0 && delim == "'"
           report_error("Character underflow", "Character literal must have exactly one character")
         end
         break
