@@ -11,28 +11,30 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer) an
 ## Things I Gotta Do
 
 ### Features
-- Enums
-- Utility methods for tables
-- Stack trace
-- Allow throwing class instances that inherit from a base `Exception` class
-- Regexes
-- `try..catch` statements
-- `none` accessing (`hello&.world` evaluates to `none` if `hello == none`)
-- Intrinsic methods for all datatypes (inherit from a base type)
-- Decorators
-- Interfaces
-- Namespaces
-- Classes
-  * single inheritance
-  * mixins
-  * static/protected members
-- Better type system
-  * bound expressions
-  * type inference
-  * generics
-  * casting union types
-  * implicit conversions
-  * intersection types
+- Grammar
+  - `try..catch` statements
+  - `none` accessing (`hello&.world` evaluates to `none` if `hello == none`)
+  - Regexes
+  - Enums
+  - Decorators
+  - Interfaces
+  - Namespaces
+  - Classes
+    * single inheritance
+    * mixins
+    * static/protected members
+  - Better type system
+    * bound expressions
+    * type inference
+    * generics
+    * casting union types
+    * implicit conversions
+    * intersection types
+- Other
+  - Utility methods for tables
+  - Stack trace
+  - Allow throwing class instances that inherit from a base `Exception` class
+  - Intrinsic methods for all datatypes (inherit from a base type)
 
 ### Fixes
 - Accessing private class members in public class methods
