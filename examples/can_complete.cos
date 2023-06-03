@@ -2,7 +2,6 @@ use "assert"
 
 bool fn can_complete(string input, string word) {
   mut int idx = 0
-
   every int i in 1..#word {
     if word[i - 1] == input[idx]
       ++idx

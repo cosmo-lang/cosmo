@@ -1,6 +1,5 @@
 func fn doubled(int[] nums) {
   mut int i = 0
-
   int? fn generator {
     int value = nums[i]?
     ++i

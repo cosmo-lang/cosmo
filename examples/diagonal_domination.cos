@@ -28,3 +28,4 @@ Assert->truthy(diagonally_dominant?([
   [2, -9, -6],
   [1, -1, 4]
 ]))
+

@@ -1,9 +1,9 @@
 use "assert"
 
 int fn count_repetitions(string str) {
-  every int i in 1..(#str / 2)->floor() {
+  every int i in 1..(#str // 2) {
     string substring = str[0..i]
-    int max_repetitions = (#str / #substring)->floor()
+    int max_repetitions = #str // #substring
     string constructed = substring * max_repetitions
 
     if constructed == str
@@ -17,3 +17,4 @@ Assert->eq(count_repetitions("abcabcabcabc"), 4)
 Assert->eq(count_repetitions("bcbcbc"), 3)
 Assert->eq(count_repetitions("llbllbllbllbllbllb"), 6)
 Assert->eq(count_repetitions("kc"), 1)
+

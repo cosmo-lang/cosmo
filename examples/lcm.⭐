@@ -9,6 +9,7 @@ int fn lcm(int x, int y) {
   i
 }
 
-Assert->eq(lcm(9, 18), 18) ## 18
-Assert->eq(lcm(8, 5), 40) ## 40
-Assert->eq(lcm(17, 11), 187) ## 187
+Assert->eq(lcm(9, 18), 18)
+Assert->eq(lcm(8, 5), 40)
+Assert->eq(lcm(17, 11), 187)
+

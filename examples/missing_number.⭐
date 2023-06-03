@@ -4,8 +4,8 @@ float|int fn missing((float|int)[] seq) {
   unless #seq > 1
     throw "Sequence must have more than one element"
 
-  int expected_sum = (((#seq + 1) * (seq[0] + seq[-1])) / 2).floor()
-  float|int actual_sum = seq.sum()
+  int expected_sum = ((#seq + 1) * (seq.first + seq.last)) // 2
+  float|int actual_sum = seq.sum
   expected_sum - actual_sum
 }
 

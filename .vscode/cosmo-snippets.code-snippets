@@ -5,18 +5,36 @@
 		"body": [
 			"class ${1:ClassName} {",
       "\tpublic ${1:ClassName} fn construct() {",
-      "\t\t",
+      "\t\t${2}",
       "\t}",
       "}"
 		]
 	},
-  "Public Method Definition": {
+  "Public Function Definition": {
 		"prefix": [ "pub", "public" ],
-		"description": "Create a public method",
+		"description": "Create a public function",
 		"body": [
-      "public ${1:typedef} fn ${2:method_name}() {",
-      "\t",
+      "public ${1:typedef} fn ${2:function_name}() {",
+      "\t${4}",
       "}"
 		]
 	},
+	"Private Function Definition": {
+		"prefix": [ "pri", "private" ],
+		"description": "Create a private function",
+		"body": [
+      "private ${1:typedef} fn ${2:function_name}() {",
+      "\t${4}",
+      "}"
+		]
+	},
+	"Main Function": {
+		"prefix": [ "main" ],
+		"description": "Generates the main function",
+		"body": [
+			"public int fn main(string[] args) {",
+      "\t${1}",
+      "}"
+		]
+	}
 }
