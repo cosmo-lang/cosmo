@@ -43,6 +43,11 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer) an
 - Handle infinite recursion
   * macro function to set recursion depth limit
 
+### Tests
+- `42 = 123` throw an invalid assignment error
+- `?:` operator
+- Literal value intrinsic methods (`Vector->map`, `string->split`, etc)
+
 ### Refactorings
 (empty)
 
