@@ -15,9 +15,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer) an
 - Utility methods for tables
 - Stack trace
 - Allow throwing class instances that inherit from a base `Exception` class
-- String stuff
-  * Multiline strings
-  * Regexes
+- Regexes
 - `try..catch` statements
 - `none` accessing (`hello&.world` evaluates to `none` if `hello == none`)
 - Intrinsic methods for all datatypes (inherit from a base type)
@@ -55,7 +53,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer) an
 ## Things I Might Do
 
 - Named arguments
-- Make into a compiler or bytecode interpreter
+- Make a Cosmo->C compiler
 - C bindings
 
 ## Contributing

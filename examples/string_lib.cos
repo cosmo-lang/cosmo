@@ -5,3 +5,19 @@ Assert::truthy(empty->blank?)
 
 char[] hello_chars = "hello"->chars
 Assert::eq(hello_chars, ['h', 'e', 'l', 'l', 'o'])
+
+string multiline = %(
+i love
+long
+multiline epicness
+strings
+)
+
+## string not_multiline = "
+## abc
+## 123
+## goo goo gaga
+## "
+
+puts(multiline)
+## puts(not_multiline)

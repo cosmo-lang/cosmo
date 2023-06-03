@@ -108,6 +108,10 @@ class Cosmo::Interpreter
         end
 
         main_result = main_fn.call([ARGV.map(&.as ValueType)])
+        if main_result.nil?
+          Logger.report_error("Invalid main() function", "Your main() function did not return an 'int'", return_typedef)
+        end
+
         TypeChecker.assert("int", main_result, return_typedef)
       else
         puts "[WARNING]: Found main() function, but it is not public. It will not be called on program execution."

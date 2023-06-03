@@ -143,6 +143,10 @@ class Cosmo::Lexer
     when "%"
       if match_char?("=")
         add_token(Syntax::PercentEqual, nil)
+      elsif match_char?("[")
+        read_string("]", multiline: true)
+      elsif match_char?("(")
+        read_string(")", multiline: true)
       else
         add_token(Syntax::Percent, nil)
       end
@@ -335,11 +339,12 @@ class Cosmo::Lexer
     @position -= 1
   end
 
-  private def read_string(delim : String)
+  private def read_string(delim : String, multiline = false)
     advance
     res_str = ""
     escaping = false
 
+    begin_line = @line
     until finished?
       if escaping
         case current_char
@@ -374,12 +379,16 @@ class Cosmo::Lexer
       else
         res_str += advance
       end
+      if current_char == "\n" && !multiline
+        report_error("Invalid string literal", "Newline found in single-line string")
+      end
     end
 
     @current_lexeme = String::Builder.new(res_str)
     add_token(
       delim == "'" ? Syntax::Char : Syntax::String,
-      delim == "'" ? res_str.chars.first : res_str
+      delim == "'" ? res_str.chars.first
+        : multiline ? res_str.strip : res_str
     )
   end
 
