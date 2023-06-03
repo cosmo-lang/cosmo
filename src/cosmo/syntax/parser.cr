@@ -740,6 +740,8 @@ class Cosmo::Parser
         nodes << Expression::VarAssignment.new(loc, respective_value)
       elsif loc.is_a?(Expression::Index) || loc.is_a?(Expression::Access)
         nodes << Expression::PropertyAssignment.new(loc, respective_value)
+      else
+        Logger.report_error("Invalid assignment target", "Attempt to assign to '#{loc.token.lexeme}'", loc.token)
       end
     end
 
@@ -758,6 +760,8 @@ class Cosmo::Parser
         left = Expression::VarAssignment.new(left, value)
       elsif left.is_a?(Expression::Index) || left.is_a?(Expression::Access)
         left = Expression::PropertyAssignment.new(left, value)
+      else
+        Logger.report_error("Invalid assignment target", "Attempt to assign to '#{left.token.lexeme}'", left.token)
       end
     end
 
