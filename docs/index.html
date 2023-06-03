@@ -971,7 +971,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
     <use href="#octicon-link"/>
   </svg>
 </a>Installation</h2>
-<p>Download the <a href="https://github.com/cosmo-lang/cosmo-installer">Cosmo Installer</a> and run it.</p>
+<p>Download the <a href="https://github.com/cosmo-lang/cosmo-installer/releases">Cosmo Installer</a> and run it.</p>
 <h2><a id="things-i-gotta-do" class="anchor" href="#things-i-gotta-do">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -985,7 +985,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 <ul>
 <li>Grammar
 <ul>
-<li><code>try..catch</code> statements</li>
+<li><code>try..catch</code> statements (can't do until you can throw more than just strings)</li>
 <li><code>none</code> accessing (<code>hello&amp;.world</code> evaluates to <code>none</code> if <code>hello == none</code>)</li>
 <li>Regexes</li>
 <li>Enums</li>
@@ -1001,7 +1001,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </li>
 <li>Better type system
 <ul>
-<li>bound expressions</li>
+<li>bound expressions (!!)</li>
 <li>type inference</li>
 <li>generics</li>
 <li>casting union types</li>
@@ -1026,14 +1026,24 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Fixes</h3>
 <ul>
-<li>Accessing private class members in public class methods</li>
 <li>Performance boosts lol</li>
+<li>Accessing private class members in public class methods</li>
 <li>Weird expression parsing (<code>[0].123</code> evaluates to 0.123??)</li>
 <li>Handle infinite recursion
 <ul>
 <li>macro function to set recursion depth limit</li>
 </ul>
 </li>
+</ul>
+<h3><a id="tests" class="anchor" href="#tests">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Tests</h3>
+<ul>
+<li><code>42 = 123</code> throw an invalid assignment error</li>
+<li><code>?:</code> operator</li>
+<li>Literal value intrinsic methods (<code>Vector-&gt;map</code>, <code>string-&gt;split</code>, etc)</li>
 </ul>
 <h3><a id="refactorings" class="anchor" href="#refactorings">
   <svg class="octicon-link" aria-hidden="true">
@@ -1048,7 +1058,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </a>Meta</h3>
 <ul>
 <li>Package manager (<a href="https://github.com/cosmo-lang/stars">WIP</a>)</li>
-<li>Documentation generator</li>
+<li>Documentation generator?</li>
 <li>Linting/language server</li>
 <li>Highlight function names without parentheses</li>
 </ul>
@@ -1068,12 +1078,12 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Contributing</h2>
 <ol>
-<li>Fork it (<a href="https://github.com/R-unic/cosmo/fork">https://github.com/R-unic/cosmo/fork</a>)</li>
+<li><a href="https://github.com/R-unic/cosmo/fork">Fork it</a></li>
 <li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
 <li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
 <li>Test your code (<code>make test</code>)</li>
 <li>Push to the branch (<code>make publish</code>)</li>
-<li>Create a new Pull Request</li>
+<li>Create a new <a href="https://github.com/cosmo-lang/cosmo/pulls">Pull Request</a></li>
 </ol>
 <h2><a id="contributors" class="anchor" href="#contributors">
   <svg class="octicon-link" aria-hidden="true">
