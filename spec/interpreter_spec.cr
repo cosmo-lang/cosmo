@@ -181,6 +181,8 @@ describe Interpreter do
     result.should eq -16384
     result = interpreter.interpret("482 // 23", "test")
     result.should eq 20
+    result = interpreter.interpret("none ?: 123", "test")
+    result.should eq 123
   end
   it "interprets ternary operators" do
     result = interpreter.interpret("true ? (true ? \"yes\" : \"wtf\") : \"wtf x2\"", "test")
@@ -253,6 +255,10 @@ describe Interpreter do
     result.should eq 13
     result = interpreter.interpret("--x", "test")
     result.should eq 12
+
+    expect_raises(Exception, "@test [1:4] Invalid assignment target: Attempt to assign to '56'") do
+      interpreter.interpret("56 = x", "test")
+    end
   end
   it "interprets compound assignment" do
     result = interpreter.interpret("mut int a = 5", "test")

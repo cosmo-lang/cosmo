@@ -13,7 +13,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 ### Features
 - Grammar
   - `try..catch` statements (can't do until you can throw more than just strings)
-  - `none` accessing (`hello&.world` evaluates to `none` if `hello == none`)
   - Regexes
   - Enums
   - Decorators
@@ -33,7 +32,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Other
   - Utility methods for tables
   - Stack trace
-  - Allow throwing class instances that inherit from a base `Exception` class
+  - Allow throwing class instances that inherit from a base `Exception` class (can't do until stack traces exist)
   - Intrinsic methods for all datatypes (inherit from a base type)
 
 ### Fixes
@@ -44,8 +43,8 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
   * macro function to set recursion depth limit
 
 ### Tests
-- `42 = 123` throw an invalid assignment error
 - `?:` operator
+- `&.`/`&::`/`&->` operator
 - Literal value intrinsic methods (`Vector->map`, `string->split`, etc)
 
 ### Refactorings
