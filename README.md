@@ -43,8 +43,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
   * macro function to set recursion depth limit
 
 ### Tests
-- `?:` operator
-- `&.`/`&::`/`&->` operator
 - Literal value intrinsic methods (`Vector->map`, `string->split`, etc)
 
 ### Refactorings

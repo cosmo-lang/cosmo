@@ -2,7 +2,7 @@ module Cosmo::AST::Expression
   class Index < Base
     getter object : Base
     getter key : Base
-    getter nullable : Bool
+    getter? nullable : Bool
 
     def initialize(@object, @key, @nullable)
     end

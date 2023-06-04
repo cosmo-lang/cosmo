@@ -75,7 +75,7 @@ describe Interpreter do
       result = interpreter.interpret("ABABABA->last", "test")
       result.should eq 2
       result = interpreter.interpret("[]->first? is void", "test")
-      result.should eq true
+      result.should be_true
       result = interpreter.interpret("['a', 'b', 'c'].join(',')", "test")
       result.should eq "a,b,c"
       result = interpreter.interpret("[].push(1,2,3,4,5)", "test")
@@ -172,9 +172,9 @@ describe Interpreter do
     result = interpreter.interpret("(14 - 3.253 / 14.5) * 27 ^ 4", "test")
     result.should eq 7320947.960482759
     result = interpreter.interpret("true == false", "test")
-    result.should eq false
+    result.should be_false
     result = interpreter.interpret("true == false == false != true", "test")
-    result.should eq false
+    result.should be_false
     result = interpreter.interpret("0xff & 24 | 15", "test")
     result.should eq 31
     result = interpreter.interpret("~15 >> 12 << 14", "test")
@@ -184,7 +184,7 @@ describe Interpreter do
     result = interpreter.interpret("none ?: 123", "test")
     result.should eq 123
   end
-  it "interprets ternary operators" do
+  it "interprets the ternary operator" do
     result = interpreter.interpret("true ? (true ? \"yes\" : \"wtf\") : \"wtf x2\"", "test")
     result.should eq "yes"
     result = interpreter.interpret("false ? \"yes\" :\"no\"", "test")
@@ -210,7 +210,7 @@ describe Interpreter do
     result.should eq "hello world"
 
     result = interpreter.interpret("bool abc = false", "test")
-    result.should eq false
+    result.should be_false
 
     result = interpreter.interpret("string|int g = 123", "test")
     result.should eq 123
@@ -295,9 +295,11 @@ describe Interpreter do
     interpreter.interpret("mut string->bool admins = {{runic -> true}}", "test")
     interpreter.interpret("admins->shedletsky = true", "test")
     result = interpreter.interpret("admins->runic", "test")
-    result.should eq true
+    result.should be_true
     result = interpreter.interpret("admins->shedletsky", "test")
-    result.should eq true
+    result.should be_true
+    result = interpreter.interpret("admins[\"goonga\"]?", "test")
+    result.should be_nil
     expect_raises(Exception, "@test [1:14] Invalid table key: 'bobert'") do
       interpreter.interpret("admins->bobert", "test")
     end
@@ -361,13 +363,15 @@ describe Interpreter do
     it "tables" do
       interpreter.interpret("string->bool bad_people = {{[\"billy bob\"] -> false, mj -> true, joemar -> false}}", "test")
       result = interpreter.interpret("bad_people[\"billy bob\"]", "test")
-      result.should eq false
+      result.should be_false
       result = interpreter.interpret("bad_people.mj", "test")
-      result.should eq true
+      result.should be_true
       result = interpreter.interpret("bad_people::mj", "test")
-      result.should eq true
+      result.should be_true
       result = interpreter.interpret("bad_people->joemar", "test")
-      result.should eq false
+      result.should be_false
+      result = interpreter.interpret("none&->booba", "test")
+      result.should be_nil
     end
   end
   it "interprets if/unless statements" do
@@ -476,29 +480,29 @@ describe Interpreter do
   describe "types:" do
     it "'is' matching" do
       result = interpreter.interpret("1 is int", "test")
-      result.should eq true
+      result.should be_true
       result = interpreter.interpret("873584728475872334 is bigint", "test")
-      result.should eq true
+      result.should be_true
       result = interpreter.interpret("1 is (int|float)?", "test")
-      result.should eq true
+      result.should be_true
       result = interpreter.interpret("'h' is char", "test")
-      result.should eq true
+      result.should be_true
       result = interpreter.interpret("'h' is void", "test")
-      result.should eq false
+      result.should be_false
       result = interpreter.interpret("none is void", "test")
-      result.should eq true
+      result.should be_true
       result = interpreter.interpret("[1,2,3] is int[]", "test")
-      result.should eq true
+      result.should be_true
       result = interpreter.interpret("{{yes->true}} is string->bool", "test")
-      result.should eq true
+      result.should be_true
     end
     it "casting" do
       result = interpreter.interpret("<string>123", "test")
       result.should eq "123"
       result = interpreter.interpret("<bool>0", "test")
-      result.should eq false
+      result.should be_false
       result = interpreter.interpret("<bool>1", "test")
-      result.should eq true
+      result.should be_true
       result = interpreter.interpret("<char>\"a\"", "test")
       result.should eq 'a'
       result = interpreter.interpret("<int>false", "test")
@@ -512,7 +516,7 @@ describe Interpreter do
       result = interpreter.interpret("type MyInt = int; MyInt my_int = 123", "test")
       result.should eq 123
       result = interpreter.interpret("type Number = bigint | int | float; 1.23 is Number &: 15 is Number", "test")
-      result.should eq true
+      result.should be_true
     end
     it "throws when a mismatch occurs" do
       interpreter.interpret("mut int x = 1", "test")
