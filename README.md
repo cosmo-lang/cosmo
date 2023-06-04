@@ -29,7 +29,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * implicit conversions
     * intersection types
 - Other
-  - `to_string$` meta method (and default to class name if none provided)
   - Utility methods for tables
   - Intrinsic methods for all datatypes (inherit from a base type)
 

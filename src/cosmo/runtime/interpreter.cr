@@ -505,11 +505,16 @@ class Cosmo::Interpreter
         fn.call([] of ValueType)
         : fn
     elsif object.is_a?(ClassInstance)
-      value = object.get_member(key, expr.key, include_private: !@meta["this"]?.nil?)
+      value = object.get_member(
+        key, expr.key,
+        include_private: !@meta["this"]?.nil?,
+        field_required: key != "to_string"
+      )
+
       if value.is_a?(Function) && value.arity.begin == 0 && !@evaluating_fn_callee
         value.call([] of ValueType)
       else
-        value
+        key == "to_string" ? object.name : value
       end
     else
       Logger.report_error("Attempt to index", TypeChecker.get_mapped(object.class), expr.token)

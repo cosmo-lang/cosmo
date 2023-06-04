@@ -1,6 +1,6 @@
 void fn _assert(bool condition, string? error_msg) {
   unless condition
-    throw error_msg |: "Assertion failed!"
+    throw new Exception(error_msg |: "Assertion failed!")
 }
 
 class AssertClass {

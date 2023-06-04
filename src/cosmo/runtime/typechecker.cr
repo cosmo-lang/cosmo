@@ -143,7 +143,14 @@ module Cosmo::TypeChecker
 
   def cast?(value : ValueType, type : Token) : ValueType
     if is?(type.lexeme, "", type) # if the type is a string
-      value.to_s
+      if value.is_a?(ClassInstance)
+        to_string = value.get_method("to_string", include_private: false, required: false)
+        to_string.nil? ?
+          value.name
+          : to_string.call([] of ValueType)
+      else
+        value.to_s
+      end
     elsif type.lexeme.includes?("char") && value.to_s.size == 1  # if the type is a char
       value.to_s.chars.first
     elsif is?(type.lexeme, 1, type) && (value.is_a?(String) || value.is_a?(Float) || value.is_a?(Int) || value.is_a?(Bool)) # if the type is an integer

@@ -1,0 +1,17 @@
+use "assert"
+
+class MyClass {
+  public string fn to_string {
+    "this is my class"
+  }
+}
+
+class MyOtherClass {}
+
+MyClass my_class = new MyClass
+Assert::eq(my_class.to_string, "this is my class")
+Assert::eq(<string>my_class, "this is my class")
+
+MyOtherClass my_class = new MyOtherClass
+Assert::eq(my_class.to_string, "MyOtherClass")
+Assert::eq(<string>my_class, "MyOtherClass")

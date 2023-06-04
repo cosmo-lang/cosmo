@@ -112,19 +112,32 @@ class Cosmo::ClassInstance
   def get_member(
     member_name : String,
     token : Token? = nil,
-    include_private : Bool = true,
-    include_protected : Bool = false
+    include_private = true,
+    include_protected = false,
+    method_required = false,
+    field_required = true
   ) : ValueType
 
-    get_method(member_name, token, include_private, include_protected, required: false) ||
-      get_field(member_name, token, include_private, include_protected)
+    get_method(
+      member_name, token,
+      include_private,
+      include_protected,
+      required: method_required
+    ) || get_field(
+      member_name,
+      token,
+      include_private,
+      include_protected,
+      required: field_required
+    )
   end
 
   def get_field(
     field_name : String,
     token : Token? = nil,
-    include_private : Bool = true,
-    include_protected : Bool = false
+    include_private = true,
+    include_protected = false,
+    required = true
   ) : ValueType
 
     field : ValueType? = @public["fields"][field_name]?
@@ -138,7 +151,7 @@ class Cosmo::ClassInstance
     unless token.nil? || include_private || @private["fields"][field_name]?.nil?
       Logger.report_error("Attempt to access private field", field_name, token)
     end
-    if meta.nil? && !token.nil?
+    if meta.nil? && !token.nil? && required
       Logger.report_error("Field '#{field_name}' does not exist on", name, token)
     end
 
