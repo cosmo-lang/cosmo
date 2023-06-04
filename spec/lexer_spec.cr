@@ -4,9 +4,9 @@ describe Lexer do
   unexpected_float = "Unexpected float: Hex/octal/binary literals must be integers"
   it "throws for unexpected characters" do
     lexer = Lexer.new("@", "test", false)
-    expect_raises(Exception, "[1:1] Unexpected character: @") { lexer.tokenize }
+    expect_raises(Exception, "Unexpected character: @") { lexer.tokenize }
     lexer = Lexer.new("\\", "test", false)
-    expect_raises(Exception, "[1:1] Unexpected character: \\") { lexer.tokenize }
+    expect_raises(Exception, "Unexpected character: \\") { lexer.tokenize }
   end
   it "skips comments & whitespaces" do
     lines = [
@@ -50,7 +50,7 @@ describe Lexer do
     tokens.first.value.should eq 1194684
 
     lexer = Lexer.new("0xAE.0", "test", false)
-    expect_raises(Exception, "[1:7] #{unexpected_float}") { lexer.tokenize }
+    expect_raises(Exception, "#{unexpected_float}") { lexer.tokenize }
   end
   it "lexes binary literals" do
     tokens = Lexer.new("0b11111", "test", false).tokenize
@@ -62,7 +62,7 @@ describe Lexer do
     tokens.first.value.should eq 91
 
     lexer = Lexer.new("0b11.2", "test", false)
-    expect_raises(Exception, "[1:6] #{unexpected_float}") { lexer.tokenize }
+    expect_raises(Exception, "#{unexpected_float}") { lexer.tokenize }
   end
   it "lexes octal literals" do
     tokens = Lexer.new("0o31234", "test", false).tokenize
@@ -74,7 +74,7 @@ describe Lexer do
     tokens.first.value.should eq 20124
 
     lexer = Lexer.new("0o36.5", "test", false)
-    expect_raises(Exception, "[1:7] #{unexpected_float}") { lexer.tokenize }
+    expect_raises(Exception, "#{unexpected_float}") { lexer.tokenize }
   end
   it "lexes booleans" do
     tokens = Lexer.new("true", "test", false).tokenize

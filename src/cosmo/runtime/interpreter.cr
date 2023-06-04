@@ -35,8 +35,14 @@ class Cosmo::Interpreter
     TypeChecker.register_intrinsics
 
     @scope = @globals
+    declare_globals
+  end
+
+  private def declare_globals
     declare_intrinsic("func", "puts", PutsIntrinsic.new(self))
     declare_intrinsic("func", "gets", GetsIntrinsic.new(self))
+
+    import_file(File.join File.dirname(__FILE__), "../../../libraries/intrinsic.⭐")
 
     version = "Cosmo #{Version}"
     declare_intrinsic("string", "version$", version)
@@ -210,6 +216,10 @@ class Cosmo::Interpreter
     relative_module_path = stmt.module_path.lexeme
     Logger.push_trace(stmt.keyword)
 
+    if relative_module_path == "intrinsic"
+      Logger.report_error("Invalid import", "Cannot import the intrinsic library, as it is in the global scope by default", stmt.module_path)
+    end
+
     unless relative_module_path.includes?("/")
       unless @importable_intrinsics.has_key?(relative_module_path)
         file_path = File.join File.dirname(__FILE__), "../../../libraries", relative_module_path
@@ -267,12 +277,13 @@ class Cosmo::Interpreter
     err = evaluate(stmt.err)
     Logger.push_trace(stmt.keyword)
 
-    unless TypeChecker.is?("string", err, stmt.token)
-      Logger.report_error("Throw statement can only be invoked with a string currently, got", TypeChecker.get_mapped(err.class), stmt.token)
+    unless TypeChecker.is?("Exception", err, stmt.token)
+      Logger.report_error("Invalid throw argument", "Throw statement can only be invoked with Exception, or a subclass of it. Got: #{TypeChecker.get_mapped(err.class)}", stmt.token)
     end
 
     # TODO: error levels, set_trace_level()?
-    Logger.report_error("Error", err.to_s, stmt.token) # replace "Error" with exception class name
+    err = err.as ClassInstance
+    Logger.report_error("Unhandled #{err.name}", err.get_field("message", stmt.keyword, include_private: true).to_s, stmt.token) # replace "Error" with exception class name
   end
 
   def visit_next_stmt(stmt : Statement::Next) : Nil

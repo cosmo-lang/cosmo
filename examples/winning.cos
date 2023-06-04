@@ -2,7 +2,7 @@ use "assert"
 
 char[] fn whos_winning?(int[] scoresets) {
   unless #scoresets % 2 == 0 |: #scoresets != 0
-    throw "Uneven scoreset array"
+    throw new Exception("Uneven scoreset array")
 
   mut char[] scores = []
   every int i in 0..((#scoresets // 2) - 1) {

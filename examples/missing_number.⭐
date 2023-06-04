@@ -2,7 +2,7 @@ use "assert"
 
 float|int fn missing((float|int)[] seq) {
   unless #seq > 1
-    throw "Sequence must have more than one element"
+    throw new Exception("Sequence must have more than one element")
 
   int expected_sum = ((#seq + 1) * (seq.first + seq.last)) // 2
   float|int actual_sum = seq.sum

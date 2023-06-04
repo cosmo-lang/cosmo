@@ -15,6 +15,8 @@ class Cosmo::TypeHoister
     case token.type
     when Syntax::Class
       TypeChecker.register_type(peek.lexeme) if token_exists?(1)
+    when Syntax::Enum
+      TypeChecker.register_type(peek.lexeme) if token_exists?(1)
     end
   end
 

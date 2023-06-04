@@ -6,7 +6,7 @@ bool fn diagonally_dominant?(int[][] matrix) {
 
   every int[] row in matrix {
     unless #row == #matrix
-      throw "Matrix must be square."
+      throw new Exception("Matrix must be square.")
 
     int main_diagonal = +matrix[i][i]
     mut int other_sum = 0

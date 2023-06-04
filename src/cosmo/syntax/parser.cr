@@ -244,6 +244,7 @@ class Cosmo::Parser
     token = last_token
     condition = parse_expression
     then_block = parse_statement
+
     if match?(Syntax::Else)
       if match?(Syntax::Unless)
         else_block = parse_unless_statement
@@ -251,17 +252,18 @@ class Cosmo::Parser
         else_block = parse_statement
       end
     end
+
     Statement::Unless.new(token, condition, then_block, else_block)
   end
 
   private def parse_use_statement : Statement::Use
     consume(Syntax::String)
-    Statement::Use.new(last_token, peek(-2))
+    Statement::Use.new(last_token, peek -2)
   end
 
   private def parse_throw_statement : Statement::Throw
-    value = token_exists? ? parse_expression : nil
-    Statement::Throw.new(value || Expression::NoneLiteral.new(nil, last_token), last_token)
+    keyword = last_token
+    Statement::Throw.new(parse_expression, keyword)
   end
 
   private def parse_return_statement : Statement::Return
@@ -572,8 +574,12 @@ class Cosmo::Parser
 
       at_fn_type?(offset: offset + 1) ## skip the token
     else
-      return at_fn_type?(offset: offset + 2) if peeked.type == Syntax::LBracket && !next_peeked.nil? && next_peeked.type == Syntax::RBracket
-      return at_fn_type?(offset: offset + 1) if peeked.type == Syntax::Question || peeked.type == Syntax::RParen
+      if peeked.type == Syntax::LBracket && !next_peeked.nil? && next_peeked.type == Syntax::RBracket
+        return at_fn_type?(offset: offset + 2)
+      end
+      if peeked.type == Syntax::Question || peeked.type == Syntax::RParen
+        return at_fn_type?(offset: offset + 1)
+      end
 
       if (peeked.type == Syntax::Pipe || peeked.type == Syntax::HyphenArrow) &&
         !next_peeked.nil? &&
@@ -764,11 +770,13 @@ class Cosmo::Parser
   # Parse a variable assignment expression and return a node
   private def parse_assignment(match_equal = true, check_comma = true) : Expression::Base
     left = parse_compound_assignment
-    return parse_multiple_assignment(left) if check?(Syntax::Comma) && !@not_assignment && check_comma
+    if check?(Syntax::Comma) && !@not_assignment && check_comma
+      return parse_multiple_assignment(left)
+    end
 
     if match_equal && match?(Syntax::Equal)
       value = parse_expression
-      assert_assignment_location(left, peek(-2))
+      assert_assignment_location(left, peek -2)
       if left.is_a?(Expression::Var)
         left = Expression::VarAssignment.new(left, value)
       elsif left.is_a?(Expression::Index) || left.is_a?(Expression::Access)

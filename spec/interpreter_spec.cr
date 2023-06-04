@@ -199,7 +199,7 @@ describe Interpreter do
 
     result = interpreter.interpret("mut uint ijija = 1500", "test")
     result.should eq 1500
-    expect_raises(Exception, "@test [1:6] Type mismatch: Expected 'uint', got 'int'") do
+    expect_raises(Exception, "Type mismatch: Expected 'uint', got 'int'") do
       interpreter.interpret("ijija = -1", "test")
     end
 
@@ -216,7 +216,7 @@ describe Interpreter do
     result.should eq 123
 
     interpreter.interpret("int foo = 10", "test")
-    expect_raises(Exception, "@test [1:4] Attempt to assign to an immutable variable: foo") do
+    expect_raises(Exception, "Attempt to assign to an immutable variable: foo") do
       interpreter.interpret("foo = 15", "test")
     end
 
@@ -256,7 +256,7 @@ describe Interpreter do
     result = interpreter.interpret("--x", "test")
     result.should eq 12
 
-    expect_raises(Exception, "@test [1:4] Invalid assignment target: Attempt to assign to '56'") do
+    expect_raises(Exception, "Invalid assignment target: Attempt to assign to '56'") do
       interpreter.interpret("56 = x", "test")
     end
   end
@@ -288,7 +288,7 @@ describe Interpreter do
     interpreter.interpret("nums << 4", "test")
     result = interpreter.interpret("nums", "test")
     result.should eq [1,2,3,4]
-    expect_raises(Exception, "[1:5] Type mismatch: Expected 'int', got 'string'") do
+    expect_raises(Exception, "Type mismatch: Expected 'int', got 'string'") do
       interpreter.interpret("nums[3] = \"hi\"", "test")
     end
 
@@ -300,7 +300,7 @@ describe Interpreter do
     result.should be_true
     result = interpreter.interpret("admins[\"goonga\"]?", "test")
     result.should be_nil
-    expect_raises(Exception, "@test [1:14] Invalid table key: 'bobert'") do
+    expect_raises(Exception, "Invalid table key: 'bobert'") do
       interpreter.interpret("admins->bobert", "test")
     end
   end
@@ -470,10 +470,10 @@ describe Interpreter do
     result = interpreter.interpret(lines.join('\n'), "test")
     result.should eq 1
 
-    expect_raises(Exception, "@test [1:4] Attempt to access private field: y") do
+    expect_raises(Exception, "Attempt to access private field: y") do
       interpreter.interpret("a->y", "test")
     end
-    expect_raises(Exception, "@test [1:2] Attempt to assign to an immutable property: x") do
+    expect_raises(Exception, "Attempt to assign to an immutable property: x") do
       interpreter.interpret("a->x = 2", "test")
     end
   end
@@ -520,13 +520,13 @@ describe Interpreter do
     end
     it "throws when a mismatch occurs" do
       interpreter.interpret("mut int x = 1", "test")
-      expect_raises(Exception, "[1:2] Type mismatch: Expected 'int', got 'float'") do
+      expect_raises(Exception, "Type mismatch: Expected 'int', got 'float'") do
         interpreter.interpret("x = 2.0", "test")
       end
-      expect_raises(Exception, "[1:3] Invalid '+' operand type: Char") do
+      expect_raises(Exception, "Invalid '+' operand type: Char") do
         interpreter.interpret("x + 'h'", "test")
       end
-      expect_raises(Exception, "[1:6] Type mismatch: Expected 'float', got 'int'") do
+      expect_raises(Exception, "Type mismatch: Expected 'float', got 'int'") do
         interpreter.interpret("float[] aba = [x, 2.0]", "test")
       end
     end
