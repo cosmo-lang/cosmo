@@ -95,6 +95,23 @@ describe Interpreter do
       result = interpreter.interpret("[1,2,3,4,5,6].index(4)", "test")
       result.should eq 3
     end
+    it "table library" do
+      result = interpreter.interpret("mut string->string h1 = {{}}", "test")
+      result.should eq({} of ValueType => ValueType)
+      result = interpreter.interpret("h1.empty?", "test")
+      result.should be_true
+      interpreter.interpret("h1->a = <string>'b'", "test")
+      result = interpreter.interpret("h1.empty?", "test")
+      result.should be_false
+      result = interpreter.interpret("h1", "test")
+      result.should eq({"a" => "b"})
+      result = interpreter.interpret("h1.invert", "test")
+      result.should eq({"b" => "a"})
+      result = interpreter.interpret("h1.invert.keys", "test")
+      result.should eq ["b"]
+      result = interpreter.interpret("h1.values", "test")
+      result.should eq ["b"]
+    end
   end
   describe "interprets literals:" do
     it "booleans" do
