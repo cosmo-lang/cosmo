@@ -564,9 +564,9 @@ class Cosmo::Interpreter
   end
 
   def visit_var_declaration_expr(expr : Expression::VarDeclaration) : ValueType
-    in_global = @meta["this"]?.nil?
+    not_class = @meta["this"]?.nil?
     value = evaluate(expr.value)
-    if in_global
+    if not_class
       @scope.declare(
         expr.typedef,
         expr.var.token,

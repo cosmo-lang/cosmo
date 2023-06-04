@@ -470,19 +470,16 @@ class Cosmo::Parser
     if required
       consume(Syntax::Identifier) unless match?(Syntax::TypeDef)
       found_typedef = true
+      variable_type = last_token
     else
       found_registered_type = token_exists? &&
         current.type == Syntax::Identifier &&
         !TypeChecker.get_registered_type?(current.lexeme, current).nil?
 
-      found_typedef = match?(Syntax::TypeDef) || found_registered_type
+      found_typedef = found_registered_type || match?(Syntax::TypeDef)
+      variable_type = found_registered_type ? consume_current : last_token if found_typedef
     end
 
-    variable_type = last_token if found_typedef
-    if found_registered_type
-      variable_type = current
-      consume_current
-    end
     unless variable_type.nil?
       variable_type, type_ref = parse_type_suffix(variable_type, required, paren_depth)
     end
@@ -570,8 +567,12 @@ class Cosmo::Parser
       at_fn_type?(offset: offset + 1) ## skip the token
     else
       return at_fn_type?(offset: offset + 2) if peeked.type == Syntax::LBracket && !next_peeked.nil? && next_peeked.type == Syntax::RBracket
-      return at_fn_type?(offset: offset + 1) if peeked.type == Syntax::HyphenArrow || peeked.type == Syntax::Question || peeked.type == Syntax::RParen
-      if peeked.type == Syntax::Pipe && !next_peeked.nil? && (next_peeked.type == Syntax::TypeDef || next_peeked.type == Syntax::Identifier)
+      return at_fn_type?(offset: offset + 1) if peeked.type == Syntax::Question || peeked.type == Syntax::RParen
+
+      if (peeked.type == Syntax::Pipe || peeked.type == Syntax::HyphenArrow) &&
+        !next_peeked.nil? &&
+        (next_peeked.type == Syntax::TypeDef || next_peeked.type == Syntax::Identifier)
+
         return at_fn_type?(offset: offset + 2)
       end
 
@@ -602,8 +603,8 @@ class Cosmo::Parser
       check_visibility: true
     )
 
-    unless type_info[:variable_type].nil? || type_info[:type_ref].nil?
-      typedef = type_info[:type_ref].nil? ? type_info[:variable_type].not_nil! : type_info[:type_ref].not_nil!.name
+    unless type_info[:type_ref].nil?
+      typedef = type_info[:type_ref].not_nil!.name
 
       if match?(Syntax::Identifier)
         variable_name = last_token
@@ -1114,7 +1115,7 @@ class Cosmo::Parser
       parse_table_literal
     when Syntax::Integer
       consume_current
-      value = value.as(Int)
+      value = value.as Int
       if value > Int64::MAX
         Expression::BigIntLiteral.new(value.to_i128, last_token)
       else
@@ -1122,10 +1123,10 @@ class Cosmo::Parser
       end
     when Syntax::Float
       consume_current
-      Expression::FloatLiteral.new(value.as(Float), last_token)
+      Expression::FloatLiteral.new(value.as Float, last_token)
     when Syntax::Boolean
       consume_current
-      Expression::BooleanLiteral.new(value.as(Bool), last_token)
+      Expression::BooleanLiteral.new(value.as Bool, last_token)
     when Syntax::String
       consume_current
       if value.to_s.includes?("%{")
@@ -1135,7 +1136,7 @@ class Cosmo::Parser
       end
     when Syntax::Char
       consume_current
-      Expression::CharLiteral.new(value.as(Char), last_token)
+      Expression::CharLiteral.new(value.as Char, last_token)
     when Syntax::None
       consume_current
       Expression::NoneLiteral.new(nil, last_token)

@@ -179,7 +179,7 @@ module Cosmo::TypeChecker
     end
   end
 
-  def is?(typedef : String, value : ValueType, token : Token) : Bool
+  def is?(typedef : String, value : ValueType, token : Token, except = false) : Bool
     case typedef
     when "Range"
       value.is_a?(Range)
@@ -222,7 +222,7 @@ module Cosmo::TypeChecker
       elsif typedef.includes?("|")
         types = typedef.split("|")
         types.each do |type|
-          matches = true if is?(type.strip, value, token)
+          matches ||= is?(type.strip, value, token, except: true)
         end
       elsif typedef.includes?("->") && typedef.split("->", 2).size == 2
         types = typedef.split("->", 2)
@@ -250,7 +250,9 @@ module Cosmo::TypeChecker
             elsif value.is_a?(ClassInstance)
               matches = value.name == registered.name
             else
-              Logger.report_error("Expected type #{registered.name}, got", get_mapped(value.class), token)
+              unless except
+                Logger.report_error("Expected type #{registered.name}, got", get_mapped(value.class), token)
+              end
             end
           end
         end
