@@ -59,6 +59,8 @@ class Cosmo::Parser
       Statement::Next.new(last_token)
     when .match?(Syntax::Case)
       parse_case_statement
+    when .match?(Syntax::Try)
+      parse_try_catch_statement
     when .match?(Syntax::If)
       parse_if_statement
     when .match?(Syntax::Unless)
@@ -119,14 +121,12 @@ class Cosmo::Parser
     has_visibility = match?(Syntax::Public)
     visibility = get_visibility(last_token.lexeme)
 
-    consume(Syntax::Class)
-    token = last_token
+    token = consume(Syntax::Class)
     unless @within_class.nil?
       Logger.report_error("Invalid class", "Classes may not be nested", token)
     end
 
-    consume(Syntax::Identifier)
-    identifier = last_token
+    identifier = consume(Syntax::Identifier)
 
     # superclass
     if match?(Syntax::Colon)
@@ -196,14 +196,13 @@ class Cosmo::Parser
     end
     typedef = type_info[:type_ref].not_nil!.name
 
-    consume(Syntax::Identifier)
-    ident = last_token
+    ident = consume(Syntax::Identifier)
     var = Expression::Var.new(ident)
     var_declaration = Expression::VarDeclaration.new(
       typedef, var,
       Expression::NoneLiteral.new(nil, ident),
-      false,
-      Visibility::Private
+      mutable: false,
+      visibility: Visibility::Private
     )
 
     consume(Syntax::In)
@@ -256,9 +255,41 @@ class Cosmo::Parser
     Statement::Unless.new(token, condition, then_block, else_block)
   end
 
+  private def parse_try_catch_statement : Statement::TryCatch
+    try_keyword = last_token
+    try_block = parse_statement
+    catch_keyword = consume(Syntax::Catch)
+
+    type_info = parse_type
+    if type_info[:type_ref].nil?
+      Logger.report_error("Expected typedef, got", last_token.lexeme, last_token)
+    end
+    typedef = type_info[:type_ref].not_nil!.name
+
+    ident = consume(Syntax::Identifier)
+    var = Expression::Var.new(ident)
+    var_declaration = Expression::VarDeclaration.new(
+      typedef, var,
+      Expression::NoneLiteral.new(nil, ident),
+      mutable: false,
+      visibility: Visibility::Private
+    )
+
+    catch_block = parse_statement
+    got_finally = match?(Syntax::Finally)
+    Statement::TryCatch.new(
+      try_keyword,
+      catch_keyword,
+      got_finally ? last_token : nil,
+      try_block,
+      catch_block,
+      got_finally ? parse_statement : nil,
+      var_declaration
+    )
+  end
+
   private def parse_use_statement : Statement::Use
-    consume(Syntax::String)
-    Statement::Use.new(last_token, peek -2)
+    Statement::Use.new(consume(Syntax::String), peek -2)
   end
 
   private def parse_throw_statement : Statement::Throw
@@ -276,8 +307,7 @@ class Cosmo::Parser
     return_typedef = type_info[:type_ref].not_nil!.name
 
     consume(Syntax::Function)
-    consume(Syntax::Identifier)
-    function_ident = last_token
+    function_ident = consume(Syntax::Identifier)
 
     if match?(Syntax::LParen)
       params = parse_fn_params
@@ -312,8 +342,7 @@ class Cosmo::Parser
       end
 
       reached_spread = match?(Syntax::Star)
-      consume(Syntax::Identifier)
-      param_ident = last_token
+      param_ident = consume(Syntax::Identifier)
 
       if match?(Syntax::Equal)
         value = parse_expression
@@ -332,8 +361,7 @@ class Cosmo::Parser
         end
 
         reached_spread = match?(Syntax::Star)
-        consume(Syntax::Identifier)
-        param_ident = last_token
+        param_ident = consume(Syntax::Identifier)
 
         if match?(Syntax::Equal)
           value = parse_expression
@@ -397,8 +425,7 @@ class Cosmo::Parser
       nullable = consume_current.type == Syntax::Ampersand
       consume_current if nullable
 
-      consume(Syntax::Identifier)
-      key = last_token
+      key = consume(Syntax::Identifier)
       callee = Expression::Access.new(callee, key, nullable)
     end
 
@@ -1220,15 +1247,18 @@ class Cosmo::Parser
 
   # Consume the current token and advance position if token syntax
   # matches the expected syntax, else log an error
-  private def consume(syntax : Syntax) : Nil
+  private def consume(syntax : Syntax) : Token
     unless token_exists?
       raise "Failed to consume: Token stream finished"
     end
 
+    to_return = current
     got = current.type == Syntax::Identifier ? "identifier" : current.lexeme
     got = current.type == Syntax::TypeDef ? "type" : got
     Logger.report_error("Expected #{syntax}, got", got, current) unless current.type == syntax
     @position += 1
+
+    to_return
   end
 
   # Consume the current token and advance the position

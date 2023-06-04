@@ -8,6 +8,7 @@ module Cosmo::AST::Statement
     abstract def visit_until_stmt(stmt : Until) : R
     abstract def visit_if_stmt(stmt : If) : R
     abstract def visit_unless_stmt(stmt : Unless) : R
+    abstract def visit_try_catch_stmt(stmt : TryCatch) : R
     abstract def visit_return_stmt(stmt : Return) : R
     abstract def visit_break_stmt(stmt : Break) : R
     abstract def visit_next_stmt(stmt : Next) : R
@@ -25,6 +26,7 @@ end
 
 require "./statements/single_expression"
 require "./statements/block"
+require "./statements/try_catch"
 require "./statements/case"
 require "./statements/if"
 require "./statements/unless"

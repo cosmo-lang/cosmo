@@ -80,6 +80,12 @@ class Cosmo::Resolver
     end_scope
   end
 
+  def visit_try_catch_stmt(stmt : Statement::TryCatch) : Nil
+    resolve(stmt.try_block)
+    resolve(stmt.caught_exception)
+    resolve(stmt.catch_block)
+  end
+
   def visit_every_stmt(stmt : Statement::Every) : Nil
     resolve(stmt.var)
     resolve(stmt.enumerable)

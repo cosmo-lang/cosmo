@@ -293,7 +293,8 @@ class Cosmo::Interpreter
       include_private: true
     ).to_s
 
-    Logger.trace_level = level
+    raise HookedExceptions::Throw.new(stmt.keyword, err) if @trying
+    Logger.trace_level = level unless @trying
     Logger.report_error("Unhandled #{err.name}", message, stmt.token) # replace "Error" with exception class name
   end
 
@@ -307,7 +308,7 @@ class Cosmo::Interpreter
 
   def visit_return_stmt(stmt : Statement::Return) : Nil
     value = evaluate(stmt.value)
-    raise HookedExceptions::Return.new(value, stmt.keyword)
+    raise HookedExceptions::Return.new(stmt.keyword, value)
   end
 
   def visit_until_stmt(stmt : Statement::Until) : Nil
@@ -407,6 +408,23 @@ class Cosmo::Interpreter
       execute(stmt.then)
     else
       execute(stmt.else.not_nil!) unless stmt.else.nil?
+    end
+  end
+
+  def visit_try_catch_stmt(stmt : Statement::TryCatch) : Nil
+    Logger.push_trace(stmt.try_keyword)
+    enclosing = @trying
+    begin
+      @trying = true
+      execute(stmt.try_block)
+    rescue ex : HookedExceptions::Throw
+      @scope.declare(stmt.caught_exception.typedef, stmt.caught_exception.token, ex.value)
+      execute(stmt.catch_block)
+    ensure
+      @trying = enclosing
+      unless stmt.finally_block.nil?
+        execute(stmt.finally_block.not_nil!)
+      end
     end
   end
 

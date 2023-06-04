@@ -22,6 +22,7 @@ enum Cosmo::Syntax
   Class; Mixin; New
   Enum
   Function
+  Try; Catch; Finally
   If; Unless
   In; Of
   Is

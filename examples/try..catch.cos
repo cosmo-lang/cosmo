@@ -1,0 +1,6 @@
+try
+  throw new Exception("googoo gaga")
+catch Exception ex
+  puts(ex::message)
+finally
+  puts("done")
