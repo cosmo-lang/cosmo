@@ -9,6 +9,7 @@ require "./resolver"
 require "./intrinsic/number"
 require "./intrinsic/string"
 require "./intrinsic/vector"
+require "./intrinsic/table"
 require "./intrinsic/lib/math"
 
 class Cosmo::Interpreter
@@ -475,13 +476,21 @@ class Cosmo::Interpreter
     if object.is_a?(Hash)
       value = object[key]?
       if value.nil?
+        fn = TableIntrinsics.new(self, object)
+          .get_method(expr.key, required: false)
+
+        unless fn.nil?
+          return fn.arity.begin == 0 && !@evaluating_fn_callee ?
+            fn.call([] of ValueType)
+            : fn
+        end
         Logger.report_error("Invalid table key", "'#{key}'", expr.key)
-        # redirect to hash intrinsic methods, else error
-      end
-      if value.is_a?(Function) && value.arity.begin == 0 && !@evaluating_fn_callee
-        value.call([] of ValueType)
       else
-        value
+        if value.is_a?(Function) && value.arity.begin == 0 && !@evaluating_fn_callee
+          value.call([] of ValueType)
+        else
+          value
+        end
       end
     elsif object.is_a?(Array)
       fn = VectorIntrinsics.new(self, object)

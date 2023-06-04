@@ -29,7 +29,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * implicit conversions
     * intersection types
 - Other
-  - Utility methods for tables
   - Intrinsic methods for all datatypes (inherit from a base type)
 
 ### Fixes
