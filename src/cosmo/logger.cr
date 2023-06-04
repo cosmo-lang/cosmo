@@ -35,9 +35,9 @@ module Cosmo::Logger
   ) : Exception
 
     full_message = "#{error_type}: #{message}"
-    stack_dump = ["\n#{TAB}at #{file_path}:#{line}"] of String
+    stack_dump = ["\n#{TAB}at #{File.basename(file_path)}:#{line}"] of String
     @@stack_trace.each do |tr|
-      stack_dump << "\n#{TAB}at #{tr.lexeme} (#{tr.location.file_name}:#{tr.location.line})"
+      stack_dump << "\n#{TAB}at #{tr.lexeme} (#{File.basename(tr.location.file_name)}:#{tr.location.line})"
     end
 
     full_message += stack_dump.join
