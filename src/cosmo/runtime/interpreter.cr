@@ -425,8 +425,9 @@ class Cosmo::Interpreter
 
   def visit_access_expr(expr : Expression::Access) : ValueType
     object = evaluate(expr.object)
-    key = expr.key.lexeme
+    return nil if object.nil? && expr.nullable?
 
+    key = expr.key.lexeme
     if object.is_a?(Hash)
       value = object[key]?
       if value.nil?

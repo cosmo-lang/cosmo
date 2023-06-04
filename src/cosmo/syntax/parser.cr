@@ -387,11 +387,17 @@ class Cosmo::Parser
       consume(Syntax::RBracket)
       nullable = match?(Syntax::Question)
       callee = Expression::Index.new(callee, key, nullable)
-    elsif token_exists? && ACCESS_SYNTAXES.includes?(current.type) # it's a property access
-      consume_current
+    elsif token_exists? && ACCESS_SYNTAXES.includes?(current.type) ||
+      (token_exists? && token_exists?(1) &&
+      current.type == Syntax::Ampersand &&
+      ACCESS_SYNTAXES.includes?(peek.type)) # it's a property access
+
+      nullable = consume_current.type == Syntax::Ampersand
+      consume_current if nullable
+
       consume(Syntax::Identifier)
       key = last_token
-      callee = Expression::Access.new(callee, key)
+      callee = Expression::Access.new(callee, key, nullable)
     end
 
     if token_exists? && (current.type == Syntax::LBracket || current.type == Syntax::LParen || ACCESS_SYNTAXES.includes?(current.type))
