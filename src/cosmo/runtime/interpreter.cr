@@ -815,6 +815,8 @@ class Cosmo::Interpreter
       end
       if operand.is_a?(Float) || operand.is_a?(Int)
         -operand
+      elsif operand.is_a?(String)
+        operand.to_s.reverse
       else
         Logger.report_error("Invalid '-' operand type", operand.class.to_s, expr.operator)
       end

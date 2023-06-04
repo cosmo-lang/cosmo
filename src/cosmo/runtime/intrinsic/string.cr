@@ -7,6 +7,8 @@ class Cosmo::StringIntrinsics
 
   def get_method(name : Token) : IntrinsicFunction
     case name.lexeme.strip
+    when "reverse"
+      Reverse.new(@interpreter, @value, name)
     when "empty?"
       Empty.new(@interpreter, @value, name)
     when "numeric?"
@@ -31,6 +33,25 @@ class Cosmo::StringIntrinsics
       Blank.new(@interpreter, @value, name)
     else
       Logger.report_error("Invalid string method", name.lexeme, name)
+    end
+  end
+
+  class Reverse < IntrinsicFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      @_self.reverse
     end
   end
 
