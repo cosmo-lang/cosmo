@@ -64,6 +64,16 @@ describe Interpreter do
       result.should eq ['b','a','b','a']
       result = interpreter.interpret("\"baba.booey.god\".split('.')", "test")
       result.should eq ["baba", "booey", "god"]
+      result = interpreter.interpret("\"abcdef\".alpha?", "test")
+      result.should be_true
+      result = interpreter.interpret("\"abcdef\".alphanumeric?", "test")
+      result.should be_true
+      result = interpreter.interpret("\"12345\".numeric?", "test")
+      result.should be_true
+      result = interpreter.interpret("\"12345\".alpha?", "test")
+      result.should be_false
+      result = interpreter.interpret("\"abcdef\".numeric?", "test")
+      result.should be_false
     end
     it "vector library" do
       result = interpreter.interpret("[1,2,3].map(&int (int n): n * 2)", "test")
@@ -80,6 +90,10 @@ describe Interpreter do
       result.should eq "a,b,c"
       result = interpreter.interpret("[].push(1,2,3,4,5)", "test")
       result.should eq [1,2,3,4,5]
+      result = interpreter.interpret("[1,2,3,4,5,6].sum", "test")
+      result.should eq 21
+      result = interpreter.interpret("[1,2,3,4,5,6].index(4)", "test")
+      result.should eq 3
     end
   end
   describe "interprets literals:" do

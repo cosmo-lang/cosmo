@@ -12,7 +12,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 
 ### Features
 - Grammar
-  - `try..catch` statements (can't do until you can throw more than just strings)
   - Regexes
   - Enums
   - Decorators
@@ -42,7 +41,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
   * macro function to set recursion depth limit
 
 ### Tests
-- Literal value intrinsic methods (`Vector->map`, `string->split`, etc)
 - Expectation of errors in parser spec
 
 ### Refactorings
