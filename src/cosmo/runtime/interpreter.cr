@@ -510,9 +510,12 @@ class Cosmo::Interpreter
       fn = NumberIntrinsics.new(self, object)
         .get_method(expr.key)
 
-      fn.arity.begin == 0 && !@evaluating_fn_callee ?
+      return fn unless fn.arity.begin == 0 && !@evaluating_fn_callee
+      begin
         fn.call([] of ValueType)
-        : fn
+      rescue ex : OverflowError
+        Logger.report_error("Arithmetic overflow", "Number exceeded its bounds", expr.token)
+      end
     elsif object.is_a?(ClassInstance)
       value = object.get_member(
         key, expr.key,
