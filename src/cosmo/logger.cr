@@ -3,6 +3,11 @@ module Cosmo::Logger
 
   @@stack_trace = [] of Token
   @@debug = false
+  @@trace_level : UInt32 = 0
+
+  def trace_level=(level : UInt32) : Nil
+    @@trace_level = level
+  end
 
   def push_trace(token : Token) : Nil
     @@stack_trace << token
@@ -33,6 +38,8 @@ module Cosmo::Logger
     pos : UInt32,
     file_path : String
   ) : Exception
+
+    @@stack_trace.shift(@@trace_level)
 
     full_message = "#{error_type}: #{message}"
     stack_dump = ["\n#{TAB}at #{File.basename(file_path)}:#{line}"] of String

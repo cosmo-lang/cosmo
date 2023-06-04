@@ -281,9 +281,20 @@ class Cosmo::Interpreter
       Logger.report_error("Invalid throw argument", "Throw statement can only be invoked with Exception, or a subclass of it. Got: #{TypeChecker.get_mapped(err.class)}", stmt.token)
     end
 
-    # TODO: error levels, set_trace_level()?
     err = err.as ClassInstance
-    Logger.report_error("Unhandled #{err.name}", err.get_field("message", stmt.keyword, include_private: true).to_s, stmt.token) # replace "Error" with exception class name
+    level = err.get_field(
+      "level",
+      stmt.keyword,
+      include_private: true
+    ).as(Int).to_u
+    message = err.get_field(
+      "message",
+      stmt.keyword,
+      include_private: true
+    ).to_s
+
+    Logger.trace_level = level
+    Logger.report_error("Unhandled #{err.name}", message, stmt.token) # replace "Error" with exception class name
   end
 
   def visit_next_stmt(stmt : Statement::Next) : Nil
