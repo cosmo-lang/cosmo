@@ -32,7 +32,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Other
   - `to_string$` meta method (and default to class name if none provided)
   - Utility methods for tables
-  - Allow throwing class instances that inherit from a base `Exception` class (can't do until stack traces exist)
   - Intrinsic methods for all datatypes (inherit from a base type)
 
 ### Fixes
