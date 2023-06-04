@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::StringIntrinsics::Alpha - Cosmo master</title>
+  <title>Cosmo::HookedExceptions::Throw - Cosmo master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -401,7 +401,7 @@
       
     </li>
   
-  <li class="parent " data-id="Cosmo/Cosmo/HookedExceptions" data-name="cosmo::hookedexceptions">
+  <li class="parent open current" data-id="Cosmo/Cosmo/HookedExceptions" data-name="cosmo::hookedexceptions">
       <a href="../../Cosmo/HookedExceptions.html">HookedExceptions</a>
       
         <ul>
@@ -421,7 +421,7 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/HookedExceptions/Throw" data-name="cosmo::hookedexceptions::throw">
+  <li class=" current" data-id="Cosmo/Cosmo/HookedExceptions/Throw" data-name="cosmo::hookedexceptions::throw">
       <a href="../../Cosmo/HookedExceptions/Throw.html">Throw</a>
       
     </li>
@@ -771,12 +771,12 @@
       
     </li>
   
-  <li class="parent open current" data-id="Cosmo/Cosmo/StringIntrinsics" data-name="cosmo::stringintrinsics">
+  <li class="parent " data-id="Cosmo/Cosmo/StringIntrinsics" data-name="cosmo::stringintrinsics">
       <a href="../../Cosmo/StringIntrinsics.html">StringIntrinsics</a>
       
         <ul>
   
-  <li class=" current" data-id="Cosmo/Cosmo/StringIntrinsics/Alpha" data-name="cosmo::stringintrinsics::alpha">
+  <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/Alpha" data-name="cosmo::stringintrinsics::alpha">
       <a href="../../Cosmo/StringIntrinsics/Alpha.html">Alpha</a>
       
     </li>
@@ -975,12 +975,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Cosmo::StringIntrinsics::Alpha
+  <span class="kind">class</span> Cosmo::HookedExceptions::Throw
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Cosmo/StringIntrinsics/Alpha.html">Cosmo::StringIntrinsics::Alpha</a></li><li class="superclass"><a href="../../Cosmo/IntrinsicFunction.html">Cosmo::IntrinsicFunction</a></li><li class="superclass"><a href="../../Cosmo/Callable.html">Cosmo::Callable</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Cosmo/HookedExceptions/Throw.html">Cosmo::HookedExceptions::Throw</a></li><li class="superclass">Cosmo::HookedExceptions::HookedException</li><li class="superclass">Exception</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -1008,8 +1008,8 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/runtime/intrinsic/string.cr#L94" target="_blank">
-        cosmo/runtime/intrinsic/string.cr
+      <a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/runtime/hooked_exceptions.cr#L8" target="_blank">
+        cosmo/runtime/hooked_exceptions.cr
       </a>
     
     <br/>
@@ -1030,7 +1030,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28interpreter%3AInterpreter%2C_self%3AString%2Ctoken%3AToken%29-class-method" class="signature"><strong>.new</strong>(interpreter : Interpreter, _self : String, token : Token)</a>
+        <a href="#new%28token%3AToken%2Cvalue%3ACosmo%3A%3AClassInstance%29-class-method" class="signature"><strong>.new</strong>(token : Token, value : Cosmo::ClassInstance)</a>
         
       </li>
     
@@ -1051,12 +1051,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#arity%3ARange%28UInt32%2CUInt32%29-instance-method" class="signature"><strong>#arity</strong> : Range(UInt32, UInt32)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#call%28args%3AArray%28ValueType%29%29%3ABool-instance-method" class="signature"><strong>#call</strong>(args : Array(ValueType)) : Bool</a>
+        <a href="#value%3AClassInstance-instance-method" class="signature"><strong>#value</strong> : ClassInstance</a>
         
       </li>
     
@@ -1070,38 +1065,14 @@
   
     
 
-  <h3>Instance methods inherited from class <code><a href="../../Cosmo/IntrinsicFunction.html">Cosmo::IntrinsicFunction</a></code></h3>
-  
-  
-    <a href="../../Cosmo/IntrinsicFunction.html#call%28args%3AArray%28ValueType%29%29%3AValueType-instance-method" class="tooltip">
-      <span>call(args : Array(ValueType)) : ValueType</span>
-    call</a>, 
-    
-  
-    <a href="../../Cosmo/IntrinsicFunction.html#intrinsic%3F%3ABool-instance-method" class="tooltip">
-      <span>intrinsic? : Bool</span>
-    intrinsic?</a>, 
-    
-  
-    <a href="../../Cosmo/IntrinsicFunction.html#to_s%3AString-instance-method" class="tooltip">
-      <span>to_s : String</span>
-    to_s</a>, 
-    
-  
-    <a href="../../Cosmo/IntrinsicFunction.html#token%28name%3AString%29%3AToken-instance-method" class="tooltip">
-      <span>token(name : String) : Token</span>
-    token</a>
-    
-  
-
 
     
 
-  <h3>Constructor methods inherited from class <code><a href="../../Cosmo/IntrinsicFunction.html">Cosmo::IntrinsicFunction</a></code></h3>
+  <h3>Constructor methods inherited from class <code>Cosmo::HookedExceptions::HookedException</code></h3>
   
   
-    <a href="../../Cosmo/IntrinsicFunction.html#new%28interpreter%3AInterpreter%29-class-method" class="tooltip">
-      <span>new(interpreter : Interpreter)</span>
+    <a href="../../Cosmo/HookedExceptions/HookedException.html#new%28token%3AToken%2Cmessage%3AString%29-class-method" class="tooltip">
+      <span>new(token : Token, message : String)</span>
     new</a>
     
   
@@ -1112,30 +1083,6 @@
 
   
     
-
-  <h3>Instance methods inherited from class <code><a href="../../Cosmo/Callable.html">Cosmo::Callable</a></code></h3>
-  
-  
-    <a href="../../Cosmo/Callable.html#arity%3ARange%28UInt32%2CUInt32%29-instance-method" class="tooltip">
-      <span>arity : Range(UInt32, UInt32)</span>
-    arity</a>, 
-    
-  
-    <a href="../../Cosmo/Callable.html#call%28args%3AArray%28ValueType%29%29%3AValueType-instance-method" class="tooltip">
-      <span>call(args : Array(ValueType)) : ValueType</span>
-    call</a>, 
-    
-  
-    <a href="../../Cosmo/Callable.html#intrinsic%3F%3ABool-instance-method" class="tooltip">
-      <span>intrinsic? : Bool</span>
-    intrinsic?</a>, 
-    
-  
-    <a href="../../Cosmo/Callable.html#to_s%3AString-instance-method" class="tooltip">
-      <span>to_s : String</span>
-    to_s</a>
-    
-  
 
 
     
@@ -1177,18 +1124,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(interpreter:Interpreter,_self:String,token:Token)-class-method">
+    <div class="entry-detail" id="new(token:Token,value:Cosmo::ClassInstance)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(interpreter : <a href="../../Cosmo/Interpreter.html">Interpreter</a>, _self : String, token : <a href="../../Cosmo/Token.html">Token</a>)
+        def self.<strong>new</strong>(token : <a href="../../Cosmo/Token.html">Token</a>, value : <a href="../../Cosmo/ClassInstance.html">Cosmo::ClassInstance</a>)
 
-        <a class="method-permalink" href="#new%28interpreter%3AInterpreter%2C_self%3AString%2Ctoken%3AToken%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28token%3AToken%2Cvalue%3ACosmo%3A%3AClassInstance%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/runtime/intrinsic/string.cr#L95" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/runtime/hooked_exceptions.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1207,34 +1154,18 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="arity:Range(UInt32,UInt32)-instance-method">
+    <div class="entry-detail" id="value:ClassInstance-instance-method">
       <div class="signature">
         
-        def <strong>arity</strong> : Range(UInt32, UInt32)
+        def <strong>value</strong> : <a href="../../Cosmo/ClassInstance.html">ClassInstance</a>
 
-        <a class="method-permalink" href="#arity%3ARange%28UInt32%2CUInt32%29-instance-method">#</a>
+        <a class="method-permalink" href="#value%3AClassInstance-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/runtime/intrinsic/string.cr#L104" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="call(args:Array(ValueType)):Bool-instance-method">
-      <div class="signature">
-        
-        def <strong>call</strong>(args : Array(<a href="../../Cosmo/ValueType.html">ValueType</a>)) : Bool
-
-        <a class="method-permalink" href="#call%28args%3AArray%28ValueType%29%29%3ABool-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/runtime/intrinsic/string.cr#L108" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/runtime/hooked_exceptions.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -326,6 +326,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/TryCatch" data-name="cosmo::ast::statement::trycatch">
+      <a href="Cosmo/AST/Statement/TryCatch.html">TryCatch</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Unless" data-name="cosmo::ast::statement::unless">
       <a href="Cosmo/AST/Statement/Unless.html">Unless</a>
       
@@ -413,6 +418,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/HookedExceptions/Return" data-name="cosmo::hookedexceptions::return">
       <a href="Cosmo/HookedExceptions/Return.html">Return</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/HookedExceptions/Throw" data-name="cosmo::hookedexceptions::throw">
+      <a href="Cosmo/HookedExceptions/Throw.html">Throw</a>
       
     </li>
   
@@ -990,7 +1000,6 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 <ul>
 <li>Grammar
 <ul>
-<li><code>try..catch</code> statements (can't do until you can throw more than just strings)</li>
 <li>Regexes</li>
 <li>Enums</li>
 <li>Decorators</li>
@@ -1017,9 +1026,8 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </li>
 <li>Other
 <ul>
+<li><code>to_string$</code> meta method (and default to class name if none provided)</li>
 <li>Utility methods for tables</li>
-<li>Stack trace</li>
-<li>Allow throwing class instances that inherit from a base <code>Exception</code> class (can't do until stack traces exist)</li>
 <li>Intrinsic methods for all datatypes (inherit from a base type)</li>
 </ul>
 </li>
@@ -1045,7 +1053,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Tests</h3>
 <ul>
-<li>Literal value intrinsic methods (<code>Vector-&gt;map</code>, <code>string-&gt;split</code>, etc)</li>
+<li>Expectation of errors in parser spec</li>
 </ul>
 <h3><a id="refactorings" class="anchor" href="#refactorings">
   <svg class="octicon-link" aria-hidden="true">

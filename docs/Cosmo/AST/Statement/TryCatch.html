@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::AST::Expression::VarDeclaration - Cosmo master</title>
+  <title>Cosmo::AST::Statement::TryCatch - Cosmo master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../../";
   </script>
@@ -66,7 +66,7 @@
       
         <ul>
   
-  <li class="parent open current" data-id="Cosmo/Cosmo/AST/Expression" data-name="cosmo::ast::expression">
+  <li class="parent " data-id="Cosmo/Cosmo/AST/Expression" data-name="cosmo::ast::expression">
       <a href="../../../Cosmo/AST/Expression.html">Expression</a>
       
         <ul>
@@ -231,7 +231,7 @@
       
     </li>
   
-  <li class=" current" data-id="Cosmo/Cosmo/AST/Expression/VarDeclaration" data-name="cosmo::ast::expression::vardeclaration">
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/VarDeclaration" data-name="cosmo::ast::expression::vardeclaration">
       <a href="../../../Cosmo/AST/Expression/VarDeclaration.html">VarDeclaration</a>
       
     </li>
@@ -256,7 +256,7 @@
       
     </li>
   
-  <li class="parent " data-id="Cosmo/Cosmo/AST/Statement" data-name="cosmo::ast::statement">
+  <li class="parent open current" data-id="Cosmo/Cosmo/AST/Statement" data-name="cosmo::ast::statement">
       <a href="../../../Cosmo/AST/Statement.html">Statement</a>
       
         <ul>
@@ -326,7 +326,7 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/TryCatch" data-name="cosmo::ast::statement::trycatch">
+  <li class=" current" data-id="Cosmo/Cosmo/AST/Statement/TryCatch" data-name="cosmo::ast::statement::trycatch">
       <a href="../../../Cosmo/AST/Statement/TryCatch.html">TryCatch</a>
       
     </li>
@@ -975,12 +975,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Cosmo::AST::Expression::VarDeclaration
+  <span class="kind">class</span> Cosmo::AST::Statement::TryCatch
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../Cosmo/AST/Expression/VarDeclaration.html">Cosmo::AST::Expression::VarDeclaration</a></li><li class="superclass"><a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a></li><li class="superclass"><a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../Cosmo/AST/Statement/TryCatch.html">Cosmo::AST::Statement::TryCatch</a></li><li class="superclass"><a href="../../../Cosmo/AST/Statement/Base.html">Cosmo::AST::Statement::Base</a></li><li class="superclass"><a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -1008,8 +1008,8 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/expressions/var_declaration.cr#L2" target="_blank">
-        cosmo/syntax/parser/expressions/var_declaration.cr
+      <a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/statements/try_catch.cr#L2" target="_blank">
+        cosmo/syntax/parser/statements/try_catch.cr
       </a>
     
     <br/>
@@ -1030,7 +1030,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28typedef%3ACosmo%3A%3AToken%2Cvar%3ACosmo%3A%3AAST%3A%3AExpression%3A%3AVar%2Cvalue%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%2Cmutable%3ABool%2Cvisibility%29-class-method" class="signature"><strong>.new</strong>(typedef : Cosmo::Token, var : Cosmo::AST::Expression::Var, value : Cosmo::AST::Expression::Base, mutable : Bool, visibility)</a>
+        <a href="#new%28try_keyword%3ACosmo%3A%3AToken%2Ccatch_keyword%3ACosmo%3A%3AToken%2Cfinally_keyword%3ACosmo%3A%3AToken%7CNil%2Ctry_block%3ACosmo%3A%3AAST%3A%3AStatement%3A%3ABase%2Ccatch_block%3ACosmo%3A%3AAST%3A%3AStatement%3A%3ABase%2Cfinally_block%3ACosmo%3A%3AAST%3A%3AStatement%3A%3ABase%7CNil%2Ccaught_exception%3ACosmo%3A%3AAST%3A%3AExpression%3A%3AVarDeclaration%29-class-method" class="signature"><strong>.new</strong>(try_keyword : Cosmo::Token, catch_keyword : Cosmo::Token, finally_keyword : Cosmo::Token | Nil, try_block : Cosmo::AST::Statement::Base, catch_block : Cosmo::AST::Statement::Base, finally_block : Cosmo::AST::Statement::Base | Nil, caught_exception : Cosmo::AST::Expression::VarDeclaration)</a>
         
       </li>
     
@@ -1056,7 +1056,27 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#mutable%3F%3ABool-instance-method" class="signature"><strong>#mutable?</strong> : Bool</a>
+        <a href="#catch_block%3ABase-instance-method" class="signature"><strong>#catch_block</strong> : Base</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#catch_keyword%3AToken-instance-method" class="signature"><strong>#catch_keyword</strong> : Token</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#caught_exception%3AExpression%3A%3AVarDeclaration-instance-method" class="signature"><strong>#caught_exception</strong> : Expression::VarDeclaration</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#finally_block%3ABase%7CNil-instance-method" class="signature"><strong>#finally_block</strong> : Base | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#finally_keyword%3AToken%7CNil-instance-method" class="signature"><strong>#finally_keyword</strong> : Token | Nil</a>
         
       </li>
     
@@ -1073,27 +1093,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#typedef%3AToken-instance-method" class="signature"><strong>#typedef</strong> : Token</a>
+        <a href="#try_block%3ABase-instance-method" class="signature"><strong>#try_block</strong> : Base</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#value%3ABase-instance-method" class="signature"><strong>#value</strong> : Base</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#value%3D%28value%3ABase%29-instance-method" class="signature"><strong>#value=</strong>(value : Base)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#var%3AVar-instance-method" class="signature"><strong>#var</strong> : Var</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#visibility%3AVisibility-instance-method" class="signature"><strong>#visibility</strong> : Visibility</a>
+        <a href="#try_keyword%3AToken-instance-method" class="signature"><strong>#try_keyword</strong> : Token</a>
         
       </li>
     
@@ -1107,10 +1112,10 @@
   
     
 
-  <h3>Instance methods inherited from class <code><a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a></code></h3>
+  <h3>Instance methods inherited from class <code><a href="../../../Cosmo/AST/Statement/Base.html">Cosmo::AST::Statement::Base</a></code></h3>
   
   
-    <a href="../../../Cosmo/AST/Expression/Base.html#accept%28visitor%3AVisitor%28R%29%29forallR-instance-method" class="tooltip">
+    <a href="../../../Cosmo/AST/Statement/Base.html#accept%28visitor%3AVisitor%28R%29%29forallR-instance-method" class="tooltip">
       <span>accept(visitor : Visitor(R)) forall R</span>
     accept</a>
     
@@ -1215,18 +1220,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(typedef:Cosmo::Token,var:Cosmo::AST::Expression::Var,value:Cosmo::AST::Expression::Base,mutable:Bool,visibility)-class-method">
+    <div class="entry-detail" id="new(try_keyword:Cosmo::Token,catch_keyword:Cosmo::Token,finally_keyword:Cosmo::Token|Nil,try_block:Cosmo::AST::Statement::Base,catch_block:Cosmo::AST::Statement::Base,finally_block:Cosmo::AST::Statement::Base|Nil,caught_exception:Cosmo::AST::Expression::VarDeclaration)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(typedef : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, var : <a href="../../../Cosmo/AST/Expression/Var.html">Cosmo::AST::Expression::Var</a>, value : <a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a>, mutable : Bool, visibility)
+        def self.<strong>new</strong>(try_keyword : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, catch_keyword : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, finally_keyword : <a href="../../../Cosmo/Token.html">Cosmo::Token</a> | Nil, try_block : <a href="../../../Cosmo/AST/Statement/Base.html">Cosmo::AST::Statement::Base</a>, catch_block : <a href="../../../Cosmo/AST/Statement/Base.html">Cosmo::AST::Statement::Base</a>, finally_block : <a href="../../../Cosmo/AST/Statement/Base.html">Cosmo::AST::Statement::Base</a> | Nil, caught_exception : <a href="../../../Cosmo/AST/Expression/VarDeclaration.html">Cosmo::AST::Expression::VarDeclaration</a>)
 
-        <a class="method-permalink" href="#new%28typedef%3ACosmo%3A%3AToken%2Cvar%3ACosmo%3A%3AAST%3A%3AExpression%3A%3AVar%2Cvalue%3ACosmo%3A%3AAST%3A%3AExpression%3A%3ABase%2Cmutable%3ABool%2Cvisibility%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28try_keyword%3ACosmo%3A%3AToken%2Ccatch_keyword%3ACosmo%3A%3AToken%2Cfinally_keyword%3ACosmo%3A%3AToken%7CNil%2Ctry_block%3ACosmo%3A%3AAST%3A%3AStatement%3A%3ABase%2Ccatch_block%3ACosmo%3A%3AAST%3A%3AStatement%3A%3ABase%2Cfinally_block%3ACosmo%3A%3AAST%3A%3AStatement%3A%3ABase%7CNil%2Ccaught_exception%3ACosmo%3A%3AAST%3A%3AExpression%3A%3AVarDeclaration%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/expressions/var_declaration.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/statements/try_catch.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1248,7 +1253,7 @@
     <div class="entry-detail" id="accept(visitor:Visitor(R)):RforallR-instance-method">
       <div class="signature">
         
-        def <strong>accept</strong>(visitor : <a href="../../../Cosmo/AST/Expression/Visitor.html">Visitor</a>(R)) : R forall R
+        def <strong>accept</strong>(visitor : <a href="../../../Cosmo/AST/Statement/Visitor.html">Visitor</a>(R)) : R forall R
 
         <a class="method-permalink" href="#accept%28visitor%3AVisitor%28R%29%29%3ARforallR-instance-method">#</a>
       </div>
@@ -1256,23 +1261,87 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/expressions/var_declaration.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/statements/try_catch.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="mutable?:Bool-instance-method">
+    <div class="entry-detail" id="catch_block:Base-instance-method">
       <div class="signature">
         
-        def <strong>mutable?</strong> : Bool
+        def <strong>catch_block</strong> : <a href="../../../Cosmo/AST/Statement/Base.html">Base</a>
 
-        <a class="method-permalink" href="#mutable%3F%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#catch_block%3ABase-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/expressions/var_declaration.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/statements/try_catch.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="catch_keyword:Token-instance-method">
+      <div class="signature">
+        
+        def <strong>catch_keyword</strong> : <a href="../../../Cosmo/Token.html">Token</a>
+
+        <a class="method-permalink" href="#catch_keyword%3AToken-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/statements/try_catch.cr#L4" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="caught_exception:Expression::VarDeclaration-instance-method">
+      <div class="signature">
+        
+        def <strong>caught_exception</strong> : <a href="../../../Cosmo/AST/Expression/VarDeclaration.html">Expression::VarDeclaration</a>
+
+        <a class="method-permalink" href="#caught_exception%3AExpression%3A%3AVarDeclaration-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/statements/try_catch.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="finally_block:Base|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>finally_block</strong> : <a href="../../../Cosmo/AST/Statement/Base.html">Base</a> | Nil
+
+        <a class="method-permalink" href="#finally_block%3ABase%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/statements/try_catch.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="finally_keyword:Token|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>finally_keyword</strong> : <a href="../../../Cosmo/Token.html">Token</a> | Nil
+
+        <a class="method-permalink" href="#finally_keyword%3AToken%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/statements/try_catch.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1294,14 +1363,14 @@
           <p>Returns a nicely readable and concise string representation of this object,
 typically intended for users.</p>
 <p>This method should usually <strong>not</strong> be overridden. It delegates to
-<code><a href="../../../Cosmo/AST/Expression/VarDeclaration.html#to_s%28indent%3AInt%3D0%29-instance-method">#to_s(IO)</a></code> which can be overridden for custom implementations.</p>
+<code><a href="../../../Cosmo/AST/Statement/TryCatch.html#to_s%28indent%3AInt%3D0%29-instance-method">#to_s(IO)</a></code> which can be overridden for custom implementations.</p>
 <p>Also see <code>#inspect</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/expressions/var_declaration.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/statements/try_catch.cr#L30" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1317,87 +1386,39 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/expressions/var_declaration.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/statements/try_catch.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="typedef:Token-instance-method">
+    <div class="entry-detail" id="try_block:Base-instance-method">
       <div class="signature">
         
-        def <strong>typedef</strong> : <a href="../../../Cosmo/Token.html">Token</a>
+        def <strong>try_block</strong> : <a href="../../../Cosmo/AST/Statement/Base.html">Base</a>
 
-        <a class="method-permalink" href="#typedef%3AToken-instance-method">#</a>
+        <a class="method-permalink" href="#try_block%3ABase-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/expressions/var_declaration.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/statements/try_catch.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="value:Base-instance-method">
+    <div class="entry-detail" id="try_keyword:Token-instance-method">
       <div class="signature">
         
-        def <strong>value</strong> : <a href="../../../Cosmo/AST/Expression/Base.html">Base</a>
+        def <strong>try_keyword</strong> : <a href="../../../Cosmo/Token.html">Token</a>
 
-        <a class="method-permalink" href="#value%3ABase-instance-method">#</a>
+        <a class="method-permalink" href="#try_keyword%3AToken-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/expressions/var_declaration.cr#L5" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="value=(value:Base)-instance-method">
-      <div class="signature">
-        
-        def <strong>value=</strong>(value : <a href="../../../Cosmo/AST/Expression/Base.html">Base</a>)
-
-        <a class="method-permalink" href="#value%3D%28value%3ABase%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/expressions/var_declaration.cr#L5" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="var:Var-instance-method">
-      <div class="signature">
-        
-        def <strong>var</strong> : <a href="../../../Cosmo/AST/Expression/Var.html">Var</a>
-
-        <a class="method-permalink" href="#var%3AVar-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/expressions/var_declaration.cr#L4" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="visibility:Visibility-instance-method">
-      <div class="signature">
-        
-        def <strong>visibility</strong> : <a href="../../../Cosmo/AST/Visibility.html">Visibility</a>
-
-        <a class="method-permalink" href="#visibility%3AVisibility-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/expressions/var_declaration.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/syntax/parser/statements/try_catch.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>

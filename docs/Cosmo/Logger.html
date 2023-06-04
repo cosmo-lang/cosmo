@@ -326,6 +326,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Statement/TryCatch" data-name="cosmo::ast::statement::trycatch">
+      <a href="../Cosmo/AST/Statement/TryCatch.html">TryCatch</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Statement/Unless" data-name="cosmo::ast::statement::unless">
       <a href="../Cosmo/AST/Statement/Unless.html">Unless</a>
       
@@ -413,6 +418,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/HookedExceptions/Return" data-name="cosmo::hookedexceptions::return">
       <a href="../Cosmo/HookedExceptions/Return.html">Return</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/HookedExceptions/Throw" data-name="cosmo::hookedexceptions::throw">
+      <a href="../Cosmo/HookedExceptions/Throw.html">Throw</a>
       
     </li>
   
@@ -1010,7 +1020,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/448245a89f777930bae6d25235aa5ea76ff4dc3f/src/cosmo/logger.cr#L1" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/logger.cr#L1" target="_blank">
         cosmo/logger.cr
       </a>
     
@@ -1041,6 +1051,11 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#push_trace%28token%3AToken%29%3ANil-instance-method" class="signature"><strong>#push_trace</strong>(token : Token) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#report_error%28error_type%3AString%2Cmessage%3AString%2Cline%3AUInt32%2Cpos%3AUInt32%2Cfile_path%3AString%29%3AException-instance-method" class="signature"><strong>#report_error</strong>(error_type : String, message : String, line : UInt32, pos : UInt32, file_path : String) : Exception</a>
         
       </li>
@@ -1052,6 +1067,11 @@
     
       <li class="entry-summary">
         <a href="#report_exception%28ex%3AE%29forallE-instance-method" class="signature"><strong>#report_exception</strong>(ex : E) forall E</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#trace_level%3D%28level%3AUInt32%29%3ANil-instance-method" class="signature"><strong>#trace_level=</strong>(level : UInt32) : Nil</a>
         
       </li>
     
@@ -1090,7 +1110,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/448245a89f777930bae6d25235aa5ea76ff4dc3f/src/cosmo/logger.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/logger.cr#L16" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="push_trace(token:Token):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>push_trace</strong>(token : <a href="../Cosmo/Token.html">Token</a>) : Nil
+
+        <a class="method-permalink" href="#push_trace%28token%3AToken%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/logger.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1106,7 +1142,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/448245a89f777930bae6d25235aa5ea76ff4dc3f/src/cosmo/logger.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/logger.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1122,7 +1158,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/448245a89f777930bae6d25235aa5ea76ff4dc3f/src/cosmo/logger.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/logger.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1138,7 +1174,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/448245a89f777930bae6d25235aa5ea76ff4dc3f/src/cosmo/logger.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/logger.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="trace_level=(level:UInt32):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>trace_level=</strong>(level : UInt32) : Nil
+
+        <a class="method-permalink" href="#trace_level%3D%28level%3AUInt32%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/8257f8aa231df190c0ee21889ad0bb1a9b7d37ae/src/cosmo/logger.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
