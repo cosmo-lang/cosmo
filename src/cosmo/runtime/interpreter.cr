@@ -194,7 +194,7 @@ class Cosmo::Interpreter
   end
 
   private def import_file(path : String) : Nil
-    # TODO: import main file if directory
+    # TODO: import main file if directory (read star.yml?)
 
     source = File.read(path)
     enclosing = @scope
@@ -208,15 +208,17 @@ class Cosmo::Interpreter
 
   def visit_use_stmt(stmt : Statement::Use) : Nil
     relative_module_path = stmt.module_path.lexeme
+    Logger.push_trace(stmt.keyword)
+
     unless relative_module_path.includes?("/")
       unless @importable_intrinsics.has_key?(relative_module_path)
         file_path = File.join File.dirname(__FILE__), "../../../libraries", relative_module_path
-        full_path = File.exists?(file_path + ".cos") ? file_path + ".cos" : file_path + ".⭐"
-        if File.exists?(full_path)
-          import_file(full_path)
-        else
-          Logger.report_error("Invalid import", "No package management system implemented yet. If you are trying to import a file path, prepend './' to the path.", stmt.module_path)
+        path_with_ext = File.exists?(file_path + ".cos") ? file_path + ".cos" : file_path + ".⭐"
+
+        if File.exists?(path_with_ext)
+          return import_file(path_with_ext)
         end
+        Logger.report_error("Invalid import", "No package management system implemented yet. If you are trying to import a file path, prepend './' to the path.", stmt.module_path)
       else
         @importable_intrinsics[relative_module_path].inject
       end
@@ -263,12 +265,14 @@ class Cosmo::Interpreter
 
   def visit_throw_stmt(stmt : Statement::Throw) : Nil
     err = evaluate(stmt.err)
+    Logger.push_trace(stmt.keyword)
+
     unless TypeChecker.is?("string", err, stmt.token)
       Logger.report_error("Throw statement can only be invoked with a string currently, got", TypeChecker.get_mapped(err.class), stmt.token)
     end
 
-    # TODO: stack traces & error levels
-    Logger.report_error("Error", err.to_s, stmt.token)
+    # TODO: error levels, set_trace_level()?
+    Logger.report_error("Error", err.to_s, stmt.token) # replace "Error" with exception class name
   end
 
   def visit_next_stmt(stmt : Statement::Next) : Nil
@@ -500,8 +504,10 @@ class Cosmo::Interpreter
   end
 
   def visit_new_expr(expr : Expression::New) : ClassInstance
-    args = [] of Expression::Base
     class_obj = @scope.lookup(expr.operand.token)
+    Logger.push_trace(expr.token)
+
+    args = [] of Expression::Base
     unless class_obj.is_a?(Class)
       Logger.report_error("Invalid 'new' invocation. Expected a class name, got", expr.operand.token.lexeme, expr.operand.token)
     end
@@ -538,6 +544,13 @@ class Cosmo::Interpreter
 
   def visit_fn_call_expr(expr : Expression::FunctionCall) : ValueType
     @evaluating_fn_callee = true
+
+    token = expr.token.dup
+    if expr.callee.is_a?(Expression::Access)
+      token.lexeme = expr.callee.as(Expression::Access).full_path
+    end
+    token.lexeme += "(#{expr.arguments.empty? ? "" : "..."})"
+    Logger.push_trace(token)
 
     fn = evaluate(expr.callee)
     unless fn.is_a?(Function) || fn.is_a?(IntrinsicFunction)

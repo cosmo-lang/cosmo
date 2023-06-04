@@ -1,4 +1,5 @@
 module Cosmo::AST::Expression
+  private PROP_ACCESS = "::"
   class Access < Base
     getter object : Base
     getter key : Token
@@ -13,6 +14,17 @@ module Cosmo::AST::Expression
 
     def token : Token
       @object.token
+    end
+
+    def full_path : String
+      path = ""
+      if @object.is_a?(Access)
+        path += @object.as(Access).full_path
+      else
+        path += @object.token.lexeme + PROP_ACCESS
+      end
+      path = path.rchop(PROP_ACCESS) + "->"
+      path += @key.lexeme
     end
 
     def to_s(indent : Int = 0)

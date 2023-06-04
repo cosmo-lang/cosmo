@@ -5,7 +5,7 @@ string fn shift_sentence(string sentence) {
   string[] shifted_words = words->map(&string (string word, int i): {
     mut char[] letters = word->chars
     letters[0] = i == 0 ? words->last[0] : words[i - 1][0]
-    letters->join("")
+    letters->join(" ")
   })
 
   shifted_words->join
