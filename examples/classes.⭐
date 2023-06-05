@@ -7,11 +7,10 @@ public class Dog {
     $->name = name
   }
 
-  public void fn woof() {
+  public void fn woof {
     puts("%{$->name} says woof!")
   }
 }
 
 Dog fido = new Dog("Fido")
 fido->woof ## Fido says woof!
-Assert::eq(fido->name, "Fido")

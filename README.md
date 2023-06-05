@@ -23,6 +23,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * static/protected members
   - Better type system
     * bound expressions (!!)
+    * an actual type pass
     * generics
     * type inference
     * casting union types
@@ -35,7 +36,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 
 ### Fixes
 - Performance boosts lol
-- Accessing private class members in public class methods
 
 ### Tests
 - Expectation of errors in parser spec

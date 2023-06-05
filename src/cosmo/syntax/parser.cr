@@ -332,7 +332,8 @@ class Cosmo::Parser
       params || [] of Expression::Parameter,
       body,
       return_typedef,
-      type_info[:visibility]
+      type_info[:visibility],
+      !@within_class.nil?
     )
   end
 

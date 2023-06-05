@@ -23,6 +23,7 @@ class Cosmo::Interpreter
   getter scope : Scope
   getter meta = {} of String => MetaType
   setter max_recursion_depth : UInt32 = 1200
+  property within_class_method = false
   @locals = {} of Expression::Base => UInt32
   @file_path : String = ""
   @importable_intrinsics = {} of String => IntrinsicLib
@@ -564,13 +565,13 @@ class Cosmo::Interpreter
     elsif object.is_a?(ClassInstance)
       value = object.get_member(
         key, expr.key,
-        include_private: !@meta["this"]?.nil?,
+        include_private: !@meta["this"]?.nil? || @within_class_method,
         field_required: key != "to_string"
       )
 
       if value.is_a?(Callable) && value.arity.begin == 0 && !@evaluating_fn_callee
         value.call([] of ValueType)
-      else
+      else # did not find a function
         key == "to_string" ? object.name : value
       end
     else
@@ -674,8 +675,8 @@ class Cosmo::Interpreter
     start_recursion(expr.token)
     result = fn.call(arg_values)
     end_recursion
-    Logger.pop_trace(trace_idx)
 
+    Logger.pop_trace(trace_idx)
     result
   end
 
@@ -990,10 +991,9 @@ class Cosmo::Interpreter
   end
 
   def visit_string_interpolation_expr(expr : Expression::StringInterpolation) : ValueType
-    string_parts = expr.parts.map do |part|
+    expr.parts.map do |part|
       part.is_a?(String) ? part : evaluate(part).to_s
-    end
-    string_parts.join("")
+    end.join
   end
 
   def visit_literal_expr(expr : Expression::Literal) : ValueType

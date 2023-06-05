@@ -5,13 +5,15 @@ module Cosmo::AST::Statement
     getter body : Block
     getter return_typedef : Token
     getter visibility : Visibility
+    getter? class_method : Bool
 
     def initialize(
       @identifier,
       @parameters,
       @body,
       @return_typedef,
-      @visibility
+      @visibility,
+      @class_method
     )
     end
 
@@ -32,6 +34,7 @@ module Cosmo::AST::Statement
       "  #{TAB * indent}return_typedef: #{@return_typedef.value},\n" +
       "  #{TAB * indent}body: #{@body.to_s(indent + 1)}\n" +
       "  #{TAB * indent}visibility: #{@visibility.to_s}\n" +
+      "  #{TAB * indent}class_method?: #{@class_method.to_s}\n" +
       "#{TAB * indent}>"
     end
   end

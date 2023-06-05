@@ -36,6 +36,9 @@ class Cosmo::Function < Cosmo::Callable
     scope = Scope.new(@closure)
 
     unless @class_instance.nil?
+      enclosing_within = @interpreter.within_class_method
+      @interpreter.within_class_method = true
+
       scope.declare(
         @interpreter.fake_typedef(@class_instance.not_nil!.name),
         @interpreter.fake_ident("$"),
@@ -76,6 +79,11 @@ class Cosmo::Function < Cosmo::Callable
     else
       @interpreter.set_meta("block_return_type", enclosing_return_type)
     end
+
+    unless @class_instance.nil?
+      @interpreter.within_class_method = enclosing_within.not_nil!
+    end
+
     result
   end
 

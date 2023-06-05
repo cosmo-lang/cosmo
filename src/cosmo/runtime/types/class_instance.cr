@@ -38,7 +38,7 @@ class Cosmo::ClassInstance
     value : ValueType,
     token : Token?,
     mutable : Bool = false,
-    visibility : Visibility = Visibility::Public,
+    visibility : Visibility = Visibility::Private,
     typedef : Token? = nil
   ) : ValueType
 
