@@ -27,9 +27,22 @@ class Cosmo::Parser
     hoister = TypeHoister.new(@tokens)
     hoister.hoist_types
 
+    last_statement : Statement::Base? = nil
     statements = [] of Statement::Base
     until finished?
-      statements << parse_statement
+      statement = parse_statement
+      if statement.is_a?(Statement::SingleExpression) && statement.expression === LiteralExpression &&
+        last_statement.is_a?(Statement::SingleExpression) && last_statement.expression === LiteralExpression
+
+        Logger.report_error(
+          "Invalid expression",
+          "Two literal expressions may not be adjacent to each other. Got '#{last_statement.token.lexeme}' and '#{statement.token.lexeme}'",
+          statement.token
+        )
+      end
+
+      statements << statement
+      last_statement = statement
     end
 
     end_time = Time.monotonic
@@ -1141,8 +1154,10 @@ class Cosmo::Parser
     Expression::StringInterpolation.new(parts, string_token)
   end
 
+
+  private alias LiteralExpression = Expression::Literal | Expression::RangeLiteral | Expression::Lambda | Expression::VectorLiteral | Expression::TableLiteral | Expression::StringInterpolation
   # Parse a number and return an AST node
-  private def parse_literal : Expression::Literal | Expression::VectorLiteral
+  private def parse_literal : LiteralExpression
     unless token_exists?
       Logger.report_error("Expected literal, got", "EOF", last_token)
     end

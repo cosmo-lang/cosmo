@@ -37,7 +37,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Pop completed traces
 - Performance boosts lol
 - Accessing private class members in public class methods
-- Weird expression parsing (`[0].123` evaluates to 0.123??)
 
 ### Tests
 - Expectation of errors in parser spec

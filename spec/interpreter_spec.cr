@@ -520,8 +520,8 @@ describe Interpreter do
       result.should be_true
       result = interpreter.interpret("'h' is char", "test")
       result.should be_true
-      result = interpreter.interpret("'h' is void", "test")
-      result.should be_false
+      result = interpreter.interpret("'h' is not void", "test")
+      result.should be_true
       result = interpreter.interpret("none is void", "test")
       result.should be_true
       result = interpreter.interpret("[1,2,3] is int[]", "test")
