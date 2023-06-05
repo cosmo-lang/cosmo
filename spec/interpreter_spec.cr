@@ -28,11 +28,10 @@ private def run(example_file : String) : Nil
 
   if File.directory?(example_file)
     files = Dir.entries(example_file)
+
     if files.includes?("main.cos") || files.includes?("main.⭐")
       f = File.join(example_file, files.select { |f| File.basename(f).starts_with?("main.") }.first)
-      it f do
-        interpret_example(f, no_context: true)
-      end
+      interpret_example(f)
     else
       files.each do |f|
         f = File.join(example_file, f)
@@ -44,20 +43,16 @@ private def run(example_file : String) : Nil
   end
 end
 
-private def interpret_example(example_file : String, no_context = false) : Nil
+private def interpret_example(example_file : String) : Nil
   return if skip_example?(example_file)
 
-  if no_context
-    run(example_file)
+  if File.directory?(example_file)
+    describe example_file do
+      run(example_file)
+    end
   else
-    if File.directory?(example_file)
-      describe example_file do
-        run(example_file)
-      end
-    else
-      it example_file do
-        run(example_file)
-      end
+    it example_file do
+      run(example_file)
     end
   end
 end

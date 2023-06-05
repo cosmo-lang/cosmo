@@ -23,8 +23,8 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * static/protected members
   - Better type system
     * bound expressions (!!)
-    * type inference
     * generics
+    * type inference
     * casting union types
     * implicit conversions
     * intersection types
@@ -34,7 +34,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
   - REPL supports multiline source
 
 ### Fixes
-- Pop completed traces
 - Performance boosts lol
 - Accessing private class members in public class methods
 
@@ -65,7 +64,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 5. Push to the branch (`make publish`)
 6. Create a new [Pull Request](https://github.com/cosmo-lang/cosmo/pulls)
 
-Have any questions or comments? Add me on Discord: `runic#5997`!
+Have any questions or comments? DM me on Discord: `runic#5997`!
 
 ## Contributors
 

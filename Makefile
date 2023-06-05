@@ -1,5 +1,6 @@
 EXECUTABLE = "bin/cosmo"
 
+# This only works on Linux (and OSX?)
 install:
 	echo "Installing Cosmo as $(SUDO_USER)"
 	shards build --release
