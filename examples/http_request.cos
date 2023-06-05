@@ -1,0 +1,11 @@
+use "http"
+
+string URL = "https://jsonplaceholder.typicode.com/users"
+HTTP::fetch(URL, &void (string->any res): {
+  puts(res->body->json)
+}, {{
+  method -> "get",
+  headers -> [
+    ["Content-Type", "application/json"]
+  ]
+}})

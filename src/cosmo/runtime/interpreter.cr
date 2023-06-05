@@ -235,7 +235,7 @@ class Cosmo::Interpreter
     Logger.push_trace(stmt.keyword)
 
     if relative_module_path == "intrinsic"
-      Logger.report_error("Invalid import", "Cannot import the intrinsic library, as it is in the global scope by default", stmt.module_path)
+      Logger.report_error("Cannot import", "Cannot import the intrinsic library, as it is in the global scope by default", stmt.module_path)
     end
 
     unless relative_module_path.includes?("/")
@@ -246,7 +246,7 @@ class Cosmo::Interpreter
         if File.exists?(path_with_ext)
           return import_file(path_with_ext)
         end
-        Logger.report_error("Invalid import", "No package management system implemented yet. If you are trying to import a file path, prepend './' to the path.", stmt.module_path)
+        Logger.report_error("Cannot import '#{relative_module_path}'", "No package management system implemented yet. If you are trying to import a file path, prepend './' to the path.", stmt.module_path)
       else
         @importable_intrinsics[relative_module_path].inject
       end
@@ -263,7 +263,7 @@ class Cosmo::Interpreter
 
       module_path = ext_file_path.gsub("./", "")
       unless File.exists?(ext_file_path)
-        Logger.report_error("Invalid import", "No such file '#{module_path}.cos/⭐' exists", stmt.module_path)
+        Logger.report_error("Cannot import", "No such file '#{module_path}.cos/⭐' exists", stmt.module_path)
       end
 
       import_file(ext_file_path)
@@ -532,7 +532,7 @@ class Cosmo::Interpreter
         end
         Logger.report_error("Invalid table key", "'#{key}'", expr.key)
       else
-        if value.is_a?(Function) && value.arity.begin == 0 && !@evaluating_fn_callee
+        if value.is_a?(Callable) && value.arity.begin == 0 && !@evaluating_fn_callee
           value.call([] of ValueType)
         else
           value
@@ -569,7 +569,7 @@ class Cosmo::Interpreter
         field_required: key != "to_string"
       )
 
-      if value.is_a?(Function) && value.arity.begin == 0 && !@evaluating_fn_callee
+      if value.is_a?(Callable) && value.arity.begin == 0 && !@evaluating_fn_callee
         value.call([] of ValueType)
       else
         key == "to_string" ? object.name : value
@@ -657,7 +657,7 @@ class Cosmo::Interpreter
     Logger.push_trace(token)
 
     fn = evaluate(expr.callee)
-    unless fn.is_a?(Function) || fn.is_a?(IntrinsicFunction)
+    unless fn.is_a?(Callable)
       Logger.report_error("Attempt to call", fn.is_a?(ClassInstance) ? fn.name : TypeChecker.get_mapped(fn.class), expr.token)
     end
     @evaluating_fn_callee = false
@@ -678,7 +678,7 @@ class Cosmo::Interpreter
 
   def visit_var_expr(expr : Expression::Var) : ValueType
     value = @scope.lookup(expr.token)
-    if value.is_a?(Function) && value.arity.begin == 0 && !@evaluating_fn_callee
+    if value.is_a?(Callable) && value.arity.begin == 0 && !@evaluating_fn_callee
       value = value.call([] of ValueType)
     end
     value
