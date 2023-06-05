@@ -65,6 +65,8 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 5. Push to the branch (`make publish`)
 6. Create a new [Pull Request](https://github.com/cosmo-lang/cosmo/pulls)
 
+Have any questions or comments? Add me on Discord: `runic#5997`!
+
 ## Contributors
 
 - [R-unic](https://github.com/R-unic) - creator and maintainer
