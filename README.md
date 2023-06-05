@@ -29,7 +29,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * implicit conversions
     * intersection types
 - Other
-  - Some form of asynchronous programming
+  - Some form of multithreading
   - Intrinsic methods for all datatypes (inherit from a base type)
   - REPL supports multiline source
 
