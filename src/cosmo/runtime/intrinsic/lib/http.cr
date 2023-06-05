@@ -181,6 +181,8 @@ class Cosmo::HttpLib < Cosmo::IntrinsicLib
 
         wrapped_req = {} of String => ValueType
         wrapped_req["path"] = ctx.request.path
+        wrapped_req["query"] = ctx.request.query
+        wrapped_req["remote_address"] = !ctx.request.remote_address.nil? ? ctx.request.remote_address.to_s : nil
 
         args[1].as(Function).call([
           TypeChecker.hash_as_value_type(wrapped_res),
