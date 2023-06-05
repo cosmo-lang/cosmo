@@ -568,7 +568,7 @@ describe Interpreter do
     example_files = Dir.entries "examples/"
     example_files.each do |example_file|
       next if example_file.starts_with?(".")
-      next if example_file.starts_with?("with_main")
+      next if example_file.starts_with?("dont_test")
       it example_file do
         interpreter = Interpreter.new(output_ast: false, run_benchmarks: false, debug_mode: true)
         path = File.join "examples", example_file

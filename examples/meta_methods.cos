@@ -11,7 +11,7 @@ class IntSet {
     $->vec << value
   }
 
-  public void fn display() {
+  public void fn display {
     puts($->vec)
   }
 
@@ -32,8 +32,12 @@ class IntSet {
     resultant
   }
 
-  public int fn size$() {
+  public int fn size$ {
     #$->vec
+  }
+
+  public string fn to_string {
+    <string>$->vec
   }
 }
 
@@ -41,8 +45,8 @@ IntSet set_x = new IntSet([1,2,3])
 IntSet set_y = new IntSet([4,5,6])
 IntSet set_z = set_x + set_y
 IntSet set_w = set_x * 3
-set_z->display() ## 1,2,3,4,5,6
-set_w->display() ## 1,2,3,1,2,3,1,2,3
+set_z->display ## 1,2,3,4,5,6
+set_w->display ## 1,2,3,1,2,3,1,2,3
 Assert->eq(#set_z, 6)
 Assert->eq(set_z->vec, [1,2,3,4,5,6])
 Assert->eq(#set_w, 9)

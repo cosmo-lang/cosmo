@@ -9,7 +9,7 @@ case life_sucks { ## life sucks
 int|float my_num = 5
 case my_num { ## integer
   when float => puts("fraction")
-  when int, bigint => puts("integer")
+  when int, uint, bigint => puts("integer")
 }
 
 string fn does_their_life_suck?(string name) {
@@ -23,3 +23,4 @@ string fn does_their_life_suck?(string name) {
 Assert->eq(does_their_life_suck?("billy"), "oh yeah")
 Assert->eq(does_their_life_suck?("jimbob"), "most definitely")
 Assert->eq(does_their_life_suck?("beezelbub"), "maybe")
+

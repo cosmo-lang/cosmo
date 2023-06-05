@@ -11,6 +11,7 @@ require "./intrinsic/string"
 require "./intrinsic/vector"
 require "./intrinsic/table"
 require "./intrinsic/lib/math"
+require "./intrinsic/lib/http"
 
 class Cosmo::Interpreter
   include Expression::Visitor(ValueType)
@@ -52,6 +53,7 @@ class Cosmo::Interpreter
     declare_intrinsic("string", "version$", version)
 
     declare_importable("math", MathLib.new(self))
+    declare_importable("http", HttpLib.new(self))
   end
 
   private def declare_importable(name : String, library : IntrinsicLib)

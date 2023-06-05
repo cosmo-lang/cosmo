@@ -29,8 +29,7 @@ class Cosmo::Parser
 
     statements = [] of Statement::Base
     until finished?
-      stmt = parse_statement
-      statements << stmt
+      statements << parse_statement
     end
 
     end_time = Time.monotonic
