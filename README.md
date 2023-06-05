@@ -12,7 +12,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 
 ### Features
 - Grammar
-  - `is not`
   - `?:=`
   - Regexes
   - Enums

@@ -886,8 +886,8 @@ class Cosmo::Parser
     while match?(Syntax::EqualEqual) || match?(Syntax::BangEqual) || match?(Syntax::Is)
       op = last_token
       if op.lexeme == "is"
-        type_info = parse_type
         inversed = match?(Syntax::Not)
+        type_info = parse_type
         left = Expression::Is.new(left, type_info[:type_ref].not_nil!, inversed)
       else
         right = parse_bitwise_or

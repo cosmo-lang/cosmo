@@ -512,6 +512,8 @@ describe Interpreter do
     it "'is' matching" do
       result = interpreter.interpret("1 is int", "test")
       result.should be_true
+      result = interpreter.interpret("1 is not int", "test")
+      result.should be_false
       result = interpreter.interpret("873584728475872334 is bigint", "test")
       result.should be_true
       result = interpreter.interpret("1 is (int|float)?", "test")

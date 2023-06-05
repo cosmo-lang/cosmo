@@ -587,7 +587,8 @@ class Cosmo::Interpreter
 
   def visit_is_expr(expr : Expression::Is) : Bool
     value = evaluate(expr.value)
-    TypeChecker.is?(expr.type.name.lexeme, value, expr.token)
+    is = TypeChecker.is?(expr.type.name.lexeme, value, expr.token)
+    expr.inversed? ? !is : is
   end
 
   def visit_type_ref_expr(expr : Expression::TypeRef) : Type
