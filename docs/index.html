@@ -506,11 +506,6 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/MathLib/Cbrt" data-name="cosmo::mathlib::cbrt">
-      <a href="Cosmo/MathLib/Cbrt.html">Cbrt</a>
-      
-    </li>
-  
   <li class=" " data-id="Cosmo/Cosmo/MathLib/Cos" data-name="cosmo::mathlib::cos">
       <a href="Cosmo/MathLib/Cos.html">Cos</a>
       
@@ -586,6 +581,11 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/NumberIntrinsics/Cbrt" data-name="cosmo::numberintrinsics::cbrt">
+      <a href="Cosmo/NumberIntrinsics/Cbrt.html">Cbrt</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/NumberIntrinsics/Ceil" data-name="cosmo::numberintrinsics::ceil">
       <a href="Cosmo/NumberIntrinsics/Ceil.html">Ceil</a>
       
@@ -653,6 +653,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Operator/Bxor" data-name="cosmo::operator::bxor">
       <a href="Cosmo/Operator/Bxor.html">Bxor</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Operator/CoalesceAssign" data-name="cosmo::operator::coalesceassign">
+      <a href="Cosmo/Operator/CoalesceAssign.html">CoalesceAssign</a>
       
     </li>
   
@@ -761,6 +766,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/RecursionDepthIntrinsic" data-name="cosmo::recursiondepthintrinsic">
+      <a href="Cosmo/RecursionDepthIntrinsic.html">RecursionDepthIntrinsic</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Resolver" data-name="cosmo::resolver">
       <a href="Cosmo/Resolver.html">Resolver</a>
       
@@ -811,6 +821,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/Reverse" data-name="cosmo::stringintrinsics::reverse">
+      <a href="Cosmo/StringIntrinsics/Reverse.html">Reverse</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/StringIntrinsics/Split" data-name="cosmo::stringintrinsics::split">
       <a href="Cosmo/StringIntrinsics/Split.html">Split</a>
       
@@ -838,6 +853,41 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Syntax" data-name="cosmo::syntax">
       <a href="Cosmo/Syntax.html">Syntax</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/TableIntrinsics" data-name="cosmo::tableintrinsics">
+      <a href="Cosmo/TableIntrinsics.html">TableIntrinsics</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/TableIntrinsics/Empty" data-name="cosmo::tableintrinsics::empty">
+      <a href="Cosmo/TableIntrinsics/Empty.html">Empty</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/TableIntrinsics/Has" data-name="cosmo::tableintrinsics::has">
+      <a href="Cosmo/TableIntrinsics/Has.html">Has</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/TableIntrinsics/Invert" data-name="cosmo::tableintrinsics::invert">
+      <a href="Cosmo/TableIntrinsics/Invert.html">Invert</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/TableIntrinsics/Keys" data-name="cosmo::tableintrinsics::keys">
+      <a href="Cosmo/TableIntrinsics/Keys.html">Keys</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/TableIntrinsics/Values" data-name="cosmo::tableintrinsics::values">
+      <a href="Cosmo/TableIntrinsics/Values.html">Values</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -1026,9 +1076,8 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </li>
 <li>Other
 <ul>
-<li><code>to_string$</code> meta method (and default to class name if none provided)</li>
-<li>Utility methods for tables</li>
 <li>Intrinsic methods for all datatypes (inherit from a base type)</li>
+<li>REPL supports multiline source</li>
 </ul>
 </li>
 </ul>
@@ -1038,14 +1087,10 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Fixes</h3>
 <ul>
+<li>Pop completed traces</li>
 <li>Performance boosts lol</li>
 <li>Accessing private class members in public class methods</li>
 <li>Weird expression parsing (<code>[0].123</code> evaluates to 0.123??)</li>
-<li>Handle infinite recursion
-<ul>
-<li>macro function to set recursion depth limit</li>
-</ul>
-</li>
 </ul>
 <h3><a id="tests" class="anchor" href="#tests">
   <svg class="octicon-link" aria-hidden="true">
@@ -1071,7 +1116,6 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 <li>Documentation generator?</li>
 <li>Linting/language server</li>
 <li>Highlight function names without parentheses</li>
-<li>Put snippets into VSC extension</li>
 </ul>
 <h2><a id="things-i-might-do" class="anchor" href="#things-i-might-do">
   <svg class="octicon-link" aria-hidden="true">
