@@ -2,8 +2,9 @@ module Cosmo::AST::Expression
   class Is < Base
     getter value : Base
     getter type : TypeRef
+    getter? inversed : Bool
 
-    def initialize(@value, @type)
+    def initialize(@value, @type, @inversed)
     end
 
     def accept(visitor : Visitor(R)) : R forall R

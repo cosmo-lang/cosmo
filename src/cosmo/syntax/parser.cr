@@ -819,7 +819,7 @@ class Cosmo::Parser
   private def parse_compound_assignment : Expression::Base
     left = parse_logical_or
 
-    if match?(Syntax::AmpersandColonEqual) || match?(Syntax::PipeColonEqual) ||
+    if match?(Syntax::AndEqual) || match?(Syntax::OrEqual) ||
       match?(Syntax::CaratEqual) ||
       match?(Syntax::StarEqual) || match?(Syntax::SlashEqual) ||
       match?(Syntax::SlashSlashEqual) || match?(Syntax::PercentEqual) ||
@@ -844,7 +844,7 @@ class Cosmo::Parser
   private def parse_logical_or : Expression::Base
     left = parse_logical_and
 
-    while match?(Syntax::PipeColon) || match?(Syntax::QuestionColon)
+    while match?(Syntax::Or) || match?(Syntax::QuestionColon)
       op = last_token
       right = parse_logical_and
       left = Expression::BinaryOp.new(left, op, right)
@@ -857,7 +857,7 @@ class Cosmo::Parser
   private def parse_logical_and : Expression::Base
     left = parse_comparison
 
-    while match?(Syntax::AmpersandColon)
+    while match?(Syntax::And)
       op = last_token
       right = parse_comparison
       left = Expression::BinaryOp.new(left, op, right)
@@ -887,7 +887,8 @@ class Cosmo::Parser
       op = last_token
       if op.lexeme == "is"
         type_info = parse_type
-        left = Expression::Is.new(left, type_info[:type_ref].not_nil!)
+        inversed = match?(Syntax::Not)
+        left = Expression::Is.new(left, type_info[:type_ref].not_nil!, inversed)
       else
         right = parse_bitwise_or
         left = Expression::BinaryOp.new(left, op, right)
@@ -985,7 +986,7 @@ class Cosmo::Parser
   private def parse_unary : Expression::Base
     if match?(Syntax::Plus) || match?(Syntax::Minus) ||
       match?(Syntax::PlusPlus) || match?(Syntax::MinusMinus) ||
-      match?(Syntax::Bang) || match?(Syntax::Star) ||
+      match?(Syntax::Not) || match?(Syntax::Star) ||
       match?(Syntax::Hashtag) || match?(Syntax::Tilde)
 
       op = last_token

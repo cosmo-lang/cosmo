@@ -9,7 +9,7 @@ string fn choose_fuse(mut string[] fuses, string current_output) {
   every string fuse in fuses {
     float fuse_rating = <float>fuse[0..-2]
     if fuse_rating >= current
-      if best_fuse == "" |: fuse_rating - current < <float>best_fuse[0..-2] - current
+      if best_fuse == "" or fuse_rating - current < <float>best_fuse[0..-2] - current
         best_fuse = fuse
   }
 

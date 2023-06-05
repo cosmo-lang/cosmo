@@ -16,7 +16,7 @@ bool fn diagonally_dominant?(int[][] matrix) {
       other_sum += n
     }
 
-    dominant &:= main_diagonal > other_sum
+    dominant and= main_diagonal > other_sum
     ++i
   }
 

@@ -2,7 +2,7 @@ use "assert"
 
 bool fn is_prime?(int n) {
   if n < 2 return false
-  every int i in 2..(n->isqrt() + 1)
+  every int i in 2..(n->isqrt + 1)
     if n % i == 0 return false
 
   true

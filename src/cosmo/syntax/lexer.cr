@@ -89,12 +89,6 @@ class Cosmo::Lexer
     when ":"
       if match_char?(":")
         add_token(Syntax::ColonColon, nil)
-      elsif match_char?("|")
-        if match_char?("=")
-          add_token(Syntax::PipeColonEqual, nil)
-        else
-          add_token(Syntax::PipeColon, nil)
-        end
       else
         add_token(Syntax::Colon, nil)
       end
@@ -151,25 +145,9 @@ class Cosmo::Lexer
         add_token(Syntax::Percent, nil)
       end
     when "&"
-      if match_char?(":")
-        if match_char?("=")
-          add_token(Syntax::AmpersandColonEqual, nil)
-        else
-          add_token(Syntax::AmpersandColon, nil)
-        end
-      else
-        add_token(Syntax::Ampersand, nil)
-      end
+      add_token(Syntax::Ampersand, nil)
     when "|"
-      if match_char?(":")
-        if match_char?("=")
-          add_token(Syntax::PipeColonEqual, nil)
-        else
-          add_token(Syntax::PipeColon, nil)
-        end
-      else
-        add_token(Syntax::Pipe, nil)
-      end
+      add_token(Syntax::Pipe, nil)
     when "?"
       if match_char?(":")
         add_token(Syntax::QuestionColon, nil)
@@ -180,7 +158,7 @@ class Cosmo::Lexer
       if match_char?("=")
         add_token(Syntax::BangEqual, nil)
       else
-        add_token(Syntax::Bang, nil)
+        report_error("Unexpected character", "!")
       end
     when "="
       if match_char?("=")
@@ -414,10 +392,16 @@ class Cosmo::Lexer
     @current_lexeme = String::Builder.new(ident_str)
     if Keywords.keyword?(ident_str)
       syntax_type = Keywords.get_syntax(ident_str)
+
+      value = nil
       value = true if ident_str == "true"
       value = false if ident_str == "false"
-      value = nil if ident_str == "none"
-      add_token(syntax_type, value)
+      if (ident_str == "and" || ident_str == "or") && match_char?("=")
+        syntax_type = ident_str == "and" ? Syntax::AndEqual : Syntax::OrEqual
+        add_token(syntax_type, nil)
+      else
+        add_token(syntax_type, value)
+      end
     elsif Keywords.type?(ident_str)
       add_token(Syntax::TypeDef, ident_str)
     elsif Keywords.class_visibility?(ident_str)

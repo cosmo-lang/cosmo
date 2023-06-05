@@ -168,7 +168,7 @@ describe Lexer do
     type.value.should eq "type"
   end
   it "lexes other characters" do
-    tokens = Lexer.new("$ -> %= & :: .. . # !", "test", false).tokenize
+    tokens = Lexer.new("$ -> %= & :: .. . # !=", "test", false).tokenize
     this, hyph_arrow, perc_eq, amper, double_colon, dotdot, dot, hashtag, bang = tokens
     this.type.should eq Syntax::This
     this.value.should eq nil
@@ -186,7 +186,7 @@ describe Lexer do
     dot.value.should eq nil
     hashtag.type.should eq Syntax::Hashtag
     hashtag.value.should eq nil
-    bang.type.should eq Syntax::Bang
+    bang.type.should eq Syntax::BangEqual
     bang.value.should eq nil
   end
 end

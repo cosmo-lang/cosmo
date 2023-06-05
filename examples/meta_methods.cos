@@ -3,8 +3,8 @@ use "assert"
 class IntSet {
   public mut int[] vec
 
-  public IntSet fn construct(int[]? base_vec) {
-    $->vec = base_vec |: []
+  public IntSet fn construct(int[]? vec = []) {
+    $->vec = vec
   }
 
   public void fn push(int value) {

@@ -180,12 +180,12 @@ describe Parser do
     literal.should be_a Expression::IntLiteral
     literal.value.should eq 15
 
-    stmts = Parser.new("!true", "test", false).parse
+    stmts = Parser.new("not true", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(Statement::SingleExpression).expression
     unary = expr.as Expression::UnaryOp
     unary.should be_a Expression::UnaryOp
-    unary.operator.type.should eq Syntax::Bang
+    unary.operator.type.should eq Syntax::Not
 
     literal = unary.operand.as Expression::BooleanLiteral
     literal.should be_a Expression::BooleanLiteral
@@ -215,12 +215,12 @@ describe Parser do
     literal.token.value.should eq "my_vec"
   end
   it "parses binary operators" do
-    stmts = Parser.new("false &: true", "test", false).parse
+    stmts = Parser.new("false and true", "test", false).parse
     stmts.should_not be_empty
     expr = stmts.first.as(Statement::SingleExpression).expression
     binary = expr.as Expression::BinaryOp
     binary.should be_a Expression::BinaryOp
-    binary.operator.type.should eq Syntax::AmpersandColon
+    binary.operator.type.should eq Syntax::And
 
     left = binary.left.as Expression::BooleanLiteral
     left.should be_a Expression::BooleanLiteral

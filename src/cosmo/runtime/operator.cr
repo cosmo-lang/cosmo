@@ -540,8 +540,8 @@ module Cosmo::Operator
   class AndAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
       fixed_token = expr.token
-      fixed_token.type = Syntax::AmpersandColon
-      fixed_token.lexeme = "&:"
+      fixed_token.type = Syntax::And
+      fixed_token.lexeme = "and"
       expr.token
 
       binary = Expression::BinaryOp.new(expr.name, fixed_token, expr.value)
@@ -558,8 +558,8 @@ module Cosmo::Operator
   class OrAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
       fixed_token = expr.token
-      fixed_token.type = Syntax::PipeColon
-      fixed_token.lexeme = "|:"
+      fixed_token.type = Syntax::Or
+      fixed_token.lexeme = "or"
 
       binary = Expression::BinaryOp.new(expr.name, fixed_token, expr.value)
       prop_assignment = Expression::PropertyAssignment.new(expr.name, binary)

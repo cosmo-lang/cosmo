@@ -5,10 +5,10 @@ string fn domino(string sequence) {
   mut bool finished = false
 
   every char ch in sequence {
-    if ch == '|' &: !finished
+    if ch == '|' and not finished
       result += '/'
     else {
-      if ch == ' ' |: ch == '/'
+      if ch == ' ' or ch == '/'
         finished = true
       result += ch
     }

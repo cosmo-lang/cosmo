@@ -2,6 +2,9 @@ require "../syntax_type"
 
 module Cosmo::Keywords
   KEYWORDS = {
+    "and" => Syntax::And,
+    "or" => Syntax::Or,
+    "not" => Syntax::Not,
     "true" => Syntax::Boolean,
     "false" => Syntax::Boolean,
     "none" => Syntax::None,

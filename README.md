@@ -12,6 +12,8 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 
 ### Features
 - Grammar
+  - `is not`
+  - `?:=`
   - Regexes
   - Enums
   - Decorators
@@ -32,6 +34,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
   - Intrinsic methods for all datatypes (inherit from a base type)
 
 ### Fixes
+- Pop completed traces
 - Performance boosts lol
 - Accessing private class members in public class methods
 - Weird expression parsing (`[0].123` evaluates to 0.123??)

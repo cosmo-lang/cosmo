@@ -178,11 +178,11 @@ describe Interpreter do
     end
   end
   it "interprets unary operators" do
-    result = interpreter.interpret("!false", "test")
+    result = interpreter.interpret("not false", "test")
     result.should be_true
-    result = interpreter.interpret("!true", "test")
+    result = interpreter.interpret("not true", "test")
     result.should be_false
-    result = interpreter.interpret("!!123", "test")
+    result = interpreter.interpret("not not 123", "test")
     result.should be_true
     result = interpreter.interpret("-0xabc", "test")
     result.should eq -2748
@@ -546,7 +546,7 @@ describe Interpreter do
     it "aliases" do
       result = interpreter.interpret("type MyInt = int; MyInt my_int = 123", "test")
       result.should eq 123
-      result = interpreter.interpret("type Number = bigint | int | float; 1.23 is Number &: 15 is Number", "test")
+      result = interpreter.interpret("type Number = bigint | int | float; 1.23 is Number and 15 is Number", "test")
       result.should be_true
     end
     it "throws when a mismatch occurs" do

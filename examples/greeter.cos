@@ -1,6 +1,6 @@
 func fn greeter(string greeting) {
   void fn greet(string person) {
-    puts(greeting + " " + person)
+    puts("%{greeting} %{person}")
   }
 }
 

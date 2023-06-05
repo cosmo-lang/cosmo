@@ -781,10 +781,10 @@ class Cosmo::Interpreter
     when Syntax::CaratEqual
       op = Operator::PowAssign.new(self)
       op.apply(expr)
-    when Syntax::AmpersandColonEqual
+    when Syntax::AndEqual
       op = Operator::AndAssign.new(self)
       op.apply(expr)
-    when Syntax::PipeColonEqual
+    when Syntax::OrEqual
       op = Operator::OrAssign.new(self)
       op.apply(expr)
     end
@@ -826,7 +826,7 @@ class Cosmo::Interpreter
     when Syntax::MinusMinus
       op = Operator::MinusAssign.new(self)
       op.apply(expr, "--")
-    when Syntax::Bang
+    when Syntax::Not
       !operand
     when Syntax::Tilde
       op = Operator::Bnot.new(self)
@@ -870,9 +870,9 @@ class Cosmo::Interpreter
     when Syntax::Percent
       op = Operator::Mod.new(self)
       op.apply(expr)
-    when Syntax::AmpersandColon
+    when Syntax::And
       evaluate(expr.left) && evaluate(expr.right)
-    when Syntax::PipeColon
+    when Syntax::Or
       left = evaluate(expr.left)
       return left if left
       evaluate(expr.right)
