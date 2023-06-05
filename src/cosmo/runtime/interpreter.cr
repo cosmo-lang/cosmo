@@ -250,7 +250,7 @@ class Cosmo::Interpreter
       end
     else
       if @file_path == "repl"
-        Logger.report_error("Cannot import", "Non-package modules are not supported in the REPL", stmt.module_path)
+        Logger.report_error("Cannot import", "Local modules are not supported in the REPL", stmt.module_path)
       end
 
       full_module_path = File.join File.dirname(@file_path), relative_module_path
@@ -261,7 +261,7 @@ class Cosmo::Interpreter
 
       module_path = ext_file_path.gsub("./", "")
       unless File.exists?(ext_file_path)
-        Logger.report_error("Cannot import", "No such file '#{module_path}.cos/⭐' exists", stmt.module_path)
+        Logger.report_error("Cannot import", "No such file '#{module_path.split('.', 2).first}.cos/⭐' exists", stmt.module_path)
       end
 
       import_file(ext_file_path)
@@ -457,7 +457,7 @@ class Cosmo::Interpreter
   end
 
   def visit_try_catch_stmt(stmt : Statement::TryCatch) : Nil
-    Logger.push_trace(stmt.try_keyword)
+    trace_idx = Logger.push_trace(stmt.try_keyword)
     enclosing = @trying
     begin
       @trying = true
@@ -471,6 +471,7 @@ class Cosmo::Interpreter
         execute(stmt.finally_block.not_nil!)
       end
     end
+    Logger.pop_trace(trace_idx)
   end
 
   def visit_class_def_stmt(stmt : Statement::ClassDef) : ValueType
@@ -606,7 +607,7 @@ class Cosmo::Interpreter
 
   def visit_new_expr(expr : Expression::New) : ClassInstance
     class_obj = @scope.lookup(expr.operand.token)
-    Logger.push_trace(expr.token)
+    trace_idx = Logger.push_trace(expr.token)
 
     args = [] of Expression::Base
     unless class_obj.is_a?(Class)
@@ -617,7 +618,10 @@ class Cosmo::Interpreter
     end
 
     TypeChecker.assert("class", class_obj, expr.operand.token)
-    class_obj.construct(args.map { |arg| evaluate(arg) })
+    instance = class_obj.construct(args.map { |arg| evaluate(arg) })
+
+    Logger.pop_trace(trace_idx)
+    instance
   end
 
   def visit_this_expr(expr : Expression::This) : ValueType
@@ -652,7 +656,7 @@ class Cosmo::Interpreter
       token.lexeme = expr.callee.as(Expression::Access).full_path
     end
     token.lexeme += "(#{expr.arguments.empty? ? "" : "..."})"
-    Logger.push_trace(token)
+    trace_idx = Logger.push_trace(token)
 
     fn = evaluate(expr.callee)
     unless fn.is_a?(Callable)
@@ -670,6 +674,7 @@ class Cosmo::Interpreter
     start_recursion(expr.token)
     result = fn.call(arg_values)
     end_recursion
+    Logger.pop_trace(trace_idx)
 
     result
   end

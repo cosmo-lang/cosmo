@@ -1,6 +1,6 @@
 require "./spec_helper"
 
-def shutup(&block : ->)
+private def shutup(&block : ->)
   out, err, in = Stdio.capture do |io|
     STDOUT.puts ":)"
     STDERR.puts ":("
@@ -10,21 +10,61 @@ def shutup(&block : ->)
   end
 end
 
-def shutup_run(interpreter : Interpreter, path : String) : Nil
+private def shutup_run(interpreter : Interpreter, path : String) : Nil
   source = File.read(path)
   shutup do
-    interpreter.interpret(source, "test:#{path}")
+    interpreter.interpret(source, "#{path}")
   end
 end
 
-def run_dir(interpreter : Interpreter, path : String) : Nil
-  if File.basename(path).downcase.starts_with?("main.")
-    shutup_run(interpreter, path)
+private def skip_example?(example_file : String) : Bool
+  example_file == "." || example_file.ends_with?("/.") ||
+    example_file.ends_with?("..") || example_file.ends_with?("dont_test")
+end
+
+private def run(example_file : String) : Nil
+  return if skip_example?(example_file)
+  interpreter = Interpreter.new(output_ast: false, run_benchmarks: false)
+
+  if File.directory?(example_file)
+    files = Dir.entries(example_file)
+    if files.includes?("main.cos") || files.includes?("main.⭐")
+      f = File.join(example_file, files.select { |f| File.basename(f).starts_with?("main.") }.first)
+      it f do
+        interpret_example(f, no_context: true)
+      end
+    else
+      files.each do |f|
+        f = File.join(example_file, f)
+        interpret_example(f)
+      end
+    end
+  else
+    shutup_run(interpreter, example_file)
   end
 end
 
+private def interpret_example(example_file : String, no_context = false) : Nil
+  return if skip_example?(example_file)
+
+  if no_context
+    run(example_file)
+  else
+    if File.directory?(example_file)
+      describe example_file do
+        run(example_file)
+      end
+    else
+      it example_file do
+        run(example_file)
+      end
+    end
+  end
+end
+
+Logger.debug = true
 describe Interpreter do
-  interpreter = Interpreter.new(output_ast: false, run_benchmarks: false, debug_mode: true)
+  interpreter = Interpreter.new(output_ast: false, run_benchmarks: false)
   describe "interprets intrinsics:" do
     it "global" do
       result = interpreter.interpret("version$", "test")
@@ -564,20 +604,11 @@ describe Interpreter do
       end
     end
   end
+
   describe "interprets examples:" do
     example_files = Dir.entries "examples/"
     example_files.each do |example_file|
-      next if example_file.starts_with?(".")
-      next if example_file.starts_with?("dont_test")
-      it example_file do
-        interpreter = Interpreter.new(output_ast: false, run_benchmarks: false, debug_mode: true)
-        path = File.join "examples", example_file
-        if File.directory?(path)
-          run_dir(interpreter, path)
-        else
-          shutup_run(interpreter, path)
-        end
-      end
+      interpret_example(File.join "examples", example_file)
     end
   end
 end

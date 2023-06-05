@@ -1,5 +1,5 @@
 use "http"
 
-HTTP::fetch("http://localhost:3000/spells/Tower_Shield", &void (string->any res): {
-  puts(res->body->json)
+HTTP::fetch("https://example.com", &void (string->any res): {
+  puts(res->body->text)
 })

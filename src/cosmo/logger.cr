@@ -9,8 +9,15 @@ module Cosmo::Logger
     @@trace_level = level
   end
 
-  def push_trace(token : Token) : Nil
-    @@stack_trace << token
+  def push_trace(token : Token) : UInt32
+    idx = (@@stack_trace << token)
+      .rindex(token)
+      .not_nil!
+      .to_u
+  end
+
+  def pop_trace(idx : UInt32) : Nil
+    @@stack_trace.delete_at(idx, (idx.to_i - @@stack_trace.size - 1).abs)
   end
 
   def debug=(on : Bool) : Nil
