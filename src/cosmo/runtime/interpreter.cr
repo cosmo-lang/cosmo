@@ -765,29 +765,23 @@ class Cosmo::Interpreter
   def visit_compound_assignment_expr(expr : Expression::CompoundAssignment) : ValueType
     case expr.operator.type
     when Syntax::PlusEqual
-      op = Operator::PlusAssign.new(self)
-      op.apply(expr)
+      Operator::PlusAssign.new(self).apply(expr)
     when Syntax::MinusEqual
-      op = Operator::MinusAssign.new(self)
-      op.apply(expr)
+      Operator::MinusAssign.new(self).apply(expr)
     when Syntax::StarEqual
-      op = Operator::MulAssign.new(self)
-      op.apply(expr)
+      Operator::MulAssign.new(self).apply(expr)
     when Syntax::SlashEqual
-      op = Operator::DivAssign.new(self)
-      op.apply(expr)
+      Operator::DivAssign.new(self).apply(expr)
     when Syntax::PercentEqual
-      op = Operator::ModAssign.new(self)
-      op.apply(expr)
+      Operator::ModAssign.new(self).apply(expr)
     when Syntax::CaratEqual
-      op = Operator::PowAssign.new(self)
-      op.apply(expr)
+      Operator::PowAssign.new(self).apply(expr)
     when Syntax::AndEqual
-      op = Operator::AndAssign.new(self)
-      op.apply(expr)
+      Operator::AndAssign.new(self).apply(expr)
     when Syntax::OrEqual
-      op = Operator::OrAssign.new(self)
-      op.apply(expr)
+      Operator::OrAssign.new(self).apply(expr)
+    when Syntax::QuestionColonEqual
+      Operator::CoalesceAssign.new(self).apply(expr)
     end
   end
 

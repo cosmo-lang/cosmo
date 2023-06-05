@@ -820,6 +820,7 @@ class Cosmo::Parser
     left = parse_logical_or
 
     if match?(Syntax::AndEqual) || match?(Syntax::OrEqual) ||
+      match?(Syntax::QuestionColonEqual) ||
       match?(Syntax::CaratEqual) ||
       match?(Syntax::StarEqual) || match?(Syntax::SlashEqual) ||
       match?(Syntax::SlashSlashEqual) || match?(Syntax::PercentEqual) ||

@@ -536,7 +536,7 @@ module Cosmo::Operator
     end
   end
 
-  ## this is beyond fucked up
+  ## this is fucked up
   class AndAssign < Base
     def apply(expr : Expression::CompoundAssignment) : ValueType
       fixed_token = expr.token
@@ -545,12 +545,13 @@ module Cosmo::Operator
       expr.token
 
       binary = Expression::BinaryOp.new(expr.name, fixed_token, expr.value)
-      var_value = @interpreter.evaluate(expr.name.is_a?(Expression::Var) ? expr.name : Expression::PropertyAssignment.new(expr.name, binary))
+      prop_assignment = Expression::PropertyAssignment.new(expr.name, binary)
+      var_value = @interpreter.evaluate(expr.name.is_a?(Expression::Var) ? expr.name : prop_assignment)
       value = @interpreter.evaluate(expr.value)
       if expr.name.is_a?(Expression::Var)
         @interpreter.scope.assign(expr.name.token, var_value && value)
       else
-        var_value
+        @interpreter.evaluate(prop_assignment)
       end
     end
   end
@@ -568,7 +569,25 @@ module Cosmo::Operator
       if expr.name.is_a?(Expression::Var)
         @interpreter.scope.assign(expr.name.token, var_value || value)
       else
-        var_value
+        @interpreter.evaluate(prop_assignment)
+      end
+    end
+  end
+
+  class CoalesceAssign < Base
+    def apply(expr : Expression::CompoundAssignment) : ValueType
+      fixed_token = expr.token
+      fixed_token.type = Syntax::Or
+      fixed_token.lexeme = "?:"
+
+      binary = Expression::BinaryOp.new(expr.name, fixed_token, expr.value)
+      prop_assignment = Expression::PropertyAssignment.new(expr.name, binary)
+      var_value = @interpreter.evaluate(expr.name.is_a?(Expression::Var) ? expr.name : prop_assignment.object)
+      value = @interpreter.evaluate(expr.value)
+      if expr.name.is_a?(Expression::Var)
+        @interpreter.scope.assign(expr.name.token, var_value.nil? ? value : var_value)
+      else
+        @interpreter.evaluate(prop_assignment)
       end
     end
   end

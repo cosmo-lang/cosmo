@@ -79,6 +79,10 @@ class Cosmo::Scope
     @variables[ident][:visibility] == Visibility::Public
   end
 
+  def variable_exists?(ident : String) : Bool
+    @variables.has_key?(ident)
+  end
+
   def lookup?(ident : String) : ValueType
     if @variables.has_key?(ident)
       @variables[ident][:value]
@@ -91,7 +95,7 @@ class Cosmo::Scope
 
   def lookup(token : Token) : ValueType
     value = lookup?(token.lexeme)
-    if value.nil?
+    if value.nil? && !variable_exists?(token.lexeme)
       Logger.report_error("Undefined variable", token.value.to_s, token) if value.nil? && @parent.nil?
     end
     value

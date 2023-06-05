@@ -150,7 +150,11 @@ class Cosmo::Lexer
       add_token(Syntax::Pipe, nil)
     when "?"
       if match_char?(":")
-        add_token(Syntax::QuestionColon, nil)
+        if match_char?("=")
+          add_token(Syntax::QuestionColonEqual, nil)
+        else
+          add_token(Syntax::QuestionColon, nil)
+        end
       else
         add_token(Syntax::Question, nil)
       end
