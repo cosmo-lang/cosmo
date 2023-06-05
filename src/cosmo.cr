@@ -17,8 +17,8 @@ module Cosmo
       opts.on("-B", "--benchmark", "Outputs the execution time of the lexer, parser, resolver, and interpreter") do
         @@options[:benchmark] = true
       end
-      opts.on("-d", "--debug", "Toggles debug mode (full error messages)") do
-        @@options[:debug] = true
+      opts.on("-e", "--error-trace", "Toggles full error message mode (shows Cosmo source code backtraces)") do
+        Logger.debug = true
       end
       opts.on("-h", "--help", "Outputs help menu for Cosmo CLI") do
         puts opts
@@ -35,12 +35,16 @@ module Cosmo
 
   @@interpreter = Interpreter.new(
     output_ast: @@options.has_key?(:ast),
-    run_benchmarks: @@options.has_key?(:benchmark),
-    debug_mode: @@options.has_key?(:debug)
+    run_benchmarks: @@options.has_key?(:benchmark)
   )
 
   def read_source(source : String, file_path : String) : ValueType
-    @@interpreter.interpret(source, file_path)
+    begin
+      @@interpreter.interpret(source, file_path)
+    rescue ex : Exception
+      msg = "BUG: #{ex.inspect_with_backtrace}\nYou've found a bug! Please open an issue, including source code so we can reproduce the bug: https://github.com/cosmo-lang/cosmo/issues"
+      abort msg, 1
+    end
   end
 
   # Reads a file at `path` and returns it's contents

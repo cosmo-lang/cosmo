@@ -16,7 +16,9 @@ def get_shard : YAML::Any
 end
 Cosmo::Version = "v" + get_shard["version"].to_s
 
-module Stringify
+# TODO: stringify hashes nested in arrays
+# This class is responsible for pretty-printing Cosmo values
+module Cosmo::Stringify
   extend self
 
   @@indent = 0
@@ -29,33 +31,66 @@ module Stringify
     @@indent -= 1
   end
 
-  def hashmap(hash : Hash, base_indent : Int = 0) : String
-    @@indent = base_indent
-    s = String::Builder.new("{")
-    push_indent(s)
+  private def stringify_value(value : T) : String forall T
+    s = String::Builder.new
 
-    hash.each_with_index do |entry, i|
-      s.write(("\n" + (TAB * @@indent)).to_slice) if i == 0
-      key, value = entry
-      s.write('"'.to_s.to_slice) if key.is_a?(String)
-      s.write(key.to_s.to_slice)
-      s.write('"'.to_s.to_slice) if key.is_a?(String)
-      s.write(" -> ".to_slice)
-      if value.is_a?(Hash)
-        s.write(Stringify.hashmap(value, @@indent).to_slice)
-      else
-        s.write('"'.to_s.to_slice) if value.is_a?(String)
-        s.write((value.nil? ? "none" : value.to_s).to_slice)
-        s.write('"'.to_s.to_slice) if value.is_a?(String)
+    if value.is_a?(Hash)
+      s.write(hashmap(value, @@indent).to_slice)
+    elsif value.is_a?(Array)
+      s.write("[".to_slice)
+
+      multiline = value.size >= 10
+      push_indent(s) if multiline
+      value.each_with_index do |v, i|
+        s.write(('\n' + (TAB * @@indent)).to_slice) if multiline
+        s.write(stringify_value(v).to_slice)
+        if i == value.size - 1
+          s.write(('\n' + TAB * (@@indent - 1)).to_slice) if multiline
+        else
+          s.write(", ".to_slice)
+        end
       end
 
-      s.write(",".to_slice) unless i == hash.size - 1
-      s.write("\n".to_slice)
-      s.write((TAB * @@indent).to_slice) unless i == hash.size - 1
+      pop_indent if multiline
+      s.write("]".to_slice)
+    elsif value.is_a?(ClassInstance)
+      value.name
+    else
+      s.write('"'.to_s.to_slice) if value.is_a?(String)
+      s.write((value.nil? ? "none" : value.to_s).to_slice)
+      s.write('"'.to_s.to_slice) if value.is_a?(String)
+    end
+
+    s.to_s
+  end
+
+  private def stringify_hash_entry(h : Hash, entry : Tuple(ValueType, ValueType), i : Int) : String
+    s = String::Builder.new
+
+    s.write(('\n' + (TAB * @@indent)).to_slice) if i == 0
+    key, value = entry
+
+    s.write(stringify_value(key).to_slice)
+    s.write(" -> ".to_slice)
+    s.write(stringify_value(value).to_slice)
+
+    s.write(",".to_slice) unless i == h.size - 1
+    s.write("\n".to_slice)
+    s.write((TAB * @@indent).to_slice) unless i == h.size - 1
+    s.to_s
+  end
+
+  def hashmap(h : Hash, base_indent : Int = 0) : String
+    @@indent = base_indent
+    s = String::Builder.new("{{")
+    push_indent(s)
+
+    h.each_with_index do |entry, i|
+      s.write(stringify_hash_entry(h, entry, i).to_slice)
     end
 
     pop_indent
-    s.write("#{TAB * @@indent}}".to_slice)
+    s.write("#{TAB * @@indent}}}".to_slice)
     s.to_s
   end
 end

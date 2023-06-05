@@ -22,7 +22,7 @@ class Cosmo::HttpLib < Cosmo::IntrinsicLib
 
   class Client::Fetch < IntrinsicFunction
     def arity : Range(UInt32, UInt32)
-      3.to_u .. 3.to_u
+      2.to_u .. 3.to_u
     end
 
     private def convert_headers(headers : Array(ValueType)) : Array(Array(String))
@@ -32,11 +32,13 @@ class Cosmo::HttpLib < Cosmo::IntrinsicLib
     def call(args : Array(ValueType)) : Nil
       TypeChecker.assert("string", args.first, token("HTTP->fetch"))
       TypeChecker.assert("func", args[1], token("HTTP->fetch"))
-      TypeChecker.assert("(string->string) | string->(string[])", args[2], token("HTTP->fetch"))
+      TypeChecker.assert("(string->string) | string->(string[]) | void", args[2]?, token("HTTP->fetch"))
 
       url = args.first.to_s
       callback = args[1].as Function
-      options = args[2].as Hash(ValueType, ValueType)
+      options = args[2]?.nil? ?
+        {} of ValueType => ValueType
+        : args[2].as Hash(ValueType, ValueType)
 
       method = (options["method"]? || "get").to_s.downcase
       headers = options["headers"]?

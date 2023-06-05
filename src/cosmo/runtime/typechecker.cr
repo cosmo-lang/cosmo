@@ -142,7 +142,7 @@ module Cosmo::TypeChecker
     type
   end
 
-  def cast?(value : ValueType, type : Token) : ValueType
+  def cast?(value : T, type : Token) : ValueType forall T
     if is?(type.lexeme, "", type) # if the type is a string
       if value.is_a?(ClassInstance)
         to_string = value.get_method("to_string", include_private: false, required: false)

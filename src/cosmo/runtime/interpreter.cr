@@ -32,10 +32,8 @@ class Cosmo::Interpreter
 
   def initialize(
     @output_ast : Bool,
-    @run_benchmarks : Bool,
-    @debug_mode : Bool
+    @run_benchmarks : Bool
   )
-    Logger.debug = debug_mode
     TypeChecker.register_intrinsics
 
     @scope = @globals
