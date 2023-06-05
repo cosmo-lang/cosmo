@@ -12,7 +12,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 
 ### Features
 - Grammar
-  - `?:=`
   - Regexes
   - Enums
   - Decorators
@@ -31,14 +30,13 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * intersection types
 - Other
   - Intrinsic methods for all datatypes (inherit from a base type)
+  - REPL supports multiline source
 
 ### Fixes
 - Pop completed traces
 - Performance boosts lol
 - Accessing private class members in public class methods
 - Weird expression parsing (`[0].123` evaluates to 0.123??)
-- Handle infinite recursion
-  * macro function to set recursion depth limit
 
 ### Tests
 - Expectation of errors in parser spec
@@ -51,7 +49,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Documentation generator?
 - Linting/language server
 - Highlight function names without parentheses
-- Put snippets into VSC extension
 
 ## Things I Might Do
 

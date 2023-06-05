@@ -21,11 +21,13 @@ class Cosmo::Interpreter
   getter globals = Scope.new
   getter scope : Scope
   getter meta = {} of String => MetaType
+  setter max_recursion_depth : UInt32 = 1200
   @locals = {} of Expression::Base => UInt32
   @file_path : String = ""
   @importable_intrinsics = {} of String => IntrinsicLib
-  @loop_level : UInt32 = 0
   @evaluating_fn_callee = false
+  @loop_level : UInt32 = 0
+  @recursion_depth : UInt32 = 1
 
   def initialize(
     @output_ast : Bool,
@@ -42,6 +44,7 @@ class Cosmo::Interpreter
   private def declare_globals
     declare_intrinsic("func", "puts", PutsIntrinsic.new(self))
     declare_intrinsic("func", "gets", GetsIntrinsic.new(self))
+    declare_intrinsic("func", "recursion_depth!", RecursionDepthIntrinsic.new(self))
 
     import_file(File.join File.dirname(__FILE__), "../../../libraries/intrinsic.⭐")
 
@@ -77,6 +80,17 @@ class Cosmo::Interpreter
   def set_meta(key : String, value : MetaType?) : Nil
     return if value.nil?
     @meta[key] = value
+  end
+
+  private def start_recursion(token : Token)
+    @recursion_depth += 1
+    if @recursion_depth >= @max_recursion_depth
+      Logger.report_error("Stack overflow", "Recursion depth of #{@max_recursion_depth} exceeded", token)
+    end
+  end
+
+  private def end_recursion(level : UInt32 = 1)
+    @recursion_depth -= level
   end
 
   def interpret(source : String, @file_path : String) : ValueType
@@ -174,6 +188,7 @@ class Cosmo::Interpreter
       end
 
       if block.is_a?(Statement::Block)
+        return nil if block.empty?
         unless block.nodes.empty?
           return_node = block.nodes.find { |node| node.is_a?(Statement::Return) } || block.nodes.last
           body_nodes = block.nodes[0..-2]
@@ -314,7 +329,12 @@ class Cosmo::Interpreter
 
   def visit_until_stmt(stmt : Statement::Until) : Nil
     @loop_level += 1
+    level : UInt32 = 0
+
     until evaluate(stmt.condition)
+      start_recursion(stmt.keyword)
+      level += 1
+
       begin
         execute(stmt.block)
       rescue _break : HookedExceptions::Break
@@ -323,11 +343,19 @@ class Cosmo::Interpreter
         next if @loop_level == _next.loop_level
       end
     end
+
+    @loop_level -= 1
+    end_recursion(level)
   end
 
   def visit_while_stmt(stmt : Statement::While) : Nil
     @loop_level += 1
+    level : UInt32 = 0
+
     while evaluate(stmt.condition)
+      start_recursion(stmt.keyword)
+      level += 1
+
       begin
         execute(stmt.block)
       rescue _break : HookedExceptions::Break
@@ -336,6 +364,9 @@ class Cosmo::Interpreter
         next if @loop_level == _next.loop_level
       end
     end
+
+    @loop_level -= 1
+    end_recursion(level)
   end
 
   def visit_every_stmt(stmt : Statement::Every) : Nil
@@ -346,9 +377,14 @@ class Cosmo::Interpreter
     @scope.declare(stmt.var.typedef, stmt.var.token, nil, mutable: true)
 
     @loop_level += 1
+    level : UInt32 = 0
+
     if enumerable.is_a?(Array) || enumerable.is_a?(Range)
       enumerable.each do |value|
         @scope.assign(stmt.var.token, value)
+        start_recursion(stmt.keyword)
+        level += 1
+
         begin
           execute_block(stmt.block, scope)
         rescue _break : HookedExceptions::Break
@@ -360,6 +396,9 @@ class Cosmo::Interpreter
     elsif enumerable.is_a?(String)
       enumerable.chars.each do |value|
         @scope.assign(stmt.var.token, value)
+        start_recursion(stmt.keyword)
+        level += 1
+
         begin
           execute_block(stmt.block, scope)
         rescue _break : HookedExceptions::Break
@@ -379,6 +418,9 @@ class Cosmo::Interpreter
       # keep looping until the iterator returns none
       until (value = enumerable.call([] of ValueType)).nil?
         @scope.assign(stmt.var.token, value)
+        start_recursion(stmt.keyword)
+        level += 1
+
         begin
           execute_block(stmt.block, scope)
         rescue _break : HookedExceptions::Break
@@ -391,6 +433,8 @@ class Cosmo::Interpreter
       Logger.report_error("Invalid iterator type", TypeChecker.get_mapped(enumerable.class), stmt.token)
     end
 
+    @loop_level -= 1
+    end_recursion(level)
     @scope = enclosing
   end
 
@@ -622,7 +666,10 @@ class Cosmo::Interpreter
     end
 
     arg_values = expr.arguments.map { |arg| evaluate(arg) }
+
+    start_recursion(expr.token)
     result = fn.call(arg_values)
+    end_recursion
 
     result
   end
