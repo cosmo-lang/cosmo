@@ -61,7 +61,7 @@ class Cosmo::Intrinsic::Vector
       TypeChecker.assert("int?", offset, token("Vector->rindex"))
 
       t_offset : Int64? = offset.as? Int64
-      n_offset : Int64 = t_offset.nil? ? 0_i64 : t_offset
+      n_offset : Int64 = t_offset.nil? ? -1_i64 : t_offset
       @_self.rindex(n_offset) { |e| e == args.first }
     end
   end

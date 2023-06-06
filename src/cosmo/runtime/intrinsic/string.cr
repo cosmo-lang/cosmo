@@ -378,7 +378,7 @@ class Cosmo::Intrinsic::Strings
       TypeChecker.assert("int?", offset, token("string->rindex"))
 
       t_offset : Int64? = offset.as? Int64
-      n_offset : Int64 = t_offset.nil? ? 0_i64 : t_offset
+      n_offset : Int64 = t_offset.nil? ? -1_i64 : t_offset
       res = @_self.rindex(args.first.to_s, n_offset)
       return nil if res.nil?
       res.to_i
