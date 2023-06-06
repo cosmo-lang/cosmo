@@ -40,7 +40,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 
 ### Fixes
 - Performance boosts lol
-- Comments mess up line numbers (I think?)
 
 ### Tests
 - Expectation of errors in parser spec

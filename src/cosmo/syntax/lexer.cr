@@ -223,8 +223,14 @@ class Cosmo::Lexer
     return false if finished?
     return false unless char_exists?(1)
     return false unless peek == expected
-    advance
-    @current_lexeme.write(current_char.to_slice)
+
+    if expected == "\n"
+      add_newline
+    else
+      advance
+      @current_lexeme.write(current_char.to_slice)
+    end
+
     true
   end
 
