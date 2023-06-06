@@ -30,7 +30,7 @@ module Cosmo
         headers.map(&.as(Array(ValueType)).map(&.to_s))
       end
 
-      def call(args : Array(ValueType)) : Nil
+      def call(args : Array(ValueType)) : ValueType
         TypeChecker.assert("string", args.first, token("HTTP->fetch"))
         TypeChecker.assert("func", args[1], token("HTTP->fetch"))
         TypeChecker.assert("(string->string) | string->(string[]) | void", args[2]?, token("HTTP->fetch"))
@@ -108,6 +108,7 @@ module Cosmo
         wrapped_res = {} of String => String | Int64 | Hash(String, IFunction)
         wrapped_res["status_code"] = res.status_code
         wrapped_res["body"] = wrapped_body
+
         callback.call([
           TypeChecker.as_value_type(wrapped_res)
         ])

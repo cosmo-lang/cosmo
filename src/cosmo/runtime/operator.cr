@@ -412,7 +412,7 @@ module Cosmo::Operator
 
       if left.is_a?(ClassInstance)
         return Operator.call_meta_method(left, right, "bshl$", op, expr.operator)
-      elsif right.is_a?(ClassInstance)
+      elsif right.is_a?(ClassInstance) && !left.is_a?(Array)
         return Operator.call_meta_method(right, left, "bshl$", op, expr.operator)
       end
 

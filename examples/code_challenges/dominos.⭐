@@ -1,4 +1,4 @@
-use "assert"
+use "bc_challenges"
 
 string fn domino(string sequence) {
   mut string result = ""
@@ -17,6 +17,4 @@ string fn domino(string sequence) {
   result
 }
 
-Assert->eq(domino("||//||"), "////||")
-Assert->eq(domino("||| ||||//| |/"), "/// ||||//| |/")
-Assert->eq(domino("||||"), "////")
+BeginnerCodes::test(664, domino)

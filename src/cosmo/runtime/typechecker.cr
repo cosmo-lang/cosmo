@@ -217,7 +217,7 @@ module Cosmo::TypeChecker
     when "bigint"
       value.is_a?(Int)
     when "uint"
-      value.is_a?(Int) && value > 0
+      value.is_a?(Int) && value >= 0
     when "int"
       value.is_a?(Int64 | Int32 | Int16 | Int8)
     when "float"
