@@ -524,7 +524,6 @@ class Cosmo::Parser
 
       consume(Syntax::LParen)
       info = parse_type(required: required, paren_depth: paren_depth + 1)
-      puts current.to_s
       consume(Syntax::RParen)
 
       variable_type, type_ref = parse_type_suffix(info[:variable_type].not_nil!, required, paren_depth)
