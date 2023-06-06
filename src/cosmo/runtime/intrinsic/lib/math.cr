@@ -55,7 +55,7 @@ module Cosmo
 
     class Min < IFunction
       def arity : Range(UInt32, UInt32)
-        2.to_u .. MAX_INTRINSIC_PARAMS.to_u
+        2.to_u .. MAX_FN_PARAMS.to_u
       end
 
       def call(args : Array(ValueType)) : Num
@@ -75,7 +75,7 @@ module Cosmo
 
     class Max < IFunction
       def arity : Range(UInt32, UInt32)
-        2.to_u .. MAX_INTRINSIC_PARAMS.to_u
+        2.to_u .. MAX_FN_PARAMS.to_u
       end
 
       def call(args : Array(ValueType)) : Num

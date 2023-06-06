@@ -21,6 +21,7 @@ module Cosmo::AST::Expression
       "  #{TAB * indent}typedef: #{@typedef.value},\n" +
       "  #{TAB * indent}identifier: #{@identifier.value.to_s},\n" +
       "  #{TAB * indent}value: #{@default_value.nil? ? "none" : @default_value.not_nil!.to_s(indent + 1)}\n" +
+      "  #{TAB * indent}spread?: #{@spread.to_s},\n" +
       "#{TAB * indent}>"
     end
   end

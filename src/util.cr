@@ -31,7 +31,7 @@ module Cosmo::Stringify
     @@indent -= 1
   end
 
-  private def stringify_value(value : T) : String forall T
+  def any_value(value : T) : String forall T
     s = String::Builder.new
 
     if value.is_a?(Hash)
@@ -43,7 +43,7 @@ module Cosmo::Stringify
       push_indent(s) if multiline
       value.each_with_index do |v, i|
         s.write(('\n' + (TAB * @@indent)).to_slice) if multiline
-        s.write(stringify_value(v).to_slice)
+        s.write(any_value(v).to_slice)
         if i == value.size - 1
           s.write(('\n' + TAB * (@@indent - 1)).to_slice) if multiline
         else
@@ -70,9 +70,9 @@ module Cosmo::Stringify
     s.write(('\n' + (TAB * @@indent)).to_slice) if i == 0
     key, value = entry
 
-    s.write(stringify_value(key).to_slice)
+    s.write(any_value(key).to_slice)
     s.write(" -> ".to_slice)
-    s.write(stringify_value(value).to_slice)
+    s.write(any_value(value).to_slice)
 
     s.write(",".to_slice) unless i == h.size - 1
     s.write("\n".to_slice)

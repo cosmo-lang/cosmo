@@ -367,14 +367,14 @@ class Cosmo::Parser
       param_type = type_info[:type_ref].not_nil!.name
       is_mut = type_info[:is_mut]
 
-      if reached_spread && check?(Syntax::Star)
-        Logger.report_error("Invalid parameter", "Cannot define other parameters after spread parameter", last_token)
-      end
-
       reached_spread = match?(Syntax::Star)
       param_ident = consume(Syntax::Identifier)
 
       if match?(Syntax::Equal)
+        if reached_spread
+          Logger.report_error("Invalid parameters", "Spread parameters cannot have default values", last_token)
+        end
+
         value = parse_expression
         params << Expression::Parameter.new(param_type, param_ident, is_mut, value, spread: reached_spread)
       else
@@ -386,7 +386,7 @@ class Cosmo::Parser
         param_type = type_info[:type_ref].not_nil!.name
         is_mut = type_info[:is_mut]
 
-        if reached_spread && check?(Syntax::Star)
+        if reached_spread
           Logger.report_error("Invalid parameter", "Cannot define other parameters after spread parameter", last_token)
         end
 
@@ -394,6 +394,10 @@ class Cosmo::Parser
         param_ident = consume(Syntax::Identifier)
 
         if match?(Syntax::Equal)
+          if reached_spread
+            Logger.report_error("Invalid parameters", "Spread parameters cannot have default values", last_token)
+          end
+
           value = parse_expression
           params << Expression::Parameter.new(param_type, param_ident, is_mut, value, spread: reached_spread)
         else

@@ -1,3 +1,5 @@
+MAX_FN_PARAMS = 255
+
 require "../syntax/parser"
 require "./hooked_exceptions"
 require "./types/function"
@@ -715,13 +717,13 @@ class Cosmo::Interpreter
     end
     @evaluating_fn_callee = false
 
-    unless fn.arity.includes?(expr.arguments.size)
-      arg_size = fn.arity.begin == fn.arity.end ? fn.arity.begin : fn.arity.to_s
-      Logger.report_error("Expected #{arg_size} arguments, got", expr.arguments.size.to_s, expr.token)
+    arg_values = expr.arguments.map { |arg| evaluate(arg) }
+    unless fn.arity.includes?(arg_values.size) || !arg_values.select(&.is_a?(Spread)).empty?
+      arg_size = fn.arity.begin == fn.arity.end ? fn.arity.begin : fn.arity
+      Logger.report_error("Expected #{arg_size.to_s} arguments, got", arg_values.size.to_s, expr.token)
     end
 
     trace_idx = Logger.push_trace(token)
-    arg_values = expr.arguments.map { |arg| evaluate(arg) }
     if fn.is_a?(Function)
       result = fn.call(arg_values, class_instance_override: instance_override)
     else
@@ -934,8 +936,11 @@ class Cosmo::Interpreter
     when Syntax::Star
       if operand.is_a?(ClassInstance)
         return Operator.call_meta_method(operand, nil, "splat$", expr.operator.lexeme, expr.operator)
+      elsif operand.is_a?(Array)
+        Spread.new(operand)
+      else
+        Logger.report_error("Invalid '*' operand type", TypeChecker.get_mapped(operand.class), expr.operator)
       end
-      raise "'*' unary operator has not yet implemented."
     when Syntax::Hashtag
       if operand.is_a?(ClassInstance)
         return Operator.call_meta_method(operand, nil, "size$", expr.operator.lexeme, expr.operator)

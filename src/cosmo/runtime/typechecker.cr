@@ -2,16 +2,25 @@ require "../logger"
 
 private alias CrystalClass = Class
 module Cosmo
+  class Spread
+    getter array : Array(ValueType)
+
+    def initialize(@array)
+    end
+
+    def to_s : String
+      Stringify.any_value(@array)
+    end
+  end
+
   alias UInt = UInt64 | UInt32 | UInt16 | UInt8
   alias RangeType = Range(
     Int128 | Int64 | Int32 | Int16 | Int8 | UInt,
     Int128 | Int64 | Int32 | Int16 | Int8 | UInt
   )
 
-  private alias NonNestableValueType = LiteralType |
-    RangeType | Callable | Class | ClassInstance | Type
-
-  alias ValueType = NonNestableValueType | Array(ValueType) | Hash(ValueType, ValueType)
+  alias NestableValueType = LiteralType | RangeType | Callable | Class | ClassInstance | Type | Spread
+  alias ValueType = NestableValueType | Array(ValueType) | Hash(ValueType, ValueType)
 end
 
 module Cosmo::TypeChecker
@@ -48,7 +57,8 @@ module Cosmo::TypeChecker
     Array(ValueType) => "any[]",
     Array => "any[]",
     Hash(ValueType, ValueType) => "Table",
-    RangeType => "Range"
+    RangeType => "Range",
+    Spread => "Spread"
   }
 
   REGISTERED = [] of Type
@@ -83,7 +93,7 @@ module Cosmo::TypeChecker
   end
 
   def array_as_value_type(arr : Array(T)) : Array(ValueType) forall T
-    arr.map { |e| as_value_type(e) }
+    arr.map { |e| as_value_type(e) }.as Array(ValueType)
   end
 
   def hash_as_value_type(hash : Hash(K, V)) : Hash(ValueType, ValueType) forall K, V
@@ -95,8 +105,9 @@ module Cosmo::TypeChecker
   def as_value_type(value : T) : ValueType forall T
     value.is_a?(Array) ? array_as_value_type(value)
       : value.is_a?(Hash) ? hash_as_value_type(value)
-        : value.is_a?(Int128) && value <= Int64::MAX ? value.to_i64
-          : value.is_a?(JSON::Any) ? as_value_type(value.raw) : value.as ValueType
+        : value.is_a?(Spread) ? as_value_type(value.array)
+          : value.is_a?(Int128) && value <= Int64::MAX ? value.to_i64
+            : value.is_a?(JSON::Any) ? as_value_type(value.raw) : value.as ValueType
   end
 
   def reset

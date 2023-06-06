@@ -18,8 +18,15 @@ class Cosmo::Function < Cosmo::Callable
       : @definition.as(Expression::Lambda).parameters
 
     params.each do |param| # initialize params & define default values
-      value = @interpreter.evaluate(param.default_value.not_nil!) unless param.default_value.nil?
-      @closure.declare(param.typedef, param.identifier, value, mutable: param.mutable?)
+      unless param.spread?
+        value = @interpreter.evaluate(param.default_value.not_nil!) unless param.default_value.nil?
+        @closure.declare(
+          param.typedef,
+          param.identifier,
+          value,
+          mutable: param.mutable?
+        )
+      end
     end
 
     @non_nullable_params = params.select { |param| !param.default_value.nil? && !param.typedef.lexeme.ends_with?("?") }
@@ -57,13 +64,52 @@ class Cosmo::Function < Cosmo::Callable
       : @definition.as(Expression::Lambda).parameters
 
     params.each_with_index do |param, i|
-      value = args[i]? || (param.default_value.nil? ? nil : @interpreter.evaluate(param.default_value.not_nil!))
-      scope.declare(
-        param.typedef,
-        param.identifier,
-        value.as ValueType,
-        mutable: param.mutable?
-      )
+      default_value = param.default_value.nil? ? nil : @interpreter.evaluate(param.default_value.not_nil!)
+
+      if param.spread?
+        typedef = param.typedef.dup
+        typedef.lexeme += "[]"
+
+        grouped_args = [] of ValueType
+        args.each do |arg|
+          if arg.is_a?(Spread)
+            arg.array.each { |v| grouped_args << v.as ValueType }
+          else
+            grouped_args << arg.as ValueType
+          end
+        end
+
+        scope.declare(
+          typedef,
+          param.identifier,
+          grouped_args,
+          mutable: param.mutable?
+        )
+      else
+        value = args[i]? || default_value
+        if value.is_a?(Spread)
+          spread_idx = 0
+          value.array.each do |v|
+            param = params[i + spread_idx]?
+            scope.declare(
+              param.typedef,
+              param.identifier,
+              v,
+              mutable: param.mutable?
+            ) unless param.nil?
+            spread_idx += 1
+          end
+
+          break
+        else
+          scope.declare(
+            param.typedef,
+            param.identifier,
+            value.as ValueType,
+            mutable: param.mutable?
+          )
+        end
+      end
     end
 
     # execute the body
@@ -108,7 +154,14 @@ class Cosmo::Function < Cosmo::Callable
       @definition.as(Statement::FunctionDef).parameters
       : @definition.as(Expression::Lambda).parameters
 
-    @non_nullable_params.size.to_u .. params.size.to_u
+    start = @non_nullable_params.size
+    if params.select(&.spread?).empty?
+      finish = params.size
+    else
+      finish = MAX_FN_PARAMS
+    end
+
+    start.to_u .. finish.to_u
   end
 
   def intrinsic? : Bool

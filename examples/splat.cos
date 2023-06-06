@@ -1,0 +1,14 @@
+use "assert"
+
+int fn sum(int *nums) {
+  nums.sum
+}
+
+Assert::eq(sum(1,2,3,4), 10)
+Assert::eq(sum(*[1,2,3,4]), 10)
+
+int fn mul(int x, int y) {
+  x * y
+}
+
+Assert::eq(mul(*[5, 2]), 10)

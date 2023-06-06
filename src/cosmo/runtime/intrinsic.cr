@@ -1,5 +1,3 @@
-MAX_INTRINSIC_PARAMS = 255
-
 module Cosmo::Intrinsic
   abstract class IFunction < Callable
     def initialize(@interpreter : Interpreter)

@@ -1,4 +1,4 @@
-use "bc_challenges"
+## use "bc_challenges"
 
 string fn extract_mentions(string tweet) {
   ""
