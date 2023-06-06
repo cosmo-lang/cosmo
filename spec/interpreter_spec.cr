@@ -602,6 +602,7 @@ describe Interpreter do
   describe "interprets examples:" do
     example_files = Dir.entries "examples/"
     example_files.each do |example_file|
+      next if example_file.includes?("code_challenges") && !File.exists?("pkg")
       interpret_example(File.join "examples", example_file)
     end
   end
