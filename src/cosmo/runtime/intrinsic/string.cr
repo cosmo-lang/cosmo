@@ -241,7 +241,10 @@ class Cosmo::Intrinsic::Strings
     def call(args : Array(ValueType)) : String
       TypeChecker.assert("char", args.first, token("string->pad"))
       TypeChecker.assert("uint", args[1], token("string->pad"))
-      @_self.center(args[1].as Int, args.first.to_s.chars.first)
+
+      rep = args[1].as Int
+      char = args.first.as Char
+      char.to_s * rep + @_self + char.to_s * rep
     end
   end
 
