@@ -32,8 +32,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * intersection types
 - Other
   - OS library
-  - FS library
-  - `eval()` method
+  - Filesystem library
   - Some form of multithreading
   - Range intrinsic methods
   - Intrinsic methods for all datatypes (inherit from a base type)
