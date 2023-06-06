@@ -40,6 +40,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 
 ### Fixes
 - Performance boosts lol
+- Chained method calls with optional parentheses (`.split('.').first.split('?').first`)
 
 ### Tests
 - Expectation of errors in parser spec
