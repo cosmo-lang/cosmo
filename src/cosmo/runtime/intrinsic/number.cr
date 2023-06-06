@@ -1,5 +1,5 @@
 module Cosmo
-  alias Num = Int128 | Int64 | Int32 | Int16 | Int8 | Float64 | Float32
+  alias Num = Int128 | Int64 | Int32 | Int16 | Int8 | Float64 | Float32 | UInt
 end
 
 class Cosmo::Intrinsic::Numbers

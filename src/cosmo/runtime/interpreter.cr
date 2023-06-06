@@ -900,8 +900,8 @@ class Cosmo::Interpreter
       if operand.is_a?(ClassInstance)
         return Operator.call_meta_method(operand, nil, "unm$", expr.operator.lexeme, expr.operator)
       end
-      if operand.is_a?(Float) || operand.is_a?(Int)
-        -operand
+      if operand.is_a?(Float) || operand.is_a?(Int) && !operand.is_a?(UInt)
+        (-operand).as ValueType
       elsif operand.is_a?(String)
         operand.to_s.reverse
       else
@@ -1001,7 +1001,7 @@ class Cosmo::Interpreter
     end
   end
 
-  def visit_range_literal_expr(expr : Expression::RangeLiteral) : Range(Int128 | Int64 | Int32 | Int16 | Int8, Int128 | Int64 | Int32 | Int16 | Int8)
+  def visit_range_literal_expr(expr : Expression::RangeLiteral) : RangeType
     from = evaluate(expr.from)
     to = evaluate(expr.to)
 
@@ -1012,7 +1012,7 @@ class Cosmo::Interpreter
       Logger.report_error("Invalid right side of range literal", "Ranges can only be of integers, got '#{TypeChecker.get_mapped(to.class)}'", expr.token)
     end
 
-    from .. to
+    (from .. to).as RangeType
   end
 
   def visit_table_literal_expr(expr : Expression::TableLiteral) : Hash(ValueType, ValueType)

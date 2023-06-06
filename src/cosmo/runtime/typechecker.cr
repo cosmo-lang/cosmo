@@ -2,9 +2,14 @@ require "../logger"
 
 private alias CrystalClass = Class
 module Cosmo
+  alias UInt = UInt64 | UInt32 | UInt16 | UInt8
+  alias RangeType = Range(
+    Int128 | Int64 | Int32 | Int16 | Int8 | UInt,
+    Int128 | Int64 | Int32 | Int16 | Int8 | UInt
+  )
+
   private alias NonNestableValueType = LiteralType |
-    Range(Int128 | Int64 | Int32 | Int16 | Int8, Int128 | Int64 | Int32 | Int16 | Int8) |
-    Callable | Class | ClassInstance | Type
+    RangeType | Callable | Class | ClassInstance | Type
 
   alias ValueType = NonNestableValueType | Array(ValueType) | Hash(ValueType, ValueType)
 end
@@ -43,7 +48,7 @@ module Cosmo::TypeChecker
     Array(ValueType) => "any[]",
     Array => "any[]",
     Hash(ValueType, ValueType) => "Table",
-    Range(Int128 | Int16 | Int32 | Int64 | Int8, Int128 | Int16 | Int32 | Int64 | Int8) => "Range"
+    RangeType => "Range"
   }
 
   REGISTERED = [] of Type

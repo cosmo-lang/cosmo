@@ -7,6 +7,36 @@ class Cosmo::Intrinsic::Strings
 
   def get_method(name : Token) : IFunction
     case name.lexeme.strip
+    when "index"
+      Index.new(@interpreter, @value, name)
+    when "rindex"
+      RIndex.new(@interpreter, @value, name)
+    when "lchop"
+      LChop.new(@interpreter, @value, name)
+    when "rchop"
+      RChop.new(@interpreter, @value, name)
+    when "ltrim"
+      LTrim.new(@interpreter, @value, name)
+    when "rtrim"
+      RTrim.new(@interpreter, @value, name)
+    when "trim"
+      Trim.new(@interpreter, @value, name)
+    when "pad"
+      Pad.new(@interpreter, @value, name)
+    when "lowercase"
+      Lowercase.new(@interpreter, @value, name)
+    when "uppercase"
+      Uppercase.new(@interpreter, @value, name)
+    when "camel_case"
+      CamelCase.new(@interpreter, @value, name)
+    when "title_case"
+      TitleCase.new(@interpreter, @value, name)
+    when "underscored"
+      Underscored.new(@interpreter, @value, name)
+    when "capitalize"
+      Capitalize.new(@interpreter, @value, name)
+    when "replace"
+      Replace.new(@interpreter, @value, name)
     when "reverse"
       Reverse.new(@interpreter, @value, name)
     when "empty?"
@@ -33,6 +63,331 @@ class Cosmo::Intrinsic::Strings
       Blank.new(@interpreter, @value, name)
     else
       Logger.report_error("Invalid string method or property", name.lexeme, name)
+    end
+  end
+
+  class Replace < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      2.to_u .. 2.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      TypeChecker.assert("string|char", args.first, token("string->replace"))
+      TypeChecker.assert("string|char", args[1], token("string->replace"))
+      @_self.gsub(args.first.to_s, args[1].to_s)
+    end
+  end
+
+  class Capitalize < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      @_self.capitalize
+    end
+  end
+
+  class Underscored < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      @_self.underscore
+    end
+  end
+
+  class TitleCase < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      @_self.titleize
+    end
+  end
+
+  class CamelCase < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      @_self.camelcase
+    end
+  end
+
+  class Uppercase < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      @_self.upcase
+    end
+  end
+
+  class Lowercase < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      @_self.downcase
+    end
+  end
+
+  class Pad < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      2.to_u .. 2.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      TypeChecker.assert("char", args.first, token("string->pad"))
+      TypeChecker.assert("uint", args[1], token("string->pad"))
+      @_self.center(args[1].as Int, args.first.to_s.chars.first)
+    end
+  end
+
+  class Trim < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      @_self.strip
+    end
+  end
+
+  class LTrim < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      @_self.lstrip
+    end
+  end
+
+  class RTrim < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      @_self.rstrip
+    end
+  end
+
+  class LChop < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      @_self.lchop
+    end
+  end
+
+  class RChop < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      @_self.rchop
+    end
+  end
+
+  class Includes < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 1.to_u
+    end
+
+    def call(args : Array(ValueType)) : Bool
+      TypeChecker.assert("string|char", args.first, token("string->includes?"))
+      @_self.includes?(args.first.to_s)
+    end
+  end
+
+  class RIndex < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 2.to_u
+    end
+
+    def call(args : Array(ValueType)) : Int32?
+      TypeChecker.assert("string|char", args.first, token("string->rindex"))
+      offset = args[1]?
+      TypeChecker.assert("int?", offset, token("string->rindex"))
+
+      t_offset : Int64? = offset.as? Int64
+      n_offset : Int64 = t_offset.nil? ? 0_i64 : t_offset
+      res = @_self.rindex(args.first.to_s, n_offset)
+      return nil if res.nil?
+      res.to_i
+    end
+  end
+
+  class Index < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 2.to_u
+    end
+
+    def call(args : Array(ValueType)) : Int32?
+      TypeChecker.assert("string|char", args.first, token("string->index"))
+      offset = args[1]?
+      TypeChecker.assert("int?", offset, token("string->index"))
+
+      t_offset : Int64? = offset.as? Int64
+      n_offset : Int64 = t_offset.nil? ? 0_i64 : t_offset
+      res = @_self.index(args.first.to_s, n_offset)
+      return nil if res.nil?
+      res.to_i
     end
   end
 

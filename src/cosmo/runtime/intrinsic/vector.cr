@@ -7,6 +7,8 @@ class Cosmo::Intrinsic::Vector
 
   def get_method(name : Token) : IFunction
     case name.lexeme
+    when "rindex"
+      RIndex.new(@interpreter, @cache, name)
     when "index"
       Index.new(@interpreter, @cache, name)
     when "empty?"
@@ -37,6 +39,30 @@ class Cosmo::Intrinsic::Vector
       Map.new(@interpreter, @cache, name)
     else
       Logger.report_error("Invalid vector method or property", name.lexeme, name)
+    end
+  end
+
+  class RIndex < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 2.to_u
+    end
+
+    def call(args : Array(ValueType)) : Int64?
+      offset = args[1]?
+      TypeChecker.assert("int?", offset, token("Vector->rindex"))
+
+      t_offset : Int64? = offset.as? Int64
+      n_offset : Int64 = t_offset.nil? ? 0_i64 : t_offset
+      @_self.rindex(n_offset) { |e| e == args.first }
     end
   end
 

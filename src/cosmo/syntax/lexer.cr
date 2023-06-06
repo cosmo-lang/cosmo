@@ -3,6 +3,7 @@ require "./lexer/keywords"
 
 alias LiteralType =
   Int128 | Int64 | Int32 | Int16 | Int8 |
+  UInt64 | UInt32 | UInt16 | UInt8 |
   Float64 | Float32 |
   Bool | String | Char | Nil
 

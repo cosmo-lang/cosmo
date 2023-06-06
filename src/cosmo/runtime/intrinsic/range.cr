@@ -1,8 +1,8 @@
 class Cosmo::Intrinsic::Ranges
-  private alias I = Int128 | Int64 | Int32 | Int16 | Int8
+  private alias I = Int128 | Int64 | Int32 | Int16 | Int8 | UInt
   def initialize(
     @interpreter : Interpreter,
-    @value : Range(I, I)
+    @value : RangeType
   )
   end
 
@@ -22,7 +22,7 @@ class Cosmo::Intrinsic::Ranges
   class Begin < IFunction
     def initialize(
       interpreter : Interpreter,
-      @_self : Range(I, I),
+      @_self : RangeType,
       @token : Token
     )
 
@@ -41,7 +41,7 @@ class Cosmo::Intrinsic::Ranges
   class End < IFunction
     def initialize(
       interpreter : Interpreter,
-      @_self : Range(I, I),
+      @_self : RangeType,
       @token : Token
     )
 
@@ -60,7 +60,7 @@ class Cosmo::Intrinsic::Ranges
   class Sum < IFunction
     def initialize(
       interpreter : Interpreter,
-      @_self : Range(I, I),
+      @_self : RangeType,
       @token : Token
     )
 
