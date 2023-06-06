@@ -1,11 +1,11 @@
-class Cosmo::VectorIntrinsics
+class Cosmo::Intrinsic::Vector
   def initialize(
     @interpreter : Interpreter,
     @cache : Array(ValueType)
   )
   end
 
-  def get_method(name : Token) : IntrinsicFunction
+  def get_method(name : Token) : IFunction
     case name.lexeme
     when "index"
       Index.new(@interpreter, @cache, name)
@@ -40,7 +40,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class Index < IntrinsicFunction
+  class Index < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),
@@ -64,7 +64,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class IsEmpty < IntrinsicFunction
+  class IsEmpty < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),
@@ -83,7 +83,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class Sort < IntrinsicFunction
+  class Sort < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),
@@ -114,7 +114,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class Join < IntrinsicFunction
+  class Join < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),
@@ -134,7 +134,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class Shift < IntrinsicFunction
+  class Shift < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),
@@ -153,7 +153,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class Push < IntrinsicFunction
+  class Push < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),
@@ -175,7 +175,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class Pop < IntrinsicFunction
+  class Pop < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),
@@ -194,7 +194,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class Sum < IntrinsicFunction
+  class Sum < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),
@@ -215,7 +215,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class FirstNullable < IntrinsicFunction
+  class FirstNullable < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),
@@ -234,7 +234,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class LastNullable < IntrinsicFunction
+  class LastNullable < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),
@@ -253,7 +253,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class First < IntrinsicFunction
+  class First < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),
@@ -276,7 +276,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class Last < IntrinsicFunction
+  class Last < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),
@@ -300,7 +300,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class Map < IntrinsicFunction
+  class Map < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),
@@ -331,7 +331,7 @@ class Cosmo::VectorIntrinsics
     end
   end
 
-  class Filter < IntrinsicFunction
+  class Filter < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Array(ValueType),

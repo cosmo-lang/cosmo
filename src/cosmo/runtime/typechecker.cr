@@ -1,5 +1,4 @@
 require "../logger"
-require "./intrinsic/global"
 
 private alias CrystalClass = Class
 module Cosmo
@@ -56,7 +55,7 @@ module Cosmo::TypeChecker
   end
 
   def get_mapped(t : CrystalClass) : String
-    return t.to_s if t < IntrinsicFunction
+    return t.to_s if t < Intrinsic::IFunction
     unless TYPE_MAP.has_key?(t)
       raise "Unhandled type to map: #{t}"
     end
@@ -198,7 +197,7 @@ module Cosmo::TypeChecker
     when "type"
       value.is_a?(Type)
     when "func"
-      value.is_a?(Function) || value.is_a?(IntrinsicFunction)
+      value.is_a?(Callable)
     when "bigint"
       value.is_a?(Int)
     when "uint"

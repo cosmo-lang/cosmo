@@ -1,11 +1,11 @@
-class Cosmo::StringIntrinsics
+class Cosmo::Intrinsic::Strings
   def initialize(
     @interpreter : Interpreter,
     @value : String
   )
   end
 
-  def get_method(name : Token) : IntrinsicFunction
+  def get_method(name : Token) : IFunction
     case name.lexeme.strip
     when "reverse"
       Reverse.new(@interpreter, @value, name)
@@ -36,7 +36,7 @@ class Cosmo::StringIntrinsics
     end
   end
 
-  class Reverse < IntrinsicFunction
+  class Reverse < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
@@ -55,7 +55,7 @@ class Cosmo::StringIntrinsics
     end
   end
 
-  class Empty < IntrinsicFunction
+  class Empty < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
@@ -74,7 +74,7 @@ class Cosmo::StringIntrinsics
     end
   end
 
-  class Numeric < IntrinsicFunction
+  class Numeric < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
@@ -93,7 +93,7 @@ class Cosmo::StringIntrinsics
     end
   end
 
-  class AlphaNumeric < IntrinsicFunction
+  class AlphaNumeric < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
@@ -112,7 +112,7 @@ class Cosmo::StringIntrinsics
     end
   end
 
-  class Alpha < IntrinsicFunction
+  class Alpha < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
@@ -131,7 +131,7 @@ class Cosmo::StringIntrinsics
     end
   end
 
-  class WithoutFirst < IntrinsicFunction
+  class WithoutFirst < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
@@ -151,7 +151,7 @@ class Cosmo::StringIntrinsics
     end
   end
 
-  class WithoutLast < IntrinsicFunction
+  class WithoutLast < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
@@ -171,7 +171,7 @@ class Cosmo::StringIntrinsics
     end
   end
 
-  class StartsWith < IntrinsicFunction
+  class StartsWith < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
@@ -191,7 +191,7 @@ class Cosmo::StringIntrinsics
     end
   end
 
-  class EndsWith < IntrinsicFunction
+  class EndsWith < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
@@ -211,7 +211,7 @@ class Cosmo::StringIntrinsics
     end
   end
 
-  class Split < IntrinsicFunction
+  class Split < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
@@ -231,7 +231,7 @@ class Cosmo::StringIntrinsics
     end
   end
 
-  class Chars < IntrinsicFunction
+  class Chars < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
@@ -250,7 +250,7 @@ class Cosmo::StringIntrinsics
     end
   end
 
-  class Blank < IntrinsicFunction
+  class Blank < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,

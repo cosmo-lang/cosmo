@@ -67,7 +67,7 @@ describe Interpreter do
 
       result = interpreter.interpret("puts", "test")
       result.should be_a Callable
-      result.should be_a IntrinsicFunction
+      result.should be_a Intrinsic::IFunction
     end
     it "math/number library" do
       result = interpreter.interpret("Math->π", "test")

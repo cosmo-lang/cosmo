@@ -35,6 +35,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
   - FS library
   - `eval()` method
   - Some form of multithreading
+  - Range intrinsic methods
   - Intrinsic methods for all datatypes (inherit from a base type)
   - REPL supports multiline source
 

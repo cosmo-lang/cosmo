@@ -1,11 +1,11 @@
-class Cosmo::TableIntrinsics
+class Cosmo::Intrinsic::Table
   def initialize(
     @interpreter : Interpreter,
     @value : Hash(ValueType, ValueType)
   )
   end
 
-  def get_method(name : Token, required = true) : IntrinsicFunction?
+  def get_method(name : Token, required = true) : IFunction?
     case name.lexeme.strip
     when "keys"
       Keys.new(@interpreter, @value, name)
@@ -22,7 +22,7 @@ class Cosmo::TableIntrinsics
     end
   end
 
-  class Keys < IntrinsicFunction
+  class Keys < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Hash(ValueType, ValueType),
@@ -43,7 +43,7 @@ class Cosmo::TableIntrinsics
     end
   end
 
-  class Values < IntrinsicFunction
+  class Values < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Hash(ValueType, ValueType),
@@ -64,7 +64,7 @@ class Cosmo::TableIntrinsics
     end
   end
 
-  class Empty < IntrinsicFunction
+  class Empty < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Hash(ValueType, ValueType),
@@ -83,7 +83,7 @@ class Cosmo::TableIntrinsics
     end
   end
 
-  class Has < IntrinsicFunction
+  class Has < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Hash(ValueType, ValueType),
@@ -102,7 +102,7 @@ class Cosmo::TableIntrinsics
     end
   end
 
-  class Invert < IntrinsicFunction
+  class Invert < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Hash(ValueType, ValueType),

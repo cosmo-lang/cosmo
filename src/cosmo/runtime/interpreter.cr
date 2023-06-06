@@ -6,12 +6,7 @@ require "./types/type"
 require "./scope"
 require "./operator"
 require "./resolver"
-require "./intrinsic/number"
-require "./intrinsic/string"
-require "./intrinsic/vector"
-require "./intrinsic/table"
-require "./intrinsic/lib/math"
-require "./intrinsic/lib/http"
+require "./intrinsic"
 
 class Cosmo::Interpreter
   include Expression::Visitor(ValueType)
@@ -26,7 +21,7 @@ class Cosmo::Interpreter
   property within_fn = false
   @locals = {} of Expression::Base => UInt32
   @file_path : String = ""
-  @importable_intrinsics = {} of String => IntrinsicLib
+  @importable_intrinsics = {} of String => Intrinsic::Lib
   @evaluating_fn_callee = false
   @loop_level : UInt32 = 0
   @recursion_depth : UInt32 = 1
@@ -42,20 +37,20 @@ class Cosmo::Interpreter
   end
 
   private def declare_globals
-    declare_intrinsic("func", "puts", PutsIntrinsic.new(self))
-    declare_intrinsic("func", "gets", GetsIntrinsic.new(self))
-    declare_intrinsic("func", "recursion_depth!", RecursionDepthIntrinsic.new(self))
+    declare_intrinsic("func", "puts", Intrinsic::Puts.new(self))
+    declare_intrinsic("func", "gets", Intrinsic::Gets.new(self))
+    declare_intrinsic("func", "recursion_depth!", Intrinsic::RecursionDepth.new(self))
 
     import_file(File.join File.dirname(__FILE__), "../../../libraries/intrinsic.⭐")
 
     version = "Cosmo #{Version}"
     declare_intrinsic("string", "version$", version)
 
-    MathLib.new(self).inject
-    declare_importable("http", HttpLib.new(self))
+    Intrinsic::MathLib.new(self).inject
+    declare_importable("http", Intrinsic::HttpLib.new(self))
   end
 
-  private def declare_importable(name : String, library : IntrinsicLib)
+  private def declare_importable(name : String, library : Intrinsic::Lib)
     @importable_intrinsics[name] = library
   end
 
@@ -121,10 +116,32 @@ class Cosmo::Interpreter
       result = execute(stmt)
     end
 
-    # Check if "main" fn exists and call it
+    main_result = execute_main
+    end_time = Time.monotonic
+    puts "Interpreter @#{file_path} took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
+
+    if !main_result.nil? && @file_path != "test" && @file_path != "repl"
+      code = main_result.not_nil!
+      if code == 0 # success
+        Process.exit(code)
+      else
+        raise "Process exited with code #{code}"
+      end
+    end
+
+    result
+  end
+
+  def resolve(expr : Expression::Base, depth : UInt32) : Nil
+    @locals[expr] = depth
+  end
+
+  # Check if a "main" fn exists and call it
+  def execute_main : Int64?
     main_fn = @globals.lookup?("main")
     is_public = @globals.public?("main")
     found_main = !main_fn.nil? && main_fn.is_a?(Function)
+
     if found_main
       if is_public
         main_fn = main_fn.as(Function)
@@ -139,28 +156,11 @@ class Cosmo::Interpreter
         end
 
         TypeChecker.assert("int", main_result, return_typedef)
+        main_result.as Int64
       else
         puts "[WARNING]: Found main() function, but it is not public. It will not be called on program execution."
       end
     end
-
-    end_time = Time.monotonic
-    puts "Interpreter @#{file_path} took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
-
-    if found_main && @file_path != "test" && @file_path != "repl"
-      code = main_result.not_nil!.as(Int64)
-      if code == 0 # success
-        Process.exit(code)
-      else
-        raise "Process exited with code #{code}"
-      end
-    end
-
-    result
-  end
-
-  def resolve(expr : Expression::Base, depth : UInt32) : Nil
-    @locals[expr] = depth
   end
 
   private def lookup_variable(identifier : Token, expr : Expression::Base) : ValueType
@@ -409,7 +409,7 @@ class Cosmo::Interpreter
         end
       end
     elsif enumerable.is_a?(Callable)
-      if enumerable.is_a?(IntrinsicFunction)
+      if enumerable.intrinsic?
         Logger.report_error("Invalid iterator", "An iterator cannot be an intrinsic function", stmt.enumerable.token)
       end
       unless enumerable.is_a?(Function)
@@ -534,7 +534,7 @@ class Cosmo::Interpreter
     if object.is_a?(Hash)
       value = object[key]?
       if value.nil?
-        fn = TableIntrinsics.new(self, object)
+        fn = Intrinsic::Table.new(self, object)
           .get_method(expr.key, required: false)
 
         unless fn.nil?
@@ -551,21 +551,21 @@ class Cosmo::Interpreter
         end
       end
     elsif object.is_a?(Array)
-      fn = VectorIntrinsics.new(self, object)
+      fn = Intrinsic::Vector.new(self, object)
         .get_method(expr.key)
 
       fn.arity.begin == 0 && !@evaluating_fn_callee ?
         fn.call([] of ValueType)
         : fn
     elsif object.is_a?(String)
-      fn = StringIntrinsics.new(self, object)
+      fn = Intrinsic::Strings.new(self, object)
         .get_method(expr.key)
 
       fn.arity.begin == 0 && !@evaluating_fn_callee ?
         fn.call([] of ValueType)
         : fn
     elsif object.is_a?(Number)
-      fn = NumberIntrinsics.new(self, object)
+      fn = Intrinsic::Numbers.new(self, object)
         .get_method(expr.key)
 
       return fn unless fn.arity.begin == 0 && !@evaluating_fn_callee

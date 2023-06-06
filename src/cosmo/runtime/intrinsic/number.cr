@@ -2,14 +2,14 @@ module Cosmo
   alias Num = Int128 | Int64 | Int32 | Int16 | Int8 | Float64 | Float32
 end
 
-class Cosmo::NumberIntrinsics
+class Cosmo::Intrinsic::Numbers
   def initialize(
     @interpreter : Interpreter,
     @value : Num
   )
   end
 
-  def get_method(name : Token) : IntrinsicFunction
+  def get_method(name : Token) : IFunction
     case name.lexeme
     when "cbrt"
       Cbrt.new(@interpreter, @value, name)
@@ -28,7 +28,7 @@ class Cosmo::NumberIntrinsics
     end
   end
 
-  class Cbrt < IntrinsicFunction
+  class Cbrt < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Num,
@@ -47,7 +47,7 @@ class Cosmo::NumberIntrinsics
     end
   end
 
-  class ISqrt < IntrinsicFunction
+  class ISqrt < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Num,
@@ -67,7 +67,7 @@ class Cosmo::NumberIntrinsics
     end
   end
 
-  class Sqrt < IntrinsicFunction
+  class Sqrt < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Num,
@@ -87,7 +87,7 @@ class Cosmo::NumberIntrinsics
     end
   end
 
-  class Round < IntrinsicFunction
+  class Round < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Num,
@@ -109,7 +109,7 @@ class Cosmo::NumberIntrinsics
     end
   end
 
-  class Floor < IntrinsicFunction
+  class Floor < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Num,
@@ -128,7 +128,7 @@ class Cosmo::NumberIntrinsics
     end
   end
 
-  class Ceil < IntrinsicFunction
+  class Ceil < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Num,
