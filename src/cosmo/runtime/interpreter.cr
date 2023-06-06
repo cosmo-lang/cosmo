@@ -51,7 +51,7 @@ class Cosmo::Interpreter
     version = "Cosmo #{Version}"
     declare_intrinsic("string", "version$", version)
 
-    declare_importable("math", MathLib.new(self))
+    MathLib.new(self).inject
     declare_importable("http", HttpLib.new(self))
   end
 
@@ -236,10 +236,6 @@ class Cosmo::Interpreter
   def visit_use_stmt(stmt : Statement::Use) : Nil
     relative_module_path = stmt.module_path.lexeme
     Logger.push_trace(stmt.keyword)
-
-    if relative_module_path == "intrinsic"
-      Logger.report_error("Cannot import", "Cannot import the intrinsic library, as it is in the global scope by default", stmt.module_path)
-    end
 
     unless relative_module_path.includes?("/")
       unless @importable_intrinsics.has_key?(relative_module_path)

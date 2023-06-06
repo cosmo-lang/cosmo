@@ -70,7 +70,6 @@ describe Interpreter do
       result.should be_a IntrinsicFunction
     end
     it "math/number library" do
-      interpreter.interpret("use \"math\"", "test")
       result = interpreter.interpret("Math->π", "test")
       result.as(Float64).should be_close 3.141, 0.001
       result = interpreter.interpret("Math->e", "test")

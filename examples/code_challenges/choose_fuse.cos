@@ -1,5 +1,4 @@
 use "assert"
-use "math"
 
 string fn choose_fuse(mut string[] fuses, string current_output) {
   mut string best_fuse = ""

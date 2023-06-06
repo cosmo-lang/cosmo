@@ -1,5 +1,4 @@
 use "assert"
-use "math"
 
 int fn lcm(int x, int y) {
   mut int i = 1
