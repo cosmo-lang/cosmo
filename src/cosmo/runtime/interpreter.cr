@@ -241,12 +241,25 @@ class Cosmo::Interpreter
     unless relative_module_path.includes?("/")
       unless @importable_intrinsics.has_key?(relative_module_path)
         file_path = File.join File.dirname(__FILE__), "../../../libraries", relative_module_path
-        path_with_ext = File.exists?(file_path + ".cos") ? file_path + ".cos" : file_path + ".⭐"
+        path_with_ext = file_path + (File.exists?(file_path + ".cos") ? ".cos" : ".⭐")
 
         if File.exists?(path_with_ext)
           return import_file(path_with_ext)
         end
-        Logger.report_error("Cannot import '#{relative_module_path}'", "No package management system implemented yet. If you are trying to import a file path, prepend './' to the path.", stmt.module_path)
+
+        pkg_path = File.join File.dirname(__FILE__), "../../../pkg", relative_module_path
+        if File.exists?(pkg_path)
+          pkg_path = File.join(pkg_path, "src", relative_module_path)
+          main_file = pkg_path + (File.exists?(pkg_path + ".cos") ? ".cos" : ".⭐")
+          unless File.exists?(main_file)
+            pkg_path = pkg_path.rchop(relative_module_path) + "main"
+            main_file = pkg_path + (File.exists?(pkg_path + ".cos") ? ".cos" : ".⭐")
+          end
+
+          return import_file(main_file)
+        end
+
+        Logger.report_error("Failed to resolve '#{relative_module_path}'", "Could not find package. Please run 'stars install' and try again.", stmt.module_path)
       else
         @importable_intrinsics[relative_module_path].inject
       end
