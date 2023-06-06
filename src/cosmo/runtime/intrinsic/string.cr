@@ -23,16 +23,16 @@ class Cosmo::Intrinsic::Strings
       Trim.new(@interpreter, @value, name)
     when "pad"
       Pad.new(@interpreter, @value, name)
-    when "lowercase"
-      Lowercase.new(@interpreter, @value, name)
-    when "uppercase"
-      Uppercase.new(@interpreter, @value, name)
-    when "camel_case"
-      CamelCase.new(@interpreter, @value, name)
+    when "lower"
+      Lower.new(@interpreter, @value, name)
+    when "upper"
+      Upper.new(@interpreter, @value, name)
+    when "pascal_case"
+      PascalCase.new(@interpreter, @value, name)
     when "title_case"
       TitleCase.new(@interpreter, @value, name)
-    when "underscored"
-      Underscored.new(@interpreter, @value, name)
+    when "snake_case"
+      SnakeCase.new(@interpreter, @value, name)
     when "capitalize"
       Capitalize.new(@interpreter, @value, name)
     when "replace"
@@ -106,7 +106,7 @@ class Cosmo::Intrinsic::Strings
     end
   end
 
-  class Underscored < IFunction
+  class SnakeCase < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
@@ -159,11 +159,32 @@ class Cosmo::Intrinsic::Strings
     end
 
     def call(args : Array(ValueType)) : String
+      chars = @_self.camelcase.chars
+      chars[0] = chars[0].downcase
+      chars.join
+    end
+  end
+
+  class PascalCase < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
       @_self.camelcase
     end
   end
 
-  class Uppercase < IFunction
+  class Upper < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
@@ -182,7 +203,7 @@ class Cosmo::Intrinsic::Strings
     end
   end
 
-  class Lowercase < IFunction
+  class Lower < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : String,
