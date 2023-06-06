@@ -366,8 +366,13 @@ class Cosmo::Lexer
           report_error("Character overflow", "Character literal must have exactly one character")
         end
       else
-        res_str += advance
+        if current_char == "\n"
+          add_newline
+        else
+          res_str += advance
+        end
       end
+
       if current_char == "\n" && !multiline
         report_error("Invalid string literal", "Newline found in single-line string")
       end
