@@ -4,6 +4,7 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     math["e"] = Math::E
     math["π"] = Math::PI
     math["inf"] = Float64::INFINITY
+    math["random"] = Random.new(@i)
     math["min"] = Min.new(@i)
     math["max"] = Max.new(@i)
     math["log"] = Log.new(@i)
@@ -23,15 +24,40 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
     math["acos"] = Acos.new(@i)
     math["atan"] = Atan.new(@i)
     math["atan2"] = Atan2.new(@i)
+
     @i.declare_intrinsic("string->(func|float)", "Math", math)
+  end
+
+  class Random < IntrinsicFunction
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 1.to_u
+    end
+
+    def call(args : Array(ValueType)) : Num
+      TypeChecker.assert("Range|float|int|void", args.first?, token("Math->random"))
+      if args.empty?
+        rand
+      elsif args.first.is_a?(Num)
+        rand(args.first.as Num)
+      else
+        r = args.first.as(Range)
+        if r.begin.is_a?(Int)
+          a = r.to_a.map(&.to_i)
+          rand(a.first .. a.last)
+        else
+          a = r.to_a.map(&.to_f)
+          rand(a.first .. a.last)
+        end
+      end
+    end
   end
 
   class Min < IntrinsicFunction
     def arity : Range(UInt32, UInt32)
-      2.to_u..MAX_INTRINSIC_PARAMS.to_u
+      2.to_u .. MAX_INTRINSIC_PARAMS.to_u
     end
 
-    def call(args : Array(ValueType)) : Float64 | Int64
+    def call(args : Array(ValueType)) : Num
       args.each do |arg|
         TypeChecker.assert("float|int", arg, token("Math->min"))
       end
@@ -41,16 +67,17 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
       args.each do |arg|
         min = Math.min(arg.as Number, min)
       end
-      min.as(Float64 | Int64)
+
+      min.as Num
     end
   end
 
   class Max < IntrinsicFunction
     def arity : Range(UInt32, UInt32)
-      2.to_u..MAX_INTRINSIC_PARAMS.to_u
+      2.to_u .. MAX_INTRINSIC_PARAMS.to_u
     end
 
-    def call(args : Array(ValueType)) : Float64 | Int64
+    def call(args : Array(ValueType)) : Num
       args.each do |arg|
         TypeChecker.assert("float|int", arg, token("Math->max"))
       end
@@ -60,13 +87,14 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
       args.each do |arg|
         max = Math.max(arg.as Number, max)
       end
-      max.as(Float64 | Int64)
+
+      max.as Num
     end
   end
 
   class Log2 < IntrinsicFunction
     def arity : Range(UInt32, UInt32)
-      1.to_u..1.to_u
+      1.to_u .. 1.to_u
     end
 
     def call(args : Array(ValueType)) : Float64
@@ -78,7 +106,7 @@ class Cosmo::MathLib < Cosmo::IntrinsicLib
 
   class Log10 < IntrinsicFunction
     def arity : Range(UInt32, UInt32)
-      1.to_u..1.to_u
+      1.to_u .. 1.to_u
     end
 
     def call(args : Array(ValueType)) : Float64

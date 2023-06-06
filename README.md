@@ -13,6 +13,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 ### Features
 - Grammar
   - Regexes
+  - Endless (and beginless?) range literals
   - Enums
   - Decorators
   - Interfaces
@@ -32,7 +33,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Other
   - OS library
   - FS library
-  - `Math::random` method
   - `eval()` method
   - Some form of multithreading
   - Intrinsic methods for all datatypes (inherit from a base type)
