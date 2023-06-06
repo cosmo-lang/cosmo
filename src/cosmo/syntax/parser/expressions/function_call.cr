@@ -16,7 +16,7 @@ module Cosmo::AST::Expression
 
     def to_s(indent : Int = 0)
       "FunctionCall<\n" +
-      "  #{TAB * indent}var: #{@callee.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}callee: #{@callee.to_s(indent + 1)},\n" +
       "  #{TAB * indent}arguments: [\n" +
       "    #{TAB * indent}#{@arguments.map(&.to_s(indent + 2)).join(",\n#{TAB * (indent + 2)}")}\n" +
       "  #{TAB * indent}]\n" +

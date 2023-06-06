@@ -318,11 +318,16 @@ class Cosmo::Intrinsic::Strings
     end
 
     def arity : Range(UInt32, UInt32)
-      0.to_u .. 0.to_u
+      0.to_u .. 1.to_u
     end
 
     def call(args : Array(ValueType)) : String
-      @_self.lchop
+      TypeChecker.assert("string|char|void", args.first?, token("string->lchop"))
+      if args.first?.nil?
+        @_self.lchop
+      else
+        @_self.lchop(args.first.to_s)
+      end
     end
   end
 
@@ -337,11 +342,16 @@ class Cosmo::Intrinsic::Strings
     end
 
     def arity : Range(UInt32, UInt32)
-      0.to_u .. 0.to_u
+      0.to_u .. 1.to_u
     end
 
     def call(args : Array(ValueType)) : String
-      @_self.rchop
+      TypeChecker.assert("string|char|void", args.first?, token("string->rchop"))
+      if args.first?.nil?
+        @_self.rchop
+      else
+        @_self.rchop(args.first.to_s)
+      end
     end
   end
 
