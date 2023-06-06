@@ -1,19 +1,10 @@
-use "assert"
+use "beginner_codes"
 
 int[]? fn simple_pair(int[] vec, int n) {
-  mut int i = 0
-  every int x in vec {
-    int? y = vec[i + 1]?
-    int? z = vec[i - 1]?
-    if y is void next
-
-    if x * y == n return [x, y]
-    if x * z == n return [x, z]
-    ++i
-  }
+  every int i in #vec
+    every int j in (i + 1)..(#vec - 1)
+      if vec[i] * vec[j] == n
+        return [ vec[i], vec[j] ]
 }
 
-Assert::eq(simple_pair([1, 2, 3], 3), [1, 3])
-Assert::eq(simple_pair([1, 2, 3], 6), [2, 3])
-Assert::is_none(simple_pair([1, 2, 3], 9))
-
+BeginnerCodes::test(665, simple_pair)

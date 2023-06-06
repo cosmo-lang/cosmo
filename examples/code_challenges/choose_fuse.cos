@@ -1,4 +1,4 @@
-use "assert"
+use "beginner_codes"
 
 string fn choose_fuse(mut string[] fuses, string current_output) {
   mut string best_fuse = ""
@@ -15,7 +15,4 @@ string fn choose_fuse(mut string[] fuses, string current_output) {
   best_fuse
 }
 
-Assert::eq(choose_fuse(["3V", "5V", "12V"], "4.5V"), "5V")
-Assert::eq(choose_fuse(["5V", "14V", "2V"], "5.5V"), "14V")
-Assert::eq(choose_fuse(["17V", "15V", "12V"], "9V"), "12V")
-
+test(673, choose_fuse)

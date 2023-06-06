@@ -3,6 +3,20 @@ abstract class Cosmo::Callable
   abstract def arity : Range(UInt32, UInt32)
   abstract def intrinsic? : Bool
   abstract def to_s : String
+
+  def expand_args(args : Array(ValueType)) : Array(ValueType)
+    grouped_args = [] of ValueType
+
+    args.each do |arg|
+      if arg.is_a?(Spread)
+        arg.array.each { |v| grouped_args << v.as ValueType }
+      else
+        grouped_args << arg.as ValueType
+      end
+    end
+
+    grouped_args
+  end
 end
 
 class Cosmo::Function < Cosmo::Callable
@@ -70,19 +84,10 @@ class Cosmo::Function < Cosmo::Callable
         typedef = param.typedef.dup
         typedef.lexeme += "[]"
 
-        grouped_args = [] of ValueType
-        args.each do |arg|
-          if arg.is_a?(Spread)
-            arg.array.each { |v| grouped_args << v.as ValueType }
-          else
-            grouped_args << arg.as ValueType
-          end
-        end
-
         scope.declare(
           typedef,
           param.identifier,
-          grouped_args,
+          expand_args(args),
           mutable: param.mutable?
         )
       else

@@ -1,17 +1,15 @@
-use "assert"
+use "beginner_codes"
 
 bool fn alternating_negatives?(int[] nums) {
-  mut bool negative
-  every int n in nums {
-    if negative is not void and (n < 0 and negative or n >= 0 and not negative)
-      return false
+  if nums.includes?(0)
+    return false
 
-    negative = n < 0
+  every int i in 0..(#nums - 2) {
+    if (nums[i] >= 0 and nums[i + 1] >= 0) or (nums[i] < 0 and nums[i + 1] < 0)
+      return false
   }
 
   true
 }
 
-Assert->truthy(alternating_negatives?([3, -2, 5, -5, 2, -8]))
-Assert->truthy(alternating_negatives?([-6, 1, -1, 4, -3]))
-Assert->falsey(alternating_negatives?([4, 4, -2, 3, -6, 10]))
+BeginnerCodes::test(666, alternating_negatives?)

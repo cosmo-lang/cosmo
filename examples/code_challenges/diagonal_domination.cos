@@ -1,31 +1,18 @@
-use "assert"
+use "beginner_codes"
 
 bool fn diagonally_dominant?(int[][] matrix) {
-  mut bool dominant = true
-  mut int i = 0
-
-  every int[] row in matrix {
-    unless #row == #matrix
-      throw new Exception("Matrix must be square.")
-
-    int main_diagonal = +matrix[i][i]
-    mut int other_sum = 0
-    every int j in 0..(#row - 1) {
-      int n = +row[j]
-      if n == main_diagonal next
-      other_sum += n
+  every int i in #matrix {
+    mut int row_sum = 0
+    every int j in #matrix {
+      if j == i next
+      row_sum += +matrix[i][j]
     }
 
-    dominant and= main_diagonal > other_sum
-    ++i
+    if +matrix[i][i] <= row_sum
+      return false
   }
 
-  dominant
+  true
 }
 
-Assert->truthy(diagonally_dominant?([
-  [10, 3, 6],
-  [2, -9, -6],
-  [1, -1, 4]
-]))
-
+BeginnerCodes::test(668, diagonally_dominant?)

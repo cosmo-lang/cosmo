@@ -1,4 +1,4 @@
-use "assert"
+use "beginner_codes"
 
 int fn count_repetitions(string str) {
   every int i in 1..(#str // 2) {
@@ -13,8 +13,4 @@ int fn count_repetitions(string str) {
   1
 }
 
-Assert->eq(count_repetitions("abcabcabcabc"), 4)
-Assert->eq(count_repetitions("bcbcbc"), 3)
-Assert->eq(count_repetitions("llbllbllbllbllbllb"), 6)
-Assert->eq(count_repetitions("kc"), 1)
-
+BeginnerCodes::test(670, count_repetitions)

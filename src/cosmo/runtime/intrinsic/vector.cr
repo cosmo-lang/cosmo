@@ -11,6 +11,8 @@ class Cosmo::Intrinsic::Vector
       RIndex.new(@interpreter, @cache, name)
     when "index"
       Index.new(@interpreter, @cache, name)
+    when "includes?"
+      Includes.new(@interpreter, @cache, name)
     when "empty?"
       IsEmpty.new(@interpreter, @cache, name)
     when "sort"
@@ -39,6 +41,25 @@ class Cosmo::Intrinsic::Vector
       Map.new(@interpreter, @cache, name)
     else
       Logger.report_error("Invalid vector method or property", name.lexeme, name)
+    end
+  end
+
+  class Includes < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 1.to_u
+    end
+
+    def call(args : Array(ValueType)) : Bool
+      @_self.includes?(args.first)
     end
   end
 
@@ -120,23 +141,20 @@ class Cosmo::Intrinsic::Vector
     end
 
     def arity : Range(UInt32, UInt32)
-      1.to_u .. 1.to_u
+      0.to_u .. 1.to_u
     end
 
     def call(args : Array(ValueType)) : Array(ValueType)
-      TypeChecker.assert("func", args.first, token("Vector->sort"))
+      TypeChecker.assert("func?", args.first?, token("Vector->sort"))
 
-      if args.first.is_a?(Callable)
-        sorter = args.first.as Callable
-        res = @_self.map { |v| TypeChecker.as_value_type(v) }.sort do |a, b|
-          value = sorter.call([a, b])
-          TypeChecker.assert("int|float", value, token("Vector->sort"))
-          value.as(Num).to_i unless value.nil?
-        end
-        res.map(&.as ValueType)
-      else
-        [] of ValueType
+      sorter = args.first?.as Callable?
+      res = @_self.map { |v| TypeChecker.as_value_type(v) }.sort do |a, b|
+        value = sorter.nil? ? a.as Num - b.as Num : sorter.call([a, b])
+        TypeChecker.assert("int|float", value, token("Vector->sort"))
+        value.as(Num).to_i unless value.nil?
       end
+
+      res.map(&.as ValueType)
     end
   end
 

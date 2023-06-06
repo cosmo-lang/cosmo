@@ -396,6 +396,10 @@ class Cosmo::Interpreter
     @loop_level += 1
     level : UInt32 = 0
 
+    if enumerable.is_a?(Int)
+      enumerable = 0 .. (enumerable - 1)
+    end
+
     if enumerable.is_a?(Array) || enumerable.is_a?(Range)
       enumerable.each do |value|
         @scope.assign(stmt.var.token, value)
@@ -729,7 +733,7 @@ class Cosmo::Interpreter
     if fn.is_a?(Function)
       result = fn.call(arg_values, class_instance_override: instance_override)
     else
-      result = fn.call(arg_values)
+      result = fn.call(fn.expand_args(arg_values))
     end
 
     Logger.pop_trace(trace_idx)
@@ -1051,7 +1055,12 @@ class Cosmo::Interpreter
 
   def visit_string_interpolation_expr(expr : Expression::StringInterpolation) : ValueType
     expr.parts.map do |part|
-      part.is_a?(String) ? part : evaluate(part).to_s
+      if part.is_a?(String)
+        part
+      else
+        part_value = evaluate(part)
+        part_value.nil? ? "none" : part_value.to_s
+      end
     end.join
   end
 

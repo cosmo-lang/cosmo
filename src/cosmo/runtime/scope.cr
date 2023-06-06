@@ -80,7 +80,7 @@ class Cosmo::Scope
   end
 
   def variable_exists?(ident : String) : Bool
-    @variables.has_key?(ident)
+    @variables.has_key?(ident) || (@parent.nil? ? false : @parent.not_nil!.variable_exists?(ident))
   end
 
   def lookup?(ident : String) : ValueType
@@ -95,8 +95,8 @@ class Cosmo::Scope
 
   def lookup(token : Token) : ValueType
     value = lookup?(token.lexeme)
-    if value.nil? && !variable_exists?(token.lexeme)
-      Logger.report_error("Undefined variable", token.value.to_s, token) if value.nil? && @parent.nil?
+    unless variable_exists?(token.lexeme)
+      Logger.report_error("Undefined variable", token.value.to_s, token) if @parent.nil?
     end
     value
   end

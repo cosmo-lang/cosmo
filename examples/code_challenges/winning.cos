@@ -1,25 +1,38 @@
-use "assert"
+use "beginner_codes"
 
-char[] fn whos_winning?(int[] scoresets) {
-  unless #scoresets % 2 == 0 or #scoresets != 0
-    throw new Exception("Uneven scoreset array")
-
-  mut char[] scores = []
-  every int i in 0..((#scoresets // 2) - 1) {
-    int even_idx = i * 2
-    int y = scoresets[even_idx]
-    int o = scoresets[even_idx + 1]
-
-    if y == o
-      scores << 'T'
+string[] fn whos_winning?(uint[] scores) {
+  mut uint[] you = []
+  mut uint[] opp = []
+  every uint i in #scores {
+    if i % 2 == 0
+      you << scores[i]
     else
-      scores << (y > o ? 'Y' : 'O')
+      opp << scores[i]
   }
 
-  scores
+  mut uint[] you_cumulative = []
+  mut uint[] opp_cumulative = []
+  mut uint you_total = 0
+  mut uint opp_total = 0
+
+  every uint i in #you {
+    you_total += you[i]
+    you_cumulative << you_total
+
+    opp_total += opp[i]
+    opp_cumulative << opp_total
+  }
+
+  mut string[] result = []
+  every uint i in #you_cumulative
+    if you_cumulative[i] > opp_cumulative[i]
+      result << "Y"
+    else if you_cumulative[i] < opp_cumulative[i]
+      result << "O"
+    else
+      result << "T"
+
+  result
 }
 
-Assert::eq(whos_winning?([10, 10, 22, 30, 5, 40]), ['T', 'O', 'O'])
-Assert::eq(whos_winning?([5, 1, 2, 10]), ['Y', 'O'])
-Assert::eq(whos_winning?([10, 10, 5, 5, 2, 2, 1, 3, 100, 5]), ['T', 'T', 'T', 'O', 'Y'])
-
+BeginnerCodes::test(676, whos_winning?)

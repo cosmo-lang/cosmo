@@ -1,4 +1,4 @@
-use "assert"
+use "beginner_codes"
 
 string fn shift_sentence(string sentence) {
   string[] words = sentence->split
@@ -11,7 +11,4 @@ string fn shift_sentence(string sentence) {
   shifted_words->join
 }
 
-Assert::eq(shift_sentence("create a function"), "freate c aunction")
-Assert::eq(shift_sentence("it should shift the sentence"), "st ihould shift she tentence")
-Assert::eq(shift_sentence("the output is not very legible"), "lhe tutput os iot nery vegible")
-Assert::eq(shift_sentence("programming"), "programming")
+BeginnerCodes::test(677, shift_sentence)
