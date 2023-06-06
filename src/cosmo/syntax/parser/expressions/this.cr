@@ -1,9 +1,8 @@
 module Cosmo::AST::Expression
   class This < Base
     getter token : Token
-    getter class_name : String
 
-    def initialize(@token, @class_name)
+    def initialize(@token)
     end
 
     def accept(visitor : Visitor(R)) : R forall R

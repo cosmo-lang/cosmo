@@ -1,16 +1,27 @@
 use "assert"
 
-public class Dog {
+class Dog {
   string name
+  string breed
 
-  public Dog fn construct(string name) {
+  public Dog fn construct(string name, string breed) {
     $->name = name
+    $->breed = breed
   }
 
   public void fn woof {
-    puts("%{$->name} says woof!")
+    puts("%{$->name} the %{$->breed} says woof!")
   }
 }
+
+## class Husky : Dog {
+##   public Dog fn construct(string name) {
+##     super name, "Husky"
+##   }
+## }
+
+## Husky fido = new Husky("Fido")
+## fido->woof ## Fido the Husky says woof!
 
 Dog fido = new Dog("Fido")
 fido->woof ## Fido says woof!

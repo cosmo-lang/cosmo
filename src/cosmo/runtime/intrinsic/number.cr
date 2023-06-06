@@ -24,7 +24,7 @@ class Cosmo::NumberIntrinsics
     when "ceil"
       Ceil.new(@interpreter, @value, name)
     else
-      Logger.report_error("Invalid number method", name.lexeme, name)
+      Logger.report_error("Invalid number method or property", name.lexeme, name)
     end
   end
 

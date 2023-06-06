@@ -418,7 +418,7 @@ module Cosmo::Operator
 
       if left.is_a?(Int)
         return left << right if right.is_a?(Int)
-      elsif left.is_a?(Array)
+      elsif left.is_a?(Array) # TODO: use VectorIntrinsics::Push instead
         if expr.left.is_a?(Expression::Access) || expr.left.is_a?(Expression::Index)
           prop_assignment = Expression::PropertyAssignment.new(expr.left, left << right)
           return @interpreter.evaluate(prop_assignment)

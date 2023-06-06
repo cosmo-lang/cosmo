@@ -27,22 +27,26 @@ class Cosmo::Function < Cosmo::Callable
 
   def call(
     args : Array(ValueType),
-    return_type_override : String? = nil
+    return_type_override : String = return_typedef.lexeme,
+    class_instance_override : ClassInstance? = @class_instance
   ) : ValueType
 
-    return_type_override ||= return_typedef.lexeme
     enclosing_return_type = @interpreter.meta["block_return_type"]?
     @interpreter.set_meta("block_return_type", return_type_override)
     scope = Scope.new(@closure)
 
-    unless @class_instance.nil?
-      enclosing_within = @interpreter.within_class_method
-      @interpreter.within_class_method = true
+    enclosing_within_fn = @interpreter.within_fn
+    @interpreter.within_fn = true
+    @interpreter.start_recursion(@definition.token)
+
+    unless class_instance_override.nil?
+      enclosing_this = @interpreter.meta["this"]?
+      @interpreter.set_meta("this", class_instance_override)
 
       scope.declare(
-        @interpreter.fake_typedef(@class_instance.not_nil!.name),
+        @interpreter.fake_typedef(class_instance_override.not_nil!.name),
         @interpreter.fake_ident("$"),
-        @class_instance,
+        class_instance_override,
         mutable: true
       )
     end
@@ -62,6 +66,7 @@ class Cosmo::Function < Cosmo::Callable
       )
     end
 
+    # execute the body
     result = nil
     begin
       body = @definition.is_a?(Statement::FunctionDef) ?
@@ -80,9 +85,14 @@ class Cosmo::Function < Cosmo::Callable
       @interpreter.set_meta("block_return_type", enclosing_return_type)
     end
 
-    unless @class_instance.nil?
-      @interpreter.within_class_method = enclosing_within.not_nil!
+    if enclosing_this.nil?
+      @interpreter.delete_meta("this")
+    else
+      @interpreter.set_meta("this", enclosing_this)
     end
+
+    @interpreter.end_recursion
+    @interpreter.within_fn = enclosing_within_fn
 
     result
   end

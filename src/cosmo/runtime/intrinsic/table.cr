@@ -18,7 +18,7 @@ class Cosmo::TableIntrinsics
     when "empty?"
       Empty.new(@interpreter, @value, name)
     else
-      Logger.report_error("Invalid table method", name.lexeme, name) if required
+      Logger.report_error("Invalid table method or property", name.lexeme, name) if required
     end
   end
 

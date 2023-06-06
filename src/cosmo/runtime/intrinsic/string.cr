@@ -32,7 +32,7 @@ class Cosmo::StringIntrinsics
     when "blank?"
       Blank.new(@interpreter, @value, name)
     else
-      Logger.report_error("Invalid string method", name.lexeme, name)
+      Logger.report_error("Invalid string method or property", name.lexeme, name)
     end
   end
 

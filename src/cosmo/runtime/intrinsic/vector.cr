@@ -36,7 +36,7 @@ class Cosmo::VectorIntrinsics
     when "map"
       Map.new(@interpreter, @cache, name)
     else
-      Logger.report_error("Invalid vector method", name.lexeme, name)
+      Logger.report_error("Invalid vector method or property", name.lexeme, name)
     end
   end
 

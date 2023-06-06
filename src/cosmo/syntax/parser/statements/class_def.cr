@@ -4,8 +4,8 @@ module Cosmo::AST::Statement
     # getter parameters : Array(Expression::Parameter) # generics?
     getter body : Block
     getter visibility : Visibility
-    getter superclass : Expression::Base?
-    getter mixins : Array(Expression::Base)
+    getter superclass : Expression::Var?
+    getter mixins : Array(Expression::Var)
 
     def initialize(@identifier, @body, @visibility, @superclass, @mixins)
     end

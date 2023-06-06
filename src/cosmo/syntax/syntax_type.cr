@@ -18,7 +18,7 @@ enum Cosmo::Syntax
   LBracket; RBracket; LParen; RParen;
   Comma
   Hashtag
-  Class; Mixin; New
+  Class; Mixin; New; Super
   Enum
   Function
   Try; Catch; Finally

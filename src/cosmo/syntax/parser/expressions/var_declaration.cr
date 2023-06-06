@@ -5,8 +5,9 @@ module Cosmo::AST::Expression
     property value : Base
     getter? mutable : Bool
     getter visibility : Visibility
+    getter? class_field : Bool
 
-    def initialize(@typedef, @var, @value, @mutable, @visibility)
+    def initialize(@typedef, @var, @value, @class_field, @mutable, @visibility)
     end
 
     def accept(visitor : Visitor(R)) : R forall R

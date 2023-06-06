@@ -49,8 +49,9 @@ module Cosmo::Logger
     @@stack_trace.shift(@@trace_level)
 
     full_message = "#{error_type}: #{message}"
-    stack_dump = @@stack_trace.reverse.map do |tr|
-      "\n#{TAB}at #{tr.lexeme} (#{File.basename(tr.location.file_name)}:#{tr.location.line})"
+    stack_dump = [ "\n#{TAB}at #{File.basename(file_path)}:#{line}" ]
+    @@stack_trace.reverse.each do |tr|
+      stack_dump << "\n#{TAB}at #{tr.lexeme} (#{File.basename(tr.location.file_name)}:#{tr.location.line})"
     end
 
     full_message += stack_dump.join

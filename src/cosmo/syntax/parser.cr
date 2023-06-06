@@ -142,7 +142,7 @@ class Cosmo::Parser
 
     # superclass
     if match?(Syntax::Colon)
-      superclass = parse_primary
+      superclass = Expression::Var.new(consume(Syntax::Identifier))
     end
 
     if check?(Syntax::Comma)
@@ -151,14 +151,16 @@ class Cosmo::Parser
 
     # mixin
     if match?(Syntax::Mixin)
-      mixins = comma_separated { parse_primary }
+      mixins = comma_separated do
+        Expression::Var.new(consume(Syntax::Identifier))
+      end
     end
 
     @within_class = identifier.lexeme
     body = parse_block
     @within_class = nil
 
-    mixins ||= [] of Expression::Base
+    mixins ||= [] of Expression::Var
     Statement::ClassDef.new(identifier, body, visibility, superclass, mixins)
   end
 
@@ -213,6 +215,7 @@ class Cosmo::Parser
     var_declaration = Expression::VarDeclaration.new(
       typedef, var,
       Expression::NoneLiteral.new(nil, ident),
+      class_field: !@within_class.nil?,
       mutable: false,
       visibility: Visibility::Private
     )
@@ -268,6 +271,9 @@ class Cosmo::Parser
   end
 
   private def parse_try_catch_statement : Statement::TryCatch
+    enclosing_class = @within_class
+    @within_class = nil
+
     try_keyword = last_token
     try_block = parse_statement
     catch_keyword = consume(Syntax::Catch)
@@ -278,17 +284,23 @@ class Cosmo::Parser
     end
     typedef = type_info[:type_ref].not_nil!.name
 
+    @within_class = enclosing_class
     ident = consume(Syntax::Identifier)
     var = Expression::Var.new(ident)
     var_declaration = Expression::VarDeclaration.new(
       typedef, var,
       Expression::NoneLiteral.new(nil, ident),
+      class_field: !@within_class.nil?,
       mutable: false,
       visibility: Visibility::Private
     )
 
+    enclosing_class = @within_class
+    @within_class = nil
     catch_block = parse_statement
     got_finally = match?(Syntax::Finally)
+    @within_class = enclosing_class
+
     Statement::TryCatch.new(
       try_keyword,
       catch_keyword,
@@ -315,6 +327,9 @@ class Cosmo::Parser
   end
 
   private def parse_fn_def_statement : Statement::FunctionDef
+    enclosing_class = @within_class
+    @within_class = nil
+
     type_info = parse_type(required: true, check_visibility: true)
     return_typedef = type_info[:type_ref].not_nil!.name
 
@@ -327,6 +342,8 @@ class Cosmo::Parser
     end
 
     body = parse_block
+    @within_class = enclosing_class
+
     Statement::FunctionDef.new(
       function_ident,
       params || [] of Expression::Parameter,
@@ -677,15 +694,17 @@ class Cosmo::Parser
             value = parse_expression
             Expression::VarDeclaration.new(
               typedef, identifier, value,
-              type_info[:is_mut],
-              type_info[:visibility]
+              class_field: !@within_class.nil?,
+              mutable: type_info[:is_mut],
+              visibility: type_info[:visibility]
             )
           else
             first = Expression::VarDeclaration.new(
               typedef, identifier,
               Expression::NoneLiteral.new(nil, variable_name),
-              type_info[:is_mut],
-              type_info[:visibility]
+              class_field: !@within_class.nil?,
+              mutable: type_info[:is_mut],
+              visibility: type_info[:visibility]
             )
 
             first
@@ -743,8 +762,9 @@ class Cosmo::Parser
       nodes << Expression::VarDeclaration.new(
         typedef, var,
         respective_value,
-        type_info[:is_mut],
-        type_info[:visibility]
+        class_field: !@within_class.nil?,
+        mutable: type_info[:is_mut],
+        visibility: type_info[:visibility]
       )
     end
 
@@ -1045,12 +1065,7 @@ class Cosmo::Parser
 
       Expression::Lambda.new(params, body, return_type_info[:type_ref].not_nil!.name)
     elsif match?(Syntax::This)
-      token = last_token
-      if @within_class.nil?
-        Logger.report_error("Invalid '$'", token.lexeme, token)
-      end
-
-      Expression::This.new(token, @within_class.not_nil!)
+      Expression::This.new(last_token)
     elsif match?(Syntax::New)
       token = last_token
       callee = parse_after(parse_primary)
@@ -1204,11 +1219,11 @@ class Cosmo::Parser
   end
 
   # Returns a list of comma separated expressions
-  private def comma_separated(&) : Array(Expression::Base)
+  private def comma_separated(& : -> R) : Array(R) forall R
     enclosing = @not_assignment
     @not_assignment = true
 
-    expressions = [] of Expression::Base
+    expressions = [] of R
     expressions << yield
     while match?(Syntax::Comma)
       expressions << yield

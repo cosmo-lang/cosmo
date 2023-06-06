@@ -30,12 +30,17 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * implicit conversions
     * intersection types
 - Other
+  - OS library
+  - FS library
+  - `Math::random` method
+  - `eval()` method
   - Some form of multithreading
   - Intrinsic methods for all datatypes (inherit from a base type)
   - REPL supports multiline source
 
 ### Fixes
 - Performance boosts lol
+- Comments mess up line numbers (I think?)
 
 ### Tests
 - Expectation of errors in parser spec

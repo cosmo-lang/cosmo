@@ -23,7 +23,7 @@ class Cosmo::Interpreter
   getter scope : Scope
   getter meta = {} of String => MetaType
   setter max_recursion_depth : UInt32 = 1200
-  property within_class_method = false
+  property within_fn = false
   @locals = {} of Expression::Base => UInt32
   @file_path : String = ""
   @importable_intrinsics = {} of String => IntrinsicLib
@@ -83,15 +83,19 @@ class Cosmo::Interpreter
     @meta[key] = value
   end
 
-  private def start_recursion(token : Token)
+  def start_recursion(token : Token)
     @recursion_depth += 1
     if @recursion_depth >= @max_recursion_depth
       Logger.report_error("Stack overflow", "Recursion depth of #{@max_recursion_depth} exceeded", token)
     end
   end
 
-  private def end_recursion(level : UInt32 = 1)
+  def end_recursion(level : UInt32 = 1)
     @recursion_depth -= level
+  end
+
+  private def within_class_body? : Bool
+    @meta.has_key?("this") && !@within_fn
   end
 
   def interpret(source : String, @file_path : String) : ValueType
@@ -476,11 +480,23 @@ class Cosmo::Interpreter
   end
 
   def visit_class_def_stmt(stmt : Statement::ClassDef) : ValueType
-    _class = Class.new(self, @scope, stmt)
     unless @scope.lookup?(stmt.identifier.lexeme).nil?
-      Logger.report_error("Cannot redefine class", "Class #{stmt.identifier.lexeme} is already defined.", stmt.identifier)
+      Logger.report_error("Cannot redefine class", "Class '#{stmt.identifier.lexeme}' is already defined", stmt.identifier)
     end
 
+    unless stmt.superclass.nil?
+      superclass = evaluate(stmt.superclass.not_nil!)
+
+      unless superclass.is_a?(Class)
+        Logger.report_error(
+          "Invalid superclass",
+          "Expected class to extend '#{stmt.identifier.lexeme}', got '#{TypeChecker.get_mapped(superclass.class)}'",
+          stmt.superclass.not_nil!.token
+        )
+      end
+    end
+
+    _class = Class.new(self, @scope, stmt, superclass)
     @scope.declare(
       fake_typedef("class"),
       stmt.identifier,
@@ -491,20 +507,20 @@ class Cosmo::Interpreter
   end
 
   def visit_fn_def_stmt(stmt : Statement::FunctionDef) : ValueType
-    if @meta["this"]?.nil?
-      @scope.declare(
-        fake_typedef("func"),
-        stmt.identifier,
-        Function.new(self, @scope, stmt),
-        mutable: false,
-        visibility: stmt.visibility
-      )
-    else
+    if @meta.has_key?("this")
       instance = @meta["this"].as ClassInstance
       instance.define_method(
         stmt.identifier.lexeme,
         Function.new(self, @scope, stmt, instance),
         token: stmt.token,
+        visibility: stmt.visibility
+      )
+    else
+      @scope.declare(
+        fake_typedef("func"),
+        stmt.identifier,
+        Function.new(self, @scope, stmt),
+        mutable: false,
         visibility: stmt.visibility
       )
     end
@@ -565,14 +581,14 @@ class Cosmo::Interpreter
     elsif object.is_a?(ClassInstance)
       value = object.get_member(
         key, expr.key,
-        include_private: !@meta["this"]?.nil? || @within_class_method,
-        field_required: key != "to_string"
+        include_private: @meta.has_key?("this"),
+        field_required: key != "to_string" # expand into base object type methods
       )
 
       if value.is_a?(Callable) && value.arity.begin == 0 && !@evaluating_fn_callee
         value.call([] of ValueType)
       else # did not find a function
-        key == "to_string" ? object.name : value
+        key == "to_string" ? object.name : value # it's a field, so return the value if it's not to_string
       end
     else
       Logger.report_error("Attempt to index", TypeChecker.get_mapped(object.class), expr.token)
@@ -612,21 +628,28 @@ class Cosmo::Interpreter
 
     args = [] of Expression::Base
     unless class_obj.is_a?(Class)
-      Logger.report_error("Invalid 'new' invocation. Expected a class name, got", expr.operand.token.lexeme, expr.operand.token)
+      Logger.report_error("Invalid 'new' invocation", "Expected a class name, got '#{expr.operand.token.lexeme}'", expr.operand.token)
     end
     if expr.operand.is_a?(Expression::FunctionCall)
       args = expr.operand.as(Expression::FunctionCall).arguments
     end
 
     TypeChecker.assert("class", class_obj, expr.operand.token)
-    instance = class_obj.construct(args.map { |arg| evaluate(arg) })
+    arg_values = args.map { |arg| evaluate(arg) }
+    instance = class_obj.construct(arg_values)
 
     Logger.pop_trace(trace_idx)
     instance
   end
 
-  def visit_this_expr(expr : Expression::This) : ValueType
-    @scope.lookup?("$")
+  def visit_this_expr(expr : Expression::This) : ClassInstance
+    instance = @scope.lookup?("$").as ClassInstance?
+
+    if instance.nil?
+      Logger.report_error("Invalid '$'", expr.token.lexeme, expr.token)
+    end
+
+    instance
   end
 
   def visit_cast_expr(expr : Expression::Cast) : ValueType
@@ -657,7 +680,17 @@ class Cosmo::Interpreter
       token.lexeme = expr.callee.as(Expression::Access).full_path
     end
     token.lexeme += "(#{expr.arguments.empty? ? "" : "..."})"
-    trace_idx = Logger.push_trace(token)
+
+    if expr.callee.is_a?(Expression::Access) || expr.callee.is_a?(Expression::Index)
+      object_node = expr.callee.is_a?(Expression::Access) ?
+        expr.callee.as(Expression::Access).object
+        : expr.callee.as(Expression::Index).object
+
+      object = evaluate(object_node)
+      if object.is_a?(ClassInstance)
+        instance_override = object
+      end
+    end
 
     fn = evaluate(expr.callee)
     unless fn.is_a?(Callable)
@@ -670,11 +703,13 @@ class Cosmo::Interpreter
       Logger.report_error("Expected #{arg_size} arguments, got", expr.arguments.size.to_s, expr.token)
     end
 
+    trace_idx = Logger.push_trace(token)
     arg_values = expr.arguments.map { |arg| evaluate(arg) }
-
-    start_recursion(expr.token)
-    result = fn.call(arg_values)
-    end_recursion
+    if fn.is_a?(Function)
+      result = fn.call(arg_values, class_instance_override: instance_override)
+    else
+      result = fn.call(arg_values)
+    end
 
     Logger.pop_trace(trace_idx)
     result
@@ -689,25 +724,23 @@ class Cosmo::Interpreter
   end
 
   def visit_var_declaration_expr(expr : Expression::VarDeclaration) : ValueType
-    not_class = @meta["this"]?.nil?
-    value = evaluate(expr.value)
-    if not_class
-      @scope.declare(
-        expr.typedef,
-        expr.var.token,
-        value,
-        mutable: expr.mutable?,
-        visibility: expr.visibility
-      )
-    else
+    if @meta.has_key?("this") && expr.class_field?
       instance = @meta["this"].as ClassInstance
       instance.define_field(
         expr.var.token.lexeme,
-        value,
+        evaluate(expr.value),
         expr.token,
         visibility: expr.visibility,
         mutable: expr.mutable?,
         typedef: expr.typedef
+      )
+    else
+      @scope.declare(
+        expr.typedef,
+        expr.var.token,
+        evaluate(expr.value),
+        mutable: expr.mutable?,
+        visibility: expr.visibility
       )
     end
   end
@@ -777,10 +810,12 @@ class Cosmo::Interpreter
       unless key.is_a?(String)
         Logger.report_error("Invalid index type", TypeChecker.get_mapped(key.class), token)
       end
-      object.define_field(key, value, token)
+
+      object.define_field(key, value, token, not_redefining: true)
     else
       Logger.report_error("Attempt to assign to index of", TypeChecker.get_mapped(object.class), token)
     end
+
     object
   end
 

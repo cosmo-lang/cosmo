@@ -37,9 +37,10 @@ class Cosmo::ClassInstance
     field_name : String,
     value : ValueType,
     token : Token?,
-    mutable : Bool = false,
+    mutable = false,
     visibility : Visibility = Visibility::Private,
-    typedef : Token? = nil
+    typedef : Token? = nil,
+    not_redefining = false
   ) : ValueType
 
     current_meta = @field_meta[field_name]?
@@ -52,24 +53,29 @@ class Cosmo::ClassInstance
     if @field_meta[field_name]?.nil?
       meta_hash = {} of Symbol => Token | Bool
       meta_hash[:mutable?] = mutable
-      unless typedef.nil?
-        meta_hash[:type] = typedef
-      else
+
+      if typedef.nil?
         unless current_meta.nil?
           typedef = current_meta[:type]
           TypeChecker.assert(typedef.lexeme + "|void", value, typedef)
         end
+      else
+        meta_hash[:type] = typedef
+        @field_meta[field_name] = FieldMeta.from(meta_hash)
       end
-
-      @field_meta[field_name] = FieldMeta.from(meta_hash)
     end
 
-    registry = visibility == Visibility::Public ? @public : (visibility == Visibility::Protected ? @protected : @private)
+    if not_redefining
+      registry = @public["fields"].has_key?(field_name) ? @public : (@protected["fields"].has_key?(field_name) ? @protected : @private)
+    else
+      registry = visibility == Visibility::Public ? @public : (visibility == Visibility::Protected ? @protected : @private)
+    end
+
     registry["fields"].as(Hash(String, ValueType))[field_name] = value
     value
   end
 
-  def define_method(method_name : String, value : Function, token : Token? = nil, visibility : Visibility = Visibility::Public) : Function
+  def define_method(method_name : String, value : Function, token : Token? = nil, visibility : Visibility = Visibility::Private) : Function
     registry = visibility == Visibility::Public ? @public : (visibility == Visibility::Protected ? @protected : @private)
     if !token.nil? && registry["methods"].has_key?(method_name)
       Logger.report_error("Duplicate method definition in '#{name}'", method_name, token)
@@ -112,17 +118,20 @@ class Cosmo::ClassInstance
 
     field : ValueType? = @public["fields"][field_name]?
     meta : FieldMeta? = @field_meta[field_name]?
+
+    if meta.nil? && !token.nil? && required
+      Logger.report_error("Field '#{field_name}' does not exist on", name, token)
+    end
+
     if include_private
       field ||= @private["fields"][field_name]?
     end
     if include_protected
       field ||= @protected["fields"][field_name]?
     end
-    unless token.nil? || include_private || @private["fields"][field_name]?.nil?
+
+    if !token.nil? && !include_private && @private["fields"].has_key?(field_name)
       Logger.report_error("Attempt to access private field", field_name, token)
-    end
-    if meta.nil? && !token.nil? && required
-      Logger.report_error("Field '#{field_name}' does not exist on", name, token)
     end
 
     field.as ValueType

@@ -4,8 +4,9 @@ class Cosmo::Class
   @closure : Scope
   getter interpreter : Interpreter
   getter definition : Statement::ClassDef
+  getter superclass : Class?
 
-  def initialize(@interpreter, @closure, @definition)
+  def initialize(@interpreter, @closure, @definition, @superclass)
   end
 
   def name_token
@@ -18,10 +19,17 @@ class Cosmo::Class
 
   def construct(args : Array(ValueType)) : ClassInstance
     instance = ClassInstance.new(self, args)
+    enclosing_this = @interpreter.meta["this"]?
     @interpreter.set_meta("this", instance)
+
     @interpreter.execute_block(@definition.body, Scope.new(@closure))
+    if enclosing_this.nil?
+      @interpreter.delete_meta("this")
+    else
+      @interpreter.set_meta("this", enclosing_this)
+    end
+
     instance.setup
-    @interpreter.delete_meta("this")
     instance
   end
 
