@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::AST::Expression::Var - Cosmo master</title>
+  <title>Cosmo::Intrinsic::Vector::Includes - Cosmo master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../../";
   </script>
@@ -61,12 +61,12 @@
       
         <ul>
   
-  <li class="parent open current" data-id="Cosmo/Cosmo/AST" data-name="cosmo::ast">
+  <li class="parent " data-id="Cosmo/Cosmo/AST" data-name="cosmo::ast">
       <a href="../../../Cosmo/AST.html">AST</a>
       
         <ul>
   
-  <li class="parent open current" data-id="Cosmo/Cosmo/AST/Expression" data-name="cosmo::ast::expression">
+  <li class="parent " data-id="Cosmo/Cosmo/AST/Expression" data-name="cosmo::ast::expression">
       <a href="../../../Cosmo/AST/Expression.html">Expression</a>
       
         <ul>
@@ -221,7 +221,7 @@
       
     </li>
   
-  <li class=" current" data-id="Cosmo/Cosmo/AST/Expression/Var" data-name="cosmo::ast::expression::var">
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Var" data-name="cosmo::ast::expression::var">
       <a href="../../../Cosmo/AST/Expression/Var.html">Var</a>
       
     </li>
@@ -431,7 +431,7 @@
       
     </li>
   
-  <li class="parent " data-id="Cosmo/Cosmo/Intrinsic" data-name="cosmo::intrinsic">
+  <li class="parent open current" data-id="Cosmo/Cosmo/Intrinsic" data-name="cosmo::intrinsic">
       <a href="../../../Cosmo/Intrinsic.html">Intrinsic</a>
       
         <ul>
@@ -921,7 +921,7 @@
       
     </li>
   
-  <li class="parent " data-id="Cosmo/Cosmo/Intrinsic/Vector" data-name="cosmo::intrinsic::vector">
+  <li class="parent open current" data-id="Cosmo/Cosmo/Intrinsic/Vector" data-name="cosmo::intrinsic::vector">
       <a href="../../../Cosmo/Intrinsic/Vector.html">Vector</a>
       
         <ul>
@@ -941,7 +941,7 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Vector/Includes" data-name="cosmo::intrinsic::vector::includes">
+  <li class=" current" data-id="Cosmo/Cosmo/Intrinsic/Vector/Includes" data-name="cosmo::intrinsic::vector::includes">
       <a href="../../../Cosmo/Intrinsic/Vector/Includes.html">Includes</a>
       
     </li>
@@ -1275,12 +1275,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Cosmo::AST::Expression::Var
+  <span class="kind">class</span> Cosmo::Intrinsic::Vector::Includes
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../Cosmo/AST/Expression/Var.html">Cosmo::AST::Expression::Var</a></li><li class="superclass"><a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a></li><li class="superclass"><a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../Cosmo/Intrinsic/Vector/Includes.html">Cosmo::Intrinsic::Vector::Includes</a></li><li class="superclass"><a href="../../../Cosmo/Intrinsic/IFunction.html">Cosmo::Intrinsic::IFunction</a></li><li class="superclass"><a href="../../../Cosmo/Callable.html">Cosmo::Callable</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -1308,8 +1308,8 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/01e9adafb3cc233773a3d0d946cfbe7d16148316/src/cosmo/syntax/parser/expressions/var.cr#L2" target="_blank">
-        cosmo/syntax/parser/expressions/var.cr
+      <a href="https://github.com/R-unic/cosmo/blob/01e9adafb3cc233773a3d0d946cfbe7d16148316/src/cosmo/runtime/intrinsic/vector.cr#L47" target="_blank">
+        cosmo/runtime/intrinsic/vector.cr
       </a>
     
     <br/>
@@ -1330,7 +1330,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28token%3ACosmo%3A%3AToken%29-class-method" class="signature"><strong>.new</strong>(token : Cosmo::Token)</a>
+        <a href="#new%28interpreter%3AInterpreter%2C_self%3AArray%28ValueType%29%2Ctoken%3AToken%29-class-method" class="signature"><strong>.new</strong>(interpreter : Interpreter, _self : Array(ValueType), token : Token)</a>
         
       </li>
     
@@ -1351,19 +1351,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#accept%28visitor%3AVisitor%28R%29%29%3ARforallR-instance-method" class="signature"><strong>#accept</strong>(visitor : Visitor(R)) : R forall R</a>
+        <a href="#arity%3ARange%28UInt32%2CUInt32%29-instance-method" class="signature"><strong>#arity</strong> : Range(UInt32, UInt32)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_s%28indent%3AInt%3D0%29-instance-method" class="signature"><strong>#to_s</strong>(indent : Int = <span class="n">0</span>)</a>
-        
-          <div class="summary"><p>Returns a nicely readable and concise string representation of this object, typically intended for users.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#token%3AToken-instance-method" class="signature"><strong>#token</strong> : Token</a>
+        <a href="#call%28args%3AArray%28ValueType%29%29%3ABool-instance-method" class="signature"><strong>#call</strong>(args : Array(ValueType)) : Bool</a>
         
       </li>
     
@@ -1377,12 +1370,39 @@
   
     
 
-  <h3>Instance methods inherited from class <code><a href="../../../Cosmo/AST/Expression/Base.html">Cosmo::AST::Expression::Base</a></code></h3>
+  <h3>Instance methods inherited from class <code><a href="../../../Cosmo/Intrinsic/IFunction.html">Cosmo::Intrinsic::IFunction</a></code></h3>
   
   
-    <a href="../../../Cosmo/AST/Expression/Base.html#accept%28visitor%3AVisitor%28R%29%29forallR-instance-method" class="tooltip">
-      <span>accept(visitor : Visitor(R)) forall R</span>
-    accept</a>
+    <a href="../../../Cosmo/Intrinsic/IFunction.html#call%28args%3AArray%28ValueType%29%29%3AValueType-instance-method" class="tooltip">
+      <span>call(args : Array(ValueType)) : ValueType</span>
+    call</a>, 
+    
+  
+    <a href="../../../Cosmo/Intrinsic/IFunction.html#intrinsic%3F%3ABool-instance-method" class="tooltip">
+      <span>intrinsic? : Bool</span>
+    intrinsic?</a>, 
+    
+  
+    <a href="../../../Cosmo/Intrinsic/IFunction.html#to_s%3AString-instance-method" class="tooltip">
+      <span>to_s : String</span>
+    to_s</a>, 
+    
+  
+    <a href="../../../Cosmo/Intrinsic/IFunction.html#token%28name%3AString%29%3AToken-instance-method" class="tooltip">
+      <span>token(name : String) : Token</span>
+    token</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../../../Cosmo/Intrinsic/IFunction.html">Cosmo::Intrinsic::IFunction</a></code></h3>
+  
+  
+    <a href="../../../Cosmo/Intrinsic/IFunction.html#new%28interpreter%3AInterpreter%29-class-method" class="tooltip">
+      <span>new(interpreter : Interpreter)</span>
+    new</a>
     
   
 
@@ -1390,58 +1410,35 @@
     
 
 
-    
-
-
   
     
 
-  <h3>Instance methods inherited from class <code><a href="../../../Cosmo/AST/Node.html">Cosmo::AST::Node</a></code></h3>
+  <h3>Instance methods inherited from class <code><a href="../../../Cosmo/Callable.html">Cosmo::Callable</a></code></h3>
   
   
-    <a href="../../../Cosmo/AST/Node.html#end_location%3ALocation%7CNil-instance-method" class="tooltip">
-      <span>end_location : Location | Nil</span>
-    end_location</a>, 
+    <a href="../../../Cosmo/Callable.html#arity%3ARange%28UInt32%2CUInt32%29-instance-method" class="tooltip">
+      <span>arity : Range(UInt32, UInt32)</span>
+    arity</a>, 
     
   
-    <a href="../../../Cosmo/AST/Node.html#end_location%3D%28end_location%3ALocation%7CNil%29-instance-method" class="tooltip">
-      <span>end_location=(end_location : Location | Nil)</span>
-    end_location=</a>, 
+    <a href="../../../Cosmo/Callable.html#call%28args%3AArray%28ValueType%29%29%3AValueType-instance-method" class="tooltip">
+      <span>call(args : Array(ValueType)) : ValueType</span>
+    call</a>, 
     
   
-    <a href="../../../Cosmo/AST/Node.html#single_expression%3ANode-instance-method" class="tooltip">
-      <span>single_expression : Node</span>
-    single_expression</a>, 
+    <a href="../../../Cosmo/Callable.html#expand_args%28args%3AArray%28ValueType%29%29%3AArray%28ValueType%29-instance-method" class="tooltip">
+      <span>expand_args(args : Array(ValueType)) : Array(ValueType)</span>
+    expand_args</a>, 
     
   
-    <a href="../../../Cosmo/AST/Node.html#single_expression%3F%3ANode%7CNil-instance-method" class="tooltip">
-      <span>single_expression? : Node | Nil</span>
-    single_expression?</a>, 
+    <a href="../../../Cosmo/Callable.html#intrinsic%3F%3ABool-instance-method" class="tooltip">
+      <span>intrinsic? : Bool</span>
+    intrinsic?</a>, 
     
   
-    <a href="../../../Cosmo/AST/Node.html#start_location%3ALocation%7CNil-instance-method" class="tooltip">
-      <span>start_location : Location | Nil</span>
-    start_location</a>, 
-    
-  
-    <a href="../../../Cosmo/AST/Node.html#start_location%3D%28start_location%3ALocation%7CNil%29-instance-method" class="tooltip">
-      <span>start_location=(start_location : Location | Nil)</span>
-    start_location=</a>, 
-    
-  
-    <a href="../../../Cosmo/AST/Node.html#token%3AToken-instance-method" class="tooltip">
-      <span>token : Token</span>
-    token</a>, 
-    
-  
-    <a href="../../../Cosmo/AST/Node.html#visibility%3ACosmo%3A%3AAST%3A%3AVisibility-instance-method" class="tooltip">
-      <span>visibility : Cosmo::AST::Visibility</span>
-    visibility</a>, 
-    
-  
-    <a href="../../../Cosmo/AST/Node.html#visibility%3D%28visibility%3ACosmo%3A%3AAST%3A%3AVisibility%29-instance-method" class="tooltip">
-      <span>visibility=(visibility : Cosmo::AST::Visibility)</span>
-    visibility=</a>
+    <a href="../../../Cosmo/Callable.html#to_s%3AString-instance-method" class="tooltip">
+      <span>to_s : String</span>
+    to_s</a>
     
   
 
@@ -1485,18 +1482,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(token:Cosmo::Token)-class-method">
+    <div class="entry-detail" id="new(interpreter:Interpreter,_self:Array(ValueType),token:Token)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(token : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>)
+        def self.<strong>new</strong>(interpreter : <a href="../../../Cosmo/Interpreter.html">Interpreter</a>, _self : Array(<a href="../../../Cosmo/ValueType.html">ValueType</a>), token : <a href="../../../Cosmo/Token.html">Token</a>)
 
-        <a class="method-permalink" href="#new%28token%3ACosmo%3A%3AToken%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28interpreter%3AInterpreter%2C_self%3AArray%28ValueType%29%2Ctoken%3AToken%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/01e9adafb3cc233773a3d0d946cfbe7d16148316/src/cosmo/syntax/parser/expressions/var.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/01e9adafb3cc233773a3d0d946cfbe7d16148316/src/cosmo/runtime/intrinsic/vector.cr#L48" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1515,63 +1512,34 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="accept(visitor:Visitor(R)):RforallR-instance-method">
+    <div class="entry-detail" id="arity:Range(UInt32,UInt32)-instance-method">
       <div class="signature">
         
-        def <strong>accept</strong>(visitor : <a href="../../../Cosmo/AST/Expression/Visitor.html">Visitor</a>(R)) : R forall R
+        def <strong>arity</strong> : Range(UInt32, UInt32)
 
-        <a class="method-permalink" href="#accept%28visitor%3AVisitor%28R%29%29%3ARforallR-instance-method">#</a>
+        <a class="method-permalink" href="#arity%3ARange%28UInt32%2CUInt32%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/01e9adafb3cc233773a3d0d946cfbe7d16148316/src/cosmo/syntax/parser/expressions/var.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/01e9adafb3cc233773a3d0d946cfbe7d16148316/src/cosmo/runtime/intrinsic/vector.cr#L57" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="to_s(indent:Int=0)-instance-method">
+    <div class="entry-detail" id="call(args:Array(ValueType)):Bool-instance-method">
       <div class="signature">
         
-        def <strong>to_s</strong>(indent : Int = <span class="n">0</span>)
+        def <strong>call</strong>(args : Array(<a href="../../../Cosmo/ValueType.html">ValueType</a>)) : Bool
 
-        <a class="method-permalink" href="#to_s%28indent%3AInt%3D0%29-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from class Object
-            </div>
-          
-          <p>Returns a nicely readable and concise string representation of this object,
-typically intended for users.</p>
-<p>This method should usually <strong>not</strong> be overridden. It delegates to
-<code><a href="../../../Cosmo/AST/Expression/Var.html#to_s%28indent%3AInt%3D0%29-instance-method">#to_s(IO)</a></code> which can be overridden for custom implementations.</p>
-<p>Also see <code>#inspect</code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/01e9adafb3cc233773a3d0d946cfbe7d16148316/src/cosmo/syntax/parser/expressions/var.cr#L12" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="token:Token-instance-method">
-      <div class="signature">
-        
-        def <strong>token</strong> : <a href="../../../Cosmo/Token.html">Token</a>
-
-        <a class="method-permalink" href="#token%3AToken-instance-method">#</a>
+        <a class="method-permalink" href="#call%28args%3AArray%28ValueType%29%29%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/01e9adafb3cc233773a3d0d946cfbe7d16148316/src/cosmo/syntax/parser/expressions/var.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/01e9adafb3cc233773a3d0d946cfbe7d16148316/src/cosmo/runtime/intrinsic/vector.cr#L61" target="_blank">View source</a>]
         
       </div>
     </div>
