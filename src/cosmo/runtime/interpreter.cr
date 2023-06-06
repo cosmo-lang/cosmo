@@ -692,6 +692,8 @@ class Cosmo::Interpreter
   end
 
   def visit_fn_call_expr(expr : Expression::FunctionCall) : ValueType
+    enclosing = @evaluating_fn_callee
+    @evaluating_fn_callee = true
 
     token = expr.token.dup
     if expr.callee.is_a?(Expression::Access)
@@ -701,8 +703,8 @@ class Cosmo::Interpreter
 
     if expr.callee.is_a?(Expression::Access) || expr.callee.is_a?(Expression::Index)
       object_node = expr.callee.is_a?(Expression::Access) ?
-      expr.callee.as(Expression::Access).object
-      : expr.callee.as(Expression::Index).object
+        expr.callee.as(Expression::Access).object
+        : expr.callee.as(Expression::Index).object
 
       object = evaluate(object_node)
       if object.is_a?(ClassInstance)
@@ -710,8 +712,6 @@ class Cosmo::Interpreter
       end
     end
 
-    enclosing = @evaluating_fn_callee
-    @evaluating_fn_callee = true
     fn = evaluate(expr.callee)
     @evaluating_fn_callee = enclosing
 

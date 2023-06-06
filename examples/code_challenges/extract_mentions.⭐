@@ -4,7 +4,11 @@ string fn extract_mentions(string tweet) {
   mut string[] mentions = []
   every string word in tweet->split
     if word.starts_with?('@') or word.starts_with?('#') {
-      string cleaned = word.rchop(',').rchop('.').rchop('?').rchop('!')
+      string cleaned = word.split(',').first()
+        .split('.').first()
+        .split('?').first()
+        .split('!').first()
+
       mentions << cleaned
     }
 
