@@ -31,6 +31,8 @@ class Cosmo::Intrinsic::Strings
       Upper.new(@interpreter, @value, name)
     when "pascal_case"
       PascalCase.new(@interpreter, @value, name)
+    when "camel_case"
+      CamelCase.new(@interpreter, @value, name)
     when "title_case"
       TitleCase.new(@interpreter, @value, name)
     when "snake_case"
