@@ -11,6 +11,8 @@ class Cosmo::Intrinsic::Strings
       Index.new(@interpreter, @value, name)
     when "rindex"
       RIndex.new(@interpreter, @value, name)
+    when "includes?"
+      Includes.new(@interpreter, @value, name)
     when "lchop"
       LChop.new(@interpreter, @value, name)
     when "rchop"
