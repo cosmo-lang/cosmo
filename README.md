@@ -34,7 +34,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
   - OS library
   - Filesystem library
   - Some form of multithreading
-  - Range intrinsic methods
   - Intrinsic methods for all datatypes (inherit from a base type)
   - REPL supports multiline source
 
