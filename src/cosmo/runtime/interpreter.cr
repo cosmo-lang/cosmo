@@ -17,10 +17,10 @@ class Cosmo::Interpreter
   getter globals = Scope.new
   getter scope : Scope
   getter meta = {} of String => MetaType
+  getter file_path : String = ""
   setter max_recursion_depth : UInt32 = 1200
   property within_fn = false
   @locals = {} of Expression::Base => UInt32
-  @file_path : String = ""
   @importable_intrinsics = {} of String => Intrinsic::Lib
   @evaluating_fn_callee = false
   @loop_level : UInt32 = 0
@@ -39,6 +39,7 @@ class Cosmo::Interpreter
   private def declare_globals
     declare_intrinsic("func", "puts", Intrinsic::Puts.new(self))
     declare_intrinsic("func", "gets", Intrinsic::Gets.new(self))
+    declare_intrinsic("func", "eval", Intrinsic::Eval.new(self))
     declare_intrinsic("func", "recursion_depth!", Intrinsic::RecursionDepth.new(self))
 
     import_file(File.join File.dirname(__FILE__), "../../../libraries/intrinsic.⭐")

@@ -31,6 +31,7 @@ end
 
 require "./intrinsic/global/puts"
 require "./intrinsic/global/gets"
+require "./intrinsic/global/eval"
 require "./intrinsic/global/recursion_depth"
 require "./intrinsic/number"
 require "./intrinsic/string"
