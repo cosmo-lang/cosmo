@@ -53,7 +53,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Package manager ([WIP](https://github.com/cosmo-lang/stars))
 - Documentation generator?
 - Linting/language server
-- Highlight function names without parentheses
+- Highlight function definition names without parentheses
 - Explain module system in Wiki
 
 ## Things I Might Do
@@ -71,7 +71,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 5. Push to the branch (`make publish`)
 6. Create a new [Pull Request](https://github.com/cosmo-lang/cosmo/pulls)
 
-Have any questions or comments? DM me on Discord: `runic#5997`!
+Have any questions or comments? DM me on Discord: `runic#5997`
 
 ## Contributors
 
