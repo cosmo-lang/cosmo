@@ -136,6 +136,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/AST/Expression/IsIn" data-name="cosmo::ast::expression::isin">
+      <a href="../../../Cosmo/AST/Expression/IsIn.html">IsIn</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/AST/Expression/Lambda" data-name="cosmo::ast::expression::lambda">
       <a href="../../../Cosmo/AST/Expression/Lambda.html">Lambda</a>
       
@@ -886,6 +891,36 @@
       
     </li>
   
+  <li class="parent " data-id="Cosmo/Cosmo/Intrinsic/SystemLib" data-name="cosmo::intrinsic::systemlib">
+      <a href="../../../Cosmo/Intrinsic/SystemLib.html">SystemLib</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/Intrinsic/SystemLib/EnvLib" data-name="cosmo::intrinsic::systemlib::envlib">
+      <a href="../../../Cosmo/Intrinsic/SystemLib/EnvLib.html">EnvLib</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/SystemLib/EnvLib/SetVar" data-name="cosmo::intrinsic::systemlib::envlib::setvar">
+      <a href="../../../Cosmo/Intrinsic/SystemLib/EnvLib/SetVar.html">SetVar</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/SystemLib/EnvLib/Var" data-name="cosmo::intrinsic::systemlib::envlib::var">
+      <a href="../../../Cosmo/Intrinsic/SystemLib/EnvLib/Var.html">Var</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class="parent " data-id="Cosmo/Cosmo/Intrinsic/Table" data-name="cosmo::intrinsic::table">
       <a href="../../../Cosmo/Intrinsic/Table.html">Table</a>
       
@@ -1308,7 +1343,7 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/4895ccbb16a9c12458f08c8afe186a9c312301dc/src/cosmo/syntax/parser/statements/use.cr#L2" target="_blank">
+      <a href="https://github.com/R-unic/cosmo/blob/a590cf1f19eda90f74b517cb7dd88fed0d8523c8/src/cosmo/syntax/parser/statements/use.cr#L2" target="_blank">
         cosmo/syntax/parser/statements/use.cr
       </a>
     
@@ -1330,7 +1365,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28module_path%3ACosmo%3A%3AToken%2Ckeyword%3ACosmo%3A%3AToken%29-class-method" class="signature"><strong>.new</strong>(module_path : Cosmo::Token, keyword : Cosmo::Token)</a>
+        <a href="#new%28imports%3AArray%28Cosmo%3A%3AToken%29%2Cmodule_path%3ACosmo%3A%3AToken%2Ckeyword%3ACosmo%3A%3AToken%29-class-method" class="signature"><strong>.new</strong>(imports : Array(Cosmo::Token), module_path : Cosmo::Token, keyword : Cosmo::Token)</a>
         
       </li>
     
@@ -1352,6 +1387,11 @@
     
       <li class="entry-summary">
         <a href="#accept%28visitor%3AVisitor%28R%29%29%3ARforallR-instance-method" class="signature"><strong>#accept</strong>(visitor : Visitor(R)) : R forall R</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#imports%3AArray%28Token%29-instance-method" class="signature"><strong>#imports</strong> : Array(Token)</a>
         
       </li>
     
@@ -1495,18 +1535,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(module_path:Cosmo::Token,keyword:Cosmo::Token)-class-method">
+    <div class="entry-detail" id="new(imports:Array(Cosmo::Token),module_path:Cosmo::Token,keyword:Cosmo::Token)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(module_path : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, keyword : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>)
+        def self.<strong>new</strong>(imports : Array(<a href="../../../Cosmo/Token.html">Cosmo::Token</a>), module_path : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>, keyword : <a href="../../../Cosmo/Token.html">Cosmo::Token</a>)
 
-        <a class="method-permalink" href="#new%28module_path%3ACosmo%3A%3AToken%2Ckeyword%3ACosmo%3A%3AToken%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28imports%3AArray%28Cosmo%3A%3AToken%29%2Cmodule_path%3ACosmo%3A%3AToken%2Ckeyword%3ACosmo%3A%3AToken%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/4895ccbb16a9c12458f08c8afe186a9c312301dc/src/cosmo/syntax/parser/statements/use.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/a590cf1f19eda90f74b517cb7dd88fed0d8523c8/src/cosmo/syntax/parser/statements/use.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1536,7 +1576,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/4895ccbb16a9c12458f08c8afe186a9c312301dc/src/cosmo/syntax/parser/statements/use.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/a590cf1f19eda90f74b517cb7dd88fed0d8523c8/src/cosmo/syntax/parser/statements/use.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="imports:Array(Token)-instance-method">
+      <div class="signature">
+        
+        def <strong>imports</strong> : Array(<a href="../../../Cosmo/Token.html">Token</a>)
+
+        <a class="method-permalink" href="#imports%3AArray%28Token%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/a590cf1f19eda90f74b517cb7dd88fed0d8523c8/src/cosmo/syntax/parser/statements/use.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1552,7 +1608,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/4895ccbb16a9c12458f08c8afe186a9c312301dc/src/cosmo/syntax/parser/statements/use.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/a590cf1f19eda90f74b517cb7dd88fed0d8523c8/src/cosmo/syntax/parser/statements/use.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1568,7 +1624,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/4895ccbb16a9c12458f08c8afe186a9c312301dc/src/cosmo/syntax/parser/statements/use.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/a590cf1f19eda90f74b517cb7dd88fed0d8523c8/src/cosmo/syntax/parser/statements/use.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1597,7 +1653,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/4895ccbb16a9c12458f08c8afe186a9c312301dc/src/cosmo/syntax/parser/statements/use.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/a590cf1f19eda90f74b517cb7dd88fed0d8523c8/src/cosmo/syntax/parser/statements/use.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1613,7 +1669,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/4895ccbb16a9c12458f08c8afe186a9c312301dc/src/cosmo/syntax/parser/statements/use.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/a590cf1f19eda90f74b517cb7dd88fed0d8523c8/src/cosmo/syntax/parser/statements/use.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
