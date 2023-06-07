@@ -1,4 +1,4 @@
-use "assert"
+use * from "assert"
 
 string->(string|int) bobert = {{
   name -> "bobert",
@@ -26,5 +26,4 @@ if bobert["net_worth"]? is not void
 else
   puts("no net worth")
 
-
-Assert->is_none(["net_worth"]?)
+Assert->is_none(bobert["net_worth"]?)

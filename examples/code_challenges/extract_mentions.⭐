@@ -1,4 +1,4 @@
-use "beginner_codes"
+use test from "beginner_codes"
 
 string fn extract_mentions(string tweet) {
   mut string[] mentions = []
@@ -15,4 +15,4 @@ string fn extract_mentions(string tweet) {
   mentions->join(" ")
 }
 
-BeginnerCodes::test(678, extract_mentions)
+test(678, extract_mentions)

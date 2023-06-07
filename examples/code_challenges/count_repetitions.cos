@@ -1,4 +1,4 @@
-use "beginner_codes"
+use test from "beginner_codes"
 
 int fn count_repetitions(string str) {
   every int i in 1..(#str // 2) {
@@ -13,4 +13,4 @@ int fn count_repetitions(string str) {
   1
 }
 
-BeginnerCodes::test(670, count_repetitions)
+test(670, count_repetitions)

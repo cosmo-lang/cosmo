@@ -1,4 +1,4 @@
-use "beginner_codes"
+use test from "beginner_codes"
 
 string fn shift_sentence(string sentence) {
   string[] words = sentence->split
@@ -11,4 +11,4 @@ string fn shift_sentence(string sentence) {
   shifted_words->join
 }
 
-BeginnerCodes::test(677, shift_sentence)
+test(677, shift_sentence)

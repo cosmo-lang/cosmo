@@ -1,4 +1,4 @@
-use "beginner_codes"
+use test from "beginner_codes"
 
 int[]? fn simple_pair(int[] vec, int n) {
   every int i in #vec
@@ -7,4 +7,4 @@ int[]? fn simple_pair(int[] vec, int n) {
         return [ vec[i], vec[j] ]
 }
 
-BeginnerCodes::test(665, simple_pair)
+test(665, simple_pair)

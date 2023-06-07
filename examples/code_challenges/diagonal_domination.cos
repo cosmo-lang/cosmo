@@ -1,4 +1,4 @@
-use "beginner_codes"
+use test from "beginner_codes"
 
 bool fn diagonally_dominant?(int[][] matrix) {
   every int i in #matrix {
@@ -15,4 +15,4 @@ bool fn diagonally_dominant?(int[][] matrix) {
   true
 }
 
-BeginnerCodes::test(668, diagonally_dominant?)
+test(668, diagonally_dominant?)

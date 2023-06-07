@@ -1,4 +1,4 @@
-use "beginner_codes"
+use test from "beginner_codes"
 
 bool fn alternating_negatives?(int[] nums) {
   if nums.includes?(0)
@@ -12,4 +12,4 @@ bool fn alternating_negatives?(int[] nums) {
   true
 }
 
-BeginnerCodes::test(666, alternating_negatives?)
+test(666, alternating_negatives?)

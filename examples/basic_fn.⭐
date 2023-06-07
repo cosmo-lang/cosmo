@@ -1,4 +1,4 @@
-use "assert"
+use * from "assert"
 
 bool fn is_eq(int a = 1, int b) {
   a == b

@@ -44,7 +44,7 @@ class Cosmo::Interpreter
     declare_intrinsic("func", "eval", Intrinsic::Eval.new(self))
     declare_intrinsic("func", "recursion_depth!", Intrinsic::RecursionDepth.new(self))
 
-    import_file(File.join File.dirname(__FILE__), "../../../libraries/intrinsic.⭐")
+    import_file(File.join(File.dirname(__FILE__), "../../../libraries/intrinsic.⭐"), [] of Token)
 
     version = "Cosmo #{Version}"
     declare_intrinsic("string", "version$", version)
@@ -224,15 +224,29 @@ class Cosmo::Interpreter
     end
   end
 
-  private def import_file(path : String) : Nil
-    # TODO: import main file if directory (read star.yml?)
-
+  private def import_file(path : String, imports : Array(Token)) : Nil
     source = File.read(path)
-    enclosing = @scope
-    module_scope = Scope.new(@scope)
 
+    enclosing = @scope
+    @scope = Scope.new(@scope)
     interpret(source, path)
-    globals.extend(module_scope)
+
+    if imports.empty?
+      globals.extend(@scope)
+    else
+      selected_scope = Scope.new
+      imports.each do |import|
+        selected_scope.declare(
+          fake_typedef("any"),
+          import,
+          @scope.lookup(import),
+          mutable: false,
+          visibility: Visibility::Public
+        ) if @scope.public?(import.lexeme)
+      end
+
+      globals.extend(selected_scope)
+    end
 
     @scope = enclosing
   end
@@ -241,13 +255,14 @@ class Cosmo::Interpreter
     relative_module_path = stmt.module_path.lexeme
     Logger.push_trace(stmt.keyword)
 
+    imports = stmt.imports
     unless relative_module_path.includes?("/")
       unless @importable_intrinsics.has_key?(relative_module_path)
         file_path = File.join File.dirname(__FILE__), "../../../libraries", relative_module_path
         path_with_ext = file_path + (File.exists?(file_path + ".cos") ? ".cos" : ".⭐")
 
         if File.exists?(path_with_ext)
-          return import_file(path_with_ext)
+          return import_file(path_with_ext, imports)
         end
 
         pkg_path = File.join File.dirname(__FILE__), "../../../pkg", relative_module_path
@@ -259,7 +274,7 @@ class Cosmo::Interpreter
             main_file = pkg_path + (File.exists?(pkg_path + ".cos") ? ".cos" : ".⭐")
           end
 
-          return import_file(main_file)
+          return import_file(main_file, imports)
         end
 
         Logger.report_error("Failed to resolve '#{relative_module_path}'", "Could not find package. Please run 'stars install' and try again.", stmt.module_path)
@@ -282,7 +297,7 @@ class Cosmo::Interpreter
         Logger.report_error("Cannot import", "No such file '#{module_path.split('.', 2).first}.cos/⭐' exists", stmt.module_path)
       end
 
-      import_file(ext_file_path)
+      import_file(ext_file_path, imports)
     end
   end
 

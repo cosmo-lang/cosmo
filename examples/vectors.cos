@@ -1,4 +1,4 @@
-use "assert"
+use * from "assert"
 
 mut string[] letters = ["a", "b", "c"]
 puts(letters->first, letters[1], letters[2]) ## a b c

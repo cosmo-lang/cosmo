@@ -1,4 +1,4 @@
-use "assert"
+use * from "assert"
 
 class MyClass {
   public string fn to_string {

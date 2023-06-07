@@ -21,6 +21,7 @@ module Cosmo::Keywords
     "break" => Syntax::Break,
     "next" => Syntax::Next,
     "use" => Syntax::Use,
+    "from" => Syntax::From,
     "case" => Syntax::Case,
     "when" => Syntax::When,
     "mut" => Syntax::Mut,

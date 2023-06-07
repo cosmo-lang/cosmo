@@ -313,7 +313,30 @@ class Cosmo::Parser
   end
 
   private def parse_use_statement : Statement::Use
-    Statement::Use.new(consume(Syntax::String), peek -2)
+    keyword = last_token
+
+    enclosed = match?(Syntax::LParen)
+    import_all = match?(Syntax::Star)
+
+    if import_all
+      consume(Syntax::RParen) if enclosed
+      consume(Syntax::From)
+      Statement::Use.new([] of Token, consume(Syntax::String), keyword)
+    else
+      imports = [ consume(Syntax::Identifier) ] of Token
+      while match?(Syntax::Comma)
+        if import_all && token_exists?(1)
+          Logger.report_error("Already imported all members", "Cannot import '#{peek.lexeme}' because '*' was already imported", last_token)
+        end
+
+        imports << consume(Syntax::Identifier)
+      end
+
+      consume(Syntax::RParen) if enclosed
+      consume(Syntax::From)
+      module_path = consume(Syntax::String)
+      Statement::Use.new(imports, module_path, keyword)
+    end
   end
 
   private def parse_throw_statement : Statement::Throw

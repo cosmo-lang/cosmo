@@ -15,7 +15,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
   - Regexes
   - Endless (and beginless?) range literals
   - `3 is in [1,2,3,4] ## true`
-  - Change `use "mod"` syntax to `use member from "mod"` (and `use * from "mod"`)
   - Enums
   - Decorators
   - Interfaces
@@ -54,6 +53,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Documentation generator?
 - Linting/language server
 - Highlight function names without parentheses
+- Explain module system in Wiki
 
 ## Things I Might Do
 

@@ -1,4 +1,4 @@
-use "beginner_codes"
+use test from "beginner_codes"
 
 string fn domino(string sequence) {
   mut string result = ""
@@ -17,4 +17,4 @@ string fn domino(string sequence) {
   result
 }
 
-BeginnerCodes::test(664, domino)
+test(664, domino)

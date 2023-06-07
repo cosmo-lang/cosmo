@@ -1,4 +1,4 @@
-use "beginner_codes"
+use test from "beginner_codes"
 
 int fn lcm(int x, int y) {
   mut int i = 1
@@ -8,4 +8,4 @@ int fn lcm(int x, int y) {
   i
 }
 
-BeginnerCodes::test(669, lcm)
+test(669, lcm)

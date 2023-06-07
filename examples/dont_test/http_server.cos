@@ -1,4 +1,4 @@
-use "http"
+use * from "http"
 
 puts("Listening @ http://localhost:8080")
 HTTP::Server.listen(8080, &void (string->any res, string->any req): {
