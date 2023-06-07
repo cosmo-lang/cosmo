@@ -12,41 +12,19 @@ module Cosmo::Intrinsic
     end
 
     abstract class Server::ContextFunctionBase < IFunction
-      def initialize(interpreter : Interpreter, @sock : TCPSocket)
+      def initialize(interpreter : Interpreter)
         super interpreter
       end
     end
 
     class Server::Connection::Send < Server::ContextFunctionBase
-      def arity : Range(UInt32, UInt32)
-        1.to_u .. 1.to_u
+      def arity(UInt32, UInt32)
+        1.to_u .. 1_to_u
       end
 
       def call(args : Array(ValueType)) : Nil
         TypeChecker.assert("string", args.first, token("Socket::Server::Connection->send"))
-        @sock.puts args.first
-      end
-    end
 
-    class Server::Connection::Receive < Server::ContextFunctionBase
-      def arity : Range(UInt32, UInt32)
-        1.to_u .. 1.to_u
-      end
-      
-      def call(args : Array(ValueType)) : (String | Nil)
-        TypeChecker.assert("string", args.first, token("Socket::Server::Connection->recv"))
-        @sock.print args.first
-        return @sock.gets
-      end
-    end
-
-    class Server::Connection::Close < Server::ContextFunctionBase
-      def arity : Range(UInt32, UInt32)
-        0.to_u .. 0.to_u
-      end
-
-      def call(args : Array(ValueType)) : Nil
-        @sock.close
       end
     end
 
@@ -62,10 +40,7 @@ module Cosmo::Intrinsic
         port = args.first.as(Int).to_i32
         tcpserver = TCPServer.new("0.0.0.0", port)
         while client = tcpserver.accept?
-          wrapped_conn = {} of String => Server::ContextFunctionBase
-          wrapped_conn["send"] = Server::Connection::Send.new(@interpreter, client)
-          wrapped_conn["recv"] = Server::Connection::Receive.new(@interpreter, client)
-          wrapped_conn["close"] = Server::Connection::Close.new(@interpreter, client)
+          wrapped_conn = {} of String => Server::Connection
           spawn do
             args[1].as(Function).call([
               TypeChecker.hash_as_value_type(wrapped_conn)
