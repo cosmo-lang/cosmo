@@ -949,8 +949,14 @@ class Cosmo::Parser
       op = last_token
       if op.lexeme == "is"
         inversed = match?(Syntax::Not)
-        type_info = parse_type
-        left = Expression::Is.new(left, type_info[:type_ref].not_nil!, inversed)
+        include_check = match?(Syntax::In)
+        if include_check
+          value = parse_expression
+          left = Expression::IsIn.new(left, value, inversed)
+        else
+          type_info = parse_type
+          left = Expression::Is.new(left, type_info[:type_ref].not_nil!, inversed)
+        end
       else
         right = parse_bitwise_or
         left = Expression::BinaryOp.new(left, op, right)

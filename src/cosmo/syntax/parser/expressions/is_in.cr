@@ -1,14 +1,16 @@
 module Cosmo::AST::Expression
-  class Is < Base
+  class IsIn < Base
+    # if
     getter value : Base
-    getter type : TypeRef
+    # is in
+    getter object : Base
     getter? inversed : Bool
 
-    def initialize(@value, @type, @inversed)
+    def initialize(@value, @object, @inversed)
     end
 
     def accept(visitor : Visitor(R)) : R forall R
-      visitor.visit_is_expr(self)
+      visitor.visit_is_in_expr(self)
     end
 
     def token : Token
@@ -16,9 +18,9 @@ module Cosmo::AST::Expression
     end
 
     def to_s(indent : Int = 0)
-      "Is<\n" +
+      "IsIn<\n" +
       "  #{TAB * indent}value: #{@value.to_s(indent + 1)},\n" +
-      "  #{TAB * indent}type: #{@type.to_s(indent + 1)}\n" +
+      "  #{TAB * indent}object: #{@object.to_s(indent + 1)}\n" +
       "  #{TAB * indent}inversed?: #{@inversed.to_s}\n" +
       "#{TAB * indent}>"
     end

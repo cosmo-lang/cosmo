@@ -2,6 +2,7 @@ module Cosmo::AST::Expression
   module Visitor(R)
     abstract def visit_lambda_expr(expr : Lambda) : R
     abstract def visit_this_expr(expr : This) : R
+    abstract def visit_is_in_expr(expr : IsIn) : R
     abstract def visit_is_expr(expr : Is) : R
     abstract def visit_type_alias_expr(expr : TypeAlias) : R
     abstract def visit_type_ref_expr(expr : TypeRef) : R
@@ -34,6 +35,7 @@ require "./expressions/unary_op"
 require "./expressions/ternary_op"
 require "./expressions/cast"
 require "./expressions/is"
+require "./expressions/is_in"
 require "./expressions/type_ref"
 require "./expressions/type_alias"
 require "./expressions/var"

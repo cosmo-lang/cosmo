@@ -158,6 +158,11 @@ class Cosmo::Resolver
     resolve(stmt.block)
   end
 
+  def visit_is_in_expr(expr : Expression::IsIn) : Nil
+    resolve(expr.value)
+    resolve(expr.object)
+  end
+
   def visit_lambda_expr(expr : Expression::Lambda) : Nil
     resolve_fn(expr, FnType::Fn)
   end
@@ -178,6 +183,7 @@ class Cosmo::Resolver
     resolve(expr.value.as Expression::Base) if expr.value.is_a?(Expression::Base)
     resolve_local(expr, expr.token)
   end
+
 
   def visit_property_assignment_expr(expr : Expression::PropertyAssignment) : Nil
     resolve(expr.object)

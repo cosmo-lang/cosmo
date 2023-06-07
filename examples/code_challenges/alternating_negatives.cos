@@ -1,7 +1,7 @@
 use test from "beginner_codes"
 
 bool fn alternating_negatives?(int[] nums) {
-  if nums.includes?(0)
+  if 0 is in nums
     return false
 
   every int i in 0..(#nums - 2) {

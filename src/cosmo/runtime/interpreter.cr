@@ -696,6 +696,21 @@ class Cosmo::Interpreter
     TypeChecker.cast(value, expr.type.name)
   end
 
+  def visit_is_in_expr(expr : Expression::IsIn) : Bool
+    value = evaluate(expr.value)
+    object = evaluate(expr.object)
+    is_in = false
+
+    if object.is_a?(Array)
+      is_in = object.includes?(value)
+    else
+      ## expected vector or table
+      Logger.report_error("Invalid 'is in' operand", "Expected vector, got '#{TypeChecker.get_mapped(value.class)}'", expr.token)
+    end
+
+    expr.inversed? ? !is_in : is_in
+  end
+
   def visit_is_expr(expr : Expression::Is) : Bool
     value = evaluate(expr.value)
     is = TypeChecker.is?(expr.type.name.lexeme, value, expr.token)

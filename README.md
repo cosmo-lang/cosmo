@@ -14,7 +14,8 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Grammar
   - Regexes
   - Endless (and beginless?) range literals
-  - `3 is in [1,2,3,4] ## true`
+  - `is in` for tables
+    * `is_in$` meta method?
   - Enums
   - Decorators
   - Interfaces
