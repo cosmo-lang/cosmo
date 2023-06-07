@@ -6,8 +6,8 @@ string->(string|int) bobert = {{
   age -> 69
 }}
 
-Assert->eq(bobert.name, "bobert") ## . is valid
-Assert->eq(bobert::address, "123 bobert st") ## :: is also valid
+Assert->eq(bobert.name, "bobert") ## '.' is valid
+Assert->eq(bobert::address, "123 bobert st") ## '::' is also valid
 Assert->eq(bobert->age, 69)
 
 mut string->string->string a = {{
@@ -16,6 +16,15 @@ mut string->string->string a = {{
   }}
 }}
 
-Assert->eq(a->b->c, "hello world") ## even -> is valid
+Assert->eq(a->b->c, "hello world") ## even '->' is valid
 a->b->foo = "bar"
 Assert->eq(a->b->foo, "bar")
+
+## if you want to find a value that may exist you can do this:
+if bobert["net_worth"]? is not void
+  puts("net worth: %{bobert.net_worth}")
+else
+  puts("no net worth")
+
+
+Assert->is_none(["net_worth"]?)

@@ -14,6 +14,8 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Grammar
   - Regexes
   - Endless (and beginless?) range literals
+  - `3 is in [1,2,3,4] ## true`
+  - Change `use "mod"` syntax to `use member from "mod"` (and `use * from "mod"`)
   - Enums
   - Decorators
   - Interfaces
@@ -31,7 +33,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * implicit conversions
     * intersection types
 - Other
-  - OS library
   - Filesystem library
   - Some form of multithreading
   - `char` intrinsic methods

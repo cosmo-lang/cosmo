@@ -3,8 +3,8 @@ require "http/client"
 require "http/headers"
 require "json"
 
-module Cosmo
-  class Intrinsic::HttpLib < Intrinsic::Lib
+module Cosmo::Intrinsic
+  class HttpLib < Lib
     def inject : Nil
       http = {} of String => Hash(String, IFunction) | IFunction
       server = {} of String => IFunction

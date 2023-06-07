@@ -1,5 +1,5 @@
-module Cosmo
-  class Intrinsic::MathLib < Intrinsic::Lib
+module Cosmo::Intrinsic
+  class MathLib < Lib
     def inject : Nil
       math = {} of String => IFunction | Float64
       math["e"] = Math::E

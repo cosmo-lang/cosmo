@@ -10,17 +10,22 @@ module Cosmo::Intrinsic
     end
 
     def token(name : String) : Token
-      location = Location.new("intrinsic", 0, 0)
+      location = Location.new("intrinsic_fn", 0, 0)
       Token.new(name, Syntax::Identifier, name, location)
     end
 
     def to_s : String
-      "<intrinsic ##{self.object_id.to_s(16)}>"
+      "<intrinsic_fn: 0x#{self.object_id.to_s(16)}>"
     end
   end
 
   abstract class Lib
     def initialize(@i : Interpreter)
+    end
+
+    def token(name : String) : Token
+      location = Location.new("intrinsic_fn", 0, 0)
+      Token.new(name, Syntax::Identifier, name, location)
     end
 
     abstract def inject : Nil
@@ -38,3 +43,4 @@ require "./intrinsic/table"
 require "./intrinsic/range"
 require "./intrinsic/lib/math"
 require "./intrinsic/lib/http"
+require "./intrinsic/lib/system"
