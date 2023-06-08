@@ -1324,6 +1324,41 @@ class Cosmo::Parser
     end
   end
 
+  private def map_syntax(syntax : Syntax) : String
+    case syntax
+    when Syntax::Identifier
+      "identifier"
+    when Syntax::TypeDef
+      "type"
+    when Syntax::Greater
+      "'<'"
+    when Syntax::Less
+      "'>'"
+    when Syntax::LParen
+      "'('"
+    when Syntax::RParen
+      "')'"
+    when Syntax::LBracket
+      "'['"
+    when Syntax::RBracket
+      "']'"
+    when Syntax::LBrace
+      "'{'"
+    when Syntax::RBrace
+      "'}'"
+    when Syntax::DoubleLBrace
+      "'{{'"
+    when Syntax::DoubleRBrace
+      "'}}'"
+    when Syntax::Pipe
+      "'|'"
+    when Syntax::Colon
+      "':'"
+    else
+      syntax.to_s
+    end
+  end
+
   # Consume the current token and advance position if token syntax
   # matches the expected syntax, else log an error
   private def consume(syntax : Syntax) : Token
@@ -1331,13 +1366,15 @@ class Cosmo::Parser
       raise "Failed to consume: Token stream finished"
     end
 
-    to_return = current
-    got = current.type == Syntax::Identifier ? "identifier" : current.lexeme
-    got = current.type == Syntax::TypeDef ? "type" : got
-    Logger.report_error("Expected #{syntax}, got", got, current) unless current.type == syntax
-    @position += 1
+    token = current
+    got = token.type == Syntax::Identifier ? "identifier" : token.lexeme
+    got = token.type == Syntax::TypeDef ? "type" : got
+    unless token.type == syntax
+      Logger.report_error("Expected #{map_syntax(syntax)}, got", got, token)
+    end
 
-    to_return
+    @position += 1
+    token
   end
 
   # Consume the current token and advance the position
