@@ -32,7 +32,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * implicit conversions
     * intersection types
 - Other
-  - Prettier errors
   - Filesystem library
   - `string` and `char` to hex conversions (e.x. `<uint>'f' == 15`)
   - Some form of multithreading

@@ -23,12 +23,20 @@ module Cosmo::Util
       encode(text, 31)
     end
 
+    def light_red(text : String)
+      encode(text, 91)
+    end
+
     def light_yellow(text : String)
       encode(text, 93)
     end
 
     def light_green(text : String)
       encode(text, 92)
+    end
+
+    def light_cyan(text : String)
+      encode(text, 96)
     end
   end
 
@@ -47,11 +55,10 @@ module Cosmo::Util
     end
 
     def any_value(value : T) : String forall T
-      s = String::Builder.new
-
       if value.is_a?(Hash)
-        s.write(hashmap(value, @@indent).to_slice)
-      elsif value.is_a?(Array) || value.is_a?(Spread)
+        hashmap(value, @@indent)
+      elsif value.is_a?(Array(ValueType) | Spread)
+        s = String::Builder.new
         s.write("*".to_slice) if value.is_a?(Spread)
         s.write("[".to_slice)
 
@@ -71,15 +78,19 @@ module Cosmo::Util
 
         pop_indent if multiline
         s.write("]".to_slice)
+        s.to_s
       elsif value.is_a?(ClassInstance)
-        value.name
+        Util::Color.light_yellow(value.name)
+      elsif value.is_a?(String | Char)
+        delim = value.is_a?(String) ? "\"" : "'"
+        Util::Color.light_green(delim + value.to_s + delim)
+      elsif value.is_a?(Num | Range(Int128 | Int64 | Int32 | Int16 | Int8 | UInt, Int128 | Int64 | Int32 | Int16 | Int8 | UInt))
+        Util::Color.light_red(value.to_s)
+      elsif value.nil? || value.is_a?(Bool)
+        Util::Color.bold Util::Color.light_cyan(value.to_s)
       else
-        s.write('"'.to_s.to_slice) if value.is_a?(String)
-        s.write((value.nil? ? "none" : value.to_s).to_slice)
-        s.write('"'.to_s.to_slice) if value.is_a?(String)
+        value.to_s
       end
-
-      s.to_s
     end
 
     private def stringify_hash_entry(h : Hash, entry : Tuple(ValueType, ValueType), i : Int) : String

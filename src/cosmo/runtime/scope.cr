@@ -1,5 +1,4 @@
 require "../syntax/lexer/token"
-require "./typechecker"
 
 class Cosmo::Scope
   private alias Variable = NamedTuple(
