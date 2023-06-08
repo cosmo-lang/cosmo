@@ -1,5 +1,5 @@
-use * from "http"
+use fetch from "http"
 
-HTTP::fetch("https://example.com", &void (string->any res): {
+request("https://example.com", &void (string->any res): {
   puts(res->body->text)
 })

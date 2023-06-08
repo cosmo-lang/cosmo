@@ -10,9 +10,8 @@ module Cosmo::Intrinsic
       server = {} of String => IFunction
       server["listen"] = Server::Listen.new(@i)
 
-      http["Server"] = server
-      http["fetch"] = Client::Fetch.new(@i)
-      @i.declare_intrinsic("string->any", "HTTP", http)
+      @i.declare_intrinsic("string->Function", "Server", server)
+      @i.declare_intrinsic("Function", "request", Client::Fetch.new(@i))
     end
 
     abstract class Client::ResponseBodyFunctionBase < IFunction
