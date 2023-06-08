@@ -348,8 +348,9 @@ class Cosmo::Lexer
         when "'" # single quote
           res_str += "'"
         else
-          report_error("Invalid string", "Invalid escape sequence '\\#{current_char}'")
+          res_str += current_char
         end
+
         advance
         escaping = false
       elsif current_char == "\\"
