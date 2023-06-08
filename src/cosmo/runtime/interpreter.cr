@@ -793,7 +793,14 @@ class Cosmo::Interpreter
     if object.is_a?(Array)
       is_in = object.includes?(value)
     elsif object.is_a?(Hash)
-      is_in = object.select { |v| v == value }.size > 0
+      is_in = false
+
+      object.each_value do |v|
+        if v == value
+          is_in = true
+          break
+        end
+      end
     elsif object.is_a?(ClassInstance)
       is_in = call_meta_method(object, value, "is_in$", "is in", expr.keyword, "bool").as Bool
     else
