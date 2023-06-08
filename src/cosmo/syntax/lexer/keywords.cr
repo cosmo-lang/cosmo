@@ -14,6 +14,7 @@ module Cosmo::Keywords
     "in" => Syntax::In,
     "of" => Syntax::Of,
     "is" => Syntax::Is,
+    "as" => Syntax::As,
     "else" => Syntax::Else,
     "every" => Syntax::Every,
     "while" => Syntax::While,

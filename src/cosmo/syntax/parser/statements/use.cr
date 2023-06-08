@@ -3,8 +3,9 @@ module Cosmo::AST::Statement
     getter imports : Array(Token)
     getter module_path : Token
     getter keyword : Token
+    getter bound_name : Token?
 
-    def initialize(@imports, @module_path, @keyword)
+    def initialize(@imports, @module_path, @keyword, @bound_name = nil)
     end
 
     def accept(visitor : Visitor(R)) : R forall R

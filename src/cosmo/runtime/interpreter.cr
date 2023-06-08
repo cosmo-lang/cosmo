@@ -238,7 +238,19 @@ class Cosmo::Interpreter
     end
   end
 
-  private def inject_imports_of(path : String, imports : Array(Token), &block)
+  private def get_import_member_value(file_scope : Scope, path : String, import : Token) : ValueType
+    unless file_scope.lookup?(import.lexeme).nil?
+      if file_scope.public?(import.lexeme)
+        return file_scope.lookup(import)
+      else
+        Logger.report_error("Invalid import member", "'#{import.lexeme}' exists in '#{path}', but is private", import)
+      end
+    else
+      Logger.report_error("Invalid import member", "'#{import.lexeme}' does not exist in '#{path}'", import)
+    end
+  end
+
+  private def inject_imports_of(path : String, imports : Array(Token), bound_name : Token? = nil, &block) : Nil
     enclosing = @scope
     file_scope = Scope.new(enclosing)
     @scope = file_scope
@@ -247,30 +259,35 @@ class Cosmo::Interpreter
 
     if imports.empty?
       @scope.extend(file_scope)
+
+      unless bound_name.nil?
+        namespace = @scope.as_namespace
+        @scope.declare(
+          fake_typedef("string->any"),
+          bound_name,
+          namespace,
+          mutable: false,
+          visibility: Visibility::Public
+        )
+      end
     else
       imports.each do |import|
-        unless file_scope.lookup?(import.lexeme).nil?
-          if file_scope.public?(import.lexeme)
-            @scope.declare(
-              fake_typedef("any"),
-              import,
-              file_scope.lookup(import),
-              mutable: false,
-              visibility: Visibility::Public
-            )
-          else
-            Logger.report_error("Invalid import member", "'#{import.lexeme}' exists in '#{path}', but is private", import)
-          end
-        else
-          Logger.report_error("Invalid import member", "'#{import.lexeme}' does not exist in '#{path}'", import)
-        end
+        value = get_import_member_value(file_scope, path, import)
+
+        @scope.declare(
+          fake_typedef("any"),
+          import,
+          value,
+          mutable: false,
+          visibility: Visibility::Public
+        )
       end
     end
   end
 
-  private def import_file(path : String, imports : Array(Token)) : Nil
+  private def import_file(path : String, imports : Array(Token), bound_name : Token? = nil) : Nil
     source = File.read(path)
-    inject_imports_of(path, imports) do
+    inject_imports_of(path, imports, bound_name) do
       interpret(source, path)
     end
   end
@@ -280,13 +297,14 @@ class Cosmo::Interpreter
     Logger.push_trace(stmt.keyword)
 
     imports = stmt.imports
+    bound_name = stmt.bound_name
     unless relative_module_path.includes?("/")
       unless @importable_intrinsics.has_key?(relative_module_path)
         file_path = File.join File.dirname(__FILE__), "../../../libraries", relative_module_path
         path_with_ext = file_path + (File.exists?(file_path + ".cos") ? ".cos" : ".⭐")
 
         if File.exists?(path_with_ext)
-          return import_file(path_with_ext, imports)
+          return import_file(path_with_ext, imports, bound_name)
         end
 
         pkg_path = File.join File.dirname(__FILE__), "../../../pkg", relative_module_path
@@ -298,12 +316,12 @@ class Cosmo::Interpreter
             main_file = pkg_path + (File.exists?(pkg_path + ".cos") ? ".cos" : ".⭐")
           end
 
-          return import_file(main_file, imports)
+          return import_file(main_file, imports, bound_name)
         end
 
         Logger.report_error("Failed to resolve '#{relative_module_path}'", "Could not find package. Please run 'stars install' and try again.", stmt.module_path)
       else
-        inject_imports_of(relative_module_path, imports) do
+        inject_imports_of(relative_module_path, imports, bound_name) do
           @importable_intrinsics[relative_module_path].inject
         end
       end
@@ -323,7 +341,7 @@ class Cosmo::Interpreter
         Logger.report_error("Cannot import", "No such file '#{module_path.split('.', 2).first}.cos/⭐' exists", stmt.module_path)
       end
 
-      import_file(ext_file_path, imports)
+      import_file(ext_file_path, imports, bound_name)
     end
   end
 
@@ -621,7 +639,7 @@ class Cosmo::Interpreter
             fn.call([] of ValueType)
             : fn
         end
-        Logger.report_error("Invalid table key", "'#{key}'", expr.key)
+        Logger.report_error("Invalid table key", "'#{key}'", expr.key) unless object.has_key?(key)
       else
         if value.is_a?(Callable) && value.arity.begin == 0 && !@evaluating_fn_callee
           value.call([] of ValueType)
@@ -680,7 +698,7 @@ class Cosmo::Interpreter
         key == "to_string" ? object.name : value # it's a field, so return the value if it's not to_string
       end
     else
-      Logger.report_error("Attempt to index", TypeChecker.get_mapped(object.class), expr.token)
+      Logger.report_error("Attempt to index", "#{TypeChecker.get_mapped(object.class)} at '#{expr.object.token.lexeme}'", expr.token)
     end
   end
 
@@ -707,7 +725,7 @@ class Cosmo::Interpreter
     elsif object.is_a?(ClassInstance)
       Logger.report_error("Attempt to index class instance", expr.token.lexeme, expr.token)
     else
-      Logger.report_error("Attempt to index", TypeChecker.get_mapped(object.class), expr.token)
+      Logger.report_error("Attempt to index", "#{TypeChecker.get_mapped(object.class)} at '#{expr.object.token.lexeme}'", expr.token)
     end
   end
 

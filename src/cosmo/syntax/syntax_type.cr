@@ -35,6 +35,6 @@ enum Cosmo::Syntax
   Case
   When
   Return
-  Use; From
+  Use; From; As
   EOF
 end

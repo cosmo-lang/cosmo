@@ -329,7 +329,11 @@ class Cosmo::Parser
     if import_all
       consume(Syntax::RParen) if enclosed
       consume(Syntax::From)
-      Statement::Use.new([] of Token, consume(Syntax::String), keyword)
+      module_path = consume(Syntax::String)
+
+      bound = match?(Syntax::As)
+      bound_name = consume(Syntax::Identifier) if bound
+      Statement::Use.new([] of Token, module_path, keyword, bound_name)
     else
       imports = [ consume(Syntax::Identifier) ] of Token
       while match?(Syntax::Comma)

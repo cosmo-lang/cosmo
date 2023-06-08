@@ -15,6 +15,18 @@ class Cosmo::Scope
   def initialize(@parent = nil)
   end
 
+  def as_namespace : Hash
+    namespace = {} of String => ValueType
+
+    variables.keys.each do |var|
+      unless lookup?(var).nil?
+        namespace[var] = lookup?(var) if public?(var)
+      end
+    end
+
+    namespace
+  end
+
   def extend(other : Cosmo::Scope) : Cosmo::Scope
     other.variables.each do |name, data|
       @variables[name] = data if data[:visibility] == Visibility::Public
