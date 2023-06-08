@@ -199,12 +199,12 @@ describe Interpreter do
       result.should eq -20..-5
     end
     it "lambdas" do
-      interpreter.interpret("func even = &bool (int n): n % 2 == 0", "test")
+      interpreter.interpret("Function even = &bool (int n): n % 2 == 0", "test")
       result = interpreter.interpret("even(6)", "test")
       result.should be_true
       result = interpreter.interpret("even(3)", "test")
       result.should be_false
-      interpreter.interpret("func double = &int (int n): n * 2", "test")
+      interpreter.interpret("Function double = &int (int n): n * 2", "test")
       result = interpreter.interpret("double(6)", "test")
       result.should eq 12
       result = interpreter.interpret("double(15)", "test")

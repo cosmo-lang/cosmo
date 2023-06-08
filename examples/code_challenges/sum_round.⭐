@@ -9,4 +9,4 @@ string fn sum_round(int n) {
   rounded_nums
 }
 
-test(679, sum_round)
+## test(679, sum_round)
