@@ -89,10 +89,12 @@ module Cosmo::TypeChecker
   end
 
   def register_intrinsics
+    register_type("Table")
+    register_type("Vector")
     register_type("Range")
+    register_type("Function")
     register_type("type")
     register_type("class")
-    register_type("Function")
     register_type("bigint")
     register_type("uint")
     register_type("int")
@@ -217,14 +219,18 @@ module Cosmo::TypeChecker
     typedef = typedef.gsub(/\s+/, "")
 
     case typedef
+    when "Table"
+      value.is_a?(Hash)
+    when "Vector"
+      value.is_a?(Array)
     when "Range"
       value.is_a?(Range)
+    when "Function"
+      value.is_a?(Callable)
     when "class"
       value.is_a?(Class)
     when "type"
       value.is_a?(Type)
-    when "Function"
-      value.is_a?(Callable)
     when "bigint"
       value.is_a?(Int)
     when "uint"

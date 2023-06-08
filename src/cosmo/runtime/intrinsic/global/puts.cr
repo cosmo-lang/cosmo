@@ -6,15 +6,8 @@ module Cosmo::Intrinsic
 
     def call(args : Array(ValueType)) : Nil
       mapped = args.map do |arg|
-        if arg.nil?
-          "none"
-        elsif arg.is_a?(Hash)
-          Stringify.hashmap(arg.as Hash(ValueType, ValueType))
-        else
-          arg.to_s
-        end
+        Stringify.any_value(arg)
       end
-
       puts mapped.join("    ")
     end
   end

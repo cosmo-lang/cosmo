@@ -36,11 +36,14 @@ module Cosmo::Stringify
 
     if value.is_a?(Hash)
       s.write(hashmap(value, @@indent).to_slice)
-    elsif value.is_a?(Array)
+    elsif value.is_a?(Array) || value.is_a?(Spread)
+      s.write("*".to_slice) if value.is_a?(Spread)
       s.write("[".to_slice)
 
       multiline = value.size >= 10
       push_indent(s) if multiline
+
+      enumerable = value.is_a?(Spread) ? value.array : value
       value.each_with_index do |v, i|
         s.write(('\n' + (TAB * @@indent)).to_slice) if multiline
         s.write(any_value(v).to_slice)

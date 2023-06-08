@@ -32,10 +32,8 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * implicit conversions
     * intersection types
 - Other
-  - `is_in$` meta method?
   - Prettier errors
   - Filesystem library
-  - `Spread` type
   - `char` to number conversions
   - Some form of multithreading
   - Intrinsic methods for all datatypes (inherit from a base type)
