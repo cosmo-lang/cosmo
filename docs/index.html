@@ -1492,7 +1492,11 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Fixes</h3>
 <ul>
-<li>Performance boosts lol</li>
+<li>Performance boosts lol
+<ul>
+<li>Throw if same module was imported twice</li>
+</ul>
+</li>
 <li><code>[&quot;a.b.c&quot;].first.split('.')</code> tries to access <code>[&quot;a.b.c&quot;].first</code> instead of <code>[&quot;a.b.c&quot;].first()</code> because of the <code>split</code> call with parentheses</li>
 </ul>
 <h3><a id="tests" class="anchor" href="#tests">
