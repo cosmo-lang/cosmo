@@ -1,4 +1,4 @@
-func fn doubled(int[] nums) {
+Function fn doubled(int[] nums) {
   mut int i = 0
   int? fn generator {
     int value = nums[i]?
@@ -8,7 +8,7 @@ func fn doubled(int[] nums) {
   }
 }
 
-func fn even(int[] nums) {
+Function fn even(int[] nums) {
   int[] even_nums = nums->filter(&bool (int x): x % 2 == 0)
   mut int i = 0
 

@@ -7,3 +7,7 @@ public class Exception {
     $->level = level
   }
 }
+
+public Function fn enumerate(any[] vec) {
+  ## TODO: this
+}

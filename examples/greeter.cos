@@ -1,9 +1,9 @@
-func fn greeter(string greeting) {
+Function fn greeter(string greeting) {
   void fn greet(string person) {
     puts("%{greeting} %{person}")
   }
 }
 
-func greet = greeter("hello")
+Function greet = greeter("hello")
 greet("world") ## hello world
 greet("bob") ## hello bob

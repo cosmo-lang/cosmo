@@ -1,0 +1,12 @@
+use test from "beginner_codes"
+
+string fn sum_round(int n) {
+  string digits = <string>n
+  int[] rounded_nums = []
+
+
+
+  rounded_nums
+}
+
+test(679, sum_round)

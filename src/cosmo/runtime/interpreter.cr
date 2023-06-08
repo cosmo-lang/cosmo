@@ -39,10 +39,10 @@ class Cosmo::Interpreter
   end
 
   private def declare_globals
-    declare_intrinsic("func", "puts", Intrinsic::Puts.new(self))
-    declare_intrinsic("func", "gets", Intrinsic::Gets.new(self))
-    declare_intrinsic("func", "eval", Intrinsic::Eval.new(self))
-    declare_intrinsic("func", "recursion_depth!", Intrinsic::RecursionDepth.new(self))
+    declare_intrinsic("Function", "puts", Intrinsic::Puts.new(self))
+    declare_intrinsic("Function", "gets", Intrinsic::Gets.new(self))
+    declare_intrinsic("Function", "eval", Intrinsic::Eval.new(self))
+    declare_intrinsic("Function", "recursion_depth!", Intrinsic::RecursionDepth.new(self))
 
     import_file(File.join(File.dirname(__FILE__), "../../../libraries/intrinsic.⭐"), [] of Token)
 
@@ -549,7 +549,7 @@ class Cosmo::Interpreter
       )
     else
       @scope.declare(
-        fake_typedef("func"),
+        fake_typedef("Function"),
         stmt.identifier,
         Function.new(self, @scope, stmt),
         mutable: false,
