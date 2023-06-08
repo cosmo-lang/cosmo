@@ -45,6 +45,7 @@ class Cosmo::Intrinsic::Numbers
     end
 
     def call(args : Array(ValueType)) : Char?
+      TypeChecker.assert("uint", @_self, token("Number->to_utf16"))
       String.from_utf16(@_self).chars.first?
     end
   end
