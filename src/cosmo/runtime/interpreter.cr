@@ -771,6 +771,14 @@ class Cosmo::Interpreter
 
     if object.is_a?(Array)
       is_in = object.includes?(value)
+    elsif object.is_a?(Hash)
+      is_in = false
+      object.each_value do |v|
+        if v == value
+          is_in = true
+          break
+        end
+      end
     else
       ## expected vector or table
       Logger.report_error("Invalid 'is in' operand", "Expected vector, got '#{TypeChecker.get_mapped(value.class)}'", expr.token)

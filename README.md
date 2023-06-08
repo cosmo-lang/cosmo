@@ -15,10 +15,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
   - Regexes
   - Endless (and beginless?) range literals
   - Don't ignore `;`
-  - `use * from "mod" as Name`
   - `typeof`
-  - `is in` for tables
-    * `is_in$` meta method?
   - Enums
   - Decorators
   - Interfaces
@@ -36,6 +33,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * implicit conversions
     * intersection types
 - Other
+  - `is_in$` meta method?
   - Prettier errors
   - Filesystem library
   - `Spread` type
