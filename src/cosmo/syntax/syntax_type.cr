@@ -12,10 +12,11 @@ enum Cosmo::Syntax
   Ampersand; Pipe; Tilde; RDoubleArrow; LDoubleArrow
   Not; And; Or; AndEqual; OrEqual;
   Question; QuestionColon; QuestionColonEqual
-  ColonColon; Colon; Dot; DotDot; HyphenArrow;
+  Semicolon
+  ColonColon; Colon; Dot; DotDot; HyphenArrow
   FatArrow; This
-  LBrace; RBrace; DoubleLBrace; DoubleRBrace;
-  LBracket; RBracket; LParen; RParen;
+  LBrace; RBrace; DoubleLBrace; DoubleRBrace
+  LBracket; RBracket; LParen; RParen
   Comma
   Hashtag
   Class; Mixin; New; Super

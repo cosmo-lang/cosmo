@@ -580,7 +580,7 @@ describe Interpreter do
       result.should eq 10.0
     end
     it "aliases" do
-      result = interpreter.interpret("type MyInt = int; MyInt my_int = 123", "test")
+      result = interpreter.interpret("type MyInt = int\nMyInt my_int = 123", "test")
       result.should eq 123
       result = interpreter.interpret("type Number = bigint | int | float; 1.23 is Number and 15 is Number", "test")
       result.should be_true

@@ -74,7 +74,7 @@ class Cosmo::Lexer
     when ","
       add_token(Syntax::Comma, nil)
     when ";"
-      advance
+      add_token(Syntax::Semicolon, nil)
     when "\"", "'"
       read_string(char)
     when "~"

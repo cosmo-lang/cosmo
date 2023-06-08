@@ -448,6 +448,7 @@ class Cosmo::Parser
 
   # Parse an expression and return a node
   private def parse_expression : Expression::Base
+    match?(Syntax::Semicolon)
     left = parse_after(parse_var_declaration)
 
     if match?(Syntax::Question)
