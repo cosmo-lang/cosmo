@@ -56,9 +56,9 @@ module Cosmo::Logger
   ) : Exception
 
     full_message = ""
-    full_message += Util::Color.faint "#{line - 1} | "
-    full_message +=  "#{Util::Color.faint "#{line} | "} " + Util::Color.bold(@@source.split('\n')[line - 1]? || "")
-    full_message += Util::Color.faint "#{line + 1} | #{(pos == 0 ? "" : " " * (pos - 1)) + Util::Color.light_yellow "^"}"
+    full_message += Util::Color.faint "#{line - 1} | \n"
+    full_message +=  "#{Util::Color.faint "#{line} | "} #{Util::Color.bold(@@source.split('\n')[line - 1]? || "")}\n"
+    full_message += Util::Color.faint "#{line + 1} | #{(pos == 0 ? "" : " " * (pos - 1)) + Util::Color.light_yellow "^"}\n"
 
     full_message += "\n#{error_type}: #{message}"
     stack_dump = [ "\n#{TAB}at #{File.basename(file_path)}:#{line}" ]
