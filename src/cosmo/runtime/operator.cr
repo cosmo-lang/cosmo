@@ -5,31 +5,15 @@ module Cosmo::Operator
     abstract def apply(expr : E) : ValueType forall E
   end
 
-  def self.call_meta_method(
-    instance : ClassInstance,
-    operand : ValueType,
-    name : String,
-    op_lexeme : String,
-    op_token : Token
-  ) : ValueType
-
-    meta_method = instance.get_method(name, include_private: false)
-    unless meta_method.nil?
-      return meta_method.call([ operand ])
-    else
-      Logger.report_error("'#{op_lexeme}' operator metamethod is not defined for", instance.name, op_token)
-    end
-  end
-
   class Plus < Base
     def apply(expr : Expression::BinaryOp, op : String = "+") : ValueType
       left = @interpreter.evaluate(expr.left)
       right = @interpreter.evaluate(expr.right)
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "add$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "add$", op, expr.operator)
       elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "add$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "add$", op, expr.operator)
       end
 
       if left.is_a?(Float)
@@ -54,9 +38,9 @@ module Cosmo::Operator
       right = @interpreter.evaluate(expr.right)
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "sub$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "sub$", op, expr.operator)
       elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "sub$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "sub$", op, expr.operator)
       end
 
       if left.is_a?(Float)
@@ -78,9 +62,9 @@ module Cosmo::Operator
       right = @interpreter.evaluate(expr.right)
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "mul$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "mul$", op, expr.operator)
       elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "mul$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "mul$", op, expr.operator)
       end
 
       if left.is_a?(Float)
@@ -110,9 +94,9 @@ module Cosmo::Operator
       right = @interpreter.evaluate(expr.right)
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "div$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "div$", op, expr.operator)
       elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "div$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "div$", op, expr.operator)
       end
 
       if left.is_a?(Float)
@@ -139,9 +123,9 @@ module Cosmo::Operator
       right = @interpreter.evaluate(expr.right)
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "idiv$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "idiv$", op, expr.operator)
       elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "idiv$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "idiv$", op, expr.operator)
       end
 
       if left.is_a?(Float)
@@ -163,9 +147,9 @@ module Cosmo::Operator
       right = @interpreter.evaluate(expr.right)
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "pow$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "pow$", op, expr.operator)
       elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "pow$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "pow$", op, expr.operator)
       end
 
       if left.is_a?(Float)
@@ -187,9 +171,9 @@ module Cosmo::Operator
       right = @interpreter.evaluate(expr.right)
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "mod$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "mod$", op, expr.operator)
       elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "mod$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "mod$", op, expr.operator)
       end
 
       if left.is_a?(Float)
@@ -212,9 +196,9 @@ module Cosmo::Operator
       op = '<'
 
       # if left.is_a?(ClassInstance)
-      #   return Operator.call_meta_method(left, right, "lt$", op, expr.operator)
+      #   return @interpreter.call_meta_method(left, right, "lt$", op, expr.operator)
       # elsif right.is_a?(ClassInstance)
-      #   return Operator.call_meta_method(right, left, "lt$", op, expr.operator)
+      #   return @interpreter.call_meta_method(right, left, "lt$", op, expr.operator)
       # end
 
       if left.is_a?(Float)
@@ -237,9 +221,9 @@ module Cosmo::Operator
       op = "<="
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "lte$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "lte$", op, expr.operator)
       elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "lte$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "lte$", op, expr.operator)
       end
 
       if left.is_a?(Float)
@@ -262,9 +246,9 @@ module Cosmo::Operator
       op = '>'
 
       # if left.is_a?(ClassInstance)
-      #   return Operator.call_meta_method(left, right, "gt$", op, expr.operator)
+      #   return @interpreter.call_meta_method(left, right, "gt$", op, expr.operator)
       # elsif right.is_a?(ClassInstance)
-      #   return Operator.call_meta_method(right, left, "gt$", op, expr.operator)
+      #   return @interpreter.call_meta_method(right, left, "gt$", op, expr.operator)
       # end
 
       if left.is_a?(Float)
@@ -287,9 +271,9 @@ module Cosmo::Operator
       op = ">="
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "gte$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "gte$", op, expr.operator)
       elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "gte$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "gte$", op, expr.operator)
       end
 
       if left.is_a?(Float)
@@ -311,7 +295,7 @@ module Cosmo::Operator
       op = "~"
 
       if operand.is_a?(ClassInstance)
-        return Operator.call_meta_method(operand, nil, "bnot$", op, expr.operator)
+        return @interpreter.call_meta_method(operand, nil, "bnot$", op, expr.operator)
       end
 
       return ~operand if operand.is_a?(Int)
@@ -326,9 +310,9 @@ module Cosmo::Operator
       op = "~"
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "bxor$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "bxor$", op, expr.operator)
       elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "bxor$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "bxor$", op, expr.operator)
       end
 
       if left.is_a?(Int)
@@ -347,9 +331,9 @@ module Cosmo::Operator
       op = "|"
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "bor$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "bor$", op, expr.operator)
       elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "bor$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "bor$", op, expr.operator)
       end
 
 
@@ -369,9 +353,9 @@ module Cosmo::Operator
       op = "&"
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "band$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "band$", op, expr.operator)
       elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "band$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "band$", op, expr.operator)
       end
 
       if left.is_a?(Int)
@@ -390,9 +374,9 @@ module Cosmo::Operator
       op = ">>"
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "bshr$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "bshr$", op, expr.operator)
       elsif right.is_a?(ClassInstance)
-        return Operator.call_meta_method(right, left, "bshr$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "bshr$", op, expr.operator)
       end
 
       if left.is_a?(Int)
@@ -411,9 +395,9 @@ module Cosmo::Operator
       op = "<<"
 
       if left.is_a?(ClassInstance)
-        return Operator.call_meta_method(left, right, "bshl$", op, expr.operator)
+        return @interpreter.call_meta_method(left, right, "bshl$", op, expr.operator)
       elsif right.is_a?(ClassInstance) && !left.is_a?(Array)
-        return Operator.call_meta_method(right, left, "bshl$", op, expr.operator)
+        return @interpreter.call_meta_method(right, left, "bshl$", op, expr.operator)
       end
 
       if left.is_a?(Int)

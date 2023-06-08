@@ -16,6 +16,7 @@ mut string->string->string a = {{
   }}
 }}
 
+Assert->truthy("hello world" is in a::b)
 Assert->eq(a->b->c, "hello world") ## even '->' is valid
 a->b->foo = "bar"
 Assert->eq(a->b->foo, "bar")

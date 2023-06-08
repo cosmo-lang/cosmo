@@ -5,8 +5,9 @@ module Cosmo::AST::Expression
     # is in
     getter object : Base
     getter? inversed : Bool
+    getter keyword : Token
 
-    def initialize(@value, @object, @inversed)
+    def initialize(@value, @object, @inversed, @keyword)
     end
 
     def accept(visitor : Visitor(R)) : R forall R

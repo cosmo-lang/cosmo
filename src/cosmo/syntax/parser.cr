@@ -965,7 +965,7 @@ class Cosmo::Parser
         include_check = match?(Syntax::In)
         if include_check
           value = parse_expression
-          left = Expression::IsIn.new(left, value, inversed)
+          left = Expression::IsIn.new(left, value, inversed, op)
         else
           type_info = parse_type
           left = Expression::Is.new(left, type_info[:type_ref].not_nil!, inversed)

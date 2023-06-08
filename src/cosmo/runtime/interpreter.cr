@@ -181,6 +181,27 @@ class Cosmo::Interpreter
     end
   end
 
+  def call_meta_method(
+    instance : ClassInstance,
+    operand : ValueType,
+    name : String,
+    op_lexeme : String,
+    op_token : Token,
+    return_type_override : String? = nil
+  ) : ValueType
+
+    meta_method = instance.get_method(name, include_private: false)
+    unless meta_method.nil?
+      unless name != "is_in$" || meta_method.return_typedef.lexeme == return_type_override
+        Logger.report_error("Invalid 'is_in$' return type", "'is_in$' meta method must return 'bool', got #{meta_method.return_typedef.lexeme}", meta_method.return_typedef)
+      end
+
+      return meta_method.call([ operand ])
+    else
+      Logger.report_error("'#{op_lexeme}' operator meta method is not defined for", instance.name, op_token)
+    end
+  end
+
   private def lookup_variable(identifier : Token, expr : Expression::Base) : ValueType
     distance : UInt32? = @locals[expr]?
     return @scope.lookup_at(distance, identifier) unless distance.nil?
@@ -772,13 +793,9 @@ class Cosmo::Interpreter
     if object.is_a?(Array)
       is_in = object.includes?(value)
     elsif object.is_a?(Hash)
-      is_in = false
-      object.each_value do |v|
-        if v == value
-          is_in = true
-          break
-        end
-      end
+      is_in = object.select { |v| v == value }.size > 0
+    elsif object.is_a?(ClassInstance)
+      is_in = call_meta_method(object, value, "is_in$", "is in", expr.keyword, "bool").as Bool
     else
       ## expected vector or table
       Logger.report_error("Invalid 'is in' operand", "Expected vector, got '#{TypeChecker.get_mapped(value.class)}'", expr.token)
@@ -1017,7 +1034,7 @@ class Cosmo::Interpreter
     case expr.operator.type
     when Syntax::Plus
       if operand.is_a?(ClassInstance)
-        return Operator.call_meta_method(operand, nil, "unp$", expr.operator.lexeme, expr.operator)
+        return call_meta_method(operand, nil, "unp$", expr.operator.lexeme, expr.operator)
       end
       if operand.is_a?(Float) || operand.is_a?(Int)
         operand.abs
@@ -1026,7 +1043,7 @@ class Cosmo::Interpreter
       end
     when Syntax::Minus
       if operand.is_a?(ClassInstance)
-        return Operator.call_meta_method(operand, nil, "unm$", expr.operator.lexeme, expr.operator)
+        return call_meta_method(operand, nil, "unm$", expr.operator.lexeme, expr.operator)
       end
       if operand.is_a?(Float) || operand.is_a?(Int) && !operand.is_a?(UInt)
         (-operand).as ValueType
@@ -1048,7 +1065,7 @@ class Cosmo::Interpreter
       op.apply(expr)
     when Syntax::Star
       if operand.is_a?(ClassInstance)
-        return Operator.call_meta_method(operand, nil, "splat$", expr.operator.lexeme, expr.operator)
+        return call_meta_method(operand, nil, "splat$", expr.operator.lexeme, expr.operator)
       elsif operand.is_a?(Array)
         Spread.new(operand)
       else
@@ -1056,7 +1073,7 @@ class Cosmo::Interpreter
       end
     when Syntax::Hashtag
       if operand.is_a?(ClassInstance)
-        return Operator.call_meta_method(operand, nil, "size$", expr.operator.lexeme, expr.operator)
+        return call_meta_method(operand, nil, "size$", expr.operator.lexeme, expr.operator)
       end
       unless operand.is_a?(Array) || operand.is_a?(Hash) || operand.is_a?(String) || operand.is_a?(Range)
         Logger.report_error("Invalid '#' operand type", TypeChecker.get_mapped(operand.class), expr.operator)
