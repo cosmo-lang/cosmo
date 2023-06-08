@@ -37,6 +37,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
   - Prettier errors
   - Filesystem library
   - `Spread` type
+  - `char` to number conversions
   - Some form of multithreading
   - Intrinsic methods for all datatypes (inherit from a base type)
   - REPL supports multiline source
