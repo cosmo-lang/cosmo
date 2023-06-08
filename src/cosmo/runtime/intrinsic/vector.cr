@@ -7,6 +7,8 @@ class Cosmo::Intrinsic::Vector
 
   def get_method(name : Token) : IFunction
     case name.lexeme
+    when "reverse"
+      Reverse.new(@interpreter, @cache, name)
     when "rindex"
       RIndex.new(@interpreter, @cache, name)
     when "index"
@@ -41,6 +43,25 @@ class Cosmo::Intrinsic::Vector
       Map.new(@interpreter, @cache, name)
     else
       Logger.report_error("Invalid vector method or property", name.lexeme, name)
+    end
+  end
+
+  class Reverse < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : Array(ValueType)
+      @_self.reverse
     end
   end
 
