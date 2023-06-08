@@ -1,0 +1,9 @@
+use Socket from "socket"
+
+puts("Attempting to run socket server on port 13531")
+Socket::Server.listen(13531, &void (string->any conn): {
+  conn->send("Hello")
+  string name = conn->recv("What is your name? > ")
+  conn->send("%{name} is very cool!")
+  conn->close
+})

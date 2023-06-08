@@ -14,6 +14,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Grammar
   - Regexes
   - Endless (and beginless?) range literals
+  - `use * from "mod" as Name`
   - `is in` for tables
     * `is_in$` meta method?
   - Enums

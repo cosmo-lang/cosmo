@@ -50,8 +50,8 @@ class Cosmo::Interpreter
     declare_intrinsic("string", "version$", version)
 
     Intrinsic::MathLib.new(self).inject
+    Intrinsic::SystemLib.new(self).inject
     declare_importable("http", Intrinsic::HttpLib.new(self))
-    declare_importable("system", Intrinsic::SystemLib.new(self))
     declare_importable("socket", Intrinsic::SocketLib.new(self))
   end
 
