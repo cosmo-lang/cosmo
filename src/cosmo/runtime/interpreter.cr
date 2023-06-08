@@ -52,6 +52,7 @@ class Cosmo::Interpreter
     Intrinsic::MathLib.new(self).inject
     declare_importable("http", Intrinsic::HttpLib.new(self))
     declare_importable("system", Intrinsic::SystemLib.new(self))
+    declare_importable("socket", Intrinsic::SocketLib.new(self))
   end
 
   private def declare_importable(name : String, library : Intrinsic::Lib)
