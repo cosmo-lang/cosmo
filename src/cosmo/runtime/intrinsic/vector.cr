@@ -145,7 +145,7 @@ class Cosmo::Intrinsic::Vector
     end
 
     def call(args : Array(ValueType)) : Array(ValueType)
-      TypeChecker.assert("func?", args.first?, token("Vector->sort"))
+      TypeChecker.assert("Function?", args.first?, token("Vector->sort"))
 
       sorter = args.first?.as Callable?
       res = @_self.map { |v| TypeChecker.as_value_type(v) }.sort do |a, b|
@@ -359,7 +359,7 @@ class Cosmo::Intrinsic::Vector
     end
 
     def call(args : Array(ValueType)) : Array(ValueType)
-      TypeChecker.assert("func", args.first, token("Vector->map"))
+      TypeChecker.assert("Function", args.first, token("Vector->map"))
       if args.first.is_a?(Callable)
         fn = args.first.as Callable
         res = [] of ValueType
@@ -390,7 +390,7 @@ class Cosmo::Intrinsic::Vector
     end
 
     def call(args : Array(ValueType)) : Array(ValueType)
-      TypeChecker.assert("func", args.first, token("Vector->filter"))
+      TypeChecker.assert("Function", args.first, token("Vector->filter"))
       if args.first.is_a?(Callable)
         fn = args.first.as Callable
 

@@ -32,7 +32,7 @@ module Cosmo::Intrinsic
 
       def call(args : Array(ValueType)) : ValueType
         TypeChecker.assert("string", args.first, token("HTTP->fetch"))
-        TypeChecker.assert("func", args[1], token("HTTP->fetch"))
+        TypeChecker.assert("Function", args[1], token("HTTP->fetch"))
         TypeChecker.assert("(string->string) | string->(string[]) | void", args[2]?, token("HTTP->fetch"))
 
         url = args.first.to_s
@@ -174,7 +174,7 @@ module Cosmo::Intrinsic
 
       def call(args : Array(ValueType)) : Nil
         TypeChecker.assert("uint", args.first, token("HTTP::Server->listen"))
-        TypeChecker.assert("func", args[1], token("HTTP::Server->listen"))
+        TypeChecker.assert("Function", args[1], token("HTTP::Server->listen"))
 
         port = args.first.as(Int).to_i32
         server = HTTP::Server.new do |ctx|

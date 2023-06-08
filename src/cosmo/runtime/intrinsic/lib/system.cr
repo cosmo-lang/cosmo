@@ -9,7 +9,7 @@ module Cosmo::Intrinsic
         env["var"] = Var.new(@i)
         env["set_var"] = SetVar.new(@i)
 
-        TypeChecker.assert("string->(func|string)", env, token("SystemLib::EnvLib#inject"))
+        TypeChecker.assert("string->(Function|string)", env, token("SystemLib::EnvLib#inject"))
         _system["Env"] = env
       end
 

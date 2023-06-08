@@ -26,7 +26,7 @@ module Cosmo::Intrinsic
       math["atan"] = Atan.new(@i)
       math["atan2"] = Atan2.new(@i)
 
-      @i.declare_intrinsic("string->(func|float)", "Math", math)
+      @i.declare_intrinsic("string->(Function|float)", "Math", math)
     end
 
     class Random < IFunction
