@@ -182,13 +182,34 @@ module Cosmo::TypeChecker
       end
     elsif type.lexeme.includes?("char") && value.to_s.size == 1  # if the type is a char
       value.to_s.chars.first
-    elsif is?(type.lexeme, 1, type) && (value.is_a?(String) || value.is_a?(Float) || value.is_a?(Int) || value.is_a?(Bool)) # if the type is an integer
+    elsif is?(type.lexeme, 1, type) && (
+      value.is_a?(String) || value.is_a?(Char) ||
+      value.is_a?(Float) || value.is_a?(Int) ||
+      value.is_a?(Bool)
+    ) # if the type is an integer
+
       if value.is_a?(Bool)
         value ? 1 : 0
       else
-        value.to_i
+        value.to_i ## TODO: handle this failing
       end
-    elsif is?(type.lexeme, 1.0, type) && (value.is_a?(String) || value.is_a?(Float) || value.is_a?(Int) || value.is_a?(Bool)) # if the type is a float
+    elsif type.lexeme.includes?("uint") && (
+      value.is_a?(String) || value.is_a?(Char) ||
+      value.is_a?(Float) || value.is_a?(Int) ||
+      value.is_a?(Bool)
+    ) # if the type is a uint
+
+      if value.is_a?(Bool)
+        value ? 1 : 0
+      else
+        value.to_u64
+      end
+    elsif is?(type.lexeme, 1.0, type) && (
+      value.is_a?(String) || value.is_a?(Char) ||
+      value.is_a?(Float) || value.is_a?(Int) ||
+      value.is_a?(Bool)
+    ) # if the type is a float
+
       if value.is_a?(Bool)
         value ? 1.0 : 0.0
       else

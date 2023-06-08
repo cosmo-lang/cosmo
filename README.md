@@ -34,7 +34,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Other
   - Prettier errors
   - Filesystem library
-  - `char` to number conversions
+  - `string` and `char` to hex conversions (e.x. `<uint>'f' == 15`)
   - Some form of multithreading
   - Intrinsic methods for all datatypes (inherit from a base type)
   - REPL supports multiline source
