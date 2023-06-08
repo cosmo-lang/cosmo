@@ -15,7 +15,7 @@ module Cosmo::Intrinsic
         end
       end
 
-      puts mapped.join('\t')
+      puts mapped.join("    ")
     end
   end
 end

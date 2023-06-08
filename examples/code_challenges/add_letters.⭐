@@ -1,0 +1,13 @@
+use test from "beginner_codes"
+
+char fn add_letters(string[] letters) {
+  mut uint[] codepoints = []
+  every string letter in letters
+    codepoints << (<char>letter).codepoint - 'a'.codepoint + 1
+
+  uint sum = codepoints.sum % 26
+  uint letter_codepoint = (sum == 0 ? 26 : sum) + 'a'.codepoint - 1
+  letter_codepoint.to_utf16
+}
+
+test(680, add_letters)

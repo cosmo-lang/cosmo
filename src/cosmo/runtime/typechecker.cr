@@ -34,6 +34,9 @@ module Cosmo::TypeChecker
     Int8 => "int",
     UInt64 => "uint",
     UInt32 => "uint",
+    UInt32 => "uint",
+    UInt16 => "uint",
+    UInt8 => "uint",
     Float64 => "float",
     Float32 => "float",
     String => "string",
@@ -48,6 +51,10 @@ module Cosmo::TypeChecker
     Array(Int32) => "int[]",
     Array(Int16) => "int[]",
     Array(Int8) => "int[]",
+    Array(UInt64) => "uint[]",
+    Array(UInt32) => "uint[]",
+    Array(UInt16) => "uint[]",
+    Array(UInt8) => "uint[]",
     Array(Float64) => "float[]",
     Array(Float32) => "float[]",
     Array(String) => "string[]",
@@ -66,6 +73,10 @@ module Cosmo::TypeChecker
 
   private def report_mismatch(typedef : String, value : ValueType, token : Token)
     got_type = value.is_a?(ClassInstance) ? value.name : get_mapped(value.class)
+    if value.is_a?(Int) && value >= 0
+      got_type = "uint"
+    end
+
     Logger.report_error("Type mismatch", "Expected '#{typedef}', got '#{got_type}'", token)
   end
 

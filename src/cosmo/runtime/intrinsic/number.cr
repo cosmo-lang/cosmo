@@ -44,9 +44,15 @@ class Cosmo::Intrinsic::Numbers
       0.to_u .. 0.to_u
     end
 
-    def call(args : Array(ValueType)) : Char?
-      TypeChecker.assert("uint", @_self, token("Number->to_utf16"))
-      String.from_utf16(@_self).chars.first?
+    def call(args : Array(ValueType)) : Char
+      t = token("Number->to_utf16")
+      TypeChecker.assert("uint", @_self, t)
+      if @_self > 65536
+        Logger.report_error("Invalid UTF-16 codepoint", "Given codepoint '#{@_self}' is larger than 16 bytes", t)
+      end
+
+      as_uint = @_self.to_u16
+      String.from_utf16(pointerof(as_uint)).first.chars.first
     end
   end
 
