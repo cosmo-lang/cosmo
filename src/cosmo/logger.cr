@@ -4,6 +4,15 @@ module Cosmo::Logger
   @@stack_trace = [] of Token
   @@debug = false
   @@trace_level : UInt32 = 0
+  @@source : String = ""
+
+  def source : String
+    @@source
+  end
+
+  def source=(source : String) : Nil
+    @@source = source
+  end
 
   def trace_level=(level : UInt32) : Nil
     @@trace_level = level
@@ -46,17 +55,20 @@ module Cosmo::Logger
     file_path : String
   ) : Exception
 
-    @@stack_trace.shift(@@trace_level)
+    puts Util::Color.gray "#{line - 1} | "
+    puts  "#{Util::Color.gray "#{line} | "} #{Util::Color.bold Util::Color.light_gray(@@source.split('\n')[line - 1]? || "")}"
+    puts Util::Color.gray "#{line + 1} | #{" " * (pos - 1) + Util::Color.bright_yellow "^"}"
 
-    full_message = "#{error_type}: #{message}"
+    full_message = "\n#{error_type}: #{message}"
     stack_dump = [ "\n#{TAB}at #{File.basename(file_path)}:#{line}" ]
+    @@stack_trace.shift(@@trace_level)
     @@stack_trace.reverse.each do |tr|
       stack_dump << "\n#{TAB}at #{tr.lexeme} (#{File.basename(tr.location.file_name)}:#{tr.location.line})"
     end
 
     full_message += stack_dump.join
     unless @@debug
-      abort full_message, 1
+      abort Util::Color.red(full_message), 1
     else
       raise full_message
     end

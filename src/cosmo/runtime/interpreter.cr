@@ -112,6 +112,8 @@ class Cosmo::Interpreter
   end
 
   def interpret(source : String, @file_path : String) : ValueType
+    Logger.source = source
+
     parser = Parser.new(source, @file_path, @run_benchmarks)
     statements = parser.parse
 
@@ -125,7 +127,7 @@ class Cosmo::Interpreter
     resolver = Resolver.new(self)
     resolver.resolve(statements)
     end_time = Time.monotonic
-    puts "Resolver @#{@file_path} took #{get_elapsed(resolver.start_time, end_time)}." if @run_benchmarks
+    puts "Resolver @#{@file_path} took #{Util.get_elapsed(resolver.start_time, end_time)}." if @run_benchmarks
 
     start_time = Time.monotonic
 
@@ -136,7 +138,7 @@ class Cosmo::Interpreter
 
     main_result = execute_main
     end_time = Time.monotonic
-    puts "Interpreter @#{file_path} took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
+    puts "Interpreter @#{file_path} took #{Util.get_elapsed(start_time, end_time)}." if @run_benchmarks
 
     if !main_result.nil? && @file_path != "test" && @file_path != "repl"
       code = main_result.not_nil!
@@ -309,7 +311,9 @@ class Cosmo::Interpreter
   private def import_file(path : String, imports : Array(Token), bound_name : Token? = nil) : Nil
     source = File.read(path)
     inject_imports_of(path, imports, bound_name) do
+      enclosing_source = Logger.source
       interpret(source, path)
+      Logger.source = enclosing_source
     end
   end
 

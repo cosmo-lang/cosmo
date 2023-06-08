@@ -9,7 +9,7 @@ module Cosmo
     end
 
     def to_s : String
-      Stringify.any_value(@array)
+      Util::Stringify.any_value(@array)
     end
   end
 

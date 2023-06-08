@@ -6,7 +6,7 @@ module Cosmo::Intrinsic
 
     def call(args : Array(ValueType)) : Nil
       mapped = args.map do |arg|
-        Stringify.any_value(arg)
+        Util::Stringify.any_value(arg)
       end
       puts mapped.join("    ")
     end

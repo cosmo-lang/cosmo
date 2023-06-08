@@ -81,9 +81,7 @@ module Cosmo
       break if line.nil? || line.chomp.empty?
 
       result = read_source(line, file_path: "repl")
-      puts result.is_a?(Hash) ?
-        Stringify.hashmap(result.as Hash(ValueType, ValueType))
-        : result.nil? ? "none" : result.to_s
+      puts Util::Stringify.any_value(result)
     end
   end
 

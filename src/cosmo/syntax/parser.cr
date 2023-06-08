@@ -46,7 +46,7 @@ class Cosmo::Parser
     end
 
     end_time = Time.monotonic
-    puts "Parser @#{@file_path} took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
+    puts "Parser @#{@file_path} took #{Util.get_elapsed(start_time, end_time)}." if @run_benchmarks
     statements
   end
 

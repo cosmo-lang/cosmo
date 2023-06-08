@@ -27,7 +27,7 @@ class Cosmo::Lexer
 
     add_token(Syntax::EOF, nil)
     end_time = Time.monotonic
-    puts "Lexer @#{@file_path} took #{get_elapsed(start_time, end_time)}." if @run_benchmarks
+    puts "Lexer @#{@file_path} took #{Util.get_elapsed(start_time, end_time)}." if @run_benchmarks
 
     @tokens
   end
