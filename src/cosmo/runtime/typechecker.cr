@@ -43,7 +43,7 @@ module Cosmo::TypeChecker
     ClassInstance => "classinstance",
     Class => "class",
     Type => "type",
-    Function => "func",
+    Function => "Function",
     Array(Int64) => "int[]",
     Array(Int32) => "int[]",
     Array(Int16) => "int[]",
@@ -81,7 +81,7 @@ module Cosmo::TypeChecker
     register_type("Range")
     register_type("type")
     register_type("class")
-    register_type("func")
+    register_type("Function")
     register_type("bigint")
     register_type("uint")
     register_type("int")
@@ -212,7 +212,7 @@ module Cosmo::TypeChecker
       value.is_a?(Class)
     when "type"
       value.is_a?(Type)
-    when "func"
+    when "Function"
       value.is_a?(Callable)
     when "bigint"
       value.is_a?(Int)
