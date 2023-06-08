@@ -35,6 +35,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * intersection types
 - Other
   - Filesystem library
+  - `Spread` type
   - Some form of multithreading
   - `char` intrinsic methods
   - Intrinsic methods for all datatypes (inherit from a base type)
@@ -77,3 +78,4 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 ## Contributors
 
 - [R-unic](https://github.com/R-unic) - creator and maintainer
+- [quasar098](https://github.com/quasar098)

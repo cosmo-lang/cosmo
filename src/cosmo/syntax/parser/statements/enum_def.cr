@@ -21,7 +21,7 @@ module Cosmo::AST::Statement
       "  #{TAB * indent}visibility: #{@visibility.to_s}\n" +
       "  #{TAB * indent}members: [\n" +
       "    #{TAB * indent}#{@members.map(&.to_s).join(",\n#{TAB * (indent + 2)}")}\n" +
-      "  #{TAB * indent}],\n" +
+      "  #{TAB * indent}]\n" +
       "#{TAB * indent}>"
     end
   end

@@ -594,7 +594,7 @@ describe Parser do
 
     stmts.last.should be_a Statement::Every
     every_stmt = stmts.last.as Statement::Every
-    declaration = assert_var_declaration(every_stmt.var, "int", "n")
+    declaration = assert_var_declaration(every_stmt.vars.first, "int", "n")
     every_stmt.enumerable.should be_a Expression::Var
     every_stmt.block.should be_a Statement::SingleExpression
     block = every_stmt.block.as Statement::SingleExpression

@@ -87,7 +87,7 @@ class Cosmo::Resolver
   end
 
   def visit_every_stmt(stmt : Statement::Every) : Nil
-    resolve(stmt.var)
+    stmt.vars.each { |var| resolve(var) }
     resolve(stmt.enumerable)
     resolve(stmt.block)
   end

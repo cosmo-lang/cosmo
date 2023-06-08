@@ -201,8 +201,7 @@ class Cosmo::Parser
     Statement::Case.new(token, value, comparisons, else_block)
   end
 
-  private def parse_every_statement : Statement::Every
-    token = last_token
+  private def parse_every_stmt_var : Expression::VarDeclaration
     type_info = parse_type
 
     if type_info[:type_ref].nil?
@@ -212,18 +211,27 @@ class Cosmo::Parser
 
     ident = consume(Syntax::Identifier)
     var = Expression::Var.new(ident)
-    var_declaration = Expression::VarDeclaration.new(
+    Expression::VarDeclaration.new(
       typedef, var,
       Expression::NoneLiteral.new(nil, ident),
       class_field: !@within_class.nil?,
       mutable: false,
       visibility: Visibility::Private
     )
+  end
+
+  private def parse_every_statement : Statement::Every
+    token = last_token
+
+    vars = [ parse_every_stmt_var ] of Expression::VarDeclaration
+    while match?(Syntax::Comma)
+      vars << parse_every_stmt_var
+    end
 
     consume(Syntax::In)
     enumerable = parse_expression
     block = parse_statement
-    Statement::Every.new(token, var_declaration, enumerable, block)
+    Statement::Every.new(token, vars, enumerable, block)
   end
 
   private def parse_while_statement : Statement::While

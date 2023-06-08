@@ -35,21 +35,16 @@ module Cosmo::Operator
       if left.is_a?(Float)
         return left + right if right.is_a?(Float)
         return left + right.to_f if right.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       elsif left.is_a?(Int)
         return left + right if right.is_a?(Int)
         return left.to_f + right if right.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
-      elsif left.is_a?(String)
-        return left + right if right.is_a?(String)
-        return left + right.to_s if right.is_a?(Char)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
-      elsif left.is_a?(Char)
-        return left.to_s + right.to_s if right.is_a?(Char)
-        return left.to_s + right if right.is_a?(String)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
+      elsif left.is_a?(String) || left.is_a?(Char)
+        return left.to_s + right.to_s if right.is_a?(String) || right.is_a?(Char)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
     end
   end
 
@@ -67,13 +62,13 @@ module Cosmo::Operator
       if left.is_a?(Float)
         return left - right if right.is_a?(Float)
         return left - right.to_f if right.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       elsif left.is_a?(Int)
         return left - right if right.is_a?(Int)
         return left.to_f - right if right.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
     end
   end
 
@@ -91,16 +86,21 @@ module Cosmo::Operator
       if left.is_a?(Float)
         return left * right if right.is_a?(Float)
         return left * right.to_f if right.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       elsif left.is_a?(Int)
         return left * right if right.is_a?(Int)
         return left.to_f * right if right.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       elsif left.is_a?(String) || left.is_a?(Char)
-        return left.to_s * right if right.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        if right.is_a?(Int)
+          if right < 0
+            Logger.report_error("Invalid '#{op}' operand type", "'int', expected 'uint'", expr.operator)
+          end
+          return left.to_s * right
+        end
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
     end
   end
 
@@ -118,18 +118,18 @@ module Cosmo::Operator
       if left.is_a?(Float)
         return left / right if right.is_a?(Float)
         return left / right.to_f if right.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       elsif left.is_a?(Int)
         return left / right if right.is_a?(Int)
         return left.to_f / right if right.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       elsif left.is_a?(String)
         if right.is_a?(String) || right.is_a?(Char)
           return TypeChecker.array_as_value_type(left.split(right.to_s))
         end
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
     end
   end
 
@@ -147,13 +147,13 @@ module Cosmo::Operator
       if left.is_a?(Float)
         return (left // right).to_i if right.is_a?(Float)
         return (left // right.to_f).to_i if right.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       elsif left.is_a?(Int)
         return (left // right).to_i if right.is_a?(Int)
         return (left.to_f // right).to_i if right.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
     end
   end
 
@@ -171,13 +171,13 @@ module Cosmo::Operator
       if left.is_a?(Float)
         return left ** right if right.is_a?(Float)
         return left ** right.to_f if right.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       elsif left.is_a?(Int)
         return left ** right if right.is_a?(Int)
         return left.to_f ** right if right.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
     end
   end
 
@@ -195,13 +195,13 @@ module Cosmo::Operator
       if left.is_a?(Float)
         return left % right if right.is_a?(Float)
         return left % right.to_f if right.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       elsif left.is_a?(Int)
         return left % right if right.is_a?(Int)
         return left.to_f % right if right.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
     end
   end
 
@@ -220,13 +220,13 @@ module Cosmo::Operator
       if left.is_a?(Float)
         return left < right if right.is_a?(Float)
         return left < right.to_f if right.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       elsif left.is_a?(Int)
         return left < right if right.is_a?(Int)
         return left.to_f < right if right.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
     end
   end
 
@@ -245,13 +245,13 @@ module Cosmo::Operator
       if left.is_a?(Float)
         return left <= right if right.is_a?(Float)
         return left <= right.to_f if right.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       elsif left.is_a?(Int)
         return left <= right if right.is_a?(Int)
         return left.to_f <= right if right.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
     end
   end
 
@@ -270,13 +270,13 @@ module Cosmo::Operator
       if left.is_a?(Float)
         return left > right if right.is_a?(Float)
         return left > right.to_f if right.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       elsif left.is_a?(Int)
         return left > right if right.is_a?(Int)
         return left.to_f > right if right.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
     end
   end
 
@@ -295,13 +295,13 @@ module Cosmo::Operator
       if left.is_a?(Float)
         return left >= right if right.is_a?(Float)
         return left >= right.to_f if right.is_a?(Int)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       elsif left.is_a?(Int)
         return left >= right if right.is_a?(Int)
         return left.to_f >= right if right.is_a?(Float)
-        Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
     end
   end
 
@@ -334,9 +334,9 @@ module Cosmo::Operator
       if left.is_a?(Int)
         return left ^ right if right.is_a?(Int)
       else
-        Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
     end
   end
 
@@ -356,9 +356,9 @@ module Cosmo::Operator
       if left.is_a?(Int)
         return left | right if right.is_a?(Int)
       else
-        Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
     end
   end
 
@@ -377,9 +377,9 @@ module Cosmo::Operator
       if left.is_a?(Int)
         return left & right if right.is_a?(Int)
       else
-        Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
     end
   end
 
@@ -398,9 +398,9 @@ module Cosmo::Operator
       if left.is_a?(Int)
         return left >> right if right.is_a?(Int)
       else
-        Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
     end
   end
 
@@ -427,9 +427,9 @@ module Cosmo::Operator
           return @interpreter.scope.assign(expr.token, access)
         end
       else
-        Logger.report_error("Invalid '#{op}' operand type", left.class.to_s, expr.operator)
+        Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(left.class), expr.operator)
       end
-      Logger.report_error("Invalid '#{op}' operand type", right.class.to_s, expr.operator)
+      Logger.report_error("Invalid '#{op}' operand type", TypeChecker.get_mapped(right.class), expr.operator)
     end
   end
 

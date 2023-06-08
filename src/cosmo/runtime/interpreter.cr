@@ -403,12 +403,29 @@ class Cosmo::Interpreter
     end_recursion(level)
   end
 
+  private def assign_every_stmt_vars(stmt : Statement::Every, value : ValueType) : Nil
+    if value.is_a?(Spread)
+      value.array.size.times do |i|
+        var = stmt.vars[i]?
+        unless var.nil?
+          @scope.assign(var.token, TypeChecker.as_value_type(value.array[i]))
+        end
+      end
+    else
+      stmt.vars.each do |var|
+        @scope.assign(var.token, value)
+      end
+    end
+  end
+
   def visit_every_stmt(stmt : Statement::Every) : Nil
     enclosing = @scope
     @scope = Scope.new(@scope)
 
     enumerable = evaluate(stmt.enumerable)
-    @scope.declare(stmt.var.typedef, stmt.var.token, nil, mutable: true)
+    stmt.vars.each do |var|
+      @scope.declare(var.typedef, var.token, nil, mutable: true)
+    end
 
     @loop_level += 1
     level : UInt32 = 0
@@ -419,7 +436,7 @@ class Cosmo::Interpreter
 
     if enumerable.is_a?(Array) || enumerable.is_a?(Range)
       enumerable.each do |value|
-        @scope.assign(stmt.var.token, value)
+        assign_every_stmt_vars(stmt, value)
         start_recursion(stmt.keyword)
         level += 1
 
@@ -433,7 +450,7 @@ class Cosmo::Interpreter
       end
     elsif enumerable.is_a?(String)
       enumerable.chars.each do |value|
-        @scope.assign(stmt.var.token, value)
+        assign_every_stmt_vars(stmt, value)
         start_recursion(stmt.keyword)
         level += 1
 
@@ -455,7 +472,7 @@ class Cosmo::Interpreter
 
       # keep looping until the iterator returns none
       until (value = enumerable.call([] of ValueType)).nil?
-        @scope.assign(stmt.var.token, value)
+        assign_every_stmt_vars(stmt, value)
         start_recursion(stmt.keyword)
         level += 1
 
@@ -977,7 +994,7 @@ class Cosmo::Interpreter
       elsif operand.is_a?(Array)
         Spread.new(operand)
       else
-        Logger.report_error("Invalid '*' operand type", TypeChecker.get_mapped(operand.class), expr.operator)
+        Logger.report_error("Attempt to spread", TypeChecker.get_mapped(operand.class), expr.operator)
       end
     when Syntax::Hashtag
       if operand.is_a?(ClassInstance)

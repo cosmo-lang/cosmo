@@ -1,11 +1,11 @@
 module Cosmo::AST::Statement
   class Every < Base
     getter keyword : Token
-    getter var : Expression::VarDeclaration
+    getter vars : Array(Expression::VarDeclaration)
     getter enumerable : Expression::Base
     getter block : Base
 
-    def initialize(@keyword, @var, @enumerable, @block)
+    def initialize(@keyword, @vars, @enumerable, @block)
     end
 
     def accept(visitor : Visitor(R)) : R forall R
@@ -18,7 +18,9 @@ module Cosmo::AST::Statement
 
     def to_s(indent : Int = 0)
       "Every<\n" +
-      "  #{TAB * indent}var: #{@var.to_s(indent + 1)},\n" +
+      "  #{TAB * indent}vars: [\n" +
+      "    #{TAB * indent}#{@vars.map(&.to_s(indent + 2).as String).join(",\n#{TAB * (indent + 2)}")}\n" +
+      "  #{TAB * indent}],\n" +
       "  #{TAB * indent}in: #{@enumerable.to_s(indent + 1)}\n" +
       "  #{TAB * indent}do: #{@block.to_s(indent + 1)}\n" +
       "#{TAB * indent}>"

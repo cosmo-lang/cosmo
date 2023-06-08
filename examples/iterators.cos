@@ -1,10 +1,10 @@
 Function fn doubled(int[] nums) {
   mut int i = 0
   int? fn generator {
-    int value = nums[i]?
+    int v = nums[i]?
     ++i
-    unless value is void
-      value * 2
+    if v is not void
+      v * 2
   }
 }
 

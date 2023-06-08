@@ -2,11 +2,14 @@ use test from "beginner_codes"
 
 string fn sum_round(int n) {
   string digits = <string>n
-  int[] rounded_nums = []
+  mut string[] rounded_nums = []
 
+  every int i, char digit in enumerate(digits) {
+    unless digit == '0'
+      rounded_nums << digit + '0' * (#digits - i)
+  }
 
-
-  rounded_nums
+  rounded_nums.reverse.join(' ')
 }
 
-## test(679, sum_round)
+test(679, sum_round)

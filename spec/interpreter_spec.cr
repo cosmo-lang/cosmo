@@ -590,7 +590,7 @@ describe Interpreter do
       expect_raises(Exception, "Type mismatch: Expected 'int', got 'float'") do
         interpreter.interpret("x = 2.0", "test")
       end
-      expect_raises(Exception, "Invalid '+' operand type: Char") do
+      expect_raises(Exception, "Invalid '+' operand type: char") do
         interpreter.interpret("x + 'h'", "test")
       end
       expect_raises(Exception, "Type mismatch: Expected 'float', got 'int'") do

@@ -8,6 +8,12 @@ public class Exception {
   }
 }
 
-public Function fn enumerate(any[] vec) {
-  ## TODO: this
+public Function fn enumerate(any[]|string vec) {
+  mut int i = 0
+  any fn generator {
+    any v = vec[i]?
+    ++i
+    if v is not void
+      *[i, v]
+  }
 }
