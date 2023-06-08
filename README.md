@@ -38,7 +38,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
   - Filesystem library
   - `Spread` type
   - Some form of multithreading
-  - `char` intrinsic methods
   - Intrinsic methods for all datatypes (inherit from a base type)
   - REPL supports multiline source
 
@@ -47,6 +46,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - `["a.b.c"].first.split('.')` tries to access `["a.b.c"].first` instead of `["a.b.c"].first()` because of the `split` call with parentheses
 
 ### Tests
+- Chained method calls with optional parentheses (e.x. `["a.b.c"].first.split('.')`)
 - Expectation of errors in parser spec
 
 ### Refactorings

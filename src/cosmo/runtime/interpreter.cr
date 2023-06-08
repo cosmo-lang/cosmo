@@ -643,6 +643,13 @@ class Cosmo::Interpreter
       fn.arity.begin == 0 && !@evaluating_fn_callee ?
         fn.call([] of ValueType)
         : fn
+    elsif object.is_a?(Char)
+      fn = Intrinsic::Chars.new(self, object)
+        .get_method(expr.key)
+
+      fn.arity.begin == 0 && !@evaluating_fn_callee ?
+        fn.call([] of ValueType)
+        : fn
     elsif object.is_a?(Range)
       fn = Intrinsic::Ranges.new(self, object)
         .get_method(expr.key)
