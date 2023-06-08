@@ -14,7 +14,6 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Grammar
   - Regexes
   - Endless (and beginless?) range literals
-  - Don't ignore `;`
   - `typeof`
   - Enums
   - Decorators
