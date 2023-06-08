@@ -75,7 +75,10 @@ class Cosmo::Scope
 
   # Returns true if the variable exists and is public, otherwise false
   def public?(ident : String) : Bool
-    return false unless @variables.has_key?(ident)
+    unless @variables.has_key?(ident)
+      return false if @parent.nil?
+      return @parent.not_nil!.public?(ident)
+    end
     @variables[ident][:visibility] == Visibility::Public
   end
 

@@ -67,11 +67,24 @@ class Cosmo::Interpreter
     Token.new(name, Syntax::Identifier, name, location || Location.new(@file_path, 0, 0))
   end
 
-  def declare_intrinsic(type : String, ident : String, value : ValueType)
+  def declare_intrinsic(
+    type : String,
+    ident : String,
+    value : ValueType,
+    visibility = Visibility::Public
+  )
+
     location = Location.new("intrinsic", 0, 0)
     ident_token = fake_ident(ident, location)
     typedef_token = fake_typedef(type, location)
-    @globals.declare(typedef_token, ident_token, value, mutable: true)
+
+    @globals.declare(
+      typedef_token,
+      ident_token,
+      value,
+      mutable: true,
+      visibility: visibility
+    )
   end
 
   def delete_meta(key : String) : Nil
@@ -225,31 +238,41 @@ class Cosmo::Interpreter
     end
   end
 
-  private def import_file(path : String, imports : Array(Token)) : Nil
-    source = File.read(path)
-
+  private def inject_imports_of(path : String, imports : Array(Token), &block)
     enclosing = @scope
-    @scope = Scope.new(@scope)
-    interpret(source, path)
+    file_scope = Scope.new(enclosing)
+    @scope = file_scope
+    block.call
+    @scope = enclosing
 
     if imports.empty?
-      globals.extend(@scope)
+      @scope.extend(file_scope)
     else
-      selected_scope = Scope.new
       imports.each do |import|
-        selected_scope.declare(
-          fake_typedef("any"),
-          import,
-          @scope.lookup(import),
-          mutable: false,
-          visibility: Visibility::Public
-        ) if @scope.public?(import.lexeme)
+        unless file_scope.lookup?(import.lexeme).nil?
+          if file_scope.public?(import.lexeme)
+            @scope.declare(
+              fake_typedef("any"),
+              import,
+              file_scope.lookup(import),
+              mutable: false,
+              visibility: Visibility::Public
+            )
+          else
+            Logger.report_error("Invalid import member", "'#{import.lexeme}' exists in '#{path}', but is private", import)
+          end
+        else
+          Logger.report_error("Invalid import member", "'#{import.lexeme}' does not exist in '#{path}'", import)
+        end
       end
-
-      globals.extend(selected_scope)
     end
+  end
 
-    @scope = enclosing
+  private def import_file(path : String, imports : Array(Token)) : Nil
+    source = File.read(path)
+    inject_imports_of(path, imports) do
+      interpret(source, path)
+    end
   end
 
   def visit_use_stmt(stmt : Statement::Use) : Nil
@@ -280,7 +303,9 @@ class Cosmo::Interpreter
 
         Logger.report_error("Failed to resolve '#{relative_module_path}'", "Could not find package. Please run 'stars install' and try again.", stmt.module_path)
       else
-        @importable_intrinsics[relative_module_path].inject
+        inject_imports_of(relative_module_path, imports) do
+          @importable_intrinsics[relative_module_path].inject
+        end
       end
     else
       if @file_path == "repl"

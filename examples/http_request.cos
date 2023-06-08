@@ -1,4 +1,4 @@
-use fetch from "http"
+use request from "http"
 
 request("https://example.com", &void (string->any res): {
   puts(res->body->text)

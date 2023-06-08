@@ -34,6 +34,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * implicit conversions
     * intersection types
 - Other
+  - Prettier errors
   - Filesystem library
   - `Spread` type
   - Some form of multithreading
