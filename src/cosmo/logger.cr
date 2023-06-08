@@ -55,11 +55,12 @@ module Cosmo::Logger
     file_path : String
   ) : Exception
 
-    puts Util::Color.faint "#{line - 1} | "
-    puts  "#{Util::Color.faint "#{line} | "} " + Util::Color.bold(@@source.split('\n')[line - 1]? || "")
-    puts Util::Color.faint "#{line + 1} | #{" " * (pos - 1) + Util::Color.light_yellow "^"}"
+    full_message = ""
+    full_message += Util::Color.faint "#{line - 1} | "
+    full_message +=  "#{Util::Color.faint "#{line} | "} " + Util::Color.bold(@@source.split('\n')[line - 1]? || "")
+    full_message += Util::Color.faint "#{line + 1} | #{(pos == 0 ? "" : " " * (pos - 1)) + Util::Color.light_yellow "^"}"
 
-    full_message = "\n#{error_type}: #{message}"
+    full_message += "\n#{error_type}: #{message}"
     stack_dump = [ "\n#{TAB}at #{File.basename(file_path)}:#{line}" ]
     @@stack_trace.shift(@@trace_level)
     @@stack_trace.reverse.each do |tr|
