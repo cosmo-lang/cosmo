@@ -1199,6 +1199,9 @@ class Cosmo::Parser
       if part.starts_with?("%{")
         interpolation_parser = Parser.new(part[2..-2], "interpolation:#{@file_path}", @run_benchmarks, @within_class)
         statements = interpolation_parser.parse
+        if statements.empty?
+          Logger.report_error("Invalid string interpolation", "No value to interpolate provided", string_token)
+        end
         unless statements.size == 1
           Logger.report_error("Invalid string interpolation", "Only one expression/statement can be used within an interpolation", string_token)
         end
