@@ -76,7 +76,7 @@ module Cosmo
   def run_repl
     puts "Welcome to the #{rainbow "Cosmo"} REPL!"
     loop do
-      STDOUT.write("» ".to_slice)
+      STDOUT.write(Util::Color.light_green("» ").to_slice)
       line = STDIN.gets
       break if line.nil? || line.chomp.empty?
 

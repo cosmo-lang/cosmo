@@ -15,20 +15,20 @@ module Cosmo::Util
       encode(text, 1, 22)
     end
 
+    def faint(text : String)
+      encode(text, 2, 22)
+    end
+
     def red(text : String)
       encode(text, 31)
     end
 
-    def bright_yellow(text : String)
-      encode(text, 37)
+    def light_yellow(text : String)
+      encode(text, 93)
     end
 
-    def gray(text : String)
-      encode(text, 37)
-    end
-
-    def light_gray(text : String)
-      encode(text, 97)
+    def light_green(text : String)
+      encode(text, 92)
     end
   end
 
