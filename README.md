@@ -43,7 +43,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 
 ### Fixes
 - Performance boosts lol
-- Chained method calls with optional parentheses (`.split('.').first.split('?').first`)
+- `["a.b.c"].first.split('.')` tries to access `["a.b.c"].first` instead of `["a.b.c"].first()` because of the `split` call with parentheses
 
 ### Tests
 - Expectation of errors in parser spec

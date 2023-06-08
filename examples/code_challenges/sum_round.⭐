@@ -9,7 +9,7 @@ string fn sum_round(int n) {
       rounded_nums << digit + '0' * (#digits - i)
   }
 
-  rounded_nums.reverse.join(' ')
+  rounded_nums.reverse().join(' ')
 }
 
 test(679, sum_round)
