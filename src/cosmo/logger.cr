@@ -15,7 +15,6 @@ module Cosmo::Logger
 
   @@stack_trace = [] of StackFrame
   @@debug = false
-  @@source = ""
   @@trace_level : UInt32 = 0
 
   # TODO: expand file paths (so you can have multiple files of the same name)
@@ -68,14 +67,16 @@ module Cosmo::Logger
     file_path : String
   ) : Exception
 
-    first_frame = @@stack_trace.first
+    first_frame = @@stack_trace.first?
     popped_frames = @@stack_trace.pop(@@trace_level)
 
     last_frame = @@stack_trace.last? || first_frame
-    source = last_frame.file_source
-    file_path = last_frame.token.location.file_name
-    line = last_frame.token.location.line
-    pos = last_frame.token.location.position
+    source = last_frame.nil? ? @@sources[file_path] : last_frame.file_source
+    unless last_frame.nil?
+      file_path = last_frame.token.location.file_name
+      line = last_frame.token.location.line
+      pos = last_frame.token.location.position
+    end
 
     full_message = Util::Color.faint "#{line - 1} |\n"
     full_message += "#{Util::Color.faint "#{line} | "} #{Util::Color.bold(source.split('\n')[line - 1]? || "")}\n"
