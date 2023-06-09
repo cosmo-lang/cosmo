@@ -1,9 +1,5 @@
 use test from "beginner_codes"
 
-int REGULAR_RATE = 10
-int OVERTIME_RATE = 15
-int WEEKEND_RATE = 2
-
 int fn daily_salary(int hours) {
   hours <= 8
     ? hours * 10

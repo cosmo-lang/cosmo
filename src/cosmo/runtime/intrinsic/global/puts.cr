@@ -5,8 +5,8 @@ module Cosmo::Intrinsic
     end
 
     def call(args : Array(ValueType)) : Nil
-      mapped = args.map do |arg|
-        Util::Stringify.any_value(arg)
+      mapped : Array(String) = args.map do |arg|
+        arg.is_a?(String | Char) ? arg.to_s : Util::Stringify.any_value(arg)
       end
       puts mapped.join("    ")
     end
