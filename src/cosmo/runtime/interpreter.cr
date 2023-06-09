@@ -114,6 +114,7 @@ class Cosmo::Interpreter
 
   def interpret(source : String, @file_path : String) : ValueType
     Logger.source = source
+    Logger.file_name = @file_path
 
     parser = Parser.new(source, @file_path, @run_benchmarks)
     statements = parser.parse

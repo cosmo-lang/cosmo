@@ -5,6 +5,15 @@ module Cosmo::Logger
   @@debug = false
   @@trace_level : UInt32 = 0
   @@source : String = ""
+  @@file_name : String = ""
+
+  def file_name : String
+    @@file_name
+  end
+
+  def file_name=(file_name : String) : Nil
+    @@file_name = file_name
+  end
 
   def source : String
     @@source
@@ -43,7 +52,7 @@ module Cosmo::Logger
       message,
       token.location.line,
       token.location.position,
-      token.location.file_name
+      @@file_name
     )
   end
 
@@ -56,20 +65,23 @@ module Cosmo::Logger
   ) : Exception
 
     full_message = ""
-    full_message += Util::Color.faint "#{line - 1} | \n"
-    full_message +=  "#{Util::Color.faint "#{line} | "} #{Util::Color.bold(@@source.split('\n')[line - 1]? || "")}\n"
-    full_message += Util::Color.faint "#{line + 1} | #{(pos == 0 ? "" : " " * (pos - 1)) + Util::Color.light_yellow "^"}\n"
+    full_message += Util::Color.faint "#{line - 1} |\n"
+    full_message += "#{Util::Color.faint "#{line} | "} #{Util::Color.bold(@@source.split('\n')[line - 1]? || "")}\n"
 
-    full_message += "\n#{error_type}: #{message}"
+    bottom_line = "#{line + 1} |"
+    full_message += Util::Color.faint(bottom_line)
+    full_message += "#{(pos == 0 ? "" : " " * (pos - bottom_line.size + 1)) + Util::Color.light_yellow "^"}\n"
+
+    full_message += Util::Color.red "\n#{error_type}: #{message}"
     stack_dump = [ "\n#{TAB}at #{File.basename(file_path)}:#{line}" ]
-    @@stack_trace.shift(@@trace_level)
+    @@stack_trace.pop(@@trace_level)
     @@stack_trace.reverse.each do |tr|
       stack_dump << "\n#{TAB}at #{tr.lexeme} (#{File.basename(tr.location.file_name)}:#{tr.location.line})"
     end
 
-    full_message += stack_dump.join
+    full_message += Util::Color.red(stack_dump.join)
     unless @@debug
-      abort Util::Color.red(full_message), 1
+      abort full_message, 1
     else
       raise full_message
     end
