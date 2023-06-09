@@ -62,6 +62,8 @@ module Cosmo::Logger
     file_path : String
   ) : Exception
 
+    @@stack_trace.shift(@@trace_level)
+
     full_message = ""
     full_message += Util::Color.faint "#{line - 1} |\n"
     full_message += "#{Util::Color.faint "#{line} | "} #{Util::Color.bold(@@source.split('\n')[line - 1]? || "")}\n"
@@ -73,11 +75,12 @@ module Cosmo::Logger
     full_message += Util::Color.red "\n#{error_type}: #{message}"
     stack_dump = [] of String
 
-    @@stack_trace.shift(@@trace_level)
     @@stack_trace.each do |tr|
       stack_dump << "\n#{TAB}at #{tr.lexeme} (#{File.basename(tr.location.file_name)}:#{tr.location.line})"
     end
-    stack_dump << "\n#{TAB}at #{File.basename(file_path)}:#{line}" if @@trace_level
+    unless stack_dump.empty? || stack_dump.last.includes?("at throw (")
+      stack_dump << "\n#{TAB}at #{File.basename(file_path)}:#{line}"
+    end
 
     full_message += Util::Color.red(stack_dump.join)
     unless @@debug
