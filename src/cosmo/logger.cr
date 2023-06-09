@@ -5,15 +5,6 @@ module Cosmo::Logger
   @@debug = false
   @@trace_level : UInt32 = 0
   @@source : String = ""
-  @@file_name : String = ""
-
-  def file_name : String
-    @@file_name
-  end
-
-  def file_name=(file_name : String) : Nil
-    @@file_name = file_name
-  end
 
   def source : String
     @@source
@@ -27,8 +18,15 @@ module Cosmo::Logger
     @@trace_level = level
   end
 
+  def push_file_trace(token : Token) : UInt32
+    (@@stack_trace << token)
+      .rindex(token)
+      .not_nil!
+      .to_u
+  end
+
   def push_trace(token : Token) : UInt32
-    idx = (@@stack_trace << token)
+    (@@stack_trace << token)
       .rindex(token)
       .not_nil!
       .to_u
@@ -52,7 +50,7 @@ module Cosmo::Logger
       message,
       token.location.line,
       token.location.position,
-      @@file_name
+      token.location.file_name
     )
   end
 
@@ -73,11 +71,13 @@ module Cosmo::Logger
     full_message += "#{(pos == 0 ? "" : " " * (pos - bottom_line.size + 1)) + Util::Color.light_yellow "^"}\n"
 
     full_message += Util::Color.red "\n#{error_type}: #{message}"
-    stack_dump = [ "\n#{TAB}at #{File.basename(file_path)}:#{line}" ]
-    @@stack_trace.pop(@@trace_level)
-    @@stack_trace.reverse.each do |tr|
+    stack_dump = [] of String
+
+    @@stack_trace.shift(@@trace_level)
+    @@stack_trace.each do |tr|
       stack_dump << "\n#{TAB}at #{tr.lexeme} (#{File.basename(tr.location.file_name)}:#{tr.location.line})"
     end
+    stack_dump << "\n#{TAB}at #{File.basename(file_path)}:#{line}" if @@trace_level
 
     full_message += Util::Color.red(stack_dump.join)
     unless @@debug

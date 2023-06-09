@@ -114,7 +114,6 @@ class Cosmo::Interpreter
 
   def interpret(source : String, @file_path : String) : ValueType
     Logger.source = source
-    Logger.file_name = @file_path
 
     parser = Parser.new(source, @file_path, @run_benchmarks)
     statements = parser.parse
@@ -147,7 +146,7 @@ class Cosmo::Interpreter
       if code == 0 # success
         Process.exit(code)
       else
-        raise "Process exited with code #{code}"
+        abort "Process exited with code #{code}", 1
       end
     end
 
@@ -312,6 +311,7 @@ class Cosmo::Interpreter
 
   private def import_file(path : String, imports : Array(Token), bound_name : Token? = nil) : Nil
     source = File.read(path)
+
     inject_imports_of(path, imports, bound_name) do
       enclosing_source = Logger.source
       interpret(source, path)
@@ -321,10 +321,9 @@ class Cosmo::Interpreter
 
   def visit_use_stmt(stmt : Statement::Use) : Nil
     relative_module_path = stmt.module_path.lexeme
-    Logger.push_trace(stmt.keyword)
-
     imports = stmt.imports
     bound_name = stmt.bound_name
+
     unless relative_module_path.includes?("/")
       unless @importable_intrinsics.has_key?(relative_module_path)
         file_path = File.join File.dirname(__FILE__), "../../../libraries", relative_module_path
