@@ -3,18 +3,17 @@ use test from "beginner_codes"
 int REGULAR_RATE = 10
 int OVERTIME_RATE = 15
 int WEEKEND_RATE = 2
-int fn weekly_salary(int[] hours) {
-  mut int salary = 0
-  every int i, int hour in enumerate(hours)
-    if i < 5 {
-      if hour <= 8
-        salary += hour * REGULAR_RATE
-      else
-        salary = (8 * REGULAR_RATE) + ((hour - 8) * OVERTIME_RATE)
-    } else
-      salary += hour * REGULAR_RATE * WEEKEND_RATE
 
-  salary
+int fn daily_salary(int hours) {
+  hours <= 8
+    ? hours * 10
+    : (hours - 8) * 15 + 80
+}
+
+int fn weekly_salary(int[] week_hours) {
+  mut int salary = week_hours.map(daily_salary).sum
+  salary += daily_salary(week_hours[5])
+  salary += daily_salary(week_hours[6])
 }
 
 test(681, weekly_salary)

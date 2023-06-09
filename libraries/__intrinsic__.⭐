@@ -1,0 +1,19 @@
+public class Exception {
+  public string message
+  public int level
+
+  public Exception fn construct(string message, int level = 0) {
+    $->message = message
+    $->level = level
+  }
+}
+
+public Function fn enumerate(any[]|string vec) {
+  mut int i = 0
+  any fn generator {
+    any v = vec[i]?
+    ++i
+    if v is not void
+      *[i, v]
+  }
+}
