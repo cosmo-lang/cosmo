@@ -1,33 +1,39 @@
 module Cosmo::Logger
   extend self
 
-  @@stack_trace = [] of Token
-  @@debug = false
-  @@trace_level : UInt32 = 0
-  @@source : String = ""
+  class StackFrame
+    getter token : Token
+    getter file_source : String
 
-  def source : String
-    @@source
+    def initialize(@token, @file_source)
+    end
+
+    def to_s : String
+      "StackFrame< \n\t#{@token.to_s},\n\tFileSource<\"\n\n#{@file_source}\n\n\"> >"
+    end
   end
 
-  def source=(source : String) : Nil
-    @@source = source
+  @@stack_trace = [] of StackFrame
+  @@debug = false
+  @@source = ""
+  @@trace_level : UInt32 = 0
+
+  # TODO: expand file paths (so you can have multiple files of the same name)
+  @@sources = {} of String => String
+
+  def register_source(file_path : String, source : String) : Nil
+    @@sources[file_path] = source
   end
 
   def trace_level=(level : UInt32) : Nil
     @@trace_level = level
   end
 
-  def push_file_trace(token : Token) : UInt32
-    (@@stack_trace << token)
-      .rindex(token)
-      .not_nil!
-      .to_u
-  end
-
   def push_trace(token : Token) : UInt32
-    (@@stack_trace << token)
-      .rindex(token)
+    source = @@sources[token.location.file_name]
+    frame = StackFrame.new(token, source)
+    (@@stack_trace << frame)
+      .rindex(frame)
       .not_nil!
       .to_u
   end
@@ -62,26 +68,36 @@ module Cosmo::Logger
     file_path : String
   ) : Exception
 
-    @@stack_trace.shift(@@trace_level)
+    first_frame = @@stack_trace.first
+    popped_frames = @@stack_trace.pop(@@trace_level)
 
-    full_message = ""
-    full_message += Util::Color.faint "#{line - 1} |\n"
-    full_message += "#{Util::Color.faint "#{line} | "} #{Util::Color.bold(@@source.split('\n')[line - 1]? || "")}\n"
+    last_frame = @@stack_trace.last? || first_frame
+    source = last_frame.file_source
+    file_path = last_frame.token.location.file_name
+    line = last_frame.token.location.line
+    pos = last_frame.token.location.position
+
+    full_message = Util::Color.faint "#{line - 1} |\n"
+    full_message += "#{Util::Color.faint "#{line} | "} #{Util::Color.bold(source.split('\n')[line - 1]? || "")}\n"
 
     bottom_line = "#{line + 1} |"
     full_message += Util::Color.faint(bottom_line)
-    full_message += "#{(pos == 0 ? "" : " " * (pos - bottom_line.size + 1)) + Util::Color.light_yellow "^"}\n"
+    full_message += "#{" " * Math.max(pos.to_i + 1 - bottom_line.size, 0) + Util::Color.light_yellow "^"}\n"
 
     full_message += Util::Color.red "\n#{error_type}: #{message}"
+
     stack_dump = [] of String
+    first_trace_dump = "\n#{TAB}at #{File.basename(file_path)}:#{line}:#{pos}"
+    stack_dump << first_trace_dump if @@stack_trace.empty?
 
-    @@stack_trace.each do |tr|
-      stack_dump << "\n#{TAB}at #{tr.lexeme} (#{File.basename(tr.location.file_name)}:#{tr.location.line})"
-    end
-    unless stack_dump.empty? || stack_dump.last.includes?("at throw (")
-      stack_dump << "\n#{TAB}at #{File.basename(file_path)}:#{line}"
+    @@stack_trace.reverse.each do |tr|
+      if tr == @@stack_trace.last && tr.token.lexeme != "throw"
+        stack_dump << first_trace_dump
+      end
+      stack_dump << "\n#{TAB}at #{tr.token.lexeme} (#{File.basename(tr.token.location.file_name)}:#{tr.token.location.line}:#{tr.token.location.position})"
     end
 
+    full_message = "" if full_message.nil?
     full_message += Util::Color.red(stack_dump.join)
     unless @@debug
       abort full_message, 1

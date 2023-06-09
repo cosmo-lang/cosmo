@@ -1,4 +1,5 @@
 MAX_FN_PARAMS = 255
+private INTRINSIC_FILE = "__intrinsic__.⭐"
 
 require "../syntax/parser"
 require "./hooked_exceptions"
@@ -20,7 +21,7 @@ class Cosmo::Interpreter
   getter globals = Scope.new
   getter scope : Scope
   getter meta = {} of String => MetaType
-  getter file_path : String = ""
+  getter file_path = ""
   setter max_recursion_depth : UInt32 = 1200
   property within_fn = false
   @locals = {} of Expression::Base => UInt32
@@ -45,7 +46,7 @@ class Cosmo::Interpreter
     declare_intrinsic("Function", "eval", Intrinsic::Eval.new(self))
     declare_intrinsic("Function", "recursion_depth!", Intrinsic::RecursionDepth.new(self))
 
-    import_file(File.join(File.dirname(__FILE__), "../../../libraries/intrinsic.⭐"), [] of Token)
+    import_file(File.join(File.dirname(__FILE__), "../../../libraries/#{INTRINSIC_FILE}"), [] of Token)
 
     version = "Cosmo #{Version}"
     declare_intrinsic("string", "version$", version)
@@ -113,7 +114,8 @@ class Cosmo::Interpreter
   end
 
   def interpret(source : String, @file_path : String) : ValueType
-    Logger.source = source
+    is_intrinsic_lib = @file_path.ends_with?(INTRINSIC_FILE)
+    Logger.register_source(@file_path, source) unless is_intrinsic_lib
 
     parser = Parser.new(source, @file_path, @run_benchmarks)
     statements = parser.parse
@@ -313,9 +315,7 @@ class Cosmo::Interpreter
     source = File.read(path)
 
     inject_imports_of(path, imports, bound_name) do
-      enclosing_source = Logger.source
       interpret(source, path)
-      Logger.source = enclosing_source
     end
   end
 
