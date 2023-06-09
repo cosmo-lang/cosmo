@@ -2,13 +2,13 @@ public class Event {
   EventSubscription[] subscriptions = []
 
   public EventSubscription fn add$(Function callback) {
-    EventSubscription sub = new EventSubscription($)
-    subscriptions << sub
+    EventSubscription sub = new EventSubscription($, callback)
+    $->subscriptions << sub
     sub
   }
 
   public void dispatch(any *args) {
-
+    every EventSubscription sub in $->subscriptions
   }
 
   public void fn remove_subscription(EventSubscription sub) {
@@ -18,9 +18,15 @@ public class Event {
 
 public class EventSubscription {
   Event parent
+  Function callback
 
-  public EventSubscription fn construct(Event parent) {
+  public EventSubscription fn construct(Event parent, Function callback) {
     $->parent = parent
+    $->callback = callback
+  }
+
+  public void fn fire(any *args) {
+
   }
 
   public void fn unsubscribe {
@@ -29,4 +35,7 @@ public class EventSubscription {
 }
 
 Event event = new Event
-event += &void
+event += &void (int x): puts(x * 2)
+event += &void (int x): puts(x ^ 2)
+event->dispatch(4)
+event->dispatch(5)

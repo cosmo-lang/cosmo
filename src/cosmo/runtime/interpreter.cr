@@ -1080,6 +1080,8 @@ class Cosmo::Interpreter
         return call_meta_method(operand, nil, "splat$", expr.operator.lexeme, expr.operator)
       elsif operand.is_a?(Array)
         Spread.new(operand)
+      elsif operand.is_a?(Spread)
+        operand
       else
         Logger.report_error("Attempt to spread", TypeChecker.get_mapped(operand.class), expr.operator)
       end
