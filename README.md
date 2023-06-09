@@ -62,6 +62,7 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 
 ### Fixes
 - Performance boosts lol
+- Class instance variables available outside of `$`
 - Throw if same module was imported twice
 - `["a.b.c"].first.split('.')` tries to access `["a.b.c"].first` instead of `["a.b.c"].first()` because of the `split` call with parentheses (bug)
 
@@ -71,6 +72,8 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 
 ### Refactorings
 (empty)
+
+TODO: http server routing stuff
 
 ### Meta
 - Package manager ([Stars](https://github.com/cosmo-lang/stars) + [StarsAPI](https://github.com/cosmo-lang/stars-api)) (WIP)

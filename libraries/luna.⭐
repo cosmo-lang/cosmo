@@ -1,0 +1,9 @@
+use * from "http" as HTTP
+
+class Server {
+  uint port
+
+  public Server fn construct(uint port = 3000) {
+
+  }
+}

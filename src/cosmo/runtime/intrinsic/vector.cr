@@ -7,6 +7,10 @@ class Cosmo::Intrinsic::Vector
 
   def get_method(name : Token) : IFunction
     case name.lexeme
+    when "delete"
+      Delete.new(@interpreter, @cache, name)
+    when "delete_at"
+      DeleteAt.new(@interpreter, @cache, name)
     when "reverse"
       Reverse.new(@interpreter, @cache, name)
     when "rindex"
@@ -43,6 +47,47 @@ class Cosmo::Intrinsic::Vector
       Map.new(@interpreter, @cache, name)
     else
       Logger.report_error("Invalid vector method or property", name.lexeme, name)
+    end
+  end
+
+  class DeleteAt < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 2.to_u
+    end
+
+    def call(args : Array(ValueType)) : Array(ValueType)
+      TypeChecker.assert("uint", args.first, token("Vector->delete_at"))
+      TypeChecker.assert("uint?", args[1]?, token("Vector->delete_at"))
+      @_self.delete_at(args.first, args[1]?)
+    end
+  end
+
+  class Delete < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 1.to_u
+    end
+
+    def call(args : Array(ValueType)) : Array(ValueType)
+      idx = @_self.index(args.first)
+      @_self.delete_at(idx)
     end
   end
 
