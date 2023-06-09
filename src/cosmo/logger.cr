@@ -83,7 +83,7 @@ module Cosmo::Logger
 
     bottom_line = "#{line + 1} |"
     full_message += Util::Color.faint(bottom_line)
-    full_message += "#{" " * Math.max(pos.to_i + 1 - bottom_line.size, 0) + Util::Color.light_yellow "^"}\n"
+    full_message += "#{" " * Math.max(pos.to_i + 1 - bottom_line.size, bottom_line.size) + Util::Color.light_yellow "^"}\n"
 
     full_message += Util::Color.red "\n#{error_type}: #{message}"
 

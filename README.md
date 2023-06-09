@@ -8,6 +8,28 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 
 Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/releases) and run it.
 
+## Contributing
+
+1. [Fork it](https://github.com/R-unic/cosmo/fork)
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Test your code (`make test`)
+5. Push to the branch (`make publish`)
+6. Create a new [Pull Request](https://github.com/cosmo-lang/cosmo/pulls)
+
+Have any questions or comments? DM me on Discord: `runic#5997`
+
+## Contributors
+
+- [R-unic](https://github.com/R-unic) - creator and maintainer
+- [quasar098](https://github.com/quasar098)
+
+## Things I Might Do
+
+- Named arguments
+- Make a Cosmo->C compiler
+- C bindings
+
 ## Things I Gotta Do
 
 ### Features
@@ -45,37 +67,15 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 
 ### Tests
 - Chained method calls with optional parentheses (e.x. `["a.b.c"].first.split('.')`)
-- Expectation of errors in parser spec
+- Expectation of errors in parser spec (e.x. `()` throws `Invalid syntax ')': Expected an expression`)
 
 ### Refactorings
 (empty)
 
 ### Meta
-- Package manager ([WIP](https://github.com/cosmo-lang/stars))
+- Package manager ([Stars](https://github.com/cosmo-lang/stars) + [StarsAPI](https://github.com/cosmo-lang/stars-api)) (WIP)
 - Documentation generator?
-- Linting/language server
+- Language server
 - Highlight function definition names without parentheses
 - Explain module system in Wiki
 - Update some of the screenshots on the Wiki
-
-## Things I Might Do
-
-- Named arguments
-- Make a Cosmo->C compiler
-- C bindings
-
-## Contributing
-
-1. [Fork it](https://github.com/R-unic/cosmo/fork)
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Test your code (`make test`)
-5. Push to the branch (`make publish`)
-6. Create a new [Pull Request](https://github.com/cosmo-lang/cosmo/pulls)
-
-Have any questions or comments? DM me on Discord: `runic#5997`
-
-## Contributors
-
-- [R-unic](https://github.com/R-unic) - creator and maintainer
-- [quasar098](https://github.com/quasar098)

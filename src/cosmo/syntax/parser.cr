@@ -1264,7 +1264,7 @@ class Cosmo::Parser
       consume_current
       Expression::NoneLiteral.new(nil, last_token)
     else
-      Logger.report_error("Invalid syntax", current.lexeme, current)
+      Logger.report_error("Invalid syntax '#{current.lexeme}'", "Expected an expression", current)
     end
   end
 
