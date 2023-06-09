@@ -56,6 +56,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 - Linting/language server
 - Highlight function definition names without parentheses
 - Explain module system in Wiki
+- Update some of the screenshots on the Wiki
 
 ## Things I Might Do
 
