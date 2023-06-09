@@ -1176,8 +1176,18 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/Logger" data-name="cosmo::logger">
+  <li class="parent " data-id="Cosmo/Cosmo/Logger" data-name="cosmo::logger">
       <a href="Cosmo/Logger.html">Logger</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Logger/StackFrame" data-name="cosmo::logger::stackframe">
+      <a href="Cosmo/Logger/StackFrame.html">StackFrame</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -1474,7 +1484,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 <li>static/protected members</li>
 </ul>
 </li>
-<li>Better type system
+<li>Rewrite type system
 <ul>
 <li>bound expressions (!!)</li>
 <li>an actual type pass</li>
@@ -1505,7 +1515,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 <ul>
 <li>Performance boosts lol</li>
 <li>Throw if same module was imported twice</li>
-<li><code>[&quot;a.b.c&quot;].first.split('.')</code> tries to access <code>[&quot;a.b.c&quot;].first</code> instead of <code>[&quot;a.b.c&quot;].first()</code> because of the <code>split</code> call with parentheses</li>
+<li><code>[&quot;a.b.c&quot;].first.split('.')</code> tries to access <code>[&quot;a.b.c&quot;].first</code> instead of <code>[&quot;a.b.c&quot;].first()</code> because of the <code>split</code> call with parentheses (bug)</li>
 </ul>
 <h3><a id="tests" class="anchor" href="#tests">
   <svg class="octicon-link" aria-hidden="true">
