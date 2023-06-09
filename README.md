@@ -23,7 +23,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
     * single inheritance
     * mixins
     * static/protected members
-  - Better type system
+  - Rewrite type system
     * bound expressions (!!)
     * an actual type pass
     * generics
@@ -41,7 +41,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 ### Fixes
 - Performance boosts lol
 - Throw if same module was imported twice
-- `["a.b.c"].first.split('.')` tries to access `["a.b.c"].first` instead of `["a.b.c"].first()` because of the `split` call with parentheses
+- `["a.b.c"].first.split('.')` tries to access `["a.b.c"].first` instead of `["a.b.c"].first()` because of the `split` call with parentheses (bug)
 
 ### Tests
 - Chained method calls with optional parentheses (e.x. `["a.b.c"].first.split('.')`)
