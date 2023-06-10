@@ -25,6 +25,8 @@ class Cosmo::Intrinsic::Vector
       IsEmpty.new(@interpreter, @cache, name)
     when "sort"
       Sort.new(@interpreter, @cache, name)
+    when "sort!"
+      SortMutable.new(@interpreter, @cache, name)
     when "join"
       Join.new(@interpreter, @cache, name)
     when "push"
@@ -234,6 +236,35 @@ class Cosmo::Intrinsic::Vector
 
     def call(args : Array(ValueType)) : Bool
       @_self.empty?
+    end
+  end
+
+  class SortMutable < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 1.to_u
+    end
+
+    def call(args : Array(ValueType)) : Array(ValueType)
+      TypeChecker.assert("Function?", args.first?, token("Vector->sort"))
+
+      sorter = args.first?.as Callable?
+      res = @_self.map { |v| TypeChecker.as_value_type(v) }.sort do |a, b|
+        value = sorter.nil? ? a.as Num - b.as Num : sorter.call([a, b])
+        TypeChecker.assert("int|float", value, token("Vector->sort"))
+        value.as(Num).to_i unless value.nil?
+      end
+
+      @_self = res.map(&.as ValueType)
+      @_self
     end
   end
 
