@@ -806,6 +806,9 @@ class Cosmo::Interpreter
           break
         end
       end
+    elsif object.is_a?(String)
+      TypeChecker.assert("string|char", value, expr.value.token)
+      is_in = object.includes?(value.as String | Char)
     elsif object.is_a?(ClassInstance)
       is_in = call_meta_method(object, value, "is_in$", "is in", expr.keyword, "bool").as Bool
     else
