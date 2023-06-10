@@ -4,6 +4,6 @@ class Server {
   uint port
 
   public Server fn construct(uint port = 3000) {
-
+    $->port = port
   }
 }

@@ -36,6 +36,7 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 - Grammar
   - Regexes
   - Endless (and beginless?) range literals
+  - `do_something for every int x in vec`
   - `typeof`
   - Enums
   - Decorators
@@ -54,6 +55,7 @@ Have any questions or comments? DM me on Discord: `runic#5997`
     * implicit conversions
     * intersection types
 - Other
+  - `+` operator for vectors, same functionality as `Vector->combine`
   - Filesystem library
   - `string` and `char` to hex conversions (e.x. `<uint>'f' == 15`)
   - Some form of multithreading
@@ -62,6 +64,7 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 
 ### Fixes
 - Performance boosts lol
+- Array `<<` operator segfault
 - Class instance variables available outside of `$`
 - Throw if same module was imported twice
 - `["a.b.c"].first.split('.')` tries to access `["a.b.c"].first` instead of `["a.b.c"].first()` because of the `split` call with parentheses (bug)
@@ -80,5 +83,8 @@ TODO: http server routing stuff
 - Documentation generator?
 - Language server
 - Highlight function definition names without parentheses
+
+### Docs
 - Explain module system in Wiki
 - Update some of the screenshots on the Wiki
+- Document intrinsics

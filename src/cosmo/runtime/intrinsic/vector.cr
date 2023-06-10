@@ -7,6 +7,8 @@ class Cosmo::Intrinsic::Vector
 
   def get_method(name : Token) : IFunction
     case name.lexeme
+    when "combine"
+      Combine.new(@interpreter, @cache, name)
     when "delete"
       Delete.new(@interpreter, @cache, name)
     when "delete_at"
@@ -50,6 +52,26 @@ class Cosmo::Intrinsic::Vector
     end
   end
 
+  class Combine < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Array(ValueType),
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 1.to_u
+    end
+
+    def call(args : Array(ValueType)) : Array(ValueType)
+      TypeChecker.assert("any[]", args.first, token("Vector->combine"))
+      @_self + args.first.as Array(ValueType)
+    end
+  end
+
   class DeleteAt < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -65,9 +87,19 @@ class Cosmo::Intrinsic::Vector
     end
 
     def call(args : Array(ValueType)) : Array(ValueType)
-      TypeChecker.assert("uint", args.first, token("Vector->delete_at"))
-      TypeChecker.assert("uint?", args[1]?, token("Vector->delete_at"))
-      @_self.delete_at(args.first, args[1]?)
+      t = token("Vector->delete_at")
+      TypeChecker.assert("uint", args.first, t)
+      TypeChecker.assert("uint?", args[1]?, t)
+      if @_self[args.first.as Int].nil?
+        Logger.report_error("Failed to delete vector value", "Value does not exist at index #{args.first} in vector", t)
+      else
+        if args[1]?.nil?
+          @_self.delete_at(args.first.as Int)
+          @_self
+        else
+          @_self.delete_at(args.first.as Int, args[1]?.as Int)
+        end
+      end
     end
   end
 
@@ -86,8 +118,17 @@ class Cosmo::Intrinsic::Vector
     end
 
     def call(args : Array(ValueType)) : Array(ValueType)
-      idx = @_self.index(args.first)
-      @_self.delete_at(idx)
+      idx = @_self.index(0) { |e| e == args.first }
+      if idx.nil?
+        Logger.report_error(
+          "Failed to delete vector value",
+          "Value '#{Util::Stringify.any_value(args.first)}' does not exist in vector",
+          token("Vector->delete")
+        )
+      else
+        @_self.delete_at(idx)
+        @_self
+      end
     end
   end
 
