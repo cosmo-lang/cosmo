@@ -3,7 +3,7 @@ use test from "beginner_codes"
 string fn choose_fuse(mut string[] fuses, string current_output) {
   mut string best_fuse = ""
   float current = <float>current_output[0..-2]
-  fuses.sort!(&float (string fuse): <float>fuse[0..-2])
+  fuses = fuses.sort(&float (string fuse): <float>fuse[0..-2])
 
   every string fuse in fuses {
     float fuse_rating = <float>fuse[0..-2]
