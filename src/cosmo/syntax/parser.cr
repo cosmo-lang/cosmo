@@ -778,7 +778,13 @@ class Cosmo::Parser
       @not_assignment = true
 
       values = [ parse_expression ]
-      consume(Syntax::Comma) # make sure there's at least one comma, since a multiple assignment requires at least one
+      unless match?(Syntax::Comma) # make sure there's at least one comma, since a multiple assignment requires at least one
+        Logger.report_error(
+          "Invalid multiple assignment",
+          "The right side of this assignment must have at least one comma",
+          values.last.token
+        )
+      end
       values << parse_expression
 
       value_commas = 1
