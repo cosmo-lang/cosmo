@@ -23,8 +23,8 @@ module Cosmo::Util
       encode(text, 31)
     end
 
-    def light_red(text : String)
-      encode(text, 91)
+    def light_purple(text : String)
+      encode(text, 95)
     end
 
     def light_yellow(text : String)
@@ -85,7 +85,7 @@ module Cosmo::Util
         delim = value.is_a?(String) ? "\"" : "'"
         Util::Color.light_green(delim + value.to_s + delim)
       elsif value.is_a?(Num | Range(Int128 | Int64 | Int32 | Int16 | Int8 | UInt, Int128 | Int64 | Int32 | Int16 | Int8 | UInt))
-        Util::Color.light_red(value.to_s)
+        Util::Color.light_purple(value.to_s)
       elsif value.nil? || value.is_a?(Bool)
         Util::Color.bold Util::Color.light_cyan(value.to_s)
       else

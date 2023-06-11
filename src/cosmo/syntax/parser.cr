@@ -780,7 +780,7 @@ class Cosmo::Parser
       values = [ parse_expression ]
       unless match?(Syntax::Comma) # make sure there's at least one comma, since a multiple assignment requires at least one
         Logger.report_error(
-          "Invalid multiple assignment",
+          "Invalid multiple assignment value",
           "The right side of this assignment must have at least one comma",
           values.last.token
         )

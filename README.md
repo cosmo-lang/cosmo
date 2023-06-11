@@ -36,8 +36,9 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 - Grammar
   - Regexes
   - Endless (and beginless?) range literals
-  - `do_something for every int x in vec`
+  - Postfix `every` loop (e.x. `x < 1 for every int x in vec`)
   - `typeof`
+  - Multiple assignment/declaration with spreads (e.x. `int x, y = *[1, 2]`)
   - Enums
   - Decorators
   - Interfaces
