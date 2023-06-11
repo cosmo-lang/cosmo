@@ -1066,6 +1066,21 @@
       
         <ul>
   
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Vector/Combine" data-name="cosmo::intrinsic::vector::combine">
+      <a href="Cosmo/Intrinsic/Vector/Combine.html">Combine</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Vector/Delete" data-name="cosmo::intrinsic::vector::delete">
+      <a href="Cosmo/Intrinsic/Vector/Delete.html">Delete</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Vector/DeleteAt" data-name="cosmo::intrinsic::vector::deleteat">
+      <a href="Cosmo/Intrinsic/Vector/DeleteAt.html">DeleteAt</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Vector/Filter" data-name="cosmo::intrinsic::vector::filter">
       <a href="Cosmo/Intrinsic/Vector/Filter.html">Filter</a>
       
@@ -1505,7 +1520,9 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 <ul>
 <li>Regexes</li>
 <li>Endless (and beginless?) range literals</li>
+<li>Postfix <code>every</code> loop (e.x. <code>x &lt; 1 for every int x in vec</code>)</li>
 <li><code>typeof</code></li>
+<li>Multiple assignment/declaration with spreads (e.x. <code>int x, y = *[1, 2]</code>)</li>
 <li>Enums</li>
 <li>Decorators</li>
 <li>Interfaces</li>
@@ -1532,6 +1549,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </li>
 <li>Other
 <ul>
+<li><code>+</code> operator for vectors, same functionality as <code>Vector-&gt;combine</code></li>
 <li>Filesystem library</li>
 <li><code>string</code> and <code>char</code> to hex conversions (e.x. <code>&lt;uint&gt;'f' == 15</code>)</li>
 <li>Some form of multithreading</li>
@@ -1547,6 +1565,13 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 </a>Fixes</h3>
 <ul>
 <li>Performance boosts lol</li>
+<li>Segfaults
+<ul>
+<li>passing <code>$</code>?</li>
+<li><code>&lt;float[]&gt;[1,2,3]</code></li>
+</ul>
+</li>
+<li>Class instance variables available outside of <code>$</code></li>
 <li>Throw if same module was imported twice</li>
 <li><code>[&quot;a.b.c&quot;].first.split('.')</code> tries to access <code>[&quot;a.b.c&quot;].first</code> instead of <code>[&quot;a.b.c&quot;].first()</code> because of the <code>split</code> call with parentheses (bug)</li>
 </ul>
@@ -1556,7 +1581,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Tests</h3>
 <ul>
-<li>Chained method calls with optional parentheses (e.x. <code>[&quot;a.b.c&quot;].first.split('.')</code>)</li>
+<li>Chained method calls with optional parentheses (e.x. <code>[&quot;a.b.c&quot;].first.split('.').first == &quot;a&quot;</code>)</li>
 <li>Expectation of errors in parser spec (e.x. <code>()</code> throws <code>Invalid syntax ')': Expected an expression</code>)</li>
 </ul>
 <h3><a id="refactorings" class="anchor" href="#refactorings">
@@ -1565,6 +1590,7 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
   </svg>
 </a>Refactorings</h3>
 <p>(empty)</p>
+<p><span class="flag orange">TODO</span>  http server routing stuff</p>
 <h3><a id="meta" class="anchor" href="#meta">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -1575,8 +1601,16 @@ We have an <a href="https://marketplace.visualstudio.com/items?itemName=cosmo.vs
 <li>Documentation generator?</li>
 <li>Language server</li>
 <li>Highlight function definition names without parentheses</li>
+</ul>
+<h3><a id="docs" class="anchor" href="#docs">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Docs</h3>
+<ul>
 <li>Explain module system in Wiki</li>
 <li>Update some of the screenshots on the Wiki</li>
+<li>Document intrinsics</li>
 </ul>
 </div>
 </body>
