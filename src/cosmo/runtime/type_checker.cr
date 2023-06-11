@@ -47,23 +47,7 @@ module Cosmo::TypeChecker
     Class => "class",
     Type => "type",
     Function => "Function",
-    Array(Int64) => "int[]",
-    Array(Int32) => "int[]",
-    Array(Int16) => "int[]",
-    Array(Int8) => "int[]",
-    Array(UInt64) => "uint[]",
-    Array(UInt32) => "uint[]",
-    Array(UInt16) => "uint[]",
-    Array(UInt8) => "uint[]",
-    Array(Float64) => "float[]",
-    Array(Float32) => "float[]",
-    Array(String) => "string[]",
-    Array(Char) => "char[]",
-    Array(Bool) => "bool[]",
-    Array(Function) => "fn[]",
-    Array(ValueType) => "any[]",
-    Array => "any[]",
-    Hash(ValueType, ValueType) => "Table",
+    Intrinsic::IFunction => "intrinsic_fn",
     RangeType => "Range",
     Spread => "Spread"
   }
@@ -81,10 +65,13 @@ module Cosmo::TypeChecker
   end
 
   def get_mapped(t : CrystalClass) : String
-    return t.to_s if t < Intrinsic::IFunction
+    return t.to_s if t < ClassInstance
+    return "Vector" if t < Array
+    return "Table" if t < Hash
     unless TYPE_MAP.has_key?(t)
       raise "Unhandled type to map: #{t}"
     end
+
     TYPE_MAP[t]
   end
 
@@ -170,6 +157,7 @@ module Cosmo::TypeChecker
     type
   end
 
+  # array types
   def cast?(value : T, type : Token) : ValueType forall T
     if is?(type.lexeme, "", type) # if the type is a string
       if value.is_a?(ClassInstance)
@@ -184,7 +172,7 @@ module Cosmo::TypeChecker
       value.to_s.chars.first
     elsif type.lexeme.includes?("uint") && (
       value.is_a?(String) || value.is_a?(Char) ||
-      value.is_a?(Float) || value.is_a?(Int) ||
+      value.is_a?(Float) || value.is_a?(Int) || value.is_a?(UInt)
       value.is_a?(Bool)
     ) # if the type is a uint
 
@@ -255,7 +243,7 @@ module Cosmo::TypeChecker
     when "uint"
       value.is_a?(Int) && value >= 0
     when "int"
-      value.is_a?(Int64 | Int32 | Int16 | Int8)
+      value.is_a?(Int)
     when "float"
       value.is_a?(Float)
     when "bool"
@@ -271,13 +259,7 @@ module Cosmo::TypeChecker
     else
       matches = false
 
-
-      if typedef.includes?("|")
-        types = typedef.split("|")
-        types.each do |type|
-          matches ||= is?(type.strip, value, token, except: true)
-        end
-      elsif typedef.starts_with?("(")
+      if typedef.starts_with?("(")
         next_paren_idx = typedef.index(")") || typedef.size
         ungrouped_chars = typedef.lchop.chars
         ungrouped_chars.delete_at(next_paren_idx - 1, 1)
@@ -294,6 +276,11 @@ module Cosmo::TypeChecker
             matches &&= is?(key_type, k, token)
             matches &&= is?(value_type, v, token)
           end
+        end
+      elsif typedef.includes?("|")
+        types = typedef.split("|")
+        types.each do |type|
+          matches ||= is?(type.strip, value, token, except: true)
         end
       elsif typedef.ends_with?("[]")
         value_type = typedef.rchop("[]")
@@ -332,35 +319,38 @@ module Cosmo::TypeChecker
     matches = is?(typedef, value, token)
 
     # assert key & value types
-    if typedef.includes?("|")
-      types = typedef.split("|")
-      types.each do |type|
-        matches ||= is?(type.strip, value, token, except: true)
-      end
-    elsif typedef.ends_with?("[]")
-      value_type = typedef.rchop("[]")
-      report_mismatch(typedef, value, token) unless value.is_a?(Array)
-      value.as(Array).each { |v| assert(value_type, v, token) }
-    elsif typedef.starts_with?("(")
-      next_paren_idx = typedef.index(")") || typedef.size
-      ungrouped_chars = typedef.lchop.chars
-      ungrouped_chars.delete_at(next_paren_idx - 1, 1)
-      ungrouped_type = ungrouped_chars.join
-      assert(ungrouped_type, value, token)
-    elsif typedef.includes?("->") && typedef.split("->", 2).size == 2
-      types = typedef.split("->", 2)
-      key_type = types.first.strip
-      value_type = types.last.strip
+    unless matches
+      if typedef.includes?("|")
+        types = typedef.split("|")
+        types.each do |type|
+          matches ||= is?(type.strip, value, token)
+        end
+        report_mismatch(typedef, value, token) unless matches
+      elsif typedef.ends_with?("[]")
+        value_type = typedef.rchop("[]")
+        report_mismatch(typedef, value, token) unless value.is_a?(Array)
+        value.as(Array).each { |v| assert(value_type, v, token) }
+      elsif typedef.starts_with?("(")
+        next_paren_idx = typedef.index(")") || typedef.size
+        ungrouped_chars = typedef.lchop.chars
+        ungrouped_chars.delete_at(next_paren_idx - 1, 1)
+        ungrouped_type = ungrouped_chars.join
+        assert(ungrouped_type, value, token)
+      elsif typedef.includes?("->") && typedef.split("->", 2).size == 2
+        types = typedef.split("->", 2)
+        key_type = types.first.strip
+        value_type = types.last.strip
 
-      report_mismatch(typedef, value, token) unless value.is_a?(Hash)
+        report_mismatch(typedef, value, token) unless value.is_a?(Hash)
 
-      internal = hash_as_value_type(value)
-      internal.each do |k, v|
-        assert(key_type, k, token)
-        assert(value_type, v, token)
+        internal = hash_as_value_type(value)
+        internal.each do |k, v|
+          assert(key_type, k, token)
+          assert(value_type, v, token)
+        end
+      else
+        report_mismatch(typedef, value, token)
       end
-    else
-      report_mismatch(typedef, value, token) unless matches
     end
   end
 end

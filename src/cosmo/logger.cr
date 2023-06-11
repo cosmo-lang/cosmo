@@ -71,19 +71,23 @@ module Cosmo::Logger
     popped_frames = @@stack_trace.pop(@@trace_level)
 
     last_frame = @@stack_trace.last? || first_frame
-    source = last_frame.nil? ? @@sources[file_path] : last_frame.file_source
-    unless last_frame.nil?
-      file_path = last_frame.token.location.file_name
-      line = last_frame.token.location.line
-      pos = last_frame.token.location.position
+    unless file_path == "intrinsic"
+      source = last_frame.nil? ? @@sources[file_path] : last_frame.file_source
+      unless last_frame.nil?
+        file_path = last_frame.token.location.file_name
+        line = last_frame.token.location.line
+        pos = last_frame.token.location.position
+      end
+
+      full_message = Util::Color.faint "#{line - 1} |\n"
+      full_message += "#{Util::Color.faint "#{line} | "} #{Util::Color.bold(source.split('\n')[line - 1]? || "")}\n"
+
+      bottom_line = "#{line + 1} |"
+      full_message += Util::Color.faint(bottom_line)
+      full_message += "#{" " * Math.max(pos.to_i + 1 - bottom_line.size, bottom_line.size) + Util::Color.light_yellow "^"}\n"
+    else
+      full_message = ""
     end
-
-    full_message = Util::Color.faint "#{line - 1} |\n"
-    full_message += "#{Util::Color.faint "#{line} | "} #{Util::Color.bold(source.split('\n')[line - 1]? || "")}\n"
-
-    bottom_line = "#{line + 1} |"
-    full_message += Util::Color.faint(bottom_line)
-    full_message += "#{" " * Math.max(pos.to_i + 1 - bottom_line.size, bottom_line.size) + Util::Color.light_yellow "^"}\n"
 
     full_message += Util::Color.red "\n#{error_type}: #{message}"
 

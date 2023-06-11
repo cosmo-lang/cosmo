@@ -64,7 +64,9 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 
 ### Fixes
 - Performance boosts lol
-- Array `<<` operator segfault
+- Segfaults
+  * passing `$`?
+  * `<float[]>[1,2,3]`
 - Class instance variables available outside of `$`
 - Throw if same module was imported twice
 - `["a.b.c"].first.split('.')` tries to access `["a.b.c"].first` instead of `["a.b.c"].first()` because of the `split` call with parentheses (bug)

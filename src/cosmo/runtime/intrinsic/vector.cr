@@ -239,6 +239,22 @@ class Cosmo::Intrinsic::Vector
     end
   end
 
+  protected def self.sorted(arr : Array(ValueType), sorter : ValueType, token : Token) : Array(ValueType)
+    sorter = sorter.as Callable?
+    res = arr.map { |v| TypeChecker.as_value_type(v) }.sort_by do |v|
+      if sorter.nil?
+        TypeChecker.assert("int|float", v, token)
+        v.as Num
+      else
+        v = sorter.call([ v ])
+        TypeChecker.assert("int|float", v, token)
+        v.as Num
+      end
+    end
+
+    res.map(&.as ValueType)
+  end
+
   class SortMutable < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -253,18 +269,10 @@ class Cosmo::Intrinsic::Vector
       0.to_u .. 1.to_u
     end
 
-    def call(args : Array(ValueType)) : Array(ValueType)
-      TypeChecker.assert("Function?", args.first?, token("Vector->sort"))
-
-      sorter = args.first?.as Callable?
-      res = @_self.map { |v| TypeChecker.as_value_type(v) }.sort do |a, b|
-        value = sorter.nil? ? a.as Num - b.as Num : sorter.call([a, b])
-        TypeChecker.assert("int|float", value, token("Vector->sort"))
-        value.as(Num).to_i unless value.nil?
-      end
-
-      @_self = res.map(&.as ValueType)
-      @_self
+    def call(args : Array(ValueType)) : Nil
+      t = token("Vector->sort!")
+      TypeChecker.assert("Function?", args.first?, t)
+      @_self = Vector.sorted(@_self, args.first?, t)
     end
   end
 
@@ -283,16 +291,9 @@ class Cosmo::Intrinsic::Vector
     end
 
     def call(args : Array(ValueType)) : Array(ValueType)
-      TypeChecker.assert("Function?", args.first?, token("Vector->sort"))
-
-      sorter = args.first?.as Callable?
-      res = @_self.map { |v| TypeChecker.as_value_type(v) }.sort do |a, b|
-        value = sorter.nil? ? a.as Num - b.as Num : sorter.call([a, b])
-        TypeChecker.assert("int|float", value, token("Vector->sort"))
-        value.as(Num).to_i unless value.nil?
-      end
-
-      res.map(&.as ValueType)
+      t = token("Vector->sort")
+      TypeChecker.assert("Function?", args.first?, t)
+      Vector.sorted(@_self, args.first?, t)
     end
   end
 
