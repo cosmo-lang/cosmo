@@ -73,7 +73,7 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 - `["a.b.c"].first.split('.')` tries to access `["a.b.c"].first` instead of `["a.b.c"].first()` because of the `split` call with parentheses (bug)
 
 ### Tests
-- Chained method calls with optional parentheses (e.x. `["a.b.c"].first.split('.')`)
+- Chained method calls with optional parentheses (e.x. `["a.b.c"].first.split('.').first == "a"`)
 - Expectation of errors in parser spec (e.x. `()` throws `Invalid syntax ')': Expected an expression`)
 
 ### Refactorings
