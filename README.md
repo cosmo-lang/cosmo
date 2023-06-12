@@ -15,7 +15,7 @@ sudo make
 ```
 
 ## Whats different in this fork?
-Nothing much just some extra things! 
+Nothing much just some extra things!
 
 ## Contributing
 
@@ -68,7 +68,6 @@ Have any questions or comments? DM me on Discord: `runic#5997`
     * intersection types
 - Other
   - `+` operator for vectors, same functionality as `Vector->combine`
-  - Filesystem library
   - `string` and `char` to hex conversions (e.x. `<uint>'f' == 15`)
   - Some form of multithreading
   - Intrinsic methods for all datatypes (inherit from a base type)

@@ -5,22 +5,31 @@ module Cosmo
     class FileLib < Lib
       def inject : Nil
         file = {} of String => IFunction
-        file["open"] = Open.new(@i)
+        file["read"] = Read.new(@i)
+        file["write"] = Write.new(@i)
         @i.declare_intrinsic("string->Function", "File", file)
       end
     end
 
-    class Open < IFunction
+    # TODO: catch any errors thrown
+    # TODO: File.append
+    class Write < IFunction
+      def arity : Range(UInt32, UInt32)
+        2.to_u .. 2.to_u
+      end
+
+      def call(args : Array(ValueType)) : Nil
+        return File.write(args.first.to_s, args[1].to_s)
+      end
+    end
+
+    class Read < IFunction
       def arity : Range(UInt32, UInt32)
         1.to_u .. 1.to_u
       end
 
       def call(args : Array(ValueType)) : String
-        if args.empty?
-          return "Expected a file as an argument"
-        else
-          return File.read(Path.new(args.first.to_s))
-        end
+        return File.read(args.first.to_s)
       end
     end
   end
