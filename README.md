@@ -66,6 +66,8 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 
 ### Fixes
 - Performance boosts lol
+- Import stack traces
+- Properly log errors from intrinsics
 - Segfaults
   * passing `$`?
   * `<float[]>[1,2,3]`
