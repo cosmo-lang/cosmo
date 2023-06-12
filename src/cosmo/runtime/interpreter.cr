@@ -315,9 +315,11 @@ class Cosmo::Interpreter
   private def import_file(path : String, imports : Array(Token), bound_name : Token? = nil) : Nil
     source = File.read(path)
 
+    prev_path = @file_path
     inject_imports_of(path, imports, bound_name) do
       interpret(source, path)
     end
+    @file_path = prev_path
   end
 
   def visit_use_stmt(stmt : Statement::Use) : Nil

@@ -1,5 +1,9 @@
 name: cosmo
+<<<<<<< HEAD
 version: 0.9.8
+=======
+version: 0.9.9
+>>>>>>> 52585fde25faf214d6e4972aca1a68a8ef41a27e
 
 authors:
   - R-unic <roleyspersonal@gmail.com>
