@@ -61,7 +61,8 @@ module Cosmo::Intrinsic
         rescue File::NotFoundError
           Logger.report_error("Invalid 'exec' process", "Command '#{process}' could not be found", t)
         end
-        io.to_s
+
+        io.to_s.chomp
       end
     end
 
