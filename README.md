@@ -59,6 +59,7 @@ Have any questions or comments? DM me on Discord: `runic#5997`
     * intersection types
 - Other
   - Extend `HTTP` library
+    * routing stuff
   - `+` operator for vectors, same functionality as `Vector->combine`
   - `string` and `char` to hex conversions (e.x. `<uint>'f' == 15`)
   - Some form of multithreading
@@ -82,8 +83,6 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 
 ### Refactorings
 (empty)
-
-TODO: http server routing stuff
 
 ### Meta
 - Package manager ([Stars](https://github.com/cosmo-lang/stars) + [StarsAPI](https://github.com/cosmo-lang/stars-api)) (WIP)
