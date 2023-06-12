@@ -341,6 +341,17 @@ class Cosmo::Lexer
           res_str += "\n"
         when "t" # tab
           res_str += "\t"
+        when "e" # tab
+          unless match_char?("[")
+            report_error("Invalid escape sequence", "\\e escape sequence contained no '[' character")
+          end
+
+          contents = ""
+          until match_char?("m")
+            advance
+            contents += current_char
+          end
+          res_str += "\e[#{contents}m"
         when "\\" # backslash
           res_str += "\\"
         when "\"" # double quote

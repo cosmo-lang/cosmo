@@ -2,3 +2,4 @@
 /bin/
 /.shards/
 *.dwarf
+/test/
