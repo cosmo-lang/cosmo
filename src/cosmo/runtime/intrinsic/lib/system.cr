@@ -76,17 +76,13 @@ module Cosmo::Intrinsic
     end
 
     private def os : String
-      {% if flag?(:linux) %}
-        "Linux"
-      {% elsif flag?(:darwin) %}
-        "Darwin"
-      {% elsif flag?(:windows) %}
+      if ENV.has_key?("OS") && ENV["OS"] == "Windows_NT"
         "Windows"
-      {% elsif flag?(:bsd) %}
-        "BSD"
-      {% else %}
-        "Unknown"
-      {% end %}
+      else
+        output = IO::Memory.new
+        Process.run("uname", ["-s"], output: output)
+        output.to_s.chomp
+      end
     end
   end
 end
