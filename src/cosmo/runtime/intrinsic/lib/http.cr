@@ -3,6 +3,7 @@ require "http/client"
 require "http/headers"
 require "json"
 
+# TODO: an actually nice way to get URI parameters
 module Cosmo::Intrinsic
   class HttpLib < Lib
     def inject : Nil
