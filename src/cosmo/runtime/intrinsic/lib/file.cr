@@ -23,10 +23,12 @@ module Cosmo
         end
 
         def call(args : Array(ValueType)) : Bool
+          t = token("File->empty?")
+          TypeChecker.assert("string", args.first, t)
           begin
             File.empty?(args.first.to_s)
           rescue File::NotFoundError
-            Logger.report_error("Failed to read from file", "File '#{args.first.to_s}' could not be found", token("File->empty?"))
+            Logger.report_error("Failed to read from file", "File '#{args.first.to_s}' could not be found", t)
           end
         end
       end
@@ -38,6 +40,8 @@ module Cosmo
         end
 
         def call(args : Array(ValueType)) : Bool
+          t = token("File->directory?")
+          TypeChecker.assert("string", args.first, t)
           File.directory?(args.first.to_s)
         end
       end
@@ -49,6 +53,8 @@ module Cosmo
         end
 
         def call(args : Array(ValueType)) : Bool
+          t = token("File->exists?")
+          TypeChecker.assert("string", args.first, t)
           File.exists?(args.first.to_s)
         end
       end
@@ -60,11 +66,12 @@ module Cosmo
         end
 
         def call(args : Array(ValueType)) : Nil
-
+          t = token("File->delete")
+          TypeChecker.assert("string", args.first, t)
           begin
             File.delete(args.first.to_s)
           rescue File::NotFoundError
-            Logger.report_error("Failed to delete file", "File '#{args.first.to_s}' could not be found", token("File->delete"))
+            Logger.report_error("Failed to delete file", "File '#{args.first.to_s}' could not be found", t)
           end
         end
       end
@@ -76,10 +83,13 @@ module Cosmo
         end
 
         def call(args : Array(ValueType)) : Nil
+          t = token("File->append")
+          TypeChecker.assert("string", args.first, t)
+          TypeChecker.assert("string|char", args[1], t)
           begin
             File.write(args.first.to_s, args[1].to_s, mode: "a")
           rescue File::NotFoundError
-            Logger.report_error("Failed to append to file", "File '#{args.first.to_s}' could not be found", token("File->append"))
+            Logger.report_error("Failed to append to file", "File '#{args.first.to_s}' could not be found", t)
           end
         end
       end
@@ -91,10 +101,13 @@ module Cosmo
         end
 
         def call(args : Array(ValueType)) : Nil
+          t = token("File->write")
+          TypeChecker.assert("string", args.first, t)
+          TypeChecker.assert("string", args[1], t)
           begin
             File.write(args.first.to_s, args[1].to_s)
           rescue File::NotFoundError
-            Logger.report_error("Failed to write to file", "File '#{args.first.to_s}' could not be found", token("File->append"))
+            Logger.report_error("Failed to write to file", "File '#{args.first.to_s}' could not be found", t)
           end
         end
       end
@@ -106,10 +119,12 @@ module Cosmo
         end
 
         def call(args : Array(ValueType)) : String
+          t = token("File->read")
+          TypeChecker.assert("string", args.first, t)
           begin
             File.read(args.first.to_s)
           rescue File::NotFoundError
-            Logger.report_error("Failed to read from file", "File '#{args.first.to_s}' could not be found", token("File->append"))
+            Logger.report_error("Failed to read from file", "File '#{args.first.to_s}' could not be found", t)
           end
         end
       end
