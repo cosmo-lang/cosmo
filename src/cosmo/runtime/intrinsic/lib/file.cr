@@ -7,12 +7,22 @@ module Cosmo
         file = {} of String => IFunction
         file["read"] = Read.new(@i)
         file["write"] = Write.new(@i)
+        file["append"] = Append.new(@i)
         @i.declare_intrinsic("string->Function", "File", file)
       end
     end
 
     # TODO: catch any errors thrown
-    # TODO: File.append
+    class Append < IFunction
+      def arity : Range(UInt32, UInt32)
+        2.to_u .. 2.to_u
+      end
+
+      def call(args : Array(ValueType)) : Nil
+        return File.write(args.first.to_s, args[1].to_s, mode: "a")
+      end
+    end
+
     class Write < IFunction
       def arity : Range(UInt32, UInt32)
         2.to_u .. 2.to_u
