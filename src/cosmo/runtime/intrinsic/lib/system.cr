@@ -48,12 +48,20 @@ module Cosmo::Intrinsic
         1.to_u .. 1.to_u
       end
 
-      def call(args : Array(ValueType)) : String #| Int32 | UInt32
-        TypeChecker.assert("string", args.first, token("System->exec"))
+      def call(args : Array(ValueType)) : String
+        t = token("System->exec")
+        TypeChecker.assert("string", args.first, t)
 
-        command = args.first.to_s
-        result = `#{command}`
-        result.to_s
+        command_args = args.first.to_s.split(' ')
+        process = command_args.shift
+        io = IO::Memory.new
+
+        begin
+          Process.run(process, command_args, input: STDIN, output: io, error: io)
+        rescue File::NotFoundError
+          Logger.report_error("Invalid 'exec' process", "Command '#{process}' could not be found", t)
+        end
+        io.to_s
       end
     end
 
@@ -61,8 +69,8 @@ module Cosmo::Intrinsic
       _system = {} of String => IFunction | String | Hash(String, Cosmo::Intrinsic::IFunction | String)
       _system["os"] = os
       EnvLib.new(@i).build(_system)
-      _system["exec"] = Exec.new(@i)
 
+      @i.declare_intrinsic("Function", "exec", Exec.new(@i))
       @i.declare_intrinsic("string->any", "System", _system)
     end
 
