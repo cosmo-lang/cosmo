@@ -16,6 +16,7 @@ module Cosmo
         @i.declare_intrinsic("string->Function", "File", file)
       end
 
+      # Checks whether or not the given file has no contents
       class Empty < IFunction
         def arity : Range(UInt32, UInt32)
           1.to_u .. 1.to_u
@@ -30,6 +31,7 @@ module Cosmo
         end
       end
 
+      # Checks whether or not the given path exists and is a directory
       class Directory < IFunction
         def arity : Range(UInt32, UInt32)
           1.to_u .. 1.to_u
@@ -40,6 +42,7 @@ module Cosmo
         end
       end
 
+      # Checks whether or not the given path exists
       class Exists < IFunction
         def arity : Range(UInt32, UInt32)
           1.to_u .. 1.to_u
@@ -50,6 +53,7 @@ module Cosmo
         end
       end
 
+      # Deletes the given file
       class Delete < IFunction
         def arity : Range(UInt32, UInt32)
           1.to_u .. 1.to_u
@@ -65,6 +69,7 @@ module Cosmo
         end
       end
 
+      # Appends to the end of the given file
       class Append < IFunction
         def arity : Range(UInt32, UInt32)
           2.to_u .. 2.to_u
@@ -79,6 +84,7 @@ module Cosmo
         end
       end
 
+      # Overwrites all contents of the given file
       class Write < IFunction
         def arity : Range(UInt32, UInt32)
           2.to_u .. 2.to_u
@@ -93,6 +99,7 @@ module Cosmo
         end
       end
 
+      # Reads the contents of a file
       class Read < IFunction
         def arity : Range(UInt32, UInt32)
           1.to_u .. 1.to_u
