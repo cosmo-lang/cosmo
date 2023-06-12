@@ -144,7 +144,7 @@ module Cosmo::Intrinsic
       end
     end
 
-    class Server::Response::SetContentType < Server::ContextFunctionBase
+    class Response::SetContentType < Server::ContextFunctionBase
       def arity : Range(UInt32, UInt32)
         1.to_u .. 1.to_u
       end
@@ -155,13 +155,23 @@ module Cosmo::Intrinsic
       end
     end
 
-    class Server::Response::Send < Server::ContextFunctionBase
+    class Response::Send < Server::ContextFunctionBase
       def arity : Range(UInt32, UInt32)
         1.to_u .. 1.to_u
       end
 
       def call(args : Array(ValueType)) : Nil
         @server_ctx.response.print(args.first)
+      end
+    end
+
+    class Request::GetParameter < Server::ContextFunctionBase
+      def arity : Range(UInt32, UInt32)
+        1.to_u .. 1.to_u
+      end
+
+      def call(args : Array(ValueType)) : String?
+        @server_ctx.request.query_params.fetch(args.first.to_s, nil)
       end
     end
 
@@ -178,12 +188,13 @@ module Cosmo::Intrinsic
         server = HTTP::Server.new do |ctx|
           ctx.response.content_type = "text/plain"
           wrapped_res = {} of String => Server::ContextFunctionBase
-          wrapped_res["content_type"] = Server::Response::SetContentType.new(@interpreter, ctx)
-          wrapped_res["send"] = Server::Response::Send.new(@interpreter, ctx)
+          wrapped_res["content_type"] = Response::SetContentType.new(@interpreter, ctx)
+          wrapped_res["send"] = Response::Send.new(@interpreter, ctx)
 
           wrapped_req = {} of String => ValueType
           wrapped_req["path"] = ctx.request.path
           wrapped_req["query"] = ctx.request.query
+          wrapped_req["parameter"] = Request::GetParameter.new(@interpreter, ctx)
           wrapped_req["remote_address"] = !ctx.request.remote_address.nil? ? ctx.request.remote_address.to_s : nil
 
           args[1].as(Function).call([
