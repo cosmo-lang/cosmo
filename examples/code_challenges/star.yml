@@ -1,0 +1,9 @@
+name: code_challenges
+version: 0.1.0
+
+entry_point: src/code_challenges.⭐
+repository: R-unic/code_challenges
+authors:
+  - R-unic
+
+cosmo: ^0.9.8
