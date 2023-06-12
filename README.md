@@ -58,6 +58,7 @@ Have any questions or comments? DM me on Discord: `runic#5997`
     * implicit conversions
     * intersection types
 - Other
+  - `JSON` library
   - Extend `HTTP` library
     * routing stuff
   - `+` operator for vectors, same functionality as `Vector->combine`
