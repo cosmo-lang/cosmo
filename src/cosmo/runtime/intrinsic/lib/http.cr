@@ -161,8 +161,7 @@ module Cosmo::Intrinsic
       end
 
       def call(args : Array(ValueType)) : Nil
-        TypeChecker.assert("string", args.first, token("HTTP::Server::Response->send"))
-        @server_ctx.response.print(args.first.to_s)
+        @server_ctx.response.print(args.first)
       end
     end
 
