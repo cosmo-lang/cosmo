@@ -8,8 +8,23 @@ module Cosmo
         file["read"] = Read.new(@i)
         file["write"] = Write.new(@i)
         file["append"] = Append.new(@i)
+        file["delete"] = Delete.new(@i)
 
         @i.declare_intrinsic("string->Function", "File", file)
+      end
+    end
+
+    class Delete < IFunction
+      def arity : Range(UInt32, UInt32)
+        1.to_u .. 1.to_u
+      end
+
+      def call(args : Array(ValueType)) : Nil
+        begin
+          return File.delete(args.first.to_s)
+        rescue File::NotFoundError
+          Logger.report_error("Failed to delete file", "File '#{args.first.to_s}' could not be found", token("File->delete"))
+        end
       end
     end
 
