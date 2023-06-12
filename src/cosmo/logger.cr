@@ -72,7 +72,7 @@ module Cosmo::Logger
 
     last_frame = @@stack_trace.last? || first_frame
     unless file_path == "intrinsic"
-      source = last_frame.nil? ? @@sources[file_path] : last_frame.file_source
+      source = last_frame.nil? ? (@@sources[file_path]? || "") : last_frame.file_source
       unless last_frame.nil?
         file_path = last_frame.token.location.file_name
         line = last_frame.token.location.line
