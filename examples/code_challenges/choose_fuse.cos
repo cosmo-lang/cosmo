@@ -1,4 +1,4 @@
-use test from "beginner_codes"
+use test from "beginner-codes"
 
 string fn choose_fuse(mut string[] fuses, string current_output) {
   mut string best_fuse = ""

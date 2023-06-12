@@ -1,4 +1,4 @@
-use test from "beginner_codes"
+use test from "beginner-codes"
 
 bool fn diagonally_dominant?(int[][] matrix) {
   every int i in #matrix {

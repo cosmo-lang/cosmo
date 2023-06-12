@@ -1,4 +1,4 @@
-use test from "beginner_codes"
+use test from "beginner-codes"
 
 int fn count_repetitions(string str) {
   every int i in 1..(#str // 2) {

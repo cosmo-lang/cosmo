@@ -1,4 +1,4 @@
-use test from "beginner_codes"
+use test from "beginner-codes"
 
 string fn extract_mentions(string tweet) {
   mut string[] mentions = []

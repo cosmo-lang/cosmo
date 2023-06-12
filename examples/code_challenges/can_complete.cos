@@ -1,4 +1,4 @@
-use test from "beginner_codes"
+use test from "beginner-codes"
 
 bool fn can_complete(string input, string word) {
   mut int idx = 0

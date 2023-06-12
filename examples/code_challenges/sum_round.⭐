@@ -1,4 +1,4 @@
-use test from "beginner_codes"
+use test from "beginner-codes"
 
 string fn sum_round(int n) {
   string digits = <string>n

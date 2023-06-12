@@ -47,10 +47,12 @@ private def interpret_example(example_file : String) : Nil
   return if skip_example?(example_file)
 
   if File.directory?(example_file)
+    return if example_file.ends_with?(".git") || example_file.ends_with?(".stars")
     describe example_file do
       run(example_file)
     end
   else
+    return unless example_file.ends_with?(".cos") || example_file.ends_with?(".⭐")
     it example_file do
       run(example_file)
     end
@@ -602,7 +604,7 @@ describe Interpreter do
   describe "interprets examples:" do
     example_files = Dir.entries "examples/"
     example_files.each do |example_file|
-      next if example_file.includes?("code_challenges") && !File.exists?("pkg/beginner_codes/src")
+      next if example_file.includes?("code_challenges") && !File.exists? File.join "examples", example_file, ".stars/beginner-codes/src"
       interpret_example(File.join "examples", example_file)
     end
   end
