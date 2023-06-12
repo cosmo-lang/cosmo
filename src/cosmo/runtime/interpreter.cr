@@ -333,7 +333,7 @@ class Cosmo::Interpreter
           return import_file(path_with_ext, imports, bound_name)
         end
 
-        pkg_path = File.join File.dirname(__FILE__), "../../../pkg", relative_module_path
+        pkg_path = File.join File.dirname(@file_path), ".stars", relative_module_path
         if File.exists?(pkg_path)
           pkg_path = File.join(pkg_path, "src", relative_module_path)
           main_file = pkg_path + (File.exists?(pkg_path + ".cos") ? ".cos" : ".⭐")
