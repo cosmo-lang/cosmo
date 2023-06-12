@@ -19,14 +19,13 @@ module Cosmo::Intrinsic
         end
 
         def call(args : Array(ValueType)) : String
-          TypeChecker.assert("string", args.first, token("System::Env->var"))
+          t = token("System::Env->var")
+          TypeChecker.assert("string", args.first, t)
 
           key = args.first.to_s
-          begin
+          ENV.has_key?(key) ?
             ENV[key]
-          rescue KeyError
-            Logger.report_error("Missing environment variable", key, token("System::Env->var"))
-          end
+            : Logger.report_error("Missing environment variable", key, t)
         end
       end
 
@@ -36,8 +35,9 @@ module Cosmo::Intrinsic
         end
 
         def call(args : Array(ValueType)) : Nil
-          TypeChecker.assert("string", args.first, token("System::Env->set_var"))
-          TypeChecker.assert("string", args[1], token("System::Env->set_var"))
+          t = token("System::Env->set_var")
+          TypeChecker.assert("string", args.first, t)
+          TypeChecker.assert("string", args[1], t)
           ENV[args.first.to_s] = args[1].to_s
         end
       end

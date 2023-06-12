@@ -13,14 +13,17 @@ module Cosmo
       end
     end
 
-    # TODO: catch any errors thrown
     class Append < IFunction
       def arity : Range(UInt32, UInt32)
         2.to_u .. 2.to_u
       end
 
       def call(args : Array(ValueType)) : Nil
-        return File.write(args.first.to_s, args[1].to_s, mode: "a")
+        begin
+          return File.write(args.first.to_s, args[1].to_s, mode: "a")
+        rescue File::NotFoundError
+          Logger.report_error("Failed to append to file", "File '#{args.first.to_s}' could not be found", token("File->append"))
+        end
       end
     end
 
@@ -30,7 +33,11 @@ module Cosmo
       end
 
       def call(args : Array(ValueType)) : Nil
-        return File.write(args.first.to_s, args[1].to_s)
+        begin
+          return File.write(args.first.to_s, args[1].to_s)
+        rescue File::NotFoundError
+          Logger.report_error("Failed to write to file", "File '#{args.first.to_s}' could not be found", token("File->append"))
+        end
       end
     end
 
@@ -40,7 +47,11 @@ module Cosmo
       end
 
       def call(args : Array(ValueType)) : String
-        return File.read(args.first.to_s)
+        begin
+          return File.read(args.first.to_s)
+        rescue File::NotFoundError
+          Logger.report_error("Failed to read from file", "File '#{args.first.to_s}' could not be found", token("File->append"))
+        end
       end
     end
   end
