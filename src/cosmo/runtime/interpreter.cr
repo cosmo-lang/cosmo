@@ -51,8 +51,7 @@ class Cosmo::Interpreter
     version = "Cosmo #{Version}"
     declare_intrinsic("string", "version$", version)
 
-    Intrinsic::MathLib.new(self).inject
-    Intrinsic::SystemLib.new(self).inject
+    importable("math", Intrinsic::MathLib.new(self))
     importable("http", Intrinsic::HttpLib.new(self))
     importable("system", Intrinsic::SystemLib.new(self))
     importable("file", Intrinsic::FileLib.new(self))

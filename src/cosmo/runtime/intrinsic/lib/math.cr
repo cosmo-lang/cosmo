@@ -1,32 +1,29 @@
 module Cosmo::Intrinsic
   class MathLib < Lib
     def inject : Nil
-      math = {} of String => IFunction | Float64
-      math["e"] = Math::E
-      math["π"] = Math::PI
-      math["inf"] = Float64::INFINITY
-      math["random"] = Random.new(@i)
-      math["min"] = Min.new(@i)
-      math["max"] = Max.new(@i)
-      math["log"] = Log.new(@i)
-      math["log2"] = Log2.new(@i)
-      math["log10"] = Log10.new(@i)
-      math["exp"] = Exp.new(@i)
-      math["sin"] = Sin.new(@i)
-      math["cos"] = Cos.new(@i)
-      math["tan"] = Tan.new(@i)
-      math["sinh"] = Sinh.new(@i)
-      math["cosh"] = Cosh.new(@i)
-      math["tanh"] = Tanh.new(@i)
-      math["asinh"] = Asinh.new(@i)
-      math["acosh"] = Acosh.new(@i)
-      math["atanh"] = Atanh.new(@i)
-      math["asin"] = Asin.new(@i)
-      math["acos"] = Acos.new(@i)
-      math["atan"] = Atan.new(@i)
-      math["atan2"] = Atan2.new(@i)
-
-      @i.declare_intrinsic("string->(Function|float)", "Math", math)
+      @i.declare_intrinsic("float", "e", Math::E)
+      @i.declare_intrinsic("float", "π", Math::PI)
+      @i.declare_intrinsic("float", "inf", Float64::INFINITY)
+      @i.declare_intrinsic("Function", "random", Random.new(@i))
+      @i.declare_intrinsic("Function", "min", Min.new(@i))
+      @i.declare_intrinsic("Function", "max", Max.new(@i))
+      @i.declare_intrinsic("Function", "log", Log.new(@i))
+      @i.declare_intrinsic("Function", "log2", Log2.new(@i))
+      @i.declare_intrinsic("Function", "log10", Log10.new(@i))
+      @i.declare_intrinsic("Function", "exp", Exp.new(@i))
+      @i.declare_intrinsic("Function", "sin", Sin.new(@i))
+      @i.declare_intrinsic("Function", "cos", Cos.new(@i))
+      @i.declare_intrinsic("Function", "tan", Tan.new(@i))
+      @i.declare_intrinsic("Function", "sinh", Sinh.new(@i))
+      @i.declare_intrinsic("Function", "cosh", Cosh.new(@i))
+      @i.declare_intrinsic("Function", "tanh", Tanh.new(@i))
+      @i.declare_intrinsic("Function", "asinh", Asinh.new(@i))
+      @i.declare_intrinsic("Function", "acosh", Acosh.new(@i))
+      @i.declare_intrinsic("Function", "atanh", Atanh.new(@i))
+      @i.declare_intrinsic("Function", "asin", Asin.new(@i))
+      @i.declare_intrinsic("Function", "acos", Acos.new(@i))
+      @i.declare_intrinsic("Function", "atan", Atan.new(@i))
+      @i.declare_intrinsic("Function", "atan2", Atan2.new(@i))
     end
 
     class Random < IFunction

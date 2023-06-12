@@ -79,7 +79,7 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 - Import stack traces
 - Properly log errors from intrinsics
 - Segfaults
-  * passing `$`?
+  * passing `$`? (pretty sure this is just like everything to do with classes)
   * `<float[]>[1,2,3]`
 - Class instance variables available outside of `$`
 - Throw if same module was imported twice
