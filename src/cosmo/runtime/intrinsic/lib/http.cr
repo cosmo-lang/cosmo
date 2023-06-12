@@ -12,7 +12,7 @@ module Cosmo::Intrinsic
       server["listen"] = Server::Listen.new(@i)
 
       @i.declare_intrinsic("string->Function", "Server", server)
-      @i.declare_intrinsic("Function", "request", Client::Fetch.new(@i))
+      @i.declare_intrinsic("Function", "request", Client::RequestFunction.new(@i))
     end
 
     abstract class Client::ResponseBodyFunctionBase < IFunction
@@ -21,7 +21,7 @@ module Cosmo::Intrinsic
       end
     end
 
-    class Client::Fetch < IFunction
+    class Client::RequestFunction < IFunction
       def arity : Range(UInt32, UInt32)
         2.to_u .. 3.to_u
       end
