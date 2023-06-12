@@ -67,6 +67,7 @@ Have any questions or comments? DM me on Discord: `runic#5997`
     * implicit conversions
     * intersection types
 - Other
+  - Extend `HTTP` library
   - `+` operator for vectors, same functionality as `Vector->combine`
   - `string` and `char` to hex conversions (e.x. `<uint>'f' == 15`)
   - Some form of multithreading
