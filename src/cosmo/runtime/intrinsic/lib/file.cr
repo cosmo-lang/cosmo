@@ -4,12 +4,9 @@ module Cosmo
   module Intrinsic
     class FileLib < Lib
       def inject : Nil
-        file = {} of String => IFunction
-        file["read"] = Read.new(@i)
-        file["write"] = Write.new(@i)
-        file["append"] = Append.new(@i)
-
-        @i.declare_intrinsic("string->Function", "File", file)
+        @i.declare_intrinsic("Function", "read", Read.new(@i))
+        @i.declare_intrinsic("Function", "write", Write.new(@i))
+        @i.declare_intrinsic("Function", "append", Append.new(@i))
       end
     end
 
