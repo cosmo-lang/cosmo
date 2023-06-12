@@ -1,0 +1,7 @@
+use System from "system"
+
+public int fn main(string[] args) {
+    string output = System->exec("echo '\e[32mSystem->exec() \e[35mWorks great!'")
+    puts("%{output}")
+    return 0
+}

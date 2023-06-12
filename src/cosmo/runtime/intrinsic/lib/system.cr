@@ -43,6 +43,29 @@ module Cosmo::Intrinsic
       end
     end
 
+    class Exec < IFunction
+      def arity : Range(UInt32, UInt32)
+        1.to_u .. 1.to_u
+      end
+
+      def call(args : Array(ValueType)) : String #| Int32 | UInt32
+        TypeChecker.assert("string", args.first, token("System->exec"))
+
+        command = args.first.to_s
+        result = `#{command}`
+        result.to_s
+      end
+    end
+
+    def inject : Nil
+      _system = {} of String => IFunction | String | Hash(String, Cosmo::Intrinsic::IFunction | String)
+      _system["os"] = os
+      EnvLib.new(@i).build(_system)
+      _system["exec"] = Exec.new(@i)
+
+      @i.declare_intrinsic("string->any", "System", _system)
+    end
+
     private def os : String
       {% if flag?(:linux) %}
         "Linux"
@@ -55,14 +78,6 @@ module Cosmo::Intrinsic
       {% else %}
         "Unknown"
       {% end %}
-    end
-
-    def inject : Nil
-      _system = {} of String => IFunction | String | Hash(String, Cosmo::Intrinsic::IFunction | String)
-      _system["os"] = os
-      EnvLib.new(@i).build(_system)
-
-      @i.declare_intrinsic("string->any", "System", _system)
     end
   end
 end
