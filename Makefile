@@ -4,8 +4,8 @@ EXECUTABLE = "bin/cosmo"
 install:
 	echo "Installing Cosmo as $(SUDO_USER)"
 	shards build --release
-	rm -rf /usr/bin/$(EXECUTABLE)
-	cp $(EXECUTABLE) /usr/bin/
+	rm -rf /usr/local/bin/$(EXECUTABLE)
+	cp $(EXECUTABLE) /usr/local/bin/
 	make test
 	echo "Successfully installed Cosmo!"
 
