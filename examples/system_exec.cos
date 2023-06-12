@@ -1,0 +1,4 @@
+use exec from "system"
+
+string output = exec("echo '\e[32mSystem->exec() \e[35mWorks great!'")
+puts(output)
