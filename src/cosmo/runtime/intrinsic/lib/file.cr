@@ -8,6 +8,7 @@ module Cosmo
         file["read"] = Read.new(@i)
         file["write"] = Write.new(@i)
         file["append"] = Append.new(@i)
+
         @i.declare_intrinsic("string->Function", "File", file)
       end
     end
