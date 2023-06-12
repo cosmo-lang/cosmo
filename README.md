@@ -1,21 +1,12 @@
 ![build](https://github.com/cosmo-lang/cosmo/actions/workflows/crystal.yml/badge.svg)
-# Cosmo - Kosmo
-(Kevins)Osmo
-get it.. ha..
+# Cosmo
 
 Cosmo is a statically-typed interpreted programming language written in pure Crystal.<br>
 We have an [extension for VS code](https://marketplace.visualstudio.com/items?itemName=cosmo.vscode-cosmo) ([source](https://github.com/R-unic/vscode-cosmo)), however it currently only features syntax highlighting and code snippets.
 
 ## Installation
 
-```bash
-git clone https://github.com/KevinAlavik/cosmo
-cd cosmo
-sudo make
-```
-
-## Whats different in this fork?
-Nothing much just some extra things!
+Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/releases) and run it.
 
 ## Contributing
 
