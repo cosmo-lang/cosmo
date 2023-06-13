@@ -66,11 +66,22 @@ module Cosmo::Intrinsic
       end
     end
 
+    class SystemTime < IFunction
+      def arity : Range(UInt32, UInt32)
+        0.to_u .. 0.to_u
+      end
+
+      def call(args : Array(ValueType)) : Int64
+        Time.utc.to_unix
+      end
+    end
+
     def inject : Nil
       _system = {} of String => IFunction | String | Hash(String, Cosmo::Intrinsic::IFunction | String)
       _system["os"] = os
       EnvLib.new(@i).build(_system)
 
+      @i.declare_intrinsic("Function", "time", SystemTime.new(@i))
       @i.declare_intrinsic("Function", "exec", Exec.new(@i))
       @i.declare_intrinsic("string->any", "System", _system)
     end

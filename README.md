@@ -65,6 +65,7 @@ Have any questions or comments? DM me on Discord: `runic#5997`
   - Some form of multithreading
   - Intrinsic methods for all datatypes (inherit from a base type)
   - REPL supports multiline source
+  - Colorize REPL input
 
 ### Fixes
 - Performance boosts lol
