@@ -55,7 +55,7 @@
 		"prefix": [ "challenge" ],
 		"description": "Fills out the boilerplate for a Beginner.Codes challenge",
 		"body": [
-			"use test from \"beginner_codes\"",
+			"use test from \"beginner-codes\"",
       "",
       "${2:typedef} fn ${3:fn_name}(${4}) {",
       "\t${5}",

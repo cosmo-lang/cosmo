@@ -1,0 +1,17 @@
+use test from "beginner-codes"
+
+bool fn has_consecutive?(int[] list, int n, int threshold) {
+  mut int count = 0
+  every int x in list {
+    if n == x
+      ++count
+    else
+      count = 0
+
+    if (count == threshold) return true
+  }
+
+  false
+}
+
+test(683, has_consecutive?)
