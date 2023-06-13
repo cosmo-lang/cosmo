@@ -471,12 +471,17 @@ class Cosmo::Parser
     callee = expr
 
     if match?(Syntax::LParen)
+      open_paren = last_token
       enclosing = @not_assignment
       @not_assignment = true
 
       arguments = [] of Expression::Base
       until match?(Syntax::RParen)
         arguments << parse_expression
+        if finished?
+          Logger.report_error("Unterminated call", "Missing ')' to close function call", open_paren)
+        end
+
         consume(Syntax::Comma) unless check?(Syntax::RParen)
       end
 
@@ -548,10 +553,12 @@ class Cosmo::Parser
 
     visibility = get_visibility(visibility_lexeme)
     is_mut = match?(Syntax::Mut) if check_mut
+
+    puts current.to_s, peek.to_s, peek(2).to_s, "\n\n" if required
     if check?(Syntax::LParen) &&
       token_exists?(1) && (
-        check?(Syntax::TypeDef) ||
-        (check?(Syntax::Identifier) && !TypeChecker.get_registered_type?(peek.lexeme, peek).nil?)
+        check?(Syntax::TypeDef, 1) ||
+        (check?(Syntax::Identifier, 1) && !TypeChecker.get_registered_type?(peek.lexeme, peek).nil?)
       ) && token_exists?(2) && (
         check?(Syntax::Pipe, 2) ||
         check?(Syntax::HyphenArrow, 2) ||
@@ -647,7 +654,7 @@ class Cosmo::Parser
     end
 
     if match?(Syntax::Pipe)
-      # type_ref is type a, parse type b
+      # type_ref is type A, parse type B
       type_info = parse_type(required: required)
       Logger.report_error(
         "Expected right operand to union type, got",
@@ -699,6 +706,7 @@ class Cosmo::Parser
 
   private def parse_type_alias(type_token : Token, identifier : Expression::Var, visibility : Visibility) : Expression::TypeAlias
     consume(Syntax::Equal)
+    TypeChecker.register_type(identifier.token.lexeme)
     type_info = parse_type(required: true, check_visibility: false, check_mut: true)
     type_ref = type_info[:type_ref].not_nil!
     TypeChecker.alias_type(identifier.token.lexeme, type_ref.name.lexeme)
@@ -723,43 +731,31 @@ class Cosmo::Parser
     unless type_info[:type_ref].nil?
       typedef = type_info[:type_ref].not_nil!.name
 
-      if match?(Syntax::Identifier)
-        variable_name = last_token
-        if variable_name.lexeme.ends_with?("?")
-          Logger.report_error("Invalid identifier '#{variable_name.lexeme}'", "Only function identifiers may include a '?' character", variable_name)
-        elsif variable_name.lexeme.ends_with?("!")
-          Logger.report_error("Invalid identifier '#{variable_name.lexeme}'", "Only function identifiers may include a '!' character", variable_name)
-        end
+      variable_name = consume(Syntax::Identifier)
+      if variable_name.lexeme.ends_with?("?")
+        Logger.report_error("Invalid identifier '#{variable_name.lexeme}'", "Only function identifiers may include a '?' character", variable_name)
+      elsif variable_name.lexeme.ends_with?("!")
+        Logger.report_error("Invalid identifier '#{variable_name.lexeme}'", "Only function identifiers may include a '!' character", variable_name)
+      end
 
-        identifier = Expression::Var.new(variable_name)
-        if typedef.value == "type"
-          parse_type_alias(typedef, identifier, type_info[:visibility])
-        else
-          if check?(Syntax::Comma) && !@not_assignment
-            return parse_multiple_declaration(typedef, identifier, type_info)
-          end
-          if match?(Syntax::Equal)
-            value = parse_expression
-            Expression::VarDeclaration.new(
-              typedef, identifier, value,
-              class_field: !@within_class.nil?,
-              mutable: type_info[:is_mut],
-              visibility: type_info[:visibility]
-            )
-          else
-            first = Expression::VarDeclaration.new(
-              typedef, identifier,
-              Expression::NoneLiteral.new(nil, variable_name),
-              class_field: !@within_class.nil?,
-              mutable: type_info[:is_mut],
-              visibility: type_info[:visibility]
-            )
-
-            first
-          end
-        end
+      identifier = Expression::Var.new(variable_name)
+      if typedef.value == "type"
+        parse_type_alias(typedef, identifier, type_info[:visibility])
       else
-        Logger.report_error("Expected identifier, got", token_exists? ? current.lexeme : "EOF", token_exists? ? current : last_token)
+        if check?(Syntax::Comma) && !@not_assignment
+          return parse_multiple_declaration(typedef, identifier, type_info)
+        end
+
+        value = match?(Syntax::Equal) ?
+          parse_expression
+          : Expression::NoneLiteral.new(nil, variable_name)
+
+        Expression::VarDeclaration.new(
+          typedef, identifier, value,
+          class_field: !@within_class.nil?,
+          mutable: type_info[:is_mut],
+          visibility: type_info[:visibility]
+        )
       end
     else
       parse_assignment
