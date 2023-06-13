@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 1.7.3">
-<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="Cosmo">
 
 
@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::Interpreter - Cosmo master-dev</title>
+  <title>Cosmo::Interpreter - Cosmo master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        master-dev
+        master
       </span>
     </div>
   </div>
@@ -456,6 +456,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Chars/Digit" data-name="cosmo::intrinsic::chars::digit">
+      <a href="../Cosmo/Intrinsic/Chars/Digit.html">Digit</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Chars/Letter" data-name="cosmo::intrinsic::chars::letter">
       <a href="../Cosmo/Intrinsic/Chars/Letter.html">Letter</a>
       
@@ -463,11 +468,6 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Chars/Lower" data-name="cosmo::intrinsic::chars::lower">
       <a href="../Cosmo/Intrinsic/Chars/Lower.html">Lower</a>
-      
-    </li>
-  
-  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Chars/NumberF" data-name="cosmo::intrinsic::chars::numberf">
-      <a href="../Cosmo/Intrinsic/Chars/NumberF.html">NumberF</a>
       
     </li>
   
@@ -648,6 +648,26 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Intrinsic/IFunction" data-name="cosmo::intrinsic::ifunction">
       <a href="../Cosmo/Intrinsic/IFunction.html">IFunction</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/Intrinsic/JSONLib" data-name="cosmo::intrinsic::jsonlib">
+      <a href="../Cosmo/Intrinsic/JSONLib.html">JSONLib</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/JSONLib/Deserialize" data-name="cosmo::intrinsic::jsonlib::deserialize">
+      <a href="../Cosmo/Intrinsic/JSONLib/Deserialize.html">Deserialize</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/JSONLib/Serialize" data-name="cosmo::intrinsic::jsonlib::serialize">
+      <a href="../Cosmo/Intrinsic/JSONLib/Serialize.html">Serialize</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -1086,6 +1106,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/SystemLib/SystemTime" data-name="cosmo::intrinsic::systemlib::systemtime">
+      <a href="../Cosmo/Intrinsic/SystemLib/SystemTime.html">SystemTime</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -1248,6 +1273,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Lexer" data-name="cosmo::lexer">
       <a href="../Cosmo/Lexer.html">Lexer</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/LiteralType" data-name="cosmo::literaltype">
+      <a href="../Cosmo/LiteralType.html">LiteralType</a>
       
     </li>
   
@@ -1431,8 +1461,18 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/Resolver" data-name="cosmo::resolver">
+  <li class="parent " data-id="Cosmo/Cosmo/Resolver" data-name="cosmo::resolver">
       <a href="../Cosmo/Resolver.html">Resolver</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Resolver/FnType" data-name="cosmo::resolver::fntype">
+      <a href="../Cosmo/Resolver/FnType.html">FnType</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -1506,16 +1546,6 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/FnType" data-name="fntype">
-      <a href="../FnType.html">FnType</a>
-      
-    </li>
-  
-  <li class=" " data-id="Cosmo/LiteralType" data-name="literaltype">
-      <a href="../LiteralType.html">LiteralType</a>
-      
-    </li>
-  
 </ul>
 
   </div>
@@ -1574,7 +1604,9 @@
   </h2>
   
     
-      cosmo/runtime/interpreter.cr
+      <a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L15" target="_blank">
+        cosmo/runtime/interpreter.cr
+      </a>
     
     <br/>
   
@@ -1625,7 +1657,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#declare_intrinsic%28type%3AString%2Cident%3AString%2Cvalue%3AValueType%2Cvisibility%3DVisibility%3A%3APublic%29-instance-method" class="signature"><strong>#declare_intrinsic</strong>(type : String, ident : String, value : ValueType, visibility = <span class="t">Visibility</span><span class="t">::</span><span class="t">Public</span>)</a>
+        <a href="#declare_intrinsic%28type%3AString%2Cident%3AString%2Cvalue%3AValueType%2Cvisibility%3DVisibility%3A%3APublic%29%3ANil-instance-method" class="signature"><strong>#declare_intrinsic</strong>(type : String, ident : String, value : ValueType, visibility = <span class="t">Visibility</span><span class="t">::</span><span class="t">Public</span>) : Nil</a>
         
       </li>
     
@@ -2202,6 +2234,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L33" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2230,6 +2264,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L965" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2244,19 +2280,23 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L191" target="_blank">View source</a>]
+        
       </div>
     </div>
   
-    <div class="entry-detail" id="declare_intrinsic(type:String,ident:String,value:ValueType,visibility=Visibility::Public)-instance-method">
+    <div class="entry-detail" id="declare_intrinsic(type:String,ident:String,value:ValueType,visibility=Visibility::Public):Nil-instance-method">
       <div class="signature">
         
-        def <strong>declare_intrinsic</strong>(type : String, ident : String, value : <a href="../Cosmo/ValueType.html">ValueType</a>, visibility = <span class="t">Visibility</span><span class="t">::</span><span class="t">Public</span>)
+        def <strong>declare_intrinsic</strong>(type : String, ident : String, value : <a href="../Cosmo/ValueType.html">ValueType</a>, visibility = <span class="t">Visibility</span><span class="t">::</span><span class="t">Public</span>) : Nil
 
-        <a class="method-permalink" href="#declare_intrinsic%28type%3AString%2Cident%3AString%2Cvalue%3AValueType%2Cvisibility%3DVisibility%3A%3APublic%29-instance-method">#</a>
+        <a class="method-permalink" href="#declare_intrinsic%28type%3AString%2Cident%3AString%2Cvalue%3AValueType%2Cvisibility%3DVisibility%3A%3APublic%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L71" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2272,6 +2312,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L91" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2285,6 +2327,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L107" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2300,6 +2344,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L218" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2314,6 +2360,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L222" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2327,6 +2375,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L226" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2347,6 +2397,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L165" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2360,6 +2412,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L67" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2375,6 +2429,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L63" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2388,6 +2444,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2403,6 +2461,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L21" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2416,6 +2476,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L115" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2431,6 +2493,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L25" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2444,6 +2508,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2459,6 +2525,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L160" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2472,6 +2540,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2487,6 +2557,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L95" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2500,6 +2572,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L100" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2515,6 +2589,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L656" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2528,6 +2604,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L1106" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2543,6 +2621,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L1220" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2556,6 +2636,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L428" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2571,6 +2653,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L378" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2584,6 +2668,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L792" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2608,6 +2694,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L605" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2621,6 +2709,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L1021" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2636,6 +2726,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L494" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2649,6 +2741,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L841" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2664,6 +2758,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L632" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2677,6 +2773,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L578" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2692,6 +2790,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L735" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2705,6 +2805,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L826" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2720,6 +2822,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L797" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2733,6 +2837,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L652" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2748,6 +2854,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L1212" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2761,6 +2869,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L931" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2776,6 +2886,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L916" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2789,6 +2901,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L762" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2804,6 +2918,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L424" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2817,6 +2933,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L990" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2832,6 +2950,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L1173" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2845,6 +2965,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L432" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2860,6 +2982,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L1216" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2873,6 +2997,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L1201" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2888,6 +3014,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L1187" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2901,6 +3029,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L1044" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2916,6 +3046,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L782" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2929,6 +3061,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L399" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2944,6 +3078,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L587" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2957,6 +3093,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L836" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2972,6 +3110,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L832" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -2985,6 +3125,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L1051" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3000,6 +3142,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L569" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -3013,6 +3157,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L437" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3028,6 +3174,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L326" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -3041,6 +3189,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L926" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3056,6 +3206,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L894" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -3069,6 +3221,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L886" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3084,6 +3238,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L1197" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -3097,6 +3253,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L458" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3112,6 +3270,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L26" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -3125,6 +3285,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/interpreter.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>

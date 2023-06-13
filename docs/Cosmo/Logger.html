@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 1.7.3">
-<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="Cosmo">
 
 
@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::Logger - Cosmo master-dev</title>
+  <title>Cosmo::Logger - Cosmo master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        master-dev
+        master
       </span>
     </div>
   </div>
@@ -456,6 +456,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Chars/Digit" data-name="cosmo::intrinsic::chars::digit">
+      <a href="../Cosmo/Intrinsic/Chars/Digit.html">Digit</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Chars/Letter" data-name="cosmo::intrinsic::chars::letter">
       <a href="../Cosmo/Intrinsic/Chars/Letter.html">Letter</a>
       
@@ -463,11 +468,6 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Chars/Lower" data-name="cosmo::intrinsic::chars::lower">
       <a href="../Cosmo/Intrinsic/Chars/Lower.html">Lower</a>
-      
-    </li>
-  
-  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Chars/NumberF" data-name="cosmo::intrinsic::chars::numberf">
-      <a href="../Cosmo/Intrinsic/Chars/NumberF.html">NumberF</a>
       
     </li>
   
@@ -648,6 +648,26 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Intrinsic/IFunction" data-name="cosmo::intrinsic::ifunction">
       <a href="../Cosmo/Intrinsic/IFunction.html">IFunction</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/Intrinsic/JSONLib" data-name="cosmo::intrinsic::jsonlib">
+      <a href="../Cosmo/Intrinsic/JSONLib.html">JSONLib</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/JSONLib/Deserialize" data-name="cosmo::intrinsic::jsonlib::deserialize">
+      <a href="../Cosmo/Intrinsic/JSONLib/Deserialize.html">Deserialize</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/JSONLib/Serialize" data-name="cosmo::intrinsic::jsonlib::serialize">
+      <a href="../Cosmo/Intrinsic/JSONLib/Serialize.html">Serialize</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -1086,6 +1106,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/SystemLib/SystemTime" data-name="cosmo::intrinsic::systemlib::systemtime">
+      <a href="../Cosmo/Intrinsic/SystemLib/SystemTime.html">SystemTime</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -1248,6 +1273,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Lexer" data-name="cosmo::lexer">
       <a href="../Cosmo/Lexer.html">Lexer</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/LiteralType" data-name="cosmo::literaltype">
+      <a href="../Cosmo/LiteralType.html">LiteralType</a>
       
     </li>
   
@@ -1431,8 +1461,18 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/Resolver" data-name="cosmo::resolver">
+  <li class="parent " data-id="Cosmo/Cosmo/Resolver" data-name="cosmo::resolver">
       <a href="../Cosmo/Resolver.html">Resolver</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Resolver/FnType" data-name="cosmo::resolver::fntype">
+      <a href="../Cosmo/Resolver/FnType.html">FnType</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -1506,16 +1546,6 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/FnType" data-name="fntype">
-      <a href="../FnType.html">FnType</a>
-      
-    </li>
-  
-  <li class=" " data-id="Cosmo/LiteralType" data-name="literaltype">
-      <a href="../LiteralType.html">LiteralType</a>
-      
-    </li>
-  
 </ul>
 
   </div>
@@ -1570,7 +1600,9 @@
   </h2>
   
     
-      cosmo/logger.cr
+      <a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/logger.cr#L1" target="_blank">
+        cosmo/logger.cr
+      </a>
     
     <br/>
   
@@ -1599,6 +1631,11 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#debug%3F%3ABool-instance-method" class="signature"><strong>#debug?</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#pop_trace%28idx%3AUInt32%29%3ANil-instance-method" class="signature"><strong>#pop_trace</strong>(idx : UInt32) : Nil</a>
         
       </li>
@@ -1606,10 +1643,14 @@
       <li class="entry-summary">
         <a href="#push_trace%28token%3AToken%29%3AUInt32-instance-method" class="signature"><strong>#push_trace</strong>(token : Token) : UInt32</a>
         
+          <div class="summary"><p>Create a stack frame at <code>token</code> and push it to the trace</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#register_source%28file_path%3AString%2Csource%3AString%29%3ANil-instance-method" class="signature"><strong>#register_source</strong>(file_path : String, source : String) : Nil</a>
+        
+          <div class="summary"><p>Register the source code at <code>file_path</code></p></div>
         
       </li>
     
@@ -1668,6 +1709,24 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/logger.cr#L48" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="debug?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>debug?</strong> : Bool
+
+        <a class="method-permalink" href="#debug%3F%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/logger.cr#L44" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -1682,6 +1741,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/logger.cr#L40" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -1693,8 +1754,15 @@
         <a class="method-permalink" href="#push_trace%28token%3AToken%29%3AUInt32-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Create a stack frame at <code>token</code> and push it to the trace</p>
+        </div>
+      
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/logger.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1707,8 +1775,15 @@
         <a class="method-permalink" href="#register_source%28file_path%3AString%2Csource%3AString%29%3ANil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Register the source code at <code>file_path</code></p>
+        </div>
+      
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/logger.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1724,6 +1799,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/logger.cr#L66" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -1737,6 +1814,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/logger.cr#L56" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1752,6 +1831,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/logger.cr#L52" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -1765,6 +1846,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/logger.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>

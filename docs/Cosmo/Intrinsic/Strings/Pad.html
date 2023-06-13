@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 1.7.3">
-<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="Cosmo">
 
 
@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::Intrinsic::Strings::Pad - Cosmo master-dev</title>
+  <title>Cosmo::Intrinsic::Strings::Pad - Cosmo master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        master-dev
+        master
       </span>
     </div>
   </div>
@@ -456,6 +456,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Chars/Digit" data-name="cosmo::intrinsic::chars::digit">
+      <a href="../../../Cosmo/Intrinsic/Chars/Digit.html">Digit</a>
+      
+    </li>
+  
   <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Chars/Letter" data-name="cosmo::intrinsic::chars::letter">
       <a href="../../../Cosmo/Intrinsic/Chars/Letter.html">Letter</a>
       
@@ -463,11 +468,6 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Chars/Lower" data-name="cosmo::intrinsic::chars::lower">
       <a href="../../../Cosmo/Intrinsic/Chars/Lower.html">Lower</a>
-      
-    </li>
-  
-  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/Chars/NumberF" data-name="cosmo::intrinsic::chars::numberf">
-      <a href="../../../Cosmo/Intrinsic/Chars/NumberF.html">NumberF</a>
       
     </li>
   
@@ -648,6 +648,26 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Intrinsic/IFunction" data-name="cosmo::intrinsic::ifunction">
       <a href="../../../Cosmo/Intrinsic/IFunction.html">IFunction</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Cosmo/Cosmo/Intrinsic/JSONLib" data-name="cosmo::intrinsic::jsonlib">
+      <a href="../../../Cosmo/Intrinsic/JSONLib.html">JSONLib</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/JSONLib/Deserialize" data-name="cosmo::intrinsic::jsonlib::deserialize">
+      <a href="../../../Cosmo/Intrinsic/JSONLib/Deserialize.html">Deserialize</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/JSONLib/Serialize" data-name="cosmo::intrinsic::jsonlib::serialize">
+      <a href="../../../Cosmo/Intrinsic/JSONLib/Serialize.html">Serialize</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -1086,6 +1106,11 @@
       
     </li>
   
+  <li class=" " data-id="Cosmo/Cosmo/Intrinsic/SystemLib/SystemTime" data-name="cosmo::intrinsic::systemlib::systemtime">
+      <a href="../../../Cosmo/Intrinsic/SystemLib/SystemTime.html">SystemTime</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -1248,6 +1273,11 @@
   
   <li class=" " data-id="Cosmo/Cosmo/Lexer" data-name="cosmo::lexer">
       <a href="../../../Cosmo/Lexer.html">Lexer</a>
+      
+    </li>
+  
+  <li class=" " data-id="Cosmo/Cosmo/LiteralType" data-name="cosmo::literaltype">
+      <a href="../../../Cosmo/LiteralType.html">LiteralType</a>
       
     </li>
   
@@ -1431,8 +1461,18 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/Cosmo/Resolver" data-name="cosmo::resolver">
+  <li class="parent " data-id="Cosmo/Cosmo/Resolver" data-name="cosmo::resolver">
       <a href="../../../Cosmo/Resolver.html">Resolver</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Cosmo/Cosmo/Resolver/FnType" data-name="cosmo::resolver::fntype">
+      <a href="../../../Cosmo/Resolver/FnType.html">FnType</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -1506,16 +1546,6 @@
       
     </li>
   
-  <li class=" " data-id="Cosmo/FnType" data-name="fntype">
-      <a href="../../../FnType.html">FnType</a>
-      
-    </li>
-  
-  <li class=" " data-id="Cosmo/LiteralType" data-name="literaltype">
-      <a href="../../../LiteralType.html">LiteralType</a>
-      
-    </li>
-  
 </ul>
 
   </div>
@@ -1558,7 +1588,9 @@
   </h2>
   
     
-      cosmo/runtime/intrinsic/string.cr
+      <a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/intrinsic/string.cr#L229" target="_blank">
+        cosmo/runtime/intrinsic/string.cr
+      </a>
     
     <br/>
   
@@ -1601,10 +1633,14 @@
       <li class="entry-summary">
         <a href="#arity%3ARange%28UInt32%2CUInt32%29-instance-method" class="signature"><strong>#arity</strong> : Range(UInt32, UInt32)</a>
         
+          <div class="summary"><p>The amount of parameters this function will accept</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#call%28args%3AArray%28ValueType%29%29%3AString-instance-method" class="signature"><strong>#call</strong>(args : Array(ValueType)) : String</a>
+        
+          <div class="summary"><p>Executes the function body, passing in <code>args</code></p></div>
         
       </li>
     
@@ -1741,6 +1777,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/intrinsic/string.cr#L230" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -1766,8 +1804,19 @@
         <a class="method-permalink" href="#arity%3ARange%28UInt32%2CUInt32%29-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class <a href="../../../Cosmo/Callable.html">Cosmo::Callable</a>
+            </div>
+          
+          <p>The amount of parameters this function will accept</p>
+        </div>
+      
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/intrinsic/string.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1780,8 +1829,19 @@
         <a class="method-permalink" href="#call%28args%3AArray%28ValueType%29%29%3AString-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class <a href="../../../Cosmo/Callable.html">Cosmo::Callable</a>
+            </div>
+          
+          <p>Executes the function body, passing in <code>args</code></p>
+        </div>
+      
       <br/>
       <div>
+        
+          [<a href="https://github.com/R-unic/cosmo/blob/793ca2e58a209835ab8a0219c6f927e339a428dc/src/cosmo/runtime/intrinsic/string.cr#L243" target="_blank">View source</a>]
         
       </div>
     </div>
