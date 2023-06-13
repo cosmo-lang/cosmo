@@ -56,6 +56,7 @@ class Cosmo::Interpreter
     importable("system", Intrinsic::SystemLib.new(self))
     importable("file", Intrinsic::FileLib.new(self))
     importable("socket", Intrinsic::SocketLib.new(self))
+    importable("webhook", Intrinsic::WebhookLib.new(self))
   end
 
   private def importable(name : String, library : Intrinsic::Lib)
