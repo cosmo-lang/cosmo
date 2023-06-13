@@ -15,3 +15,4 @@ bool fn has_consecutive?(int[] list, int n, int threshold) {
 }
 
 test(683, has_consecutive?)
+

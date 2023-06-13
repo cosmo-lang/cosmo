@@ -537,8 +537,7 @@ class Cosmo::Parser
   private def parse_type(
     required = true,
     check_mut = false,
-    check_visibility = false,
-    paren_depth = 0
+    check_visibility = false
   ) : TypeInfo
 
     is_nullable = false
@@ -549,7 +548,6 @@ class Cosmo::Parser
 
     visibility = get_visibility(visibility_lexeme)
     is_mut = match?(Syntax::Mut) if check_mut
-    # puts current.to_s, peek.to_s, peek(2).to_s, "\n"
     if check?(Syntax::LParen) &&
       token_exists?(1) && (
         check?(Syntax::TypeDef) ||
@@ -562,12 +560,13 @@ class Cosmo::Parser
       )
 
       consume(Syntax::LParen)
-      info = parse_type(required: required, paren_depth: paren_depth + 1)
+      info = parse_type(required: required)
       consume(Syntax::RParen)
+
       variable_type = info[:variable_type].not_nil!
       variable_type.lexeme = "(" + variable_type.lexeme + ")"
+      variable_type, type_ref = parse_type_suffix(variable_type, required)
 
-      variable_type, type_ref = parse_type_suffix(variable_type, required, paren_depth)
       return {
         found_typedef: info[:found_typedef],
         variable_type: variable_type,
@@ -592,7 +591,7 @@ class Cosmo::Parser
     end
 
     unless variable_type.nil?
-      variable_type, type_ref = parse_type_suffix(variable_type, required, paren_depth)
+      variable_type, type_ref = parse_type_suffix(variable_type, required)
     end
 
     {
@@ -605,7 +604,7 @@ class Cosmo::Parser
     }
   end
 
-  private def parse_type_suffix(variable_type : Token, required : Bool = true, paren_depth : Int = 0) : Tuple(Token, Expression::TypeRef)
+  private def parse_type_suffix(variable_type : Token, required = true) : Tuple(Token, Expression::TypeRef)
     type_ref = Expression::TypeRef.new(variable_type)
 
     if match?(Syntax::LBracket)
@@ -622,9 +621,10 @@ class Cosmo::Parser
         type_ref = Expression::TypeRef.new(variable_type)
       end
     end
+
     if match?(Syntax::HyphenArrow)
       # type_ref is the key type, parse the value type
-      type_info = parse_type(required: required, paren_depth: paren_depth)
+      type_info = parse_type(required: required)
       if type_info[:variable_type].nil?
         Logger.report_error("Expected table value type, got", current.type.to_s, current)
       end
@@ -634,8 +634,9 @@ class Cosmo::Parser
       variable_type = table_type_token
       type_ref = Expression::TypeRef.new(variable_type)
     end
+
     if match?(Syntax::Question)
-      if token_exists? && current.type == Syntax::Question
+      if check?(Syntax::Question)
         Logger.report_error("Invalid type", "Type can only be made nullable once", current)
       end
       is_nullable = true
@@ -644,9 +645,10 @@ class Cosmo::Parser
       variable_type = nullable_type_token
       type_ref = Expression::TypeRef.new(variable_type)
     end
+
     if match?(Syntax::Pipe)
       # type_ref is type a, parse type b
-      type_info = parse_type(required: required, paren_depth: paren_depth)
+      type_info = parse_type(required: required)
       Logger.report_error(
         "Expected right operand to union type, got",
         token_exists? ? current.type.to_s : "EOF",

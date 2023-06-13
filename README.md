@@ -10,7 +10,7 @@ Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/rel
 
 ## Contributing
 
-There is more detailed instructions about how to contribute [here]() on our Wiki.
+There is a guide about how to contribute [here](https://github.com/cosmo-lang/cosmo/wiki) on our Wiki.
 
 1. [Fork it](https://github.com/R-unic/cosmo/fork)
 2. Create your feature branch (`git checkout -b my-new-feature`)
