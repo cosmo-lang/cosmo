@@ -76,7 +76,7 @@ class Cosmo::Interpreter
     ident : String,
     value : ValueType,
     visibility = Visibility::Public
-  )
+  ) : Nil
 
     location = Location.new("intrinsic", 0, 0)
     ident_token = fake_ident(ident, location)
@@ -88,6 +88,20 @@ class Cosmo::Interpreter
       value,
       mutable: true,
       visibility: visibility
+    )
+  end
+
+  def intrinsic_type_alias(name : String, typedef : String) : Nil
+    location = Location.new("intrinsic", 0, 0)
+    ident_token = fake_ident(name, location)
+    type_value = Type.new(typedef)
+
+    @scope.declare(
+      fake_typedef("type", location),
+      ident_token,
+      type_value,
+      mutable: true,
+      visibility: Visibility::Public
     )
   end
 
