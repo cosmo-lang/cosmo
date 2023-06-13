@@ -1,5 +1,5 @@
 MAX_FN_PARAMS = 255
-private INTRINSIC_FILE = "__intrinsic__.⭐"
+private GLOBAL_INTRINSIC_FILE = "global.⭐"
 
 require "../syntax/parser"
 require "./hooked_exceptions"
@@ -46,7 +46,7 @@ class Cosmo::Interpreter
     declare_intrinsic("Function", "eval", Intrinsic::Eval.new(self))
     declare_intrinsic("Function", "recursion_depth!", Intrinsic::RecursionDepth.new(self))
 
-    import_file(File.join(File.dirname(__FILE__), "../../../libraries/#{INTRINSIC_FILE}"), [] of Token)
+    import_file(File.join(File.dirname(__FILE__), "../../../libraries/#{GLOBAL_INTRINSIC_FILE}"), [] of Token)
 
     version = "Cosmo #{Version}"
     declare_intrinsic("string", "version$", version)
@@ -116,7 +116,7 @@ class Cosmo::Interpreter
   end
 
   def interpret(source : String, @file_path : String) : ValueType
-    is_intrinsic_lib = @file_path.ends_with?(INTRINSIC_FILE)
+    is_intrinsic_lib = @file_path.ends_with?(GLOBAL_INTRINSIC_FILE)
     Logger.register_source(@file_path, source) unless is_intrinsic_lib
 
     parser = Parser.new(source, @file_path, @run_benchmarks)
