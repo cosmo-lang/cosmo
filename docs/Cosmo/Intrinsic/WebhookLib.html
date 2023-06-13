@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="Cosmo">
-  <title>Cosmo::Intrinsic::Table - Cosmo master</title>
+  <title>Cosmo::Intrinsic::WebhookLib - Cosmo master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -1116,7 +1116,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="Cosmo/Cosmo/Intrinsic/Table" data-name="cosmo::intrinsic::table">
+  <li class="parent " data-id="Cosmo/Cosmo/Intrinsic/Table" data-name="cosmo::intrinsic::table">
       <a href="../../Cosmo/Intrinsic/Table.html">Table</a>
       
         <ul>
@@ -1261,7 +1261,7 @@
       
     </li>
   
-  <li class="parent " data-id="Cosmo/Cosmo/Intrinsic/WebhookLib" data-name="cosmo::intrinsic::webhooklib">
+  <li class="parent open current" data-id="Cosmo/Cosmo/Intrinsic/WebhookLib" data-name="cosmo::intrinsic::webhooklib">
       <a href="../../Cosmo/Intrinsic/WebhookLib.html">WebhookLib</a>
       
         <ul>
@@ -1570,12 +1570,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Cosmo::Intrinsic::Table
+  <span class="kind">class</span> Cosmo::Intrinsic::WebhookLib
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Cosmo/Intrinsic/Table.html">Cosmo::Intrinsic::Table</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Cosmo/Intrinsic/WebhookLib.html">Cosmo::Intrinsic::WebhookLib</a></li><li class="superclass"><a href="../../Cosmo/Intrinsic/Lib.html">Cosmo::Intrinsic::Lib</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -1603,8 +1603,8 @@
   </h2>
   
     
-      <a href="https://github.com/R-unic/cosmo/blob/11479694c4d111be580bd0503bd7bf375a149384/src/cosmo/runtime/intrinsic/table.cr#L1" target="_blank">
-        cosmo/runtime/intrinsic/table.cr
+      <a href="https://github.com/R-unic/cosmo/blob/11479694c4d111be580bd0503bd7bf375a149384/src/cosmo/runtime/intrinsic/lib/webhook.cr#L7" target="_blank">
+        cosmo/runtime/intrinsic/lib/webhook.cr
       </a>
     
     <br/>
@@ -1613,23 +1613,6 @@
 
 
 
-
-  <h2>
-    <a id="constructors" class="anchor" href="#constructors">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructors
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#new%28interpreter%3AInterpreter%2Cvalue%3AHash%28ValueType%2CValueType%29%29-class-method" class="signature"><strong>.new</strong>(interpreter : Interpreter, value : Hash(ValueType, ValueType))</a>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -1646,7 +1629,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#get_method%28name%3AToken%2Crequired%3Dtrue%29%3AIFunction%7CNil-instance-method" class="signature"><strong>#get_method</strong>(name : Token, required = <span class="n">true</span>) : IFunction | Nil</a>
+        <a href="#inject%3ANil-instance-method" class="signature"><strong>#inject</strong> : Nil</a>
+        
+          <div class="summary"><p>Injects all members into the current scope</p></div>
         
       </li>
     
@@ -1657,6 +1642,39 @@
 
 
 <div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../../Cosmo/Intrinsic/Lib.html">Cosmo::Intrinsic::Lib</a></code></h3>
+  
+  
+    <a href="../../Cosmo/Intrinsic/Lib.html#inject%3ANil-instance-method" class="tooltip">
+      <span>inject : Nil</span>
+    inject</a>, 
+    
+  
+    <a href="../../Cosmo/Intrinsic/Lib.html#token%28name%3AString%29%3AToken-instance-method" class="tooltip">
+      <span>token(name : String) : Token</span>
+    token</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../../Cosmo/Intrinsic/Lib.html">Cosmo::Intrinsic::Lib</a></code></h3>
+  
+  
+    <a href="../../Cosmo/Intrinsic/Lib.html#new%28i%3AInterpreter%29-class-method" class="tooltip">
+      <span>new(i : Interpreter)</span>
+    new</a>
+    
+  
+
+
+    
+
+
   
     
 
@@ -1681,32 +1699,6 @@
 </div>
 
 
-  <h2>
-    <a id="constructor-detail" class="anchor" href="#constructor-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructor Detail
-  </h2>
-  
-    <div class="entry-detail" id="new(interpreter:Interpreter,value:Hash(ValueType,ValueType))-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(interpreter : <a href="../../Cosmo/Interpreter.html">Interpreter</a>, value : Hash(<a href="../../Cosmo/ValueType.html">ValueType</a>, <a href="../../Cosmo/ValueType.html">ValueType</a>))
-
-        <a class="method-permalink" href="#new%28interpreter%3AInterpreter%2Cvalue%3AHash%28ValueType%2CValueType%29%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/R-unic/cosmo/blob/11479694c4d111be580bd0503bd7bf375a149384/src/cosmo/runtime/intrinsic/table.cr#L2" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-
 
 
 
@@ -1720,18 +1712,27 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="get_method(name:Token,required=true):IFunction|Nil-instance-method">
+    <div class="entry-detail" id="inject:Nil-instance-method">
       <div class="signature">
         
-        def <strong>get_method</strong>(name : <a href="../../Cosmo/Token.html">Token</a>, required = <span class="n">true</span>) : <a href="../../Cosmo/Intrinsic/IFunction.html">IFunction</a> | Nil
+        def <strong>inject</strong> : Nil
 
-        <a class="method-permalink" href="#get_method%28name%3AToken%2Crequired%3Dtrue%29%3AIFunction%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#inject%3ANil-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class <a href="../../Cosmo/Intrinsic/Lib.html">Cosmo::Intrinsic::Lib</a>
+            </div>
+          
+          <p>Injects all members into the current scope</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/R-unic/cosmo/blob/11479694c4d111be580bd0503bd7bf375a149384/src/cosmo/runtime/intrinsic/table.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/R-unic/cosmo/blob/11479694c4d111be580bd0503bd7bf375a149384/src/cosmo/runtime/intrinsic/lib/webhook.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
