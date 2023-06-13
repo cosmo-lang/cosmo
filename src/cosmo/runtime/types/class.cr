@@ -17,6 +17,7 @@ class Cosmo::Class
     name_token.lexeme
   end
 
+  # Executes the class body, creates a `ClassInstance`, and calls `setup` on it
   def construct(args : Array(ValueType)) : ClassInstance
     instance = ClassInstance.new(self, args)
     enclosing_this = @interpreter.meta["this"]?

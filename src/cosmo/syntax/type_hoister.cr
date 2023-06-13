@@ -1,3 +1,4 @@
+# This class is responsible for allowing all class, enum, etc. types to be accessible from anywhere, no matter where it's defined
 class Cosmo::TypeHoister
   @pos : UInt32 = 0
 

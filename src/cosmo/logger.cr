@@ -18,6 +18,7 @@ module Cosmo::Logger
   @@trace_level : UInt32 = 0
   @@sources = {} of String => String
 
+  # Register the source code at `file_path`
   def register_source(file_path : String, source : String) : Nil
     @@sources[file_path] = source
   end
@@ -26,6 +27,7 @@ module Cosmo::Logger
     @@trace_level = level
   end
 
+  # Create a stack frame at `token` and push it to the trace
   def push_trace(token : Token) : UInt32
     source = @@sources[token.location.file_name]
     frame = StackFrame.new(token, source)

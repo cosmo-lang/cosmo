@@ -1,7 +1,7 @@
 require "./lexer/token"
 require "./lexer/keywords"
 
-alias LiteralType =
+alias Cosmo::LiteralType =
   Int128 | Int64 | Int32 | Int16 | Int8 |
   UInt64 | UInt32 | UInt16 | UInt8 |
   Float64 | Float32 |
@@ -18,6 +18,7 @@ class Cosmo::Lexer
   def initialize(@source : String, @file_path : String, @run_benchmarks : Bool)
   end
 
+  # Entry point: returns an array of tokens representing the source code
   def tokenize : Array(Token)
     start_time = Time.monotonic
 
@@ -32,6 +33,7 @@ class Cosmo::Lexer
     @tokens
   end
 
+  # Called for every character in the source code
   private def lex : Nil
     char = current_char
     @current_lexeme.write(char.to_slice)
@@ -220,6 +222,8 @@ class Cosmo::Lexer
     peek 0
   end
 
+  # Advances and returns true if the current character is `expected`
+  # Returns false otherwise
   private def match_char?(expected)
     return false if finished?
     return false unless char_exists?(1)
@@ -243,12 +247,14 @@ class Cosmo::Lexer
     (@position + offset) < @source.size
   end
 
+  # Advances, adds a newline, and resets the current row
   private def add_newline
     advance
     @line += 1
     @char_pos = 0
   end
 
+  # Adds to the current position, and returns the current character before adding to the position
   private def advance : String
     char = current_char
     @position += 1
@@ -256,12 +262,14 @@ class Cosmo::Lexer
     char
   end
 
+  # Pushes a token with the given syntax and value to `@tokens`
   private def add_token(syntax : Syntax, value : LiteralType) : Nil
     location = Location.new(@file_path, @line, @char_pos + 1)
     @tokens << Token.new(@current_lexeme.to_s, syntax, value, location)
     @current_lexeme = String::Builder.new
   end
 
+  # Returns whether or not `char` and it's following characters are a number literal (e.x. `0xfff` or `0b1101`)
   private def is_base?(char : String, radix : Int) : Bool
     current_char == "0" &&
       char_exists?(1) &&
@@ -270,20 +278,23 @@ class Cosmo::Lexer
       !peek(2).to_i(radix).nil?
   end
 
+  # Advances all characters that are part of a comment
   private def skip_comments(multiline : Bool)
     @current_lexeme = String::Builder.new
     advance
-    until end_of_comment(multiline, @line)
+    until end_of_comment?(multiline, @line)
       advance
     end
   end
 
-  private def end_of_comment(multiline : Bool, current_line : UInt32)
+  # Whether or not the comment is finished being consumed
+  private def end_of_comment?(multiline : Bool, current_line : UInt32) : Bool
     multiline ?
       match_char?(":") && match_char?("#")
       : match_char?("\n") || finished?
   end
 
+  # Advances all characters that are blank
   private def skip_whitespace
     @current_lexeme = String::Builder.new
     until finished? || !current_char.blank?
@@ -291,6 +302,7 @@ class Cosmo::Lexer
     end
   end
 
+  # Advances all number characters and adds a integer/float token
   private def read_number
     num_str = ""
     radix = 10
@@ -328,6 +340,7 @@ class Cosmo::Lexer
     @position -= 1
   end
 
+  # Advances all character/string characters and adds a character/string token
   private def read_string(delim : String, multiline = false)
     advance
     res_str = ""
@@ -398,6 +411,7 @@ class Cosmo::Lexer
     )
   end
 
+  # Advances all identifier characters and adds an identifier or keyword token
   private def read_identifier
     ident_str = ""
     until finished?
@@ -446,6 +460,7 @@ class Cosmo::Lexer
     end
   end
 
+  # Shortcut to `Logger.report_error`
   private def report_error(type : String, message : String) : Nil
     Logger.report_error(type, message, @line, @char_pos, @file_path)
   end

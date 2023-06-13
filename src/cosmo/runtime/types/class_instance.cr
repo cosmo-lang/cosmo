@@ -24,6 +24,7 @@ class Cosmo::ClassInstance
   def initialize(@parent, @args)
   end
 
+  # Calls the construct method
   def setup : Nil
     ctor_method = get_method("construct", include_private: false)
     unless ctor_method.nil?
@@ -166,10 +167,12 @@ class Cosmo::ClassInstance
     method
   end
 
+  # Returns the class' name token
   def name_token
     @parent.name_token
   end
 
+  # Returns the class' name
   def name
     @parent.name
   end

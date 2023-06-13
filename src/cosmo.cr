@@ -86,7 +86,6 @@ module Cosmo
       break if line.nil? || line.chomp.empty?
 
       result = read_source(line, file_path: "repl")
-      puts "=> " + Util::Stringify.any_value(result)
     end
   end
 
