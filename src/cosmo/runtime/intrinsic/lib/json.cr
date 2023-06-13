@@ -7,7 +7,7 @@ module Cosmo
         json["deserialize"] = Deserialize.new(@i)
 
         @i.declare_intrinsic("string->Function", "JSON", json)
-        @i.interpret("type JSONType = string|float|int|uint|(string->JSONType)|(JSONType[])", "JSONLib")
+        @i.interpret("type JSONType = JSONType[]|(string->JSONType)|string|float|int|uint", "JSONLib")
       end
 
       # Parses a raw JSON input into a Cosmo value

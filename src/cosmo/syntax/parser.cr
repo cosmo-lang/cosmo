@@ -554,7 +554,6 @@ class Cosmo::Parser
     visibility = get_visibility(visibility_lexeme)
     is_mut = match?(Syntax::Mut) if check_mut
 
-    puts current.to_s, peek.to_s, peek(2).to_s, "\n\n" if required
     if check?(Syntax::LParen) &&
       token_exists?(1) && (
         check?(Syntax::TypeDef, 1) ||
