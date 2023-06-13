@@ -267,9 +267,9 @@ class Cosmo::Interpreter
   end
 
   private def get_import_member_value(file_scope : Scope, path : String, import : Token) : ValueType
-    unless file_scope.lookup?(import.lexeme).nil?
+    if file_scope.variable_exists?(import.lexeme)
       if file_scope.public?(import.lexeme)
-        return file_scope.lookup(import)
+        file_scope.lookup(import)
       else
         Logger.report_error("Invalid import member", "'#{import.lexeme}' exists in '#{path}', but is private", import)
       end

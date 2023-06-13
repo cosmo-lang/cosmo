@@ -695,9 +695,9 @@ class Cosmo::Parser
     end
   end
 
-  private def parse_type_alias(type_token : Token, identifier : Expression::Var) : Expression::TypeAlias
+  private def parse_type_alias(type_token : Token, identifier : Expression::Var, visibility : Visibility) : Expression::TypeAlias
     consume(Syntax::Equal)
-    type_info = parse_type(required: true, check_visibility: true, check_mut: true)
+    type_info = parse_type(required: true, check_visibility: false, check_mut: true)
     type_ref = type_info[:type_ref].not_nil!
     TypeChecker.alias_type(identifier.token.lexeme, type_ref.name.lexeme)
 
@@ -706,7 +706,7 @@ class Cosmo::Parser
       identifier,
       type_ref,
       type_info[:is_mut],
-      type_info[:visibility]
+      visibility
     )
   end
 
@@ -731,7 +731,7 @@ class Cosmo::Parser
 
         identifier = Expression::Var.new(variable_name)
         if typedef.value == "type"
-          parse_type_alias(typedef, identifier)
+          parse_type_alias(typedef, identifier, type_info[:visibility])
         else
           if check?(Syntax::Comma) && !@not_assignment
             return parse_multiple_declaration(typedef, identifier, type_info)

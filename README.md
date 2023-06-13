@@ -69,6 +69,7 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 
 ### Fixes
 - Performance boosts lol
+- Access imported aliased types
 - Access types within tables (e.x.`JSON::Any`)
 - More detailed errors when unable to resolve a type
 - Import stack traces
