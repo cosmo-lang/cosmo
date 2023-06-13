@@ -86,8 +86,10 @@ module Cosmo::Util
         Util::Color.light_green(delim + value.to_s + delim)
       elsif value.is_a?(Num | Range(Int128 | Int64 | Int32 | Int16 | Int8 | UInt, Int128 | Int64 | Int32 | Int16 | Int8 | UInt))
         Util::Color.light_purple(value.to_s)
-      elsif value.nil? || value.is_a?(Bool)
+      elsif value.is_a?(Bool)
         Util::Color.bold Util::Color.light_cyan(value.to_s)
+      elsif value.nil?
+        Util::Color.bold Util::Color.red "none"
       else
         value.to_s
       end
