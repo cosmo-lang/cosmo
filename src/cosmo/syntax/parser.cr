@@ -477,7 +477,7 @@ class Cosmo::Parser
       arguments = [] of Expression::Base
       until match?(Syntax::RParen)
         arguments << parse_expression
-        match?(Syntax::Comma)
+        consume(Syntax::Comma) unless check?(Syntax::RParen)
       end
 
       @not_assignment = enclosing
