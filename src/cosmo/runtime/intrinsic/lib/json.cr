@@ -3,8 +3,12 @@ module Cosmo
     class JSONLib < Lib
       def inject : Nil
         json = {} of String => IFunction
-        json["serialize"] = Serialize.new(@i)
-        json["deserialize"] = Deserialize.new(@i)
+        serialize = Serialize.new(@i)
+        deserialize = Deserialize.new(@i)
+        json["serialize"] = stringify
+        json["deserialize"] = parse
+        json["stringify"] = stringify
+        json["parse"] = parse
 
         @i.declare_intrinsic("string->Function", "JSON", json)
         @i.interpret("type JSONType = JSONType[]|(string->JSONType)|string|float|int|uint", "JSONLib")
