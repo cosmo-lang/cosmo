@@ -16,8 +16,6 @@ module Cosmo::Logger
   @@stack_trace = [] of StackFrame
   @@debug = false
   @@trace_level : UInt32 = 0
-
-  # TODO: expand file paths (so you can have multiple files of the same name)
   @@sources = {} of String => String
 
   def register_source(file_path : String, source : String) : Nil

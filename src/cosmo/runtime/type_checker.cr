@@ -140,14 +140,14 @@ module Cosmo::TypeChecker
         end
       end
       Type.new(typedef) if resolved
-    elsif typedef.ends_with?("[]")
-      value_type = typedef.rchop("[]")
-      Type.new(typedef) unless get_registered_type?(value_type, token).nil?
     elsif typedef.includes?("->") && typedef.split("->", 2).size == 2
       types = typedef.split("->", 2)
       key_type = types.first
       value_type = types.last
       Type.new(typedef) unless get_registered_type?(key_type, token).nil? && get_registered_type?(value_type, token).nil?
+    elsif typedef.ends_with?("[]")
+      value_type = typedef.rchop("[]")
+      Type.new(typedef) unless get_registered_type?(value_type, token).nil?
     else
       REGISTERED.find { |t| t.name == typedef }
     end
@@ -267,6 +267,11 @@ module Cosmo::TypeChecker
         ungrouped_chars.delete_at(next_paren_idx - 1, 1)
         ungrouped_type = ungrouped_chars.join
         matches = is?(ungrouped_type, value, token)
+      elsif typedef.includes?("|")
+        types = typedef.split("|")
+        types.each do |type|
+          matches ||= is?(type.strip, value, token, except: true)
+        end
       elsif typedef.includes?("->") && typedef.split("->", 2).size == 2
         types = typedef.split("->", 2)
         key_type = types.first.strip
@@ -278,11 +283,6 @@ module Cosmo::TypeChecker
             matches &&= is?(key_type, k, token)
             matches &&= is?(value_type, v, token)
           end
-        end
-      elsif typedef.includes?("|")
-        types = typedef.split("|")
-        types.each do |type|
-          matches ||= is?(type.strip, value, token, except: true)
         end
       elsif typedef.ends_with?("[]")
         value_type = typedef.rchop("[]")
@@ -322,22 +322,18 @@ module Cosmo::TypeChecker
 
     # assert key & value types
     unless matches
-      if typedef.includes?("|")
-        types = typedef.split("|")
-        types.each do |type|
-          matches ||= is?(type.strip, value, token)
-        end
-        report_mismatch(typedef, value, token) unless matches
-      elsif typedef.ends_with?("[]")
-        value_type = typedef.rchop("[]")
-        report_mismatch(typedef, value, token) unless value.is_a?(Array)
-        value.as(Array).each { |v| assert(value_type, v, token) }
-      elsif typedef.starts_with?("(")
+      if typedef.starts_with?("(")
         next_paren_idx = typedef.index(")") || typedef.size
         ungrouped_chars = typedef.lchop.chars
         ungrouped_chars.delete_at(next_paren_idx - 1, 1)
         ungrouped_type = ungrouped_chars.join
         assert(ungrouped_type, value, token)
+      elsif typedef.includes?("|")
+        types = typedef.split("|")
+        types.each do |type|
+          matches ||= is?(type.strip, value, token)
+        end
+        report_mismatch(typedef, value, token) unless matches
       elsif typedef.includes?("->") && typedef.split("->", 2).size == 2
         types = typedef.split("->", 2)
         key_type = types.first.strip
@@ -350,6 +346,10 @@ module Cosmo::TypeChecker
           assert(key_type, k, token)
           assert(value_type, v, token)
         end
+      elsif typedef.ends_with?("[]")
+        value_type = typedef.rchop("[]")
+        report_mismatch(typedef, value, token) unless value.is_a?(Array)
+        value.as(Array).each { |v| assert(value_type, v, token) }
       else
         report_mismatch(typedef, value, token)
       end
