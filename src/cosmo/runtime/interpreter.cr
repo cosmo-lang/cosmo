@@ -136,6 +136,9 @@ class Cosmo::Interpreter
     result = nil
     statements.each do |stmt|
       result = execute(stmt)
+      if file_path == "repl" && (stmt.is_a?(Statement::SingleExpression) || !result.nil?)
+        puts "=> " + Util::Stringify.any_value(result)
+      end
     end
 
     main_result = execute_main
