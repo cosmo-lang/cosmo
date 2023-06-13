@@ -96,6 +96,7 @@ class Cosmo::Interpreter
     ident_token = fake_ident(name, location)
     type_value = Type.new(typedef)
 
+    TypeChecker.alias_type(name, typedef)
     @scope.declare(
       fake_typedef("type", location),
       ident_token,

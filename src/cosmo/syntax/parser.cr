@@ -654,7 +654,6 @@ class Cosmo::Parser
       ) if type_info[:type_ref].nil?
 
       union_type = "#{variable_type.lexeme}|#{type_info[:variable_type].not_nil!.lexeme}"
-      puts union_type
       union_type_token = Token.new(union_type, variable_type.type, union_type, variable_type.location)
       variable_type = union_type_token
       type_ref = Expression::TypeRef.new(variable_type)
