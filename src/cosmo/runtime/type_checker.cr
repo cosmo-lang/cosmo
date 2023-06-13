@@ -267,11 +267,6 @@ module Cosmo::TypeChecker
         ungrouped_chars.delete_at(next_paren_idx - 1, 1)
         ungrouped_type = ungrouped_chars.join
         matches = is?(ungrouped_type, value, token)
-      elsif typedef.includes?("|")
-        types = typedef.split("|")
-        types.each do |type|
-          matches ||= is?(type.strip, value, token, except: true)
-        end
       elsif typedef.includes?("->") && typedef.split("->", 2).size == 2
         types = typedef.split("->", 2)
         key_type = types.first.strip
@@ -283,6 +278,11 @@ module Cosmo::TypeChecker
             matches &&= is?(key_type, k, token)
             matches &&= is?(value_type, v, token)
           end
+        end
+      elsif typedef.includes?("|")
+        types = typedef.split("|")
+        types.each do |type|
+          matches ||= is?(type.strip, value, token, except: true)
         end
       elsif typedef.ends_with?("[]")
         value_type = typedef.rchop("[]")
@@ -321,6 +321,7 @@ module Cosmo::TypeChecker
     matches = is?(typedef, value, token)
 
     # assert key & value types
+    puts typedef, value.to_s, matches
     unless matches
       if typedef.starts_with?("(")
         next_paren_idx = typedef.index(")") || typedef.size

@@ -538,8 +538,7 @@ class Cosmo::Parser
     required = true,
     check_mut = false,
     check_visibility = false,
-    paren_depth = 0,
-    add_paren = false
+    paren_depth = 0
   ) : TypeInfo
 
     is_nullable = false
@@ -561,13 +560,12 @@ class Cosmo::Parser
       )
 
       consume(Syntax::LParen)
-      info = parse_type(required: required, paren_depth: paren_depth + 1, add_paren: true)
+      info = parse_type(required: required, paren_depth: paren_depth + 1)
       consume(Syntax::RParen)
-      unless info[:variable_type].nil?
-        info[:variable_type].not_nil!.lexeme = "(" + info[:variable_type].not_nil!.lexeme + ")"
-      end
+      variable_type = info[:variable_type].not_nil!
+      variable_type.lexeme = "(" + variable_type.lexeme + ")"
 
-      variable_type, type_ref = parse_type_suffix(info[:variable_type].not_nil!, required, paren_depth)
+      variable_type, type_ref = parse_type_suffix(variable_type, required, paren_depth)
       return {
         found_typedef: info[:found_typedef],
         variable_type: variable_type,
