@@ -2,3 +2,4 @@ public int fn main(string[] args) {
   puts("hello, world!", #args, args)
   0
 }
+

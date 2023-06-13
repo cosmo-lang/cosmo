@@ -1,5 +1,3 @@
-use * from "assert"
-
 class Dog {
   string name
   string breed
@@ -14,6 +12,9 @@ class Dog {
   }
 }
 
+Dog fido = new Dog("Fido")
+fido->woof ## Fido says woof!
+
 ## class Husky : Dog {
 ##   public Dog fn construct(string name) {
 ##     super name, "Husky"
@@ -22,6 +23,3 @@ class Dog {
 
 ## Husky fido = new Husky("Fido")
 ## fido->woof ## Fido the Husky says woof!
-
-Dog fido = new Dog("Fido")
-fido->woof ## Fido says woof!

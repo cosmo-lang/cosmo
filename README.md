@@ -98,6 +98,4 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 - Highlight function definition names without parentheses
 
 ### Docs
-- Explain module system in Wiki
-- Update some of the screenshots on the Wiki
-- Document intrinsics
+(empty)
