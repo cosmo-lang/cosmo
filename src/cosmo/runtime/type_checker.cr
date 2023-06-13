@@ -128,7 +128,9 @@ module Cosmo::TypeChecker
   end
 
   def get_registered_type?(typedef : String, token : Token) : Type?
-    if typedef.includes?("|")
+    if typedef.starts_with?("(")
+      get_registered_type?(typedef.lchop.rchop, token)
+    elsif typedef.includes?("|")
       types = typedef.split("|")
       resolved = true
       types.each do |t|

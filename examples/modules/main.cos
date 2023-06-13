@@ -1,3 +1,5 @@
-use my_msg from "./my_stuff"
+use my_msg, Number from "./my_stuff"
 
 puts(my_msg)
+Number x = 5.0
+puts(x)

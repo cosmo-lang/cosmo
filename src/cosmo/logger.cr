@@ -41,6 +41,10 @@ module Cosmo::Logger
     @@stack_trace.delete_at(idx, (idx.to_i - @@stack_trace.size - 1).abs)
   end
 
+  def debug? : Bool
+    @@debug
+  end
+
   def debug=(on : Bool) : Nil
     @@debug = on
   end

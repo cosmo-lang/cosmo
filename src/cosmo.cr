@@ -42,7 +42,12 @@ module Cosmo
     begin
       @@interpreter.interpret(source, file_path)
     rescue ex : Exception
-      msg = "BUG: #{ex.inspect_with_backtrace}\nYou've found a bug! Please open an issue, including source code so we can reproduce the bug: https://github.com/cosmo-lang/cosmo/issues"
+      bug = !Logger.debug?
+      msg = (bug ? "BUG: " : "") + "#{ex.inspect_with_backtrace}"
+      if bug
+        msg += "\nYou've found a bug! Please open an issue, including source code so we can reproduce the bug: https://github.com/cosmo-lang/cosmo/issues"
+      end
+
       abort msg, 1
     end
   end

@@ -535,10 +535,11 @@ class Cosmo::Parser
   # i dont wanna talk about this method
   # or the one below it
   private def parse_type(
-    required : Bool = true,
-    check_mut : Bool = false,
-    check_visibility : Bool = false,
-    paren_depth : Int = 0
+    required = true,
+    check_mut = false,
+    check_visibility = false,
+    paren_depth = 0,
+    add_paren = false
   ) : TypeInfo
 
     is_nullable = false
@@ -550,17 +551,21 @@ class Cosmo::Parser
     visibility = get_visibility(visibility_lexeme)
     is_mut = match?(Syntax::Mut) if check_mut
     if check?(Syntax::LParen) &&
-      token_exists?(1) && (peek.type == Syntax::TypeDef ||
-        (peek.type == Syntax::Identifier && !TypeChecker.get_registered_type?(peek.lexeme, peek).nil?)) &&
-      token_exists?(2) && (peek(2).type == Syntax::Identifier ||
-      peek(2).type == Syntax::Pipe ||
-      peek(2).type == Syntax::HyphenArrow ||
-      peek(2).type == Syntax::LBracket ||
-      peek(2).type == Syntax::RParen)
+      token_exists?(1) && (peek.type == Syntax::TypeDef || peek.type == Syntax::Identifier) &&
+      token_exists?(2) && (
+        peek(2).type == Syntax::Identifier ||
+        peek(2).type == Syntax::Pipe ||
+        peek(2).type == Syntax::HyphenArrow ||
+        peek(2).type == Syntax::LBracket ||
+        peek(2).type == Syntax::RParen
+      )
 
       consume(Syntax::LParen)
-      info = parse_type(required: required, paren_depth: paren_depth + 1)
+      info = parse_type(required: required, paren_depth: paren_depth + 1, add_paren: true)
       consume(Syntax::RParen)
+      unless info[:variable_type].nil?
+        info[:variable_type].not_nil!.lexeme = "(" + info[:variable_type].not_nil!.lexeme + ")"
+      end
 
       variable_type, type_ref = parse_type_suffix(info[:variable_type].not_nil!, required, paren_depth)
       return {
@@ -646,9 +651,10 @@ class Cosmo::Parser
         "Expected right operand to union type, got",
         token_exists? ? current.type.to_s : "EOF",
         token_exists? ? current : last_token
-      ) if type_info[:variable_type].nil?
+      ) if type_info[:type_ref].nil?
 
       union_type = "#{variable_type.lexeme}|#{type_info[:variable_type].not_nil!.lexeme}"
+      puts union_type
       union_type_token = Token.new(union_type, variable_type.type, union_type, variable_type.location)
       variable_type = union_type_token
       type_ref = Expression::TypeRef.new(variable_type)

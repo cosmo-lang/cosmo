@@ -53,6 +53,7 @@ class Cosmo::Interpreter
 
     importable("math", Intrinsic::MathLib.new(self))
     importable("http", Intrinsic::HttpLib.new(self))
+    importable("json", Intrinsic::JSONLib.new(self))
     importable("system", Intrinsic::SystemLib.new(self))
     importable("file", Intrinsic::FileLib.new(self))
     importable("socket", Intrinsic::SocketLib.new(self))

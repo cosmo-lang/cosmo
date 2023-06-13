@@ -44,6 +44,8 @@ require "./intrinsic/table"
 require "./intrinsic/range"
 require "./intrinsic/lib/math"
 require "./intrinsic/lib/http"
+require "./intrinsic/lib/json"
 require "./intrinsic/lib/system"
 require "./intrinsic/lib/socket"
 require "./intrinsic/lib/file"
+
