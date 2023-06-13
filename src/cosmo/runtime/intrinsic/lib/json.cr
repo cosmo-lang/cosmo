@@ -5,10 +5,10 @@ module Cosmo
         json = {} of String => IFunction
         serialize = Serialize.new(@i)
         deserialize = Deserialize.new(@i)
-        json["serialize"] = stringify
-        json["deserialize"] = parse
-        json["stringify"] = stringify
-        json["parse"] = parse
+        json["serialize"] = serialize
+        json["deserialize"] = deserialize
+        json["stringify"] = serialize
+        json["parse"] = deserialize
 
         @i.declare_intrinsic("string->Function", "JSON", json)
         @i.interpret("type JSONType = JSONType[]|(string->JSONType)|string|float|int|uint", "JSONLib")
