@@ -22,6 +22,7 @@ class Cosmo::Intrinsic::Table
     end
   end
 
+  # Returns a vector of all keys in the table
   class Keys < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -43,6 +44,7 @@ class Cosmo::Intrinsic::Table
     end
   end
 
+  # Returns a vector of all values in the table
   class Values < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -64,6 +66,7 @@ class Cosmo::Intrinsic::Table
     end
   end
 
+  # Returns whether or not the table has no key/value pairs
   class Empty < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -83,6 +86,7 @@ class Cosmo::Intrinsic::Table
     end
   end
 
+  # Returns whether or not `key` has a value associated with it
   class Has < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -97,11 +101,13 @@ class Cosmo::Intrinsic::Table
       1.to_u .. 1.to_u
     end
 
+    # `K key`: The key to search for
     def call(args : Array(ValueType)) : Bool
       @_self.has_key?(args.first)
     end
   end
 
+  # Swaps the table's keys and values
   class Invert < IFunction
     def initialize(
       interpreter : Interpreter,

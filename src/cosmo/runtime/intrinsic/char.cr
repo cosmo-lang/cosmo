@@ -15,8 +15,8 @@ class Cosmo::Intrinsic::Chars
       Upper.new(@interpreter, @value, name)
     when "pad"
       Pad.new(@interpreter, @value, name)
-    when "number?"
-      NumberF.new(@interpreter, @value, name)
+    when "digit?"
+      Digit.new(@interpreter, @value, name)
     when "letter?"
       Letter.new(@interpreter, @value, name)
     when "blank?"
@@ -26,25 +26,7 @@ class Cosmo::Intrinsic::Chars
     end
   end
 
-  class Codepoint < IFunction
-    def initialize(
-      interpreter : Interpreter,
-      @_self : Char,
-      @token : Token
-    )
-
-      super interpreter
-    end
-
-    def arity : Range(UInt32, UInt32)
-      0.to_u .. 0.to_u
-    end
-
-    def call(args : Array(ValueType)) : Int
-      @_self.ord
-    end
-  end
-
+  # Returns the UTF-16 codepoint of the character
   class Codepoint < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -64,6 +46,7 @@ class Cosmo::Intrinsic::Chars
     end
   end
 
+  # Returns the uppercase equivalent of the character
   class Upper < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -83,6 +66,7 @@ class Cosmo::Intrinsic::Chars
     end
   end
 
+  # Returns the lowercase equivalent of the character
   class Lower < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -102,6 +86,7 @@ class Cosmo::Intrinsic::Chars
     end
   end
 
+  # Adds the `padding` character to the beginning and end of the character `size` times
   class Pad < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -116,6 +101,8 @@ class Cosmo::Intrinsic::Chars
       2.to_u .. 2.to_u
     end
 
+    # `char padding`: The character to add to the end and beginning
+    # `uint size`: How many times the `padding` character should be repeated
     def call(args : Array(ValueType)) : String
       TypeChecker.assert("char", args.first, token("char->pad"))
       TypeChecker.assert("uint", args[1], token("char->pad"))
@@ -126,7 +113,8 @@ class Cosmo::Intrinsic::Chars
     end
   end
 
-  class NumberF < IFunction
+  # Returns whether or not the given character is a digit
+  class Digit < IFunction
     def initialize(
       interpreter : Interpreter,
       @_self : Char,
@@ -145,6 +133,7 @@ class Cosmo::Intrinsic::Chars
     end
   end
 
+  # Returns whether or not the given character is an english alphabet letter
   class Letter < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -164,6 +153,7 @@ class Cosmo::Intrinsic::Chars
     end
   end
 
+  # Returns whether or not the given character is a whitespace character
   class Blank < IFunction
     def initialize(
       interpreter : Interpreter,

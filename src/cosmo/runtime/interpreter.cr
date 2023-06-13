@@ -45,12 +45,9 @@ class Cosmo::Interpreter
     declare_intrinsic("Function", "gets", Intrinsic::Gets.new(self))
     declare_intrinsic("Function", "eval", Intrinsic::Eval.new(self))
     declare_intrinsic("Function", "recursion_depth!", Intrinsic::RecursionDepth.new(self))
+    declare_intrinsic("string", "version$", "Cosmo #{Version}")
 
     import_file(File.join(File.dirname(__FILE__), "../../../libraries/#{GLOBAL_INTRINSIC_FILE}"), [] of Token)
-
-    version = "Cosmo #{Version}"
-    declare_intrinsic("string", "version$", version)
-
     importable("math", Intrinsic::MathLib.new(self))
     importable("http", Intrinsic::HttpLib.new(self))
     importable("json", Intrinsic::JSONLib.new(self))

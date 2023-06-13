@@ -1,4 +1,5 @@
 module Cosmo::Intrinsic
+  # An intrinsic function
   abstract class IFunction < Callable
     def initialize(@interpreter : Interpreter)
     end
@@ -9,6 +10,7 @@ module Cosmo::Intrinsic
       true
     end
 
+    # Helper function to generate a fake token for logging
     def token(name : String) : Token
       location = Location.new("intrinsic_fn", 0, 0)
       Token.new(name, Syntax::Identifier, name, location)
@@ -19,15 +21,18 @@ module Cosmo::Intrinsic
     end
   end
 
+  # An intrinsic library
   abstract class Lib
     def initialize(@i : Interpreter)
     end
 
+    # Helper function to generate a fake token for logging
     def token(name : String) : Token
-      location = Location.new("intrinsic_fn", 0, 0)
+      location = Location.new("intrinsic_lib", 0, 0)
       Token.new(name, Syntax::Identifier, name, location)
     end
 
+    # Injects all members into the current scope
     abstract def inject : Nil
   end
 end

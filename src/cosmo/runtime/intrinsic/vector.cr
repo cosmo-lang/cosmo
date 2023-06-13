@@ -52,6 +52,7 @@ class Cosmo::Intrinsic::Vector
     end
   end
 
+  # Returns a new vector with all current elements as well as the elements of `other`
   class Combine < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -66,12 +67,15 @@ class Cosmo::Intrinsic::Vector
       1.to_u .. 1.to_u
     end
 
+    # `Vector other`: The vector to append
     def call(args : Array(ValueType)) : Array(ValueType)
       TypeChecker.assert("any[]", args.first, token("Vector->combine"))
       @_self + args.first.as Array(ValueType)
     end
   end
 
+  # Deletes the value at index `i`, or `i` + `offset` if one is provided.
+  # Returns the given vector
   class DeleteAt < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -86,6 +90,8 @@ class Cosmo::Intrinsic::Vector
       1.to_u .. 2.to_u
     end
 
+    # `uint i`: The index of the value to be deleted
+    # `uint? offset`: The number added to the index
     def call(args : Array(ValueType)) : Array(ValueType)
       t = token("Vector->delete_at")
       TypeChecker.assert("uint", args.first, t)

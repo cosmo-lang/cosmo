@@ -19,6 +19,7 @@ class Cosmo::Intrinsic::Ranges
     end
   end
 
+  # Returns the first number of the range
   class Begin < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -38,6 +39,7 @@ class Cosmo::Intrinsic::Ranges
     end
   end
 
+  # Returns the last number of the range
   class End < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -57,6 +59,7 @@ class Cosmo::Intrinsic::Ranges
     end
   end
 
+  # Returns the sum of all numbers in the range
   class Sum < IFunction
     def initialize(
       interpreter : Interpreter,

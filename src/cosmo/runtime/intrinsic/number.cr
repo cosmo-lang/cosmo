@@ -30,6 +30,7 @@ class Cosmo::Intrinsic::Numbers
     end
   end
 
+  # Converts the number to a character as a UTF-16 codepoint
   class ToUtf16 < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -56,6 +57,7 @@ class Cosmo::Intrinsic::Numbers
     end
   end
 
+  # Returns the cube root of the number
   class Cbrt < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -75,6 +77,7 @@ class Cosmo::Intrinsic::Numbers
     end
   end
 
+  # Returns the integer square root of the number
   class ISqrt < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -95,6 +98,7 @@ class Cosmo::Intrinsic::Numbers
     end
   end
 
+  # Returns the square root of the number
   class Sqrt < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -115,6 +119,7 @@ class Cosmo::Intrinsic::Numbers
     end
   end
 
+  # Returns the number rounded to the `n`th decimal point
   class Round < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -129,14 +134,16 @@ class Cosmo::Intrinsic::Numbers
       1.to_u .. 1.to_u
     end
 
+    # `uint n`: The decimal point to round to
     def call(args : Array(ValueType)) : Num
-      TypeChecker.assert("int", args.first, token("Number->round"))
+      TypeChecker.assert("uint", args.first, token("Number->round"))
 
       decimal_place = args.first.to_s.to_i64
       @_self.round(decimal_place).as Num
     end
   end
 
+  # Returns the number rounded down
   class Floor < IFunction
     def initialize(
       interpreter : Interpreter,
@@ -156,6 +163,7 @@ class Cosmo::Intrinsic::Numbers
     end
   end
 
+  # Returns the number rounded up
   class Ceil < IFunction
     def initialize(
       interpreter : Interpreter,

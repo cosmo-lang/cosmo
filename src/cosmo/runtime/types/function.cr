@@ -1,9 +1,13 @@
 abstract class Cosmo::Callable
+  # Executes the function body, passing in `args`
   abstract def call(args : Array(ValueType)) : ValueType
+  # The amount of parameters this function will accept
   abstract def arity : Range(UInt32, UInt32)
+  # Whether or not this function is intrinsic
   abstract def intrinsic? : Bool
   abstract def to_s : String
 
+  # Expands any `Spread`s in the argument list
   def expand_args(args : Array(ValueType)) : Array(ValueType)
     grouped_args = [] of ValueType
 
