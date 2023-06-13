@@ -4,10 +4,9 @@ bool fn alternating_negatives?(int[] nums) {
   if 0 is in nums
     return false
 
-  every int i in 0..(#nums - 2) {
+  every int i in 0..(#nums - 2)
     if (nums[i] >= 0 and nums[i + 1] >= 0) or (nums[i] < 0 and nums[i + 1] < 0)
       return false
-  }
 
   true
 }

@@ -549,14 +549,16 @@ class Cosmo::Parser
 
     visibility = get_visibility(visibility_lexeme)
     is_mut = match?(Syntax::Mut) if check_mut
+    # puts current.to_s, peek.to_s, peek(2).to_s, "\n"
     if check?(Syntax::LParen) &&
-      token_exists?(1) && (peek.type == Syntax::TypeDef || peek.type == Syntax::Identifier) &&
-      token_exists?(2) && (
-        peek(2).type == Syntax::Identifier ||
-        peek(2).type == Syntax::Pipe ||
-        peek(2).type == Syntax::HyphenArrow ||
-        peek(2).type == Syntax::LBracket ||
-        peek(2).type == Syntax::RParen
+      token_exists?(1) && (
+        check?(Syntax::TypeDef) ||
+        (check?(Syntax::Identifier) && !TypeChecker.get_registered_type?(peek.lexeme, peek).nil?)
+      ) && token_exists?(2) && (
+        check?(Syntax::Pipe, 2) ||
+        check?(Syntax::HyphenArrow, 2) ||
+        check?(Syntax::LBracket, 2) ||
+        check?(Syntax::RParen, 2)
       )
 
       consume(Syntax::LParen)

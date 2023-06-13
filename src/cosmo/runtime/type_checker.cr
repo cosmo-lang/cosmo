@@ -261,7 +261,13 @@ module Cosmo::TypeChecker
     else
       matches = false
 
-      if typedef.starts_with?("(")
+      if typedef.ends_with?("[]")
+        value_type = typedef.rchop("[]")
+        matches = value.is_a?(Array)
+        if value.is_a?(Array)
+          value.as(Array).each { |v| matches &&= is?(value_type, v, token) }
+        end
+      elsif typedef.starts_with?("(")
         next_paren_idx = typedef.index(")") || typedef.size
         ungrouped_chars = typedef.lchop.chars
         ungrouped_chars.delete_at(next_paren_idx - 1, 1)
@@ -283,12 +289,6 @@ module Cosmo::TypeChecker
         types = typedef.split("|")
         types.each do |type|
           matches ||= is?(type.strip, value, token, except: true)
-        end
-      elsif typedef.ends_with?("[]")
-        value_type = typedef.rchop("[]")
-        matches = value.is_a?(Array)
-        if value.is_a?(Array)
-          value.as(Array).each { |v| matches &&= is?(value_type, v, token) }
         end
       elsif typedef.ends_with?("?")
         non_nullable_type = typedef.rchop
@@ -321,9 +321,12 @@ module Cosmo::TypeChecker
     matches = is?(typedef, value, token)
 
     # assert key & value types
-    puts typedef, value.to_s, matches
     unless matches
-      if typedef.starts_with?("(")
+      if typedef.ends_with?("[]")
+        value_type = typedef.rchop("[]")
+        report_mismatch(typedef, value, token) unless value.is_a?(Array)
+        value.as(Array).each { |v| assert(value_type, v, token) }
+      elsif typedef.starts_with?("(")
         next_paren_idx = typedef.index(")") || typedef.size
         ungrouped_chars = typedef.lchop.chars
         ungrouped_chars.delete_at(next_paren_idx - 1, 1)
@@ -347,10 +350,6 @@ module Cosmo::TypeChecker
           assert(key_type, k, token)
           assert(value_type, v, token)
         end
-      elsif typedef.ends_with?("[]")
-        value_type = typedef.rchop("[]")
-        report_mismatch(typedef, value, token) unless value.is_a?(Array)
-        value.as(Array).each { |v| assert(value_type, v, token) }
       else
         report_mismatch(typedef, value, token)
       end
