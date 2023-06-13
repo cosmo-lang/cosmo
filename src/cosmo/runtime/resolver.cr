@@ -1,11 +1,13 @@
-enum FnType
-  None
-  Fn
-end
-
+# This class is responsible for resolving declared/defined variables in the scope.
+# I'm about 70% sure that it doesn't work as intended currently. lol
 class Cosmo::Resolver
   include Expression::Visitor(Nil)
   include Statement::Visitor(Nil)
+
+  enum FnType
+    None
+    Fn
+  end
 
   @scopes = [] of Hash(String, Bool)
   @current_fn = FnType::None

@@ -13,6 +13,7 @@ module Cosmo::Intrinsic
         _system["Env"] = env
       end
 
+      # Retrieves an environment variable
       class Var < IFunction
         def arity : Range(UInt32, UInt32)
           1.to_u .. 1.to_u
@@ -29,6 +30,7 @@ module Cosmo::Intrinsic
         end
       end
 
+      # Sets an environment variable
       class SetVar < IFunction
         def arity : Range(UInt32, UInt32)
           2.to_u .. 2.to_u
@@ -43,6 +45,7 @@ module Cosmo::Intrinsic
       end
     end
 
+    # Executes a shell command and returns it's result
     class Exec < IFunction
       def arity : Range(UInt32, UInt32)
         1.to_u .. 1.to_u
@@ -66,6 +69,7 @@ module Cosmo::Intrinsic
       end
     end
 
+    # Returns the Unix epoch time in seconds
     class SystemTime < IFunction
       def arity : Range(UInt32, UInt32)
         0.to_u .. 0.to_u
@@ -86,6 +90,7 @@ module Cosmo::Intrinsic
       @i.declare_intrinsic("string->any", "System", _system)
     end
 
+    # Returns the OS environment variable if on Windows, otherwise returns the result of `uname -s`
     private def os : String
       if ENV.has_key?("OS") && ENV["OS"] == "Windows_NT"
         "Windows"

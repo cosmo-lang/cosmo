@@ -115,6 +115,7 @@ module Cosmo::Intrinsic
       end
     end
 
+    # Returns the response body as a string (unchanged)
     class Client::ResponseBody::ToText < Client::ResponseBodyFunctionBase
       def arity : Range(UInt32, UInt32)
         0.to_u .. 0.to_u
@@ -125,6 +126,7 @@ module Cosmo::Intrinsic
       end
     end
 
+    # Returns the response body as a JSONAny
     class Client::ResponseBody::ToJSON < Client::ResponseBodyFunctionBase
       def arity : Range(UInt32, UInt32)
         0.to_u .. 0.to_u
@@ -134,38 +136,44 @@ module Cosmo::Intrinsic
         begin
           TypeChecker.as_value_type(JSON.parse(@body))
         rescue ex : JSON::ParseException
-          Logger.report_error("Failed to parse body as JSON", ex.message || "", token("HTTP::Client::ResponseBody->json"))
+          Logger.report_error("Failed to parse JSON", ex.message || "Invalid JSON body", token("HTTP::Client::ResponseBody->json"))
         end
       end
     end
 
+    # Base class for all HTTP context functions
     abstract class Server::ContextFunctionBase < IFunction
       def initialize(interpreter : Interpreter, @server_ctx : HTTP::Server::Context)
         super interpreter
       end
     end
 
+    # Sets the `Content-Type` header to `content_type`
     class Response::SetContentType < Server::ContextFunctionBase
       def arity : Range(UInt32, UInt32)
         1.to_u .. 1.to_u
       end
 
+      # `string content_type`
       def call(args : Array(ValueType)) : Nil
         TypeChecker.assert("string", args.first, token("HTTP::Server::Response->set_content_type"))
         @server_ctx.response.content_type = args.first.to_s
       end
     end
 
+    # Sends `value` back to the client
     class Response::Send < Server::ContextFunctionBase
       def arity : Range(UInt32, UInt32)
         1.to_u .. 1.to_u
       end
 
+      # `JSONAny value`
       def call(args : Array(ValueType)) : Nil
         @server_ctx.response.print(args.first)
       end
     end
 
+    # Retrieves the value of a query parameter
     class Request::GetParameter < Server::ContextFunctionBase
       def arity : Range(UInt32, UInt32)
         1.to_u .. 1.to_u
@@ -176,11 +184,14 @@ module Cosmo::Intrinsic
       end
     end
 
+    # Creates a new server and listens on port `port`, then calls `callback` with the HTTP request and response tables
     class Server::Listen < IFunction
       def arity : Range(UInt32, UInt32)
         2.to_u .. 2.to_u
       end
 
+      # `uint port`
+      # `Function callback`: The function called when the server starts successfully
       def call(args : Array(ValueType)) : Nil
         TypeChecker.assert("uint", args.first, token("HTTP::Server->listen"))
         TypeChecker.assert("Function", args[1], token("HTTP::Server->listen"))
