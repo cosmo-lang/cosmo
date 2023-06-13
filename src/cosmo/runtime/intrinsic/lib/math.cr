@@ -193,7 +193,7 @@ module Cosmo::Intrinsic
 
       def call(args : Array(ValueType)) : Float64
         TypeChecker.assert("float|int", args.first, token("Math->acos"))
-        x = args.first.as(Float64)
+        x = args.first.as Number
         Math.acos(x).to_f64
       end
     end

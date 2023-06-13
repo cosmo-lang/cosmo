@@ -82,7 +82,7 @@ class Cosmo::Interpreter
     ident_token = fake_ident(ident, location)
     typedef_token = fake_typedef(type, location)
 
-    @globals.declare(
+    @scope.declare(
       typedef_token,
       ident_token,
       value,

@@ -68,6 +68,7 @@ Have any questions or comments? DM me on Discord: `runic#5997`
 
 ### Fixes
 - Performance boosts lol
+- Access types within tables (e.x.`JSON::Any`)
 - Import stack traces
 - Properly log errors from intrinsics
 - Segfaults
