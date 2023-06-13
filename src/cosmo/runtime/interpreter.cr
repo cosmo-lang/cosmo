@@ -91,21 +91,6 @@ class Cosmo::Interpreter
     )
   end
 
-  def intrinsic_type_alias(name : String, typedef : String) : Nil
-    location = Location.new("intrinsic", 0, 0)
-    ident_token = fake_ident(name, location)
-    type_value = Type.new(typedef)
-
-    TypeChecker.alias_type(name, typedef)
-    @scope.declare(
-      fake_typedef("type", location),
-      ident_token,
-      type_value,
-      mutable: true,
-      visibility: Visibility::Public
-    )
-  end
-
   def delete_meta(key : String) : Nil
     @meta.delete(key)
   end
