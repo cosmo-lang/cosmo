@@ -6,7 +6,7 @@ module Cosmo::Intrinsic
 
     def call(args : Array(ValueType)) : Nil
       TypeChecker.assert("uint", args.first, token("recursion_depth!"))
-      @interpreter.max_recursion_depth = args.first.as UInt32 if args.first.is_a?(UInt32)
+      @interpreter.max_recursion_depth = args.first.as(Int).to_u
     end
   end
 end

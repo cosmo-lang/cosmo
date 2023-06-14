@@ -22,7 +22,7 @@ class Cosmo::Interpreter
   getter scope : Scope
   getter meta = {} of String => MetaType
   getter file_path = ""
-  setter max_recursion_depth : UInt32 = 1200
+  property max_recursion_depth : UInt32 = 1200
   property within_fn = false
   @locals = {} of Expression::Base => UInt32
   @importable_intrinsics = {} of String => Intrinsic::Lib
@@ -100,8 +100,8 @@ class Cosmo::Interpreter
 
   def start_recursion(token : Token)
     @recursion_depth += 1
-    if @recursion_depth >= @max_recursion_depth
-      Logger.report_error("Stack overflow", "Recursion depth of #{@max_recursion_depth} exceeded", token)
+    if @recursion_depth >= max_recursion_depth
+      Logger.report_error("Stack overflow", "Recursion depth of #{max_recursion_depth} exceeded", token)
     end
   end
 
