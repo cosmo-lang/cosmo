@@ -40,7 +40,7 @@ class Cosmo::Intrinsic::Numbers
   class ZeroPad < IFunction
     def initialize(
       interpreter : Interpreter,
-      @_self : String,
+      @_self : Num,
       @token : Token
     )
 
@@ -56,7 +56,7 @@ class Cosmo::Intrinsic::Numbers
       TypeChecker.assert("uint", args.first, token("string->zero_pad"))
 
       width = args.first.as Int
-      ("0" * Math.max(width - @_self.size, 0)) + @_self
+      ("0" * Math.max(width - @_self.to_s.size, 0)) + @_self.to_s
     end
   end
 

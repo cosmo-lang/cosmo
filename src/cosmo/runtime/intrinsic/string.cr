@@ -91,8 +91,7 @@ class Cosmo::Intrinsic::Strings
       TypeChecker.assert("uint", args.first, token("string->zero_pad"))
 
       width = args.first.as Int
-      as_str = @_self.to_s
-      ("0" * Math.max(width - as_str.size, 0)) + as_str
+      ("0" * Math.max(width - @_self.size, 0)) + @_self
     end
   end
 

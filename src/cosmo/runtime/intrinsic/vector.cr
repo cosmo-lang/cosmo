@@ -295,8 +295,8 @@ class Cosmo::Intrinsic::Vector
     end
 
     def call(args : Array(ValueType)) : String
-      TypeChecker.assert("string|char|void", args[0]?, token("Vector->join"))
-      @_self.join((args[0]? || " ").to_s)
+      TypeChecker.assert("string|char|void", args.first?, token("Vector->join"))
+      @_self.join((args.first? || " ").to_s)
     end
   end
 
@@ -311,11 +311,17 @@ class Cosmo::Intrinsic::Vector
     end
 
     def arity : Range(UInt32, UInt32)
-      0.to_u .. 0.to_u
+      0.to_u .. 1.to_u
     end
 
     def call(args : Array(ValueType)) : ValueType
-      @_self.shift
+      TypeChecker.assert("uint?", args.first?, token("Vector->shift"))
+      if args.first?.nil?
+        @_self.shift
+      else
+        @_self.shift(args.first.as Int)
+        @_self
+      end
     end
   end
 
@@ -352,11 +358,17 @@ class Cosmo::Intrinsic::Vector
     end
 
     def arity : Range(UInt32, UInt32)
-      0.to_u .. 0.to_u
+      0.to_u .. 1.to_u
     end
 
     def call(args : Array(ValueType)) : ValueType
-      @_self.pop
+      TypeChecker.assert("uint?", args.first?, token("Vector->shift"))
+      if args.first?.nil?
+        @_self.pop
+      else
+        @_self.pop(args.first.as Int)
+        @_self
+      end
     end
   end
 
