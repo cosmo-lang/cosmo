@@ -644,8 +644,8 @@ class Cosmo::Intrinsic::Strings
     end
 
     def call(args : Array(ValueType)) : Array(ValueType)
-      TypeChecker.assert("string|char|void", args[0]?, token("string->split"))
-      TypeChecker.array_as_value_type(@_self.split((args[0]? || " ").to_s))
+      TypeChecker.assert("string|char|void", args.first?, token("string->split"))
+      TypeChecker.array_as_value_type(@_self.split((args.first? || " ").to_s))
     end
   end
 

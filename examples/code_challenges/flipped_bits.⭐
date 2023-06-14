@@ -1,6 +1,12 @@
 use test from "beginner-codes"
 
 uint fn flip_bits(uint n) {
+  string binary = (<string>123.to_binary()).chars().shift(2).join("").zero_pad(32)
+  char[] flipped_bits = binary.chars
+  char[] binary = []
+
+  every char bit in flipped_bits
+    binary << bit == '0' ? '1' : '0'
 
 }
 

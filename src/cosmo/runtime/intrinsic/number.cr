@@ -13,6 +13,8 @@ class Cosmo::Intrinsic::Numbers
     case name.lexeme
     when "zero_pad"
       ZeroPad.new(@interpreter, @value, name)
+    when "to_decimal"
+      ToDecimal.new(@interpreter, @value, name)
     when "to_hex"
       ToHex.new(@interpreter, @value, name)
     when "to_binary"
@@ -60,6 +62,29 @@ class Cosmo::Intrinsic::Numbers
     end
   end
 
+  # Returns the decimal representation of the number from `radix`
+  class ToDecimal < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Num,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 1.to_u
+    end
+
+    def call(args : Array(ValueType)) : Num
+      t = token("Number->to_decimal")
+      TypeChecker.assert("int", @_self, t)
+      TypeChecker.assert("int", args.first, t)
+      @_self.to_s.to_i(args.first.as Int)
+    end
+  end
+
   # Returns the hexadecimal representation of the number
   class ToHex < IFunction
     def initialize(
@@ -76,7 +101,7 @@ class Cosmo::Intrinsic::Numbers
     end
 
     def call(args : Array(ValueType)) : String
-      TypeChecker.assert("int", @_self, token("Number->to_binary"))
+      TypeChecker.assert("int", @_self, token("Number->to_hex"))
       @_self.to_i.to_s(16)
     end
   end
