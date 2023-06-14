@@ -7,6 +7,8 @@ class Cosmo::Intrinsic::Strings
 
   def get_method(name : Token) : IFunction
     case name.lexeme.strip
+    when "zero_pad"
+      ZeroPad.new(@interpreter, @value, name)
     when "index"
       Index.new(@interpreter, @value, name)
     when "rindex"
@@ -67,6 +69,30 @@ class Cosmo::Intrinsic::Strings
       Blank.new(@interpreter, @value, name)
     else
       Logger.report_error("Invalid string method or property", name.lexeme, name)
+    end
+  end
+
+  # Adds `width` - `#<string>n` zeros to the front of the string
+  class ZeroPad < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 1.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      TypeChecker.assert("uint", args.first, token("string->zero_pad"))
+
+      width = args.first.as Int
+      as_str = @_self.to_s
+      ("0" * Math.max(width - as_str.size, 0)) + as_str
     end
   end
 

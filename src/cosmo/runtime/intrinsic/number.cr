@@ -11,6 +11,8 @@ class Cosmo::Intrinsic::Numbers
 
   def get_method(name : Token) : IFunction
     case name.lexeme
+    when "zero_pad"
+      ZeroPad.new(@interpreter, @value, name)
     when "to_hex"
       ToHex.new(@interpreter, @value, name)
     when "to_binary"
@@ -31,6 +33,30 @@ class Cosmo::Intrinsic::Numbers
       Ceil.new(@interpreter, @value, name)
     else
       Logger.report_error("Invalid number method or property", name.lexeme, name)
+    end
+  end
+
+  # Adds `width` - `#<string>n` zeros to the front of the string
+  class ZeroPad < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : String,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      1.to_u .. 1.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      TypeChecker.assert("uint", @_self, token("string->zero_pad"))
+      TypeChecker.assert("uint", args.first, token("string->zero_pad"))
+
+      width = args.first.as Int
+      ("0" * Math.max(width - @_self.size, 0)) + @_self
     end
   end
 
