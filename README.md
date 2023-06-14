@@ -73,6 +73,7 @@ Have any questions or comments? DM me or @ me in [my server](https://discord.gg/
 
 ### Fixes
 - Performance boosts lol
+- Parser does not recognize imported classes as type (WHY???)
 - Access imported aliased types
 - Access types within tables (e.x.`JSON::Any`)
 - More detailed errors when unable to resolve a type

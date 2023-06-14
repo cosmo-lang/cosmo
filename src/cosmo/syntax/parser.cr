@@ -135,7 +135,7 @@ class Cosmo::Parser
 
     token = consume(Syntax::Class)
     unless @within_class.nil?
-      Logger.report_error("Invalid class", "Classes may not be nested", token)
+      Logger.report_error("Invalid class", "Classes may not be nested", token_exists? ? current : token)
     end
 
     identifier = consume(Syntax::Identifier)
@@ -157,6 +157,7 @@ class Cosmo::Parser
     end
 
     @within_class = identifier.lexeme
+    TypeChecker.register_type(@within_class.not_nil!)
     body = parse_block
     @within_class = nil
 

@@ -287,10 +287,10 @@ class Cosmo::Interpreter
     @scope = enclosing
 
     if imports.empty?
-      @scope.extend(file_scope)
-
-      unless bound_name.nil?
-        namespace = @scope.as_namespace
+      if bound_name.nil?
+        @scope.extend(file_scope)
+      else
+        namespace = file_scope.as_namespace
         @scope.declare(
           fake_typedef("string->any"),
           bound_name,
@@ -363,7 +363,7 @@ class Cosmo::Interpreter
 
       full_module_path = File.join File.dirname(@file_path), relative_module_path
       ext_file_path = File.exists?(full_module_path + ".cos") ? full_module_path + ".cos" : full_module_path + ".⭐"
-      if full_module_path.includes?("././")
+      if full_module_path.includes?("././././././././././")
         Logger.report_error("Recursive import detected", ext_file_path.gsub("./", ""), stmt.module_path)
       end
 
@@ -604,13 +604,12 @@ class Cosmo::Interpreter
   end
 
   def visit_class_def_stmt(stmt : Statement::ClassDef) : ValueType
-    unless @scope.lookup?(stmt.identifier.lexeme).nil?
+    if @scope.variable_exists?(stmt.identifier.lexeme)
       Logger.report_error("Cannot redefine class", "Class '#{stmt.identifier.lexeme}' is already defined", stmt.identifier)
     end
 
     unless stmt.superclass.nil?
       superclass = evaluate(stmt.superclass.not_nil!)
-
       unless superclass.is_a?(Class)
         Logger.report_error(
           "Invalid superclass",
@@ -620,11 +619,10 @@ class Cosmo::Interpreter
       end
     end
 
-    _class = Class.new(self, @scope, stmt, superclass)
     @scope.declare(
       fake_typedef("class"),
       stmt.identifier,
-      _class,
+      Class.new(self, @scope, stmt, superclass),
       mutable: false,
       visibility: stmt.visibility
     )

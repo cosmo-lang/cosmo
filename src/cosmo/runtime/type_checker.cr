@@ -105,9 +105,9 @@ module Cosmo::TypeChecker
   def as_value_type(value : T) : ValueType forall T
     value.is_a?(Array) ? array_as_value_type(value)
       : value.is_a?(Hash) ? hash_as_value_type(value)
-        : value.is_a?(Spread) ? as_value_type(value.array)
-          : value.is_a?(Int128) && value <= Int64::MAX ? value.to_i64
-            : value.is_a?(JSON::Any) ? as_value_type(value.raw) : value.as ValueType
+      : value.is_a?(Spread) ? as_value_type(value.array)
+      : value.is_a?(Int128) && value <= Int64::MAX ? value.to_i64
+      : value.is_a?(JSON::Any) ? as_value_type(value.raw) : value.as ValueType
   end
 
   def reset
