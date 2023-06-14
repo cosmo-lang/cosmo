@@ -181,7 +181,18 @@ module Cosmo::TypeChecker
       if value.is_a?(Bool)
         value ? 1 : 0
       else
-        value.to_u64
+        value.to_i64.to_u64
+      end
+    elsif is?(type.lexeme, 1_i128, type) && (
+      value.is_a?(String) || value.is_a?(Char) ||
+      value.is_a?(Float) || value.is_a?(Int) ||
+      value.is_a?(Bool)
+    ) # if the type is an integer
+
+      if value.is_a?(Bool)
+        value ? 1_i128 : 0_i128
+      else
+        value.to_i128
       end
     elsif is?(type.lexeme, 1, type) && (
       value.is_a?(String) || value.is_a?(Char) ||

@@ -80,8 +80,8 @@ class Cosmo::Intrinsic::Numbers
     def call(args : Array(ValueType)) : Num
       t = token("Number->to_decimal")
       TypeChecker.assert("int", @_self, t)
-      TypeChecker.assert("int", args.first, t)
-      @_self.to_s.to_i(args.first.as Int)
+      TypeChecker.assert("uint", args.first, t)
+      @_self.to_s.to_i64(args.first.as Int)
     end
   end
 
