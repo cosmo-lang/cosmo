@@ -41,7 +41,7 @@ module Cosmo::Intrinsic
         t = token("HTTP->fetch")
         TypeChecker.assert("string", args.first, t)
         TypeChecker.assert("Function", args[1], t)
-        TypeChecker.assert("(string->any)?", args[2]?, t)
+        TypeChecker.assert("(string->any) | void", args[2]?, t)
 
         url = args.first.to_s
         callback = args[1].as Function
