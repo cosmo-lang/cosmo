@@ -18,6 +18,10 @@ module Cosmo
         end
 
         def call(args : Array(ValueType)) : String
+          t = token("Webhook->send")
+          TypeChecker.assert("string", args.first, t)
+          TypeChecker.assert("string", args[1], t)
+
           webhook_url = args[0].to_s
           payload = { "content" => args[1].to_s }
 
@@ -30,7 +34,7 @@ module Cosmo
           elsif response.status_code == 204
             return "Message sent successfully!"
           else
-            Logger.report_error("Failed to send webhook message", "Status code #{response.status_code}", token("Webhook->send"))
+            Logger.report_error("Failed to send webhook message", "Status code #{response.status_code}", t)
           end
         end
       end
