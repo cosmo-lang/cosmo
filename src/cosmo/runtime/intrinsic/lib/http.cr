@@ -21,6 +21,7 @@ module Cosmo::Intrinsic
       end
     end
 
+    # Makes an HTTP request and returns the response
     class Client::RequestFunction < IFunction
       def arity : Range(UInt32, UInt32)
         2.to_u .. 3.to_u
@@ -30,10 +31,17 @@ module Cosmo::Intrinsic
         headers.map(&.as(Array(ValueType)).map(&.to_s))
       end
 
+      # `string uri`: The URI path to make a request to
+      # `Function callback`: Executed when the request is completed
+      # `Table? options`
+      #   - `string verb`: The HTTP verb to use, e.g. GET, POST
+      #   - `string[][] headers`
+      #   - `(string | Table)? form`: The form body to send
       def call(args : Array(ValueType)) : ValueType
-        TypeChecker.assert("string", args.first, token("HTTP->fetch"))
-        TypeChecker.assert("Function", args[1], token("HTTP->fetch"))
-        TypeChecker.assert("(string->string) | string->(string[]) | void", args[2]?, token("HTTP->fetch"))
+        t = token("HTTP->fetch")
+        TypeChecker.assert("string", args.first, t)
+        TypeChecker.assert("Function", args[1], t)
+        TypeChecker.assert("(string->any)?", args[2]?, t)
 
         url = args.first.to_s
         callback = args[1].as Function
@@ -41,12 +49,12 @@ module Cosmo::Intrinsic
           {} of ValueType => ValueType
           : args[2].as Hash(ValueType, ValueType)
 
+        TypeChecker.assert("string?", options["method"]?, t)
         method = (options["method"]? || "get").to_s.downcase
         headers = options["headers"]?
         form = options["form"]?
-        TypeChecker.assert("string", method, token("HTTP->fetch"))
-        TypeChecker.assert("string[][]", headers, token("HTTP->fetch")) unless headers.nil?
-        TypeChecker.assert("string | (string->any)", form, token("HTTP->fetch")) unless form.nil?
+        TypeChecker.assert("string[][]?", headers, t)
+        TypeChecker.assert("string | (string->any) | void", form, t)
 
         headers_obj = HTTP::Headers.new
         unless headers.nil?
@@ -56,7 +64,7 @@ module Cosmo::Intrinsic
               Logger.report_error(
                 "Invalid header array '#{h}'",
                 "Header array must have exactly 2 elements. The first is the key, the second is the value.",
-                token("HTTP->fetch")
+                t
               )
             end
             headers_obj.add(h.first, h.last)
@@ -68,8 +76,8 @@ module Cosmo::Intrinsic
           if form.nil?
             Logger.report_error(
               "Invalid #{method.upcase} options",
-              "Options for #{method.upcase} method must include a 'form' key",
-              token("HTTP->fetch")
+              "Options table for the #{method.upcase} method must include a 'form' key",
+              t
             )
           end
         end
@@ -77,6 +85,8 @@ module Cosmo::Intrinsic
         case method
         when "get"
           res = HTTP::Client.get(url, headers_obj)
+        when "delete"
+          res = HTTP::Client.delete(url, headers_obj)
         when "post"
           res = HTTP::Client.post(
             url,
@@ -95,10 +105,8 @@ module Cosmo::Intrinsic
             headers_obj,
             form.is_a?(Hash(String, String)) ? form.to_json : form.to_s
           )
-        when "delete"
-          res = HTTP::Client.delete(url, headers_obj)
         else
-          Logger.report_error("Failed to fetch", "Invalid HTTP method '#{method}'", token("HTTP->fetch"))
+          Logger.report_error("Failed to fetch", "Invalid HTTP method '#{method}'", t)
         end
 
         wrapped_body = {} of String => IFunction
