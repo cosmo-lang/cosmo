@@ -1,0 +1,7 @@
+use test from "beginner-codes"
+
+uint fn flip_bits(uint n) {
+
+}
+
+test(684, flip_bits)

@@ -6,8 +6,7 @@ bool fn can_complete(string input, string word) {
     if word[i - 1] == input[idx]
       ++idx
 
-    if idx == #input
-      return true
+    if idx == #input return true
   }
 
   false

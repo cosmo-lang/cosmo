@@ -12,3 +12,4 @@ bool fn alternating_negatives?(int[] nums) {
 }
 
 test(666, alternating_negatives?)
+

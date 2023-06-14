@@ -11,6 +11,10 @@ class Cosmo::Intrinsic::Numbers
 
   def get_method(name : Token) : IFunction
     case name.lexeme
+    when "to_hex"
+      ToHex.new(@interpreter, @value, name)
+    when "to_binary"
+      ToBinary.new(@interpreter, @value, name)
     when "to_utf16"
       ToUtf16.new(@interpreter, @value, name)
     when "cbrt"
@@ -27,6 +31,48 @@ class Cosmo::Intrinsic::Numbers
       Ceil.new(@interpreter, @value, name)
     else
       Logger.report_error("Invalid number method or property", name.lexeme, name)
+    end
+  end
+
+  # Returns the hexadecimal representation of the number
+  class ToHex < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Num,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : String
+      TypeChecker.assert("int", @_self, token("Number->to_binary"))
+      @_self.to_i.to_s(16)
+    end
+  end
+
+  # Returns the binary representation of the number
+  class ToBinary < IFunction
+    def initialize(
+      interpreter : Interpreter,
+      @_self : Num,
+      @token : Token
+    )
+
+      super interpreter
+    end
+
+    def arity : Range(UInt32, UInt32)
+      0.to_u .. 0.to_u
+    end
+
+    def call(args : Array(ValueType)) : Int64 | Int32
+      TypeChecker.assert("int", @_self, token("Number->to_binary"))
+      @_self.to_i.to_s(2).to_i
     end
   end
 

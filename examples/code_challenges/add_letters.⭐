@@ -10,3 +10,4 @@ char fn add_letters(string[] letters) {
 }
 
 test(680, add_letters)
+

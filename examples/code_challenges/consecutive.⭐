@@ -8,7 +8,7 @@ bool fn has_consecutive?(int[] list, int n, int threshold) {
     else
       count = 0
 
-    if (count == threshold) return true
+    if count == threshold return true
   }
 
   false

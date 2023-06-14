@@ -5,3 +5,4 @@ Server.listen(8080, &void (string->any res, string->any req): {
   res->send("Hello world, got %{req::path}!")
   puts(req->parameter("hello"))
 })
+
