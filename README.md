@@ -102,3 +102,6 @@ Have any questions or comments? DM me or @ me in [my server](https://discord.gg/
 
 ### Docs
 (empty)
+
+## Featured cosmo projects
+- [KevinAlavik/cosmo-webhook-sender](https://github.com/KevinAlavik/cosmo-webhook-sender)
