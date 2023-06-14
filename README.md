@@ -7,6 +7,7 @@ We have an [extension for VS code](https://marketplace.visualstudio.com/items?it
 ## Installation
 
 Download the [Cosmo Installer](https://github.com/cosmo-lang/cosmo-installer/releases) and run it.
+You can also demo the language using the Cosmo bot in [my Discord server](https://discord.gg/WHyHh39dwh).
 
 ## Contributing
 
