@@ -4,7 +4,7 @@ description: >-
   or other specific behavior.
 ---
 
-# Meta methods
+# 🌐 Meta methods
 
 Below is a list of each meta method name along with it's corresponding operator (or functionality). Each operator listed is binary unless otherwise stated.
 

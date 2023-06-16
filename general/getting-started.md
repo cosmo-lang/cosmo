@@ -36,4 +36,4 @@ A main function is optional in Cosmo, except for if you want to accept the argum
 
 <figure><img src="../.gitbook/assets/image (6).png" alt=""><figcaption><p>What a full main function should look like.</p></figcaption></figure>
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption><p>The output of this script.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>The output of this script.</p></figcaption></figure>

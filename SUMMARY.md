@@ -6,4 +6,9 @@
 
 * [⭐ Getting Started](general/getting-started.md)
 * [🧱 Modules](general/modules.md)
-* [Meta methods](general/meta-methods.md)
+* [🌐 Meta methods](general/meta-methods.md)
+
+## Contributing
+
+* [🤝 Welcome!](contributing/welcome.md)
+* [Intrinsics](contributing/intrinsics.md)
