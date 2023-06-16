@@ -1,3 +1,7 @@
 # Table of contents
 
-* [Page](README.md)
+* [👋 Welcome to the Cosmo Docs!](README.md)
+
+## General Information <a href="#general" id="general"></a>
+
+* [⭐ Getting Started](general/getting-started.md)
