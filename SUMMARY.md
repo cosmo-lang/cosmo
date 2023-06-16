@@ -5,3 +5,4 @@
 ## General Information <a href="#general" id="general"></a>
 
 * [⭐ Getting Started](general/getting-started.md)
+* [🧱 Modules](general/modules.md)
