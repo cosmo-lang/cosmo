@@ -1,5 +1,0 @@
-use my_msg, Number from "./my_stuff"
-
-puts(my_msg)
-## Number x = 5.0
-## puts(x)
