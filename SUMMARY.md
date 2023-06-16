@@ -11,4 +11,5 @@
 ## Contributing
 
 * [🤝 Welcome!](contributing/welcome.md)
-* [Intrinsics](contributing/intrinsics.md)
+* [⚛ Intrinsics](contributing/intrinsics.md)
+* [📝 Grammar](contributing/grammar.md)

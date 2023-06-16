@@ -4,7 +4,7 @@ description: >-
   to Cosmo.
 ---
 
-# Intrinsics
+# ⚛ Intrinsics
 
 First, let me define what I mean when I say "intrinsic". I am referring to anything that is available to Cosmo without having to install a package. For example: the `puts` and `gets` functions are global intrinsics, and the `HTTP` and `System` libraries are imported intrinsics.
 
