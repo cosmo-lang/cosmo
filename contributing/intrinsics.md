@@ -10,7 +10,7 @@ First, let me define what I mean when I say "intrinsic". I am referring to anyth
 
 ## Written in Cosmo
 
-If you want to write any code in Cosmo that will be intrinsic to Cosmo, just create a new Cosmo file in [`libraries/`](https://github.com/cosmo-lang/cosmo/tree/master/libraries) and code away. Each file in `libraries/` becomes an importable, except for `global.⭐`, which is injected into the global scope. When sqcreating an importable intrinsic in Cosmo, the name to import will be the file name without the extension. For example: if I created `libraries/colors.⭐`, it would be importable via `colors`.
+If you want to write any code in Cosmo that will be intrinsic to Cosmo, just create a new Cosmo file in [`libraries/`](https://github.com/cosmo-lang/cosmo/tree/master/libraries) and code away. Each file in `libraries/` becomes an importable, except for `global.⭐`, which is injected into the global scope. When creating an importable intrinsic in Cosmo, the name to import will be the file name without the extension. For example: if I created `libraries/colors.⭐`, it would be importable via `colors`.
 
 ```sql
 use * from "colors"
@@ -34,3 +34,13 @@ As you can see, it defines a hash called `file` and assigns all of the `File` li
 An `IFunction` is just a regular function, just without a body node. They are called like normal functions, besides having to interpret the function body. Arity checks are done just like normal functions as well. The below example of an `IFunction` (taken from `Math::atan`) has an arity of 1, meaning that it will throw if any more or any less arguments are provided. It also uses the [`TypeChecker#assert`](https://cosmo-lang.github.io/cosmo/Cosmo/TypeChecker.html#assert%28typedef%3AString%2Cvalue%3AValueType%2Ctoken%3AToken%29%3ANil-instance-method) method to make sure the input is a float or an integer.&#x20;
 
 <figure><img src="https://user-images.githubusercontent.com/49625808/245358559-c8a18f65-8eb2-4658-ad15-847ce6e82417.png" alt=""><figcaption></figcaption></figure>
+
+### Declaring/Importing
+
+Intrinsics written in Cosmo are **not** importable **OR** in the global scope by default. To finally implement your intrinsic, navigate to the [`Interpreter#declare_globals`](https://github.com/cosmo-lang/cosmo/blob/c87d84797940a6ff3a956657a6fed04ab49d203d/src/cosmo/runtime/interpreter.cr#L43) method. Each call to `declare_intrinsic` declares it as global. To make it importable, call the `importable` method. The first argument to the `importable` method is the name that it will be importable by. So for example, importing `MathLib` would look like:
+
+```sql
+use sin, cos, π from "math"
+```
+
+<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
