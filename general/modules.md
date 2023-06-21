@@ -6,8 +6,11 @@ description: >-
 
 # 🧱 Modules
 
-Cosmo's module system is similar to TypeScript. Here is an example of how you might import a file in the same directory:\
+{% hint style="danger" %}
+Warning: There's currently a bug that makes it so that you cannot use types imported from other files. This includes classes. Sorry, this will be fixed soon hopefully.
+{% endhint %}
 
+Cosmo's module system is similar to TypeScript. Here is an example of how you might import a file in the same directory:
 
 ```sql
 use member from "./mod_name"

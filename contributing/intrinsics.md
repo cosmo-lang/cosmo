@@ -43,4 +43,4 @@ Intrinsics written in Cosmo are **not** importable **OR** in the global scope by
 use sin, cos, π from "math"
 ```
 
-<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
