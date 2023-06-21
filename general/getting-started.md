@@ -26,11 +26,11 @@ If you want to customize your installation, build your own fork of Cosmo, the in
 
 To get started writing your first Cosmo app, first create a new folder.
 
-<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption><p>I named mine <code>test</code>.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>I named mine <code>test</code>.</p></figcaption></figure>
 
 Now, create your Cosmo file. Cosmo sees files named `main` or the name of your project as an entry point. I will use the name of my project in this case, `test`, to give an example.
 
-<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
 A main function is optional in Cosmo, except for if you want to accept the arguments the program was executed with. The `args` parameter is also optional. Be sure to mark your main function as `public` and return an `int`, which will be the exit code of the program.
 
