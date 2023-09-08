@@ -1,2 +1,0 @@
-public string my_msg = "hello world"
-public type Number = float|int

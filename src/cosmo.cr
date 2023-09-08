@@ -40,7 +40,7 @@ module Cosmo
 
   def read_source(source : String, file_path : String) : ValueType
     begin
-      @@interpreter.interpret(source, file_path)
+
     rescue ex : Exception
       bug = !Logger.debug?
       msg = (bug ? "BUG: " : "") + "#{ex.inspect_with_backtrace}"

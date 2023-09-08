@@ -5,9 +5,9 @@ module Cosmo::Keywords
     "and" => Syntax::And,
     "or" => Syntax::Or,
     "not" => Syntax::Not,
-    "true" => Syntax::Boolean,
-    "false" => Syntax::Boolean,
-    "none" => Syntax::None,
+    "true" => Syntax::BooleanLiteral,
+    "false" => Syntax::BooleanLiteral,
+    "none" => Syntax::NoneLiteral,
     "fn" => Syntax::Function,
     "if" => Syntax::If,
     "unless" => Syntax::Unless,
@@ -38,17 +38,26 @@ module Cosmo::Keywords
   }
 
   # These cannot be any of the keywords above
-  TYPE_KEYWORDS = ["type", "any", "bool", "string", "char", "int", "uint", "bigint", "float", "void", "Function"]
-  CLASS_VISIBILITY_KEYWORDS = ["protected", "static"]
+  TYPE_KEYWORDS = {
+    "any" => Syntax::AnyType,
+    "bool" => Syntax::BoolType,
+    "string" => Syntax::StringType,
+    "char" => Syntax::CharType,
+    "int" => Syntax::IntType,
+    "uint" => Syntax::UIntType,
+    "bigint" => Syntax::BigIntType,
+    "float" => Syntax::FloatType,
+    "void" => Syntax::VoidType
+  }
 
   # Returns whether or not `s` is a class vibility keyword
   def self.class_visibility?(s : String)
-    CLASS_VISIBILITY_KEYWORDS.includes?(s)
+    ["protected", "static"].includes?(s)
   end
 
   # Returns whether or not `s` is a type keyword
   def self.type?(s : String)
-    TYPE_KEYWORDS.includes?(s)
+    TYPE_KEYWORDS.has_key?(s)
   end
 
   # Returns whether or not `s` is a regular keyword
@@ -59,5 +68,10 @@ module Cosmo::Keywords
   # Returns the syntax type of `s` if it is a regular keyword
   def self.get_syntax(s : String) : Syntax
     KEYWORDS.fetch(s) { raise "Invalid keyword #{s}" }
+  end
+
+  # Returns the syntax type of `s` if it is a regular keyword
+  def self.get_type_syntax(s : String) : Syntax
+    TYPE_KEYWORDS.fetch(s) { raise "Invalid type #{s}" }
   end
 end

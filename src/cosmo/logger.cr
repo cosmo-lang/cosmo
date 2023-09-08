@@ -1,7 +1,7 @@
 module Cosmo::Logger
   extend self
 
-  class StackFrame
+  private class StackFrame
     getter token : Token
     getter file_source : String
 
@@ -9,7 +9,7 @@ module Cosmo::Logger
     end
 
     def to_s : String
-      "StackFrame< \n\t#{@token.to_s},\n\tFileSource<\"\n\n#{@file_source}\n\n\"> >"
+      "Logger::StackFrame< \n\t#{@token.to_s},\n\tFileSource<\"\n\n#{@file_source}\n\n\"> >"
     end
   end
 

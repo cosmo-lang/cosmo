@@ -264,13 +264,13 @@ class Cosmo::Lexer
 
   # Pushes a token with the given syntax and value to `@tokens`
   private def add_token(syntax : Syntax, value : LiteralType) : Nil
-    location = Location.new(@file_path, @line, @char_pos + 1)
+    location = Token::Location.new(@file_path, @line, @char_pos + 1)
     @tokens << Token.new(@current_lexeme.to_s, syntax, value, location)
     @current_lexeme = String::Builder.new
   end
 
   # Returns whether or not `char` and it's following characters are a number literal (e.x. `0xfff` or `0b1101`)
-  private def is_base?(char : String, radix : Int) : Bool
+  private def matches_base?(char : String, radix : Int) : Bool
     current_char == "0" &&
       char_exists?(1) &&
       peek == char &&
@@ -295,7 +295,7 @@ class Cosmo::Lexer
   end
 
   # Advances all characters that are blank
-  private def skip_whitespace
+  private def skip_whitespace : Nil
     @current_lexeme = String::Builder.new
     until finished? || !current_char.blank?
       advance
@@ -303,7 +303,7 @@ class Cosmo::Lexer
   end
 
   # Advances all number characters and adds a integer/float token
-  private def read_number
+  private def read_number : Nil
     num_str = ""
     radix = 10
     if is_base?("x", 16)
@@ -332,21 +332,20 @@ class Cosmo::Lexer
     @current_lexeme = String::Builder.new(num_str)
     if decimal_used
       report_error("Unexpected float", "Hex/octal/binary literals must be integers") unless radix == 10
-      add_token(Syntax::Float, num_str.to_f64)
+      add_token(Syntax::FloatLiteral, num_str.to_f64)
     else
-      add_token(Syntax::Integer, num_str.to_i128(radix))
+      add_token(Syntax::IntegerLiteral, num_str.to_i128(radix))
     end
 
     @position -= 1
   end
 
   # Advances all character/string characters and adds a character/string token
-  private def read_string(delim : String, multiline = false)
+  private def read_string(delim : String, multiline = false) : Nil
     advance
     res_str = ""
     escaping = false
 
-    begin_line = @line
     until finished?
       if escaping
         case current_char
@@ -405,14 +404,14 @@ class Cosmo::Lexer
 
     @current_lexeme = String::Builder.new(res_str)
     add_token(
-      delim == "'" ? Syntax::Char : Syntax::String,
+      delim == "'" ? Syntax::CharLiteral : Syntax::StringLiteral,
       delim == "'" ? res_str.chars.first
         : multiline ? res_str.strip : res_str
     )
   end
 
   # Advances all identifier characters and adds an identifier or keyword token
-  private def read_identifier
+  private def read_identifier : Nil
     ident_str = ""
     until finished?
       # as soon as it's not a valid identifier character,
@@ -445,15 +444,17 @@ class Cosmo::Lexer
         add_token(syntax_type, value)
       end
     elsif Keywords.type?(ident_str)
-      add_token(Syntax::TypeDef, ident_str)
+      syntax_type = Keywords.get_type_syntax(ident_str)
+      add_token(syntax_type, ident_str)
     elsif Keywords.class_visibility?(ident_str)
       add_token(Syntax::ClassVisibility, ident_str)
     elsif ident_str == "public"
       add_token(Syntax::Public, ident_str)
     else
       split = ident_str.split("?")
-      unless split.empty? || !Keywords.type?(split.first)
-        add_token(Syntax::TypeDef, ident_str)
+      if !split.empty? && Keywords.type?(split.first)
+        syntax_type = Keywords.get_type_syntax(ident_str)
+        add_token(syntax_type, ident_str)
       else
         add_token(Syntax::Identifier, ident_str)
       end

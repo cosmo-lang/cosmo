@@ -1,7 +1,8 @@
 enum Cosmo::Syntax
   Identifier
-  Integer; Float; String; Char; Boolean; None
-  TypeDef; Public; ClassVisibility
+  IntegerLiteral; FloatLiteral; StringLiteral; CharLiteral; BooleanLiteral; NoneLiteral
+  IntegerType; FloatType; StringType; CharType; BoolType; NoneType;
+  Public; ClassVisibility
   PlusPlus; MinusMinus;
   Plus; PlusEqual; Minus; MinusEqual
   Star; StarEqual; Slash; SlashEqual
@@ -14,8 +15,8 @@ enum Cosmo::Syntax
   Question; QuestionColon; QuestionColonEqual
   Semicolon
   ColonColon; Colon; Dot; DotDot; HyphenArrow
-  FatArrow; This
-  LBrace; RBrace; DoubleLBrace; DoubleRBrace
+  FatArrow;
+  LBrace; RBrace;
   LBracket; RBracket; LParen; RParen
   Comma
   Hashtag
@@ -24,17 +25,14 @@ enum Cosmo::Syntax
   Function
   Try; Catch; Finally
   If; Unless
-  In; Of
-  Is
+  Is; In; Of
   Else
   Every
   While; Until
   Mut
   Throw
-  Break
-  Next
-  Case
-  When
+  Break; Next
+  Case; When
   Return
   Use; From; As
   EOF
