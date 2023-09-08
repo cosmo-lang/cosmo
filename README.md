@@ -13,7 +13,7 @@ You can also demo the language using the Cosmo bot in [my Discord server](https:
 
 - [R-unic](https://github.com/R-unic) - creator and maintainer
 - [quasar098](https://github.com/quasar098) - created socket library
-- [Kevin Alavik](https://github.com/kevinalavik) - purchased https://cosmo-lang.dev
+- [Kevin Alavik](https://github.com/kevinalavik) - purchased https://cosmo-lang.dev, made libraries, advertised
 
 ## Contributing
 
